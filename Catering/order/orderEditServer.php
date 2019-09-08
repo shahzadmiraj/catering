@@ -33,7 +33,7 @@ $coumnText=$_POST['value'];
 if($_POST['option']=="orderChange")
 {
     $orderId=$_SESSION['order'];
-    $sql='UPDATE `order` SET '.$columnName.'="'.$coumnText.'" WHERE id='.$orderId.'';
+    $sql='UPDATE `orderTable` SET '.$columnName.'="'.$coumnText.'" WHERE id='.$orderId.'';
     querySend($sql);
 }
 else if($_POST['option']=="addressChange")

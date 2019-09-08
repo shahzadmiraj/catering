@@ -23,7 +23,7 @@ function queryReceive($sql)
     }
 }
 $orderId=$_SESSION['order'];
-$sql='SELECT `id`, `total_amount`, `order_comments`, `total_person`, `is_active`, `destination_date`, `booking_date`, `destination_time`, `address_id`, `extre_charges`, `person_id` FROM `order` WHERE id='.$orderId.'';
+$sql='SELECT `id`, `total_amount`, `order_comments`, `total_person`, `is_active`, `destination_date`, `booking_date`, `destination_time`, `address_id`, `extre_charges`, `person_id` FROM `orderTable` WHERE id='.$orderId.'';
 $orderDetail=queryReceive($sql);
 $addressId=$orderDetail[0][8];
 $sql='SELECT `id`, `address_city`, `address_town`, `address_street_no`, `address_house_no`, `person_id` FROM `address` WHERE id='.$addressId.'';

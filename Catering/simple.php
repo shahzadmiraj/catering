@@ -67,7 +67,7 @@ function querySend($sql)
 
 
 <script>
-
+//window.history.back();
 </script>
 </body>
 </html>
