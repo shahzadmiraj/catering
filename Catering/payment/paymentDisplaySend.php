@@ -48,47 +48,45 @@ $paymentDetail=queryReceive($sql);
 
     <div class="col-12 shadow card">
         <h1 align="center">Send payment To User</h1>
+
+
         <div class="form-group row">
             <label class="col-4 col-form-label"> User </label>
-            <select class="col-8">
+            <select id="userIdlabel" class="col-8">
                 <option value="none">None</option>
                 <?php
                     $sql='SELECT id, username FROM user WHERE id !='.$userId.' ';
                     $userDetail=queryReceive($sql);
                     for($y=0;$y<count($userDetail);$y++)
                     {
-                        echo '<option value="'.$userDetail[$y][0].'">'.$userDetail[$y][1].'</option>';
+                        echo '<option value='.$userDetail[$y][0].'>'.$userDetail[$y][1].'</option>';
                     }
                 ?>
             </select>
         </div>
         <div class="form-group row">
             <label class="col-4 col-form-label"> payment ID</label>
-            <label class="col-8 col-form-label"> <?php
-
-                echo $paymentDetail[0][0]
-                ?>
-            </label>
+            <input readonly value="<?php echo $paymentDetail[0][0]; ?>" id="paymentId" class="col-8 form-control">
         </div>
         <div class="form-group row">
             <label class="col-4 col-form-label"> Amount</label>
             <label class="col-8 col-form-label"> <?php
 
-                echo $paymentDetail[0][1]
+                echo $paymentDetail[0][1];
                 ?></label>
         </div>
         <div class="form-group row">
             <label class="col-4 col-form-label"> customer Name</label>
             <label class="col-8 col-form-label"> <?php
 
-                echo $paymentDetail[0][2]
+                echo $paymentDetail[0][2];
                 ?></label>
         </div>
         <div class="form-group row">
             <label class="col-4 col-form-label"> Receive Date</label>
             <label class="col-8 col-form-label"> <?php
 
-                echo $paymentDetail[0][3]
+                echo $paymentDetail[0][3];
                 ?></label>
         </div>
         <div class="form-group row">
@@ -109,20 +107,22 @@ $paymentDetail=queryReceive($sql);
 
         <div class="form-group row">
             <button type="button" class="col-6 btn btn-danger "> Cancel</button>
-            <button type="button" class="col-6 btn btn-success">
-                <?php
+            <input  id="paymentsend" type="button" class="col-6 btn btn-success" value="<?php
 
-                if($paymentDetail[0][5]==0)
-                {
-                    echo "Send";
-                }
-                else if ($paymentDetail[0][5]==1)
-                {
-                    echo "Confirming";
-                }
-                ?>
+            if($paymentDetail[0][5]==0)
+            {
+                echo "Send";
+            }
+            else if ($paymentDetail[0][5]==1)
+            {
+                echo "Confirming";
+            }
+            else
+            {
+                echo "not part of this";
+            }
+            ?>">
 
-            </button>
         </div>
 
     </div>
@@ -137,6 +137,41 @@ $paymentDetail=queryReceive($sql);
 
 <script>
     //window.history.back();
+    $(document).ready(function () {
+       $("#paymentsend") .click(function () {
+          var btnsender=$(this).val();
+          if(btnsender=='Send')
+          {
+              var userID=$("#userIdlabel").val();
+              if(userID=='none')
+              {
+                  alert("please select User");
+                  return false;
+              }
+              var paymentId=$("#paymentId").val();
+              $.ajax({
+                 url:"paymentServer.php",
+                 data:{useid:userID,paymentId:paymentId,option:"paymentsend"} ,
+                  dataType:"text",
+                  method:"POST",
+                  success:function (data)
+                  {
+                        if(data!='')
+                        {
+                            alert(data);
+                        }
+                  }
+              });
+
+          }
+          else if(btnsender=='Confirming')
+          {
+              alert("your request has been sent to the next user so please wait for it");
+              return false;
+          }
+       });
+
+    });
 </script>
 </body>
 </html>

@@ -36,8 +36,39 @@ if(isset($_POST['option']))
         $personality=$_POST['personality'];
         $userId=$_POST['user_id'];
         $orderTable_id=$_POST['orderTable_id'];
-        $dateTime=date('Y-m-d H:i:s');;
+        $dateTime=date('Y-m-d H:i:s');
         $sql='INSERT INTO `payment`(`id`, `amount`, `nameCustomer`, `receive`, `personality`, `rating`, `IsReturn`, `orderTable_id`, `user_id`, `sendingStatus`) VALUES (NULL,'.$amount.',"'.$name.'","'.$dateTime.'","'.$personality.'",'.$rating.','.$status.','.$orderTable_id.','.$userId.',0)';
         querySend($sql);
+    }
+    else if($_POST['option']=='paymentsend')
+    {
+        $useid=$_POST['useid'];
+        $paymentId=$_POST['paymentId'];
+        $dateTime=date('Y-m-d H:i:s');
+        $sql='INSERT INTO `transfer`(`id`, `Isconfirm`, `senderTimeDate`, `payment_id`, `user_id`,`Isget`) VALUES (NULL,NULL,"'.$dateTime.'",'.$paymentId.','.$useid.',0)';
+        querySend($sql);
+        $sql='UPDATE payment as py SET py.sendingStatus=1  WHERE py.id='.$paymentId.'';
+        querySend($sql);
+
+    }
+    else if($_POST['option']=='paymentconfigration')
+    {
+        $paymentid=$_POST["paymentid"];
+        $tranferid=$_POST['tranferid'];
+        $dateTime=date('Y-m-d H:i:s');
+        if ($_POST['value'] == "unconfirm")
+        {
+            $sql='UPDATE transfer as t SET t.Isconfirm="'.$dateTime.'"  WHERE t.id='.$tranferid.'';
+            querySend($sql);
+            $sql='UPDATE payment as py SET py.sendingStatus=0  WHERE py.id='.$paymentid.'';
+            querySend($sql);
+
+        } else if ($_POST['value'] == "confirm")
+        {
+            $sql='UPDATE transfer as t SET t.Isconfirm="'.$dateTime.'",t.Isget=1  WHERE t.id='.$tranferid.'';
+            querySend($sql);
+            $sql='UPDATE payment as py SET py.sendingStatus=2  WHERE py.id='.$paymentid.'';
+            querySend($sql);
+        }
     }
 }

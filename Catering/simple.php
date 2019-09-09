@@ -68,6 +68,34 @@ function querySend($sql)
 
 <script>
 //window.history.back();
+
+
+
+/*var previous='';
+$('.showDetail').click(function ()
+{
+    var formid=$(this).data("formid");
+    var value=$(this).val();
+    if((previous!=formid)&& (previous!=''))
+    {
+        $("#"+previous).val("Detail");
+        $("#"+previous).hide('slow');
+    }
+    previous=formid;
+    if(value=="Detail")
+    {
+        $(this).val("preview");
+        $("#"+formid).show('slow');
+    }
+    else if(value=="preview")
+    {
+        $(this).val("Detail");
+        $("#"+formid).hide('slow');
+    }
+});*/
+
+
+
 </script>
 </body>
 </html>
