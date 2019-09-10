@@ -52,7 +52,7 @@ if($_POST['option']=='createDish')
     $quantity=$_POST['quantity'];
     $describe=$_POST['describe'];
     $CurrentDateTime=date('Y-m-d H:i:s');
-    $sql='INSERT INTO `dish_detail`(`id`, `describe`, `price`, `expire_date`, `quantity`, `dish_id`, `orderTable_id`)VALUES(NULL,"'.$describe.'",'.$each_price.',"'.$CurrentDateTime.'",'.$quantity.','.$dishId.','.$orderId.')';
+    $sql='INSERT INTO `dish_detail`(`id`, `describe`, `price`, `expire_date`, `quantity`, `dish_id`, `orderTable_id`)VALUES(NULL,"'.$describe.'",'.$each_price.',NULL,'.$quantity.','.$dishId.','.$orderId.')';
     querySend($sql);
     $dishDetailId=mysqli_insert_id($connect);
     for ($i=0;$i<count($attributesId);$i++)

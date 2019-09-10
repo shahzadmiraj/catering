@@ -11,7 +11,6 @@ if(!isset($_SESSION['order']))
     echo "session of order is not created";
     exit();
 }
-$_SESSION['order']=5;
 $orderId=$_SESSION['order'];
 include_once ("../connection/connect.php");
 function queryReceive($sql)
@@ -47,10 +46,6 @@ function queryReceive($sql)
 <body>
 <div class="container">
     <h1 align="center"> Selected Dishes / items Detail</h1>
-    <div class="col-12 mb-3 row">
-        <button type="button" class="btn-danger col-6">order Detail</button>
-        <button type="button" class="btn-danger col-6">dish Add +</button>
-    </div>
     <div class="col-12 border">
 
         <div class=" row">
@@ -124,12 +119,15 @@ where
             ?>
         </label>
     </div>
+
+
+    </div>
+    <div class="col-12  row ">
+        <a href="http://192.168.64.2/Catering/order/PreviewOrder.php"  class="form-control btn-info col-5">order Detail</a>
+        <a href="http://192.168.64.2/Catering/dish/dishDisplay.php" class="form-control btn-success col-5">dish Add +</a>
     </div>
 
-    <div class="row col-12">
-        <button type="button" class="btn-danger col-2">cancel</button>
-        <button type="button" class="col-2 btn-success">ok</button>
-    </div>
+
 
 </div>
 

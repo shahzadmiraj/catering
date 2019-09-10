@@ -6,7 +6,6 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-
 ?>
 <!DOCTYPE html>
 <head>
@@ -62,7 +61,7 @@ include_once ("../connection/connect.php");
             <textarea  id="describe" name="describe" class="form-control col-8 form-control"></textarea>
         </div>
         <div class="form-group row">
-            <button type="button"  id='cancel'class="form-control col-4 btn btn-danger"> cancel</button>
+            <button type="button"  id='cancelorder'class="form-control col-4 btn btn-danger"> cancel</button>
         <button type="button" id="submit" class="form-control col-4 btn-success"> submit</button>
 
         </div>
@@ -75,7 +74,8 @@ include_once ("../connection/connect.php");
 
 <script>
     $(document).ready(function () {
-       $("#submit").click(function (e) {
+       $("#submit").click(function (e)
+       {
            e.preventDefault();
            var formdata=new FormData($('form')[0]);
            formdata.append('function',"add");
@@ -86,15 +86,26 @@ include_once ("../connection/connect.php");
                contentType: false,
                processData: false,
                dataType:"text",
-               success:function (data){
+               success:function (data)
+               {
                   if(data!='')
                   {
                     console.log(data);
                   }
+                  else
+                  {
+                      window.location.href="http://192.168.64.2/Catering/dish/dishDisplay.php";
+                  }
                }
            });
 
-       }) ;
+       });
+
+       $("#cancelorder").click(function () {
+           window.history.back();
+           return false;
+
+       });
     });
 
 </script>

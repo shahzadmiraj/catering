@@ -7,6 +7,30 @@
  */
 include_once ("../connection/connect.php");
 session_start();
+
+//$customerId='';
+//if(isset($_GET['customer']))
+//{
+//    $customerId=$_GET['customer'];
+//}
+//if(isset($_SESSION['customer']))
+//{
+//    $customerId=$_SESSION['customer'];
+//}
+//
+////if(isset($_SESSION['customer']) && isset($_GET['customer']))
+////{
+////    echo "confusing of session and Get";
+////    exit();
+////}
+//if($customerId=="")
+//{
+//    echo "Set session or Get for customerid";
+//    exit();
+//}
+//$_SESSION['customer']=$customerId;
+//
+////
 if(!isset($_SESSION['customer']))
 {
     echo "please session is create for customer";
@@ -49,7 +73,7 @@ $numbers=queryReceive($sql);
         *{
             margin:auto;
             padding: auto;
-            background-color: #6c757d;
+           // background-color: #6c757d;
         }
     </style>
 </head>
@@ -129,8 +153,8 @@ $numbers=queryReceive($sql);
         <div class="col-12">
             <p>if customer is already existed</p>
         </div>
-        <button class="col-2 form-control btn btn-danger" id="cancel">cancel</button>
-        <button class="col-2 form-control btn btn-outline-primary" id="submit">ok</button>
+        <a href="http://192.168.64.2/Catering/order/PreviewOrder.php" class="col-2 form-control btn btn-danger" id="cancel">cancel</a>
+        <a href="http://192.168.64.2/Catering/order/PreviewOrder.php" class="col-2 form-control btn btn-outline-primary" id="submit">ok</a>
     </form>
 </div>
 

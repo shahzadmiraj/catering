@@ -7,7 +7,7 @@
  */
 
 include_once ("../connection/connect.php");
-$sql='SELECT p.id,p.name,ot.booking_date,ot.id  FROM person as p INNER join number as n on p.id=n.person_id
+$sql='SELECT p.id,p.name,ot.destination_date,ot.id  FROM person as p INNER join number as n on p.id=n.person_id
     INNER join orderTable as ot
     on p.id=ot.person_id
     INNER join change_status as cs
@@ -62,10 +62,13 @@ if(isset($_POST['cs_order_status_id']))
     if($_POST['cs_order_status_id']!='None')
     $sql.=' (cs.order_status_id = '.$_POST["cs_order_status_id"].') AND ';
 }
-$sql.='  (p.id IS NOT NULL)';
+
+
+$sql.='  (p.id IS NOT NULL)
+order by 
+ot.destination_date DESC';
 $records=queryReceive($sql);
 
-//print_r( $sql);
 
 
 if(count($records)>0)
@@ -75,7 +78,7 @@ if(count($records)>0)
             <div class="form-group row border mb-0 p-1">
                 <label class="font-weight-bold col-form-label col-2">order Id</label>
                 <label class="font-weight-bold col-form-label col-5">customer Name</label>
-                <label class="font-weight-bold col-form-label col-3">booking Date</label>
+                <label class="font-weight-bold col-form-label col-3">destination Date</label>
                 <label class="font-weight-bold col-form-label col-2">Detail</label>
             </div>';
 
@@ -85,7 +88,7 @@ if(count($records)>0)
                 <label class="col-form-label col-2">'.$records[$j][3].'</label>
                 <label class="col-form-label col-5">'.$records[$j][1].'</label>
                 <label class="col-form-label col-3">'.$records[$j][2].'</label>
-                <a href="#'.$records[$j][3].'" class="btn-primary col-2 form-control ">Detail</a>
+                <a href="http://192.168.64.2/Catering/order/PreviewOrder.php?order='.$records[$j][3].'" class="btn-primary col-2 form-control ">Detail</a>
             </div>';
     }
 }

@@ -6,10 +6,18 @@
  * Time: 14:15
  */
 
-$_POST["user_id"]=1;
-$_POST["orderTable_id"]=1;
-$userId=$_POST['user_id'];
-$orderTable_id=$_POST['orderTable_id'];
+//$_POST["user_id"]=1;
+//$_POST["orderTable_id"]=1;
+
+if(!isset($_GET["user_id"]) && !isset($_GET["orderTable_id"]))
+{
+    echo 'orderTable id and user id is not GET';
+    exit();
+}
+
+
+$userId=$_GET['user_id'];
+$orderTable_id=$_GET['orderTable_id'];
 ?>
 
 <!DOCTYPE html>
@@ -68,8 +76,8 @@ $orderTable_id=$_POST['orderTable_id'];
             <textarea type="text" name="personality" class="col-8 form-control"></textarea>
         </div>
         <div class="form-group row">
-            <button type="button" class="form-control col-3 btn-danger">cancel</button>
-        <button id="submitBtnfrom" type="submit" class="form-control col-3 btn-primary">Submit</button>
+            <a href="http://192.168.64.2/Catering/order/PreviewOrder.php" class="form-control col-3 btn-danger">cancel</a>
+            <button id="submitBtnfrom" type="submit" class="form-control col-3 btn-primary">Submit</button>
 
         </div>
 
@@ -104,6 +112,10 @@ $orderTable_id=$_POST['orderTable_id'];
                   if(data!='')
                   {
                       alert(data);
+                  }
+                  else
+                  {
+                      window.history.back();
                   }
               }
           });

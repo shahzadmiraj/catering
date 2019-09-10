@@ -9,6 +9,7 @@
 
 include_once ("../connection/connect.php");
 session_start();
+
 function querySend($sql)
 {
     global $connect;
@@ -41,6 +42,8 @@ if($_POST['function']=="add")
     querySend($sql);
     $address_id=mysqli_insert_id($connect);
     $customerId=$_SESSION['customer'];
+    //$sql='INSERT INTO `orderTable`(`id`, `total_amount`, `order_comments`, `total_person`, `is_active`, `destination_date`, `booking_date`, `destination_time`, `address_id`, `extre_charges`, `person_id`) VALUES (NULL,0,"'.$describe.'",'.$persons.',1,"'.$date.'","'.$currentDate.'","'.$time.'",'.$address_id.',0,'.$customerId.')';
+
     $sql='INSERT INTO `orderTable`(`id`, `total_amount`, `order_comments`, `total_person`, `is_active`, `destination_date`, `booking_date`, `destination_time`, `address_id`, `extre_charges`, `person_id`) VALUES (NULL,0,"'.$describe.'",'.$persons.',1,"'.$date.'","'.$currentDate.'","'.$time.'",'.$address_id.',0,'.$customerId.')';
     querySend($sql);
     $_SESSION['order']=mysqli_insert_id($connect);

@@ -7,14 +7,14 @@
  */
 include_once ("../connection/connect.php");
 session_start();
-$_SESSION['order']=5;
+//$_SESSION['order']=5;
 if(!isset($_SESSION['order']))
 {
         echo " session of order is not created";
         exit();
 }
-$_POST['dishid']=array(1,2);
-$_POST['types']=array(1,2);
+//$_POST['dishid']=array(1,2);
+//$_POST['types']=array(1,2);
 if(!isset($_POST['dishid']))
 {
     echo "dish is not created";
@@ -69,10 +69,12 @@ function querySend($sql)
     <?php
     $dishesId=$_POST['dishid'];
     $types=$_POST['types'];
+    $totalDishes=0;
     $display='';
     $number=0;
     for ($i=0;$i<count($types);$i++)
     {
+        $totalDishes+=$types[$i];
         for ($k=$types[$i];$k>0;$k--)
         {
             $value=$dishesId[$i];
@@ -124,6 +126,8 @@ WHERE d.id=' . $value . '';
         }
     }
     echo $display;
+
+    echo '<h4 align="center">total number of dishes<input readonly type="number" id="totalRemaing" value='.$totalDishes.'></h4>';
     ?>
 </div>
 
@@ -131,7 +135,18 @@ WHERE d.id=' . $value . '';
 
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function ()
+    {
+       var totalitems= $("#totalRemaing").val();
+       function redirect()
+       {
+           totalitems--;
+            if(totalitems==0)
+            {
+                window.location.href="http://192.168.64.2/Catering/dish/AllSelectedDishes.php";
+            }
+       }
+
        $(document).on('click','.submitForm',function () {
           var id=$(this).data("formid");
           var formdata=new FormData($("#form_"+id)[0]);
@@ -151,6 +166,7 @@ WHERE d.id=' . $value . '';
                   else
                   {
                       $("#form_"+id).remove();
+                      redirect();
                   }
                }
            });
@@ -158,6 +174,7 @@ WHERE d.id=' . $value . '';
        $(document).on('click','.cancelForm',function () {
            var id=$(this).data("formid");
            $("#form_"+id).remove();
+           redirect();
        });
 
     });

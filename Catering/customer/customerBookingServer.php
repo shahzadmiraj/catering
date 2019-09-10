@@ -43,7 +43,7 @@ if(!isset($_SESSION['customer']))
             echo("Error description: " . mysqli_error($connect));
         }
     }
-    $_SESSION['customer']['id']=$last_id;
+    $_SESSION['customer']=$last_id;
 
 }
 ?>

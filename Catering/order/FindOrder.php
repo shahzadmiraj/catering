@@ -16,6 +16,10 @@ function queryReceive($sql)
         return mysqli_fetch_all($result);
     }
 }
+if(!isset($_GET['order_status_id']))
+{
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <head>
@@ -43,6 +47,7 @@ function queryReceive($sql)
 
         <form class="col-12 shadow card " id="formId1">
         <h2>Search order :</h2>
+
         <div class="form-group row">
             <label class="col-form-label col-4"> customer name</label>
             <input  name="p_name" type="text" class="changeColumn form-control col-8">
@@ -69,7 +74,7 @@ function queryReceive($sql)
         </div>
         <div class="form-group row">
             <label class="col-form-label col-4">order status</label>
-            <select name="cs_order_status_id" class="changeColumn form-control col-8 ">
+            <select  name="cs_order_status_id" class="changeColumn form-control col-8 ">
                 <option value="None">None</option>
                 <?php
                     $sql='SELECT `id`, `name` FROM `order_status` WHERE 1';
@@ -82,13 +87,44 @@ function queryReceive($sql)
             </select>
         </div>
         <div class="form-group row">
-            <button type="button" class="col-4 form-control btn-danger">cancel</button>
+            <a href="http://192.168.64.2/Catering/user/userDisplay.php" class="col-4 form-control btn-danger">cancel</a>
             <button type="button" class="col-4 form-control btn-success">Find</button>
         </div>
 
         </form>
         <div class="col-12 card shadow" id="recordsAll">
+            <?php
+            $sql='SELECT p.id,p.name,ot.destination_date,ot.id FROM person as p INNER join number as n on p.id=n.person_id INNER join orderTable as ot on p.id=ot.person_id INNER join change_status as cs on ot.id=cs.orderTable_id where (cs.order_status_id = '.$_GET["order_status_id"].')
+order by 
+ot.destination_date DESC';
+            $records=queryReceive($sql);
+            if(count($records)>0)
+            {
 
+                $displayRecord = '<h2 align="center">display records</h2>
+            <div class="form-group row border mb-0 p-1">
+                <label class="font-weight-bold col-form-label col-2">order Id</label>
+                <label class="font-weight-bold col-form-label col-5">customer Name</label>
+                <label class="font-weight-bold col-form-label col-3">destination Date</label>
+                <label class="font-weight-bold col-form-label col-2">Detail</label>
+            </div>';
+
+                for ($j=0;$j<count($records);$j++)
+                {
+                    $displayRecord .= ' <div class="form-group row border">
+                <label class="col-form-label col-2">'.$records[$j][3].'</label>
+                <label class="col-form-label col-5">'.$records[$j][1].'</label>
+                <label class="col-form-label col-3">'.$records[$j][2].'</label>
+                <a href="http://192.168.64.2/Catering/order/PreviewOrder.php?order='.$records[$j][3].'" class="btn-primary col-2 form-control ">Detail</a>
+            </div>';
+                }
+            }
+            else
+            {
+                $displayRecord = '<h2 align="center">Not Found</h2>';
+            }
+            echo $displayRecord
+            ?>
 
         </div>
 
@@ -100,12 +136,6 @@ function queryReceive($sql)
 
 
 <script>
-    //window.history.back();
-    // SELECT * FROM person as p INNER join number as n on p.id=n.person_id
-    // INNER join orderTable as ot
-    // on p.id=ot.person_id
-    // INNER join change_status as cs
-    // on ot.id=cs.orderTable_id
 
     $(document).ready(function () {
 
@@ -126,6 +156,8 @@ function queryReceive($sql)
                     }
                 });
         });
+
+
 
 
     });

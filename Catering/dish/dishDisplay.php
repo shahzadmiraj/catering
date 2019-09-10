@@ -59,7 +59,7 @@ $dishTypeDetail=queryReceive($sql);
 
 <div class="container">
 
-    <form class="card" id="formid">
+    <form class="card" id="formid" method="post" action="dishCreate.php">
         <div class="col-12" id="selected">
     <div class="form-group row border">
         <label  class="text-center col-form-label col-4">Dish Name</label>
@@ -72,7 +72,7 @@ $dishTypeDetail=queryReceive($sql);
         </div>
 
         <button id="submit" type="submit" class="btn-success">Submit</button>
-        <button type="button" class="btn-danger">cancel</button>
+        <button id="cancelDish" type="button" class="btn-danger">cancel</button>
 
     </form>
 
@@ -132,25 +132,35 @@ $dishTypeDetail=queryReceive($sql);
           var id=$(this).data("dishid");
           $("#dishid_"+id).remove();
        });
-        $('#submit').click(function (e) {
-            e.preventDefault();
-            var formdata=new FormData($('form')[0]);
-            $.ajax({
-                url:"dishCreate.php",
-                method:"POST",
-                data:formdata,
-                contentType: false,
-                processData: false,
-                success:function (data)
-                {
-                    if(data!='')
-                    {
-                        alert(data);
-                    }
-                }
-            });
 
+        // $('#submit').click(function (e) {
+        //     e.preventDefault();
+        //     var formdata=new FormData($('form')[0]);
+        //     $.ajax({
+        //         url:"dishCreate.php",
+        //         method:"POST",
+        //         data:formdata,
+        //         contentType: false,
+        //         processData: false,
+        //         success:function (data)
+        //         {
+        //             if(data!='')
+        //             {
+        //                 alert(data);
+        //             }
+        //             else
+        //             {
+        //                 window.location.href="http://192.168.64.2/Catering/dish/dishCreate.php";
+        //             }
+        //         }
+        //     });
+        //
+        // });
+        $("#cancelDish").click(function () {
+            window.history.back();
+            return false;
         });
+
     });
 
 

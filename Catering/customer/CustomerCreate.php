@@ -37,7 +37,7 @@ session_start();
     <form id="form">
         <div class="form-group row">
         <label for="number" class="col-2 col-form-label">Phone no:</label>
-        <input id="number"class="allnumber form-control col-8" type="text" name="number[]"  >
+        <input id="number"class="allnumber form-control col-8" type="number" name="number[]"  >
         <input type="button" class="form-control btn-primary col-2" id="Add_btn" value="+">
         </div>
         <div class="col-12" id="number_records">
@@ -75,7 +75,7 @@ session_start();
         <div class="col-12">
             <p>if customer is already existed</p>
         </div>
-        <button class="col-2 form-control btn btn-danger" id="cancel">cancel</button>
+        <button class="col-2 form-control btn btn-danger" id="cancelCustomer">cancel</button>
         <button class="col-2 form-control btn btn-outline-primary" id="submit">submit</button>
     </form>
 </div>
@@ -83,22 +83,15 @@ session_start();
 
 <script>
 
-    function phoneCheck(idText)
-    {
-        var id=$("#"+idText);
-        var text=id.val();
-        if((isNaN(text))||  (text.length!=11))
-        {
-            id.css("background-color", "red");
-            return false;
-        }
 
-        id.css("background-color", "white");
-        return true;
-
-    }
    $(document).ready(function ()
    {
+
+
+       $("#cancelCustomer").click(function () {
+          window.history.back();
+          return false;
+       });
        var number=0;
 
 
@@ -115,7 +108,7 @@ session_start();
            }
           $("#number_records").append("<div class=\"form-group row\" id=\"Each_number_row_"+number+"\">\n" +
               "                <label for=\"number_"+number+"\" class=\"col-2 col-form-label\">Phone no:</label>\n" +
-              "                <input id=\"number_"+number+"\" class=\"allnumber form-control col-8\" type=\"text\" name=\"number[]\">\n" +
+              "                <input id=\"number_"+number+"\" class=\"allnumber form-control col-8\" type=\"number\" name=\"number[]\">\n" +
               "                <input class=\"form-control btn btn-danger col-2 remove_number \" id=\"remove_numbers_"+number+"\" data-removenumber=\""+number+"\" value=\"-\">\n" +
               "            </div>");
            number++;
@@ -129,44 +122,57 @@ session_start();
 
        $("#submit").click(function (e) {
            e.preventDefault();
-           var error=0;
-           $('.allnumber').map(function () {
 
-               if(!phoneCheck(this.id))
-               {
-                    error++;
-               }
-           }).get().join();
-           if(error>0)
+
+           // var error=0;
+           // var name=$("#name");
+           // var nameRedex=new  RegExp(/[a-zA-Z]{2,20}$/,'i');
+           // if(!nameRedex.test(name.val()))
+           // {
+           //     name.css("background-color", "red");
+           //     alert("name is invalid");
+           //     error++;
+           // }
+           // else
+           // {
+           //     name.css("background-color", "white");
+           // }
+           // if(error>0)
+           // {
+           //     return false;
+           // }
+
+           if($.trim($("#number").val())=="")
            {
-               alert("check your numbers like this 03121111111");
-           }
-           var name=$("#name");
-           var nameRedex=new  RegExp(/[a-zA-Z]{2,20}$/,'i');
-           if(!nameRedex.test(name.val()))
-           {
-               name.css("background-color", "red");
-               alert("name is invalid");
-               error++;
-           }
-           else
-           {
-               name.css("background-color", "white");
-           }
-           if(error>0)
-           {
+               alert("number must be enter");
                return false;
            }
-           var formdatd=new FormData($('form')[0]);
+           if($.trim($("#name").val())=="")
+           {
+
+               alert("name must be enter");
+               return false;
+           }
+
+
+           var formdata=new FormData($('form')[0]);
            $.ajax({
                url:"customerBookingServer.php",
                method:"POST",
-               data:formdatd,
+               data:formdata,
                contentType: false,
                processData: false,
                success:function (data)
                {
-                   console.log(data);
+                    if(data!='')
+                    {
+                        alert(data);
+                    }
+                    else
+                    {
+                        window.location.href="http://192.168.64.2/Catering/order/orderCreate.php";
+                        //return false;
+                    }
                }
            });
 
