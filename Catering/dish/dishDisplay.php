@@ -59,7 +59,7 @@ $dishTypeDetail=queryReceive($sql);
 
 <div class="container">
 
-    <form class="card" id="formid" method="post" action="dishCreate.php">
+    <form class="card" id="formid" method="post" action="dishCreate.php?order=<?php echo $_GET['order'];?>">
         <div class="col-12" id="selected">
     <div class="form-group row border">
         <label  class="text-center col-form-label col-4">Dish Name</label>

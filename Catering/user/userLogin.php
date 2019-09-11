@@ -7,10 +7,10 @@
  */
 
 
-
 if(isset($_COOKIE['userName']))
 {
-    header("location:userDisplay.php");
+
+    header('location:userDisplay.php?userid='.$_COOKIE["userid"].'');
     exit();
 }
 function queryReceive($sql)
@@ -95,6 +95,10 @@ function querySend($sql)
                   if(data!='')
                   {
                       alert(data);
+                  }
+                  else
+                  {
+                      window.location.href='userDisplay.php?userid=<?php json_decode($_COOKIE['userid']); ?>';
                   }
 
               }

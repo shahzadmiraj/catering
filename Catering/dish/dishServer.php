@@ -36,12 +36,12 @@ if(!isset($_POST['option']))
     echo "option is not created";
     exit();
 }
-if(!isset($_SESSION['order']))
-{
-    echo "order is not create";
-    exit();
-}
-$orderId=$_SESSION['order'];
+//if(!isset($_SESSION['order']))
+//{
+//    echo "order is not create";
+//    exit();
+//}
+$orderId=$_GET['order'];
 
 if($_POST['option']=='createDish')
 {

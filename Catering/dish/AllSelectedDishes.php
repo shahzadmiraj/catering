@@ -5,13 +5,8 @@
  * Date: 2019-09-07
  * Time: 11:31
  */
-session_start();
-if(!isset($_SESSION['order']))
-{
-    echo "session of order is not created";
-    exit();
-}
-$orderId=$_SESSION['order'];
+
+$orderId=$_GET['order'];
 include_once ("../connection/connect.php");
 function queryReceive($sql)
 {
@@ -123,8 +118,8 @@ where
 
     </div>
     <div class="col-12  row ">
-        <a href="http://192.168.64.2/Catering/order/PreviewOrder.php"  class="form-control btn-info col-5">order Detail</a>
-        <a href="http://192.168.64.2/Catering/dish/dishDisplay.php" class="form-control btn-success col-5">dish Add +</a>
+        <a href="http://192.168.64.2/Catering/order/PreviewOrder.php?order=<?php echo $_GET['order'];?>"  class="form-control btn-info col-5">order Detail</a>
+        <a href="http://192.168.64.2/Catering/dish/dishDisplay.php?order=<?php echo $_GET['order'];?>" class="form-control btn-success col-5">dish Add +</a>
     </div>
 
 

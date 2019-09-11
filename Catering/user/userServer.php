@@ -7,7 +7,6 @@
  */
 
 include_once ("../connection/connect.php");
-session_start();
 function queryReceive($sql)
 {
     global $connect;
@@ -36,7 +35,7 @@ if(isset($_POST["option"]))
             //one day
             setcookie("userName",$userName,time()+86400);
             setcookie("userid",$userDetail[0][0],time()+86400);
-            $_SESSION["userid"]=$userDetail[0][0];
+
         }
     }
 }

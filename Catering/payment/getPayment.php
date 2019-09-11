@@ -6,8 +6,6 @@
  * Time: 14:15
  */
 
-//$_POST["user_id"]=1;
-//$_POST["orderTable_id"]=1;
 
 if(!isset($_GET["user_id"]) && !isset($_GET["orderTable_id"]))
 {
@@ -76,7 +74,7 @@ $orderTable_id=$_GET['orderTable_id'];
             <textarea type="text" name="personality" class="col-8 form-control"></textarea>
         </div>
         <div class="form-group row">
-            <a href="http://192.168.64.2/Catering/order/PreviewOrder.php" class="form-control col-3 btn-danger">cancel</a>
+            <a href="http://192.168.64.2/Catering/order/PreviewOrder.php?order=<?php echo $orderTable_id;?>" class="form-control col-3 btn-danger">cancel</a>
             <button id="submitBtnfrom" type="submit" class="form-control col-3 btn-primary">Submit</button>
 
         </div>

@@ -6,7 +6,7 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-session_start();
+//session_start();
 ?>
 <!DOCTYPE html>
 <head>
@@ -35,6 +35,7 @@ session_start();
         Customer create
     </h1>
     <form id="form">
+        <input id="customer" hidden value="">
         <div class="form-group row">
         <label for="number" class="col-2 col-form-label">Phone no:</label>
         <input id="number"class="allnumber form-control col-8" type="number" name="number[]"  >
@@ -124,23 +125,6 @@ session_start();
            e.preventDefault();
 
 
-           // var error=0;
-           // var name=$("#name");
-           // var nameRedex=new  RegExp(/[a-zA-Z]{2,20}$/,'i');
-           // if(!nameRedex.test(name.val()))
-           // {
-           //     name.css("background-color", "red");
-           //     alert("name is invalid");
-           //     error++;
-           // }
-           // else
-           // {
-           //     name.css("background-color", "white");
-           // }
-           // if(error>0)
-           // {
-           //     return false;
-           // }
 
            if($.trim($("#number").val())=="")
            {
@@ -164,14 +148,15 @@ session_start();
                processData: false,
                success:function (data)
                {
-                    if(data!='')
+
+                    if(!($.isNumeric(data)))
                     {
                         alert(data);
+                        return false;
                     }
                     else
                     {
-                        window.location.href="http://192.168.64.2/Catering/order/orderCreate.php";
-                        //return false;
+                        window.location.href="http://192.168.64.2/Catering/order/orderCreate.php?customer="+data;
                     }
                }
            });

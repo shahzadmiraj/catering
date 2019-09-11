@@ -6,13 +6,12 @@
  * Time: 16:48
  */
 include_once ("../connection/connect.php");
-session_start();
-//$_SESSION['order']=5;
-if(!isset($_SESSION['order']))
-{
-        echo " session of order is not created";
-        exit();
-}
+//session_start();
+//if(!isset($_SESSION['order']))
+//{
+//        echo " session of order is not created";
+//        exit();
+//}
 //$_POST['dishid']=array(1,2);
 //$_POST['types']=array(1,2);
 if(!isset($_POST['dishid']))
@@ -21,7 +20,7 @@ if(!isset($_POST['dishid']))
     exit();
 }
 
-$orderId=$_SESSION['order'];
+$orderId=$_GET['order'];
 function queryReceive($sql)
 {
     global $connect;
@@ -65,6 +64,7 @@ function querySend($sql)
 <body>
 <div class="container">
     <h1 align="center">Create dishes</h1>
+    <input hidden type="number" id="orderIdindish" value="<?php echo $_GET["order"];?>">
 
     <?php
     $dishesId=$_POST['dishid'];
@@ -143,16 +143,19 @@ WHERE d.id=' . $value . '';
            totalitems--;
             if(totalitems==0)
             {
-                window.location.href="http://192.168.64.2/Catering/dish/AllSelectedDishes.php";
+                var orderid=$("#orderIdindish").val();
+                window.location.href="http://192.168.64.2/Catering/dish/AllSelectedDishes.php?order="+orderid;
             }
        }
 
-       $(document).on('click','.submitForm',function () {
+       $(document).on('click','.submitForm',function ()
+       {
+           var orderid=$("#orderIdindish").val();
           var id=$(this).data("formid");
           var formdata=new FormData($("#form_"+id)[0]);
           formdata.append("option",'createDish');
            $.ajax({
-               url:"dishServer.php",
+               url:"dishServer.php?order="+orderid,
                method:"POST",
                data:formdata,
                contentType: false,

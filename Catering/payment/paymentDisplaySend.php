@@ -6,10 +6,10 @@
  * Time: 23:30
  */
 include_once ("../connection/connect.php");
-$_POST["user_id"]=1;
-$_POST["payment"]=1;
-$userId=$_POST['user_id'];
-$paymentId=$_POST['payment'];
+
+$userId=$_GET['user_id'];
+$paymentId=$_GET['payment'];
+$orderid=$_GET['order'];
 function queryReceive($sql)
 {
     global $connect;
@@ -106,7 +106,7 @@ $paymentDetail=queryReceive($sql);
 
 
         <div class="form-group row">
-            <button type="button" class="col-6 btn btn-danger "> Cancel</button>
+            <a href="http://192.168.64.2/Catering/payment/transferPayment.php?order=<?php echo $orderid; ?>&user_id=<?php echo $userId;?> " class="col-6 btn btn-danger "> Cancel</a>
             <input  id="paymentsend" type="button" class="col-6 btn btn-success" value="<?php
 
             if($paymentDetail[0][5]==0)
@@ -160,6 +160,10 @@ $paymentDetail=queryReceive($sql);
                         {
                             alert(data);
                         }
+                        else
+                        {
+                            window.location.href="http://192.168.64.2/Catering/payment/transferPayment.php?order=<?php echo $orderid;?>&user_id=<?php echo $userId;?>";
+                        }
                   }
               });
 
@@ -167,7 +171,7 @@ $paymentDetail=queryReceive($sql);
           else if(btnsender=='Confirming')
           {
               alert("your request has been sent to the next user so please wait for it");
-              return false;
+              window.location.href="http://192.168.64.2/Catering/payment/transferPayment.php?order=<?php echo $orderid; ?>&user_id=<?php echo $userId;?>";
           }
        });
 

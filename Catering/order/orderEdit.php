@@ -132,8 +132,8 @@ $addresDetail=queryReceive($sql);
         </div>
 
         <div class="form-group row">
-            <a href="http://192.168.64.2/Catering/order/PreviewOrder.php"   id='cancel'class="form-control col-4 btn btn-danger"> cancel</a>
-            <a href="http://192.168.64.2/Catering/order/PreviewOrder.php"  id="submit" class="form-control col-4 btn-success"> ok</a>
+            <a href="http://192.168.64.2/Catering/order/PreviewOrder.php?order=<?php echo $_GET['order'];?>"   id='cancel'class="form-control col-4 btn btn-danger"> cancel</a>
+            <a href="http://192.168.64.2/Catering/order/PreviewOrder.php?order=<?php echo $_GET['order'];?>"  id="submit" class="form-control col-4 btn-success"> ok</a>
 
         </div>
 

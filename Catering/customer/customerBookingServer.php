@@ -5,14 +5,14 @@
  * Date: 2019-09-03
  * Time: 17:20
  */
-session_start();
+//session_start();
 include_once ("../connection/connect.php");
 
 
     //new customer is created;
 
-if(!isset($_SESSION['customer']))
-{
+//if(!isset($_SESSION['customer']))
+//{
     $name = trim($_POST['name']);
     //array of numbers
     $numberArray = $_POST['number'];
@@ -43,7 +43,7 @@ if(!isset($_SESSION['customer']))
             echo("Error description: " . mysqli_error($connect));
         }
     }
-    $_SESSION['customer']=$last_id;
-
-}
+    $customerId=$last_id;
+    echo  json_decode($customerId);
+//}
 ?>

@@ -29,6 +29,7 @@ include_once ("../connection/connect.php");
 <div class="container">
     <h1 align="center"> Order Create</h1>
     <form >
+        <input type="number" hidden id="customeridForm" value=<?php echo $_GET['customer'];?>   >
         <div class="form-group row">
         <label for="persons" class="col-4 col-form-label"> no of guests</label>
         <input type="number" name="persons" id="persons" class="col-8 form-control">
@@ -73,14 +74,16 @@ include_once ("../connection/connect.php");
 
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function ()
+    {
        $("#submit").click(function (e)
        {
            e.preventDefault();
+           var customerid=$("#customeridForm").val();
            var formdata=new FormData($('form')[0]);
            formdata.append('function',"add");
            $.ajax({
-              url:"orderServer.php",
+              url:"orderServer.php?customer="+customerid,
               data:formdata,
                method:"POST",
                contentType: false,
@@ -88,13 +91,13 @@ include_once ("../connection/connect.php");
                dataType:"text",
                success:function (data)
                {
-                  if(data!='')
+                  if(!($.isNumeric(data)))
                   {
-                    console.log(data);
+                      alert(data);
                   }
                   else
                   {
-                      window.location.href="http://192.168.64.2/Catering/dish/dishDisplay.php";
+                      window.location.href="http://192.168.64.2/Catering/dish/dishDisplay.php?order="+data;
                   }
                }
            });

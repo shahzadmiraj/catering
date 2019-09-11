@@ -17,38 +17,12 @@ function queryReceive($sql)
         return mysqli_fetch_all($result);
     }
 }
-//$orderId='';
-//if(isset($_GET['order']))
-//{
-//    $orderId=$_GET['order'];
-//}
-//if(isset($_SESSION['order']))
-//{
-//    $orderId=$_SESSION['order'];
-//}
-//
-//if(isset($_SESSION['order']) && isset($_GET['order']))
-//{
-//    echo "confusing of session and Get";
-//    exit();
-//}
-//if($orderId=="")
-//{
-//    echo "Set session or Get for Order iD";
-//    exit();
-//}
 
-if(!isset($_SESSION['order']))
-{
-    echo "session is not set";
-    exit();
-}
-$orderId=$_SESSION['order'];
+$orderId=$_GET['order'];
 
 $sql='SELECT (SELECT p.name FROM person as p WHERE p.id=ot.person_id),ot.person_id FROM orderTable as ot WHERE ot.id='.$orderId.'';
 $orderDetailPerson= queryReceive($sql);
 $customerID=$orderDetailPerson[0][1];
-$_SESSION['customer']=$customerID;
 ?>
 <!DOCTYPE html>
 <head>
@@ -89,21 +63,21 @@ $_SESSION['customer']=$customerID;
             </div>
         </h4>
         <div class="form-group row">
-            <a href="http://192.168.64.2/Catering/customer/customerEdit.php?customer=<?php echo $customerID;?>" class="text-center col-5 form-control btn-success">Customer Preview</a>
+            <a href="http://192.168.64.2/Catering/customer/customerEdit.php?customer=<?php echo $customerID;?>&order=<?php echo $orderId;?>" class="text-center col-5 form-control btn-success">Customer Preview</a>
             <a href="http://192.168.64.2/Catering/order/orderEdit.php?order=<?php echo $orderId;?>" class="text-center col-5 form-control btn-success">Order Preview</a>
         </div>
 
         <div class="form-group row">
-            <a href="http://192.168.64.2/Catering/dish/AllSelectedDishes.php" class="col-5  text-center form-control btn-success">Dish Preview</a>
-            <a href="#" class="col-5 text-center form-control btn-success">Payment History</a>
+            <a href="http://192.168.64.2/Catering/dish/AllSelectedDishes.php?order=<?php echo $orderId;?>" class="col-5  text-center form-control btn-success">Dish Preview</a>
+            <a href="http://192.168.64.2/Catering/payment/paymentHistory.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>" class="col-5 text-center form-control btn-success">Payment History</a>
         </div>
         <div class="form-group row">
             <a href="http://192.168.64.2/Catering/payment/getPayment.php?user_id=<?php echo $_SESSION['userid'];?>&orderTable_id=<?php echo $orderId;?>" class="col-5 text-center form-control btn-success">Get payment</a>
-            <a href="#" class="col-5 text-center form-control btn-success">Transfer payment</a>
+            <a href="http://192.168.64.2/Catering/payment/transferPayment.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>" class="col-5 text-center form-control btn-success">Transfer payment</a>
         </div>
 
         <div class="form-group row">
-            <a href="#" class="col-5 text-center form-control btn-success">Receive payment</a>
+            <a href="http://192.168.64.2/Catering/payment/transferPaymentReceive.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>" class="col-5 text-center form-control btn-success">Receive payment</a>
             <a href="http://192.168.64.2/Catering/user/userDisplay.php" class="col-5 text-center form-control btn-success">User Display</a>
         </div>
     </div>

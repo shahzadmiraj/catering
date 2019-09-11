@@ -7,10 +7,9 @@
  */
 
 include_once ("../connection/connect.php");
-$_POST["user_id"]=1;
-$_POST["orderTable_id"]=1;
-$userId=$_POST['user_id'];
-$orderTable_id=$_POST['orderTable_id'];
+
+$userId=$_GET['user_id'];
+$orderTable_id=$_GET['order'];
 
 function queryReceive($sql)
 {
@@ -47,6 +46,8 @@ function queryReceive($sql)
 <div class="container">
     <div class="col-12 card shadow" id="from3">
         <h1 align="center">your payments</h1>
+
+        <a class="btn-success form-control col-4 " href="http://192.168.64.2/Catering/order/PreviewOrder.php?order=<?php echo $orderTable_id; ?>"> <- Preview Order</a>
         <div class="form-group row border">
             <label class="font-weight-bold col-2 col-form-label">ID</label>
             <label class="font-weight-bold col-4 col-form-label">Amount</label>
@@ -66,7 +67,7 @@ py.receive  DESC';
             <label class="col-2 col-form-label">'.$paymentDetail[$l][0].'</label>
             <label class="col-3 col-form-label">'.$paymentDetail[$l][1].'</label>
             <label class="col-5 col-form-label">'.$paymentDetail[$l][2].'</label>
-            <a href="#'.$paymentDetail[$l][0].'" class="col-2 form-control btn-primary">Send</a>
+            <a href="http://192.168.64.2/Catering/payment/paymentDisplaySend.php?user_id='.$userId.'&payment='.$paymentDetail[$l][0].'&order='.$orderTable_id.'" class="col-2 form-control btn-primary">Send</a>
         </div>';
         }
         ?>
