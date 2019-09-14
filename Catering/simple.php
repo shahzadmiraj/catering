@@ -92,7 +92,19 @@ $('.showDetail').click(function ()
         $(this).val("Detail");
         $("#"+formid).hide('slow');
     }
-});*/
+
+
+});
+
+
+           $('.allnumber').map(function () {
+               var data=$(this).val();
+               console.log(data);
+           }).get().join();
+
+
+
+*/
 
 
 

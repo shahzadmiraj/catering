@@ -9,9 +9,7 @@
 include_once ("../connection/connect.php");
 $sql='SELECT p.id,p.name,ot.destination_date,ot.id  FROM person as p INNER join number as n on p.id=n.person_id
     INNER join orderTable as ot
-    on p.id=ot.person_id
-    INNER join change_status as cs
-    on ot.id=cs.orderTable_id where ';
+    on p.id=ot.person_id where ';
 
 function queryReceive($sql)
 {
@@ -57,10 +55,10 @@ if(isset($_POST['ot_destination_date']))
     if($_POST['ot_destination_date']!='')
     $sql.=' (ot.destination_date ="'.$_POST["ot_destination_date"].'") AND ';
 }
-if(isset($_POST['cs_order_status_id']))
+if(isset($_POST['ot_is_active']))
 {
-    if($_POST['cs_order_status_id']!='None')
-    $sql.=' (cs.order_status_id = '.$_POST["cs_order_status_id"].') AND ';
+    if($_POST['ot_is_active']!='None')
+    $sql.=' (ot.is_active = '.$_POST["ot_is_active"].') AND ';
 }
 
 

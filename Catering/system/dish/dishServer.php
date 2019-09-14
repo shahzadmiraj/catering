@@ -69,7 +69,45 @@ if(isset($_POST['option']))
     {
         $timestamp = date('Y-m-d H:i:s');
         $dishid=$_POST['dishid'];
-        $sql='UPDATE dish as d SET d.isExpire="'.$timestamp.'"  WHERE d.id='.$dishid.'';
+        $value=$_POST['value'];
+        if($value=="Show dish")
+        {
+            $sql='UPDATE dish as d SET d.isExpire=NULL  WHERE d.id='.$dishid.'';
+        }
+        else
+        {
+            $sql='UPDATE dish as d SET d.isExpire="'.$timestamp.'"  WHERE d.id='.$dishid.'';
+        }
+
+        querySend($sql);
+    }
+    else if($_POST['option']=="changeDishType")
+    {
+        $id=$_POST['id'];
+        $value=$_POST['value'];
+        $sql='UPDATE dish_type as dt SET dt.name="'.$value.'" WHERE dt.id='.$id.'';
+        querySend($sql);
+    }
+    else if($_POST['option']=="Delele_Dish_Type")
+    {
+        $id=$_POST['id'];
+        $value=$_POST['value'];
+        if($value=="Disable")
+        {
+            $timestamp = date('Y-m-d H:i:s');
+            $sql = 'UPDATE dish_type as dt SET dt.isExpire="' . $timestamp . '" WHERE dt.id=' . $id . '';
+        }
+        else
+        {
+
+            $sql = 'UPDATE dish_type as dt SET dt.isExpire=NULL WHERE dt.id=' . $id . '';
+        }
+        querySend($sql);
+    }
+    else if($_POST['option']=="addDishtype")
+    {
+        $value=$_POST['value'];
+        $sql='INSERT INTO `dish_type`(`id`, `name`, `isExpire`) VALUES (NULL,"'.$value.'",NULL)';
         querySend($sql);
     }
 }

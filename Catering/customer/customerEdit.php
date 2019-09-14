@@ -11,7 +11,8 @@ function queryReceive($sql)
 {
     global $connect;
     $result = mysqli_query($connect, $sql);
-    if (!$result) {
+    if (!$result)
+    {
         echo("Error description: " . mysqli_error($connect));
     }else{
          return mysqli_fetch_all($result);
@@ -43,7 +44,6 @@ $numbers=queryReceive($sql);
         *{
             margin:auto;
             padding: auto;
-           // background-color: #6c757d;
         }
     </style>
 </head>
@@ -51,10 +51,11 @@ $numbers=queryReceive($sql);
 
 <div class="container">
 
-    <h1 align="center">
-        Customer View and Edit;
-    </h1>
-    <form id="form">
+
+    <form id="form" class="col-12 shadow mb-3">
+        <h1 align="center">
+            Customer Preview
+        </h1>
         <div class="col-12" id="number_records">
             <?php
             for($i=0;$i<count($numbers);$i++)
@@ -77,14 +78,14 @@ $numbers=queryReceive($sql);
         <div class="form-group row">
             <label for="name" class="col-form-label col-2"> Name:</label>
             <?php
-                echo'<input id="name"  name="name"class=" personchange form-control col-10" value="'.$person[0][0].'" data-columne="name">';
+                echo'<input type="text" id="name"  name="name" class=" personchange form-control col-10" value="'.$person[0][0].'" data-columne="name">';
             ?>
         </div>
         <div class="form-group row">
             <label for="cnic" class="col-form-label col-2"> CNIC:</label>
             <?php
                 echo '
-            <input id="cnic" name="cnic" class=" personchange form-control col-10" value="'.$person[0][1].'" data-columne="cnic">';
+            <input type="number" id="cnic" name="cnic" class=" personchange form-control col-10" value="'.$person[0][1].'" data-columne="cnic">';
             ?>
         </div>
 
@@ -92,7 +93,7 @@ $numbers=queryReceive($sql);
         <div class="form-group row">
             <label for="city" class="col-form-label col-2"> City:</label>
             <?php
-                echo '<input id="city" name="city" class=" addresschange form-control col-10" value="'.$address[0][1].'" data-columne="address_city">';
+                echo '<input  type="text"  id="city" name="city" class=" addresschange form-control col-10" value="'.$address[0][1].'" data-columne="address_city">';
             ?>
 
         </div>
@@ -100,7 +101,7 @@ $numbers=queryReceive($sql);
         <div class="form-group row">
             <label for="area" class="col-form-label col-2"> Area/ Block:</label>
             <?php
-                echo '<input  id="area" name="area" class=" addresschange form-control col-10" value="'.$address[0][2].'" data-columne="address_town">';
+                echo '<input  type="text" id="area" name="area" class=" addresschange form-control col-10" value="'.$address[0][2].'" data-columne="address_town">';
             ?>
 
         </div>
@@ -108,7 +109,7 @@ $numbers=queryReceive($sql);
         <div class="form-group row">
             <label for="streetNo" class="col-form-label col-2">Street No :</label>
             <?php
-                echo '     <input id="streetNo" name="streetNo" class=" addresschange form-control col-10" value="'.$address[0][3].'" data-columne="address_street_no">';
+                echo '     <input type="number"  id="streetNo" name="streetNo" class=" addresschange form-control col-10" value="'.$address[0][3].'" data-columne="address_street_no">';
             ?>
 
         </div>
@@ -116,15 +117,65 @@ $numbers=queryReceive($sql);
         <div class="form-group row">
             <label for="houseNo" class="col-form-label col-2">House No:</label>
             <?php
-                echo '<input id="houseNo" name="houseNo" class=" addresschange form-control col-10" value="'.$address[0][4].'" data-columne="address_house_no">';
+                echo '<input type="number" id="houseNo" name="houseNo" class=" addresschange form-control col-10" value="'.$address[0][4].'" data-columne="address_house_no">';
             ?>
 
         </div>
-        <div class="col-12">
-            <p>if customer is already existed</p>
+        <div class="col-12 shadow p-3">
+            <h4 align="center">Customer personality</h4>
+            <?php
+            $sql='SELECT py.personality,py.rating FROM person as p INNER join orderTable as ot
+on p.id=ot.person_id
+INNER JOIN payment as py
+on ot.id=py.orderTable_id
+WHERE
+p.id='.$customerId.'';
+            $personalitydetails=queryReceive($sql);
+            for ($k=0;$k<count($personalitydetails);$k++)
+            {
+                echo '
+            <p class=" mb-3 form-control">'.$personalitydetails[$k][0].' <span class="float-right border-danger border font-weight-bold">Rating: '.$personalitydetails[$k][1].' </span> </p>';
+            }
+
+
+
+            ?>
+
         </div>
-        <a href="http://192.168.64.2/Catering/order/PreviewOrder.php?order=<?php echo $_GET['order'];?>" class="col-2 form-control btn btn-danger" id="cancel">cancel</a>
-        <a href="http://192.168.64.2/Catering/order/PreviewOrder.php?order=<?php echo $_GET['order'];?>" class="col-2 form-control btn btn-outline-primary" id="submit">ok</a>
+        <div class="form-group row mb-3 p-4">
+
+            <?php
+            if(isset($_GET['option']))
+            {
+                if($_GET['option']=="orderCreate")
+                {
+                    echo '
+        <a href="http://192.168.64.2/Catering/customer/CustomerCreate.php" class="col-6 form-control btn btn-danger" id="cancel">Not this customer</a>
+        <a href="http://192.168.64.2/Catering/order/orderCreate.php?customer='.$customerId.'" class="col-6 form-control btn btn-outline-primary" id="submit">Next</a>';
+                }
+                else if(($_GET['option']=="orderCreate") || ($_GET['option']=="CustomerCreate"))
+                {
+
+                    echo '
+        <a href="http://192.168.64.2/Catering/customer/CustomerCreate.php?option=customerEdit" class="col-6 form-control btn btn-danger" id="cancel">Not this customer</a>
+        <a href="http://192.168.64.2/Catering/order/orderCreate.php?customer='.$customerId.'&option=customerEdit" class="col-6 form-control btn btn-outline-primary" id="submit">Order Create</a>';
+                }
+                else if($_GET['option']=="customerAndOrderalreadyHave")
+                {
+
+                    echo '
+        <a href="http://192.168.64.2/Catering/customer/CustomerCreate.php" class="col-6 form-control btn btn-danger" id="cancel">Not this customer</a>
+        <a href="http://192.168.64.2/Catering/order/orderEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=customerEdit" class="col-6 form-control btn btn-outline-primary" id="submit">Edit order</a>';
+                }
+                else if($_GET['option']=="PreviewOrder")
+                {
+                    echo '<a href="http://192.168.64.2/Catering/order/PreviewOrder.php?order='.$_GET['order'].'" class="col-6 form-control btn btn-outline-primary" >DONE</a>';
+                }
+            }
+
+            ?>
+
+        </div>
     </form>
 </div>
 
@@ -189,41 +240,8 @@ $numbers=queryReceive($sql);
      });
 
 
-     function phoneCheck(idText)
-     {
-         var id=$("#"+idText);
-         var text=id.val();
-         if((isNaN(text))||  (text.length!=11))
-         {
-             id.css("background-color", "red");
-             return false;
-         }
-
-         id.css("background-color", "white");
-         return true;
-
-     }
-
-
-     var number=0;
-
-     $('.number_records').map(function () {
-         number++;
-     }).get().join();
-
      $("#newadd").click(function ()
      {
-         if(number>1)
-         {
-             alert("no of numbers not more then 3");
-             return false;
-         }
-            var numberText=$("#newNumber").val();
-         if((isNaN(numberText))||  (numberText.length!=11))
-         {
-             alert("number is invalid");
-             return false;
-         }
 
          $.ajax({
              url: "customerEditServer.php",
@@ -262,7 +280,6 @@ $numbers=queryReceive($sql);
                  }
              }
          });
-         number--;
      });
 
  });

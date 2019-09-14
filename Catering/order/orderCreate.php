@@ -62,9 +62,24 @@ include_once ("../connection/connect.php");
             <textarea  id="describe" name="describe" class="form-control col-8 form-control"></textarea>
         </div>
         <div class="form-group row">
-            <button type="button"  id='cancelorder'class="form-control col-4 btn btn-danger"> cancel</button>
-        <button type="button" id="submit" class="form-control col-4 btn-success"> submit</button>
 
+            <?php
+                if(isset($_GET['option']))
+                {
+                    if(($_GET['option']=="CustomerCreate")||($_GET['option']=="customerEdit"))
+                    {
+
+                        echo '<a href="http://192.168.64.2/Catering/customer/customerEdit.php?customer='.$_GET['customer'].'&option=orderCreate" class="form-control col-4 btn btn-danger">Edit Customer</a>';
+                    }
+                }
+                else
+                {
+                    echo '
+            <button  type="button"  id=\'cancelorder\'class="form-control col-4 btn btn-danger"> cancel</button>';
+                }
+
+            ?>
+            <button type="button" id="submit" class="form-control col-4 btn-success"> submit</button>
         </div>
     </form>
 
@@ -97,7 +112,7 @@ include_once ("../connection/connect.php");
                   }
                   else
                   {
-                      window.location.href="http://192.168.64.2/Catering/dish/dishDisplay.php?order="+data;
+                      window.location.href="http://192.168.64.2/Catering/dish/dishDisplay.php?order="+data+"&customer="+customerid+"&option=orderCreate";
                   }
                }
            });

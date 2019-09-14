@@ -7,10 +7,15 @@
  */
 
 include_once ("../connection/connect.php");
-
-$userId=$_GET['user_id'];
-$orderTable_id=$_GET['order'];
-
+session_start();
+$userId='';
+$orderTable_id="";
+if(!isset($_GET['option']))
+{
+    $userId = $_GET['user_id'];
+    $orderTable_id = $_GET['order'];
+}
+$userId = $_SESSION['userid'];
 function queryReceive($sql)
 {
     global $connect;
@@ -47,7 +52,19 @@ function queryReceive($sql)
     <div class="col-12 card shadow" id="from3">
         <h1 align="center">your payments Receive Requests</h1>
 
-        <a class="btn-success form-control col-4 " href="http://192.168.64.2/Catering/order/PreviewOrder.php?order=<?php echo $orderTable_id; ?>"> <- Preview Order</a>
+        <?php
+        if(!isset($_GET['option']))
+        {
+          echo '
+        <a class="btn-success form-control col-4 " href="http://192.168.64.2/Catering/order/PreviewOrder.php?order='.$orderTable_id.'"> <- Preview Order</a>';
+        }
+        else
+        {
+
+            echo '
+        <a class="btn-success form-control col-4 " href="http://192.168.64.2/Catering/user/userDisplay.php"> <- Preview Order</a>';
+        }
+        ?>
         <div class="form-group row border">
             <label class="font-weight-bold col-2 col-form-label">ID</label>
             <label class="font-weight-bold col-4 col-form-label">User</label>
@@ -57,8 +74,19 @@ function queryReceive($sql)
 
 
         <?php
-        $sql='SELECT py.id,(SELECT u.username FROM user as u WHERE u.id=py.user_id) as username,py.amount,py.nameCustomer,py.IsReturn,t.senderTimeDate,py.receive,t.id FROM orderTable as ot INNER join payment as py on ot.id=py.orderTable_id INNER join transfer as t on py.id=t.payment_id where (ot.id='.$orderTable_id.') AND (py.sendingStatus=1) AND (ISNULL(t.Isconfirm)) AND (t.user_id='.$userId.')
+
+
+        if(!isset($_GET['option']))
+        {
+            $sql = 'SELECT py.id,(SELECT u.username FROM user as u WHERE u.id=py.user_id) as username,py.amount,py.nameCustomer,py.IsReturn,t.senderTimeDate,py.receive,t.id FROM orderTable as ot INNER join payment as py on ot.id=py.orderTable_id INNER join transfer as t on py.id=t.payment_id where (ot.id=' . $orderTable_id . ') AND (py.sendingStatus=1) AND (ISNULL(t.Isconfirm)) AND (t.user_id=' . $userId . ')
 ';
+        }
+        else
+        {
+            //userDisplay
+            $sql = 'SELECT py.id,(SELECT u.username FROM user as u WHERE u.id=py.user_id) as username,py.amount,py.nameCustomer,py.IsReturn,t.senderTimeDate,py.receive,t.id FROM orderTable as ot INNER join payment as py on ot.id=py.orderTable_id INNER join transfer as t on py.id=t.payment_id where  (py.sendingStatus=1) AND (ISNULL(t.Isconfirm)) AND (t.user_id=' . $userId . ')
+';
+        }
         $paymentDetail=queryReceive($sql);
         $displayDetailOfPayment='';
         for($l=0;$l<count($paymentDetail);$l++)

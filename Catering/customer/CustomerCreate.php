@@ -6,7 +6,7 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-//session_start();
+
 ?>
 <!DOCTYPE html>
 <head>
@@ -31,53 +31,76 @@ include_once ("../connection/connect.php");
 
 <div class="container">
 
-    <h1 align="center">
-        Customer create
-    </h1>
-    <form id="form">
+    <form id="form" class="card shadow p-3">
+        <h1 align="center">
+            Customer create
+        </h1>
         <input id="customer" hidden value="">
         <div class="form-group row">
         <label for="number" class="col-2 col-form-label">Phone no:</label>
         <input id="number"class="allnumber form-control col-8" type="number" name="number[]"  >
         <input type="button" class="form-control btn-primary col-2" id="Add_btn" value="+">
         </div>
-        <div class="col-12" id="number_records">
-            <p> extra numbers</p>
+        <div class="col-12 border mb-3 " id="number_records">
         </div>
         <div class="form-group row">
         <label for="name" class="col-form-label col-2"> Name:</label>
-        <input id="name"  name="name"class="form-control col-10" >
+        <input type="text" id="name"  name="name"class="form-control col-10" >
         </div>
         <div class="form-group row">
         <label for="cnic" class="col-form-label col-2"> CNIC:</label>
-        <input id="cnic" name="cnic" class="form-control col-10" >
+        <input type="number" id="cnic" name="cnic" class="form-control col-10" >
         </div>
 
             <h3 align="center"> Address</h3>
         <div class="form-group row">
             <label for="city" class="col-form-label col-2"> City:</label>
-            <input id="city" name="city" class="form-control col-10" >
+            <input type="text" id="city" name="city" class="form-control col-10" >
         </div>
 
         <div class="form-group row">
             <label for="area" class="col-form-label col-2"> Area/ Block:</label>
-            <input  id="area" name="area" class="form-control col-10">
+            <input type="text"  id="area" name="area" class="form-control col-10">
         </div>
 
         <div class="form-group row">
             <label for="streetNo" class="col-form-label col-2">Street No :</label>
-            <input id="streetNo" name="streetNo" class="form-control col-10">
+            <input type="number" id="streetNo" name="streetNo" class="form-control col-10">
         </div>
 
         <div class="form-group row">
             <label for="houseNo" class="col-form-label col-2">House No:</label>
-            <input id="houseNo" name="houseNo" class="form-control col-10">
+            <input type="number" id="houseNo" name="houseNo" class="form-control col-10">
         </div>
-        <div class="col-12">
-            <p>if customer is already existed</p>
+        <div class="form-group row col-12">
+            <?php
+            if(isset($_GET['option']))
+            {
+                if($_GET['option']=="userDisplay")
+                {
+                   echo '
+            <button class="col-5 form-control btn btn-danger" id="cancelCustomer">cancel</button>
+            <button class="col-5 form-control btn btn-outline-primary" id="submit">submit</button>';
+                }
+                else
+                {
+
+                    echo '
+            <a href="http://192.168.64.2/Catering/user/userDisplay.php" class=" col-5 form-control btn btn-danger">cancel</a>
+            <button class="col-5 form-control btn btn-outline-primary" id="submit">submit</button>';
+                }
+
+            }
+            else
+            {
+
+                echo '
+            <a href="http://192.168.64.2/Catering/user/userDisplay.php" class=" col-5 form-control btn btn-danger">cancel</a>
+            <button class="col-5 form-control btn btn-outline-primary" id="submit">submit</button>';
+            }
+
+            ?>
         </div>
-        <button class="col-2 form-control btn btn-danger" id="cancelCustomer">cancel</button>
-        <button class="col-2 form-control btn btn-outline-primary" id="submit">submit</button>
     </form>
 </div>
 
@@ -88,8 +111,33 @@ include_once ("../connection/connect.php");
    $(document).ready(function ()
    {
 
+       $(document).on("change",".allnumber",function ()
+       {
+           //number exist
+           var value=$(this).val();
+           $.ajax({
+               url:"customerBookingServer.php",
+               data:{value:value,option:"customerExist"},
+               dataType:"text",
+               method: "POST",
+               success:function (data)
+               {
+                   if((!($.isNumeric(data))) && (data==""))
+                   {
+                       return false;
+                   }
+                   else
+                   {
+                       window.location.href="http://192.168.64.2/Catering/customer/customerEdit.php?customer="+data+"&option=CustomerCreate";
+                   }
+               }
+           });
+       });
 
-       $("#cancelCustomer").click(function () {
+
+       $("#cancelCustomer").click(function (e)
+       {
+           e.preventDefault();
           window.history.back();
           return false;
        });
@@ -140,6 +188,7 @@ include_once ("../connection/connect.php");
 
 
            var formdata=new FormData($('form')[0]);
+           formdata.append("option","customerCreate");
            $.ajax({
                url:"customerBookingServer.php",
                method:"POST",
@@ -156,7 +205,7 @@ include_once ("../connection/connect.php");
                     }
                     else
                     {
-                        window.location.href="http://192.168.64.2/Catering/order/orderCreate.php?customer="+data;
+                        window.location.href="http://192.168.64.2/Catering/order/orderCreate.php?customer="+data+"&option=CustomerCreate";
                     }
                }
            });

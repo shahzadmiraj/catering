@@ -7,7 +7,7 @@
  */
 
 
-if(!isset($_GET["user_id"]) && !isset($_GET["orderTable_id"]))
+if(!isset($_GET["user_id"]) && !isset($_GET["order"]))
 {
     echo 'orderTable id and user id is not GET';
     exit();
@@ -15,7 +15,7 @@ if(!isset($_GET["user_id"]) && !isset($_GET["orderTable_id"]))
 
 
 $userId=$_GET['user_id'];
-$orderTable_id=$_GET['orderTable_id'];
+$orderTable_id=$_GET['order'];
 ?>
 
 <!DOCTYPE html>

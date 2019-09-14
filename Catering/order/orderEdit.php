@@ -6,12 +6,7 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-session_start();
-if(!isset($_SESSION['customer'])|| !isset($_SESSION['order']))
-{
-    echo "customer or order of session is not created";
-    exit();
-}
+
 function queryReceive($sql)
 {
     global $connect;
@@ -22,7 +17,7 @@ function queryReceive($sql)
         return mysqli_fetch_all($result);
     }
 }
-$orderId=$_SESSION['order'];
+$orderId=$_GET['order'];
 $sql='SELECT `id`, `total_amount`, `order_comments`, `total_person`, `is_active`, `destination_date`, `booking_date`, `destination_time`, `address_id`, `extre_charges`, `person_id` FROM `orderTable` WHERE id='.$orderId.'';
 $orderDetail=queryReceive($sql);
 $addressId=$orderDetail[0][8];
@@ -52,6 +47,10 @@ $addresDetail=queryReceive($sql);
 <div class="container">
     <h1 align="center"> Order View and EDIT</h1>
     <form >
+        <?php
+            echo '<input id="orderid" type="number" hidden value="'.$_GET['order'].'">';
+        ?>
+
         <div class="form-group row">
             <label for="persons" class="col-4 col-form-label"> no of guests</label>
             <?php
@@ -62,7 +61,7 @@ $addresDetail=queryReceive($sql);
         <div class="form-group row">
             <label for="time" class="col-4 col-form-label">delivery Time</label>
             <?php
-                $timeSet=date('H:i',time($orderDetail[0][7]));
+                $timeSet=date("H:m",strtotime($orderDetail[0][7]));
                 echo '<input data-column="destination_time"  type="time" name="time" id="time"  class=" order col-8 form-control" value="'.$timeSet.'">';
             ?>
 
@@ -80,8 +79,33 @@ $addresDetail=queryReceive($sql);
             <?php
             echo '<input data-column="order_comments"  type="text" id="describe" name="describe" class="order change form-control col-8 form-control"  value="'.$orderDetail[0][2].'">';
             ?>
-
         </div>
+        <div class="form-group row">
+            <label for="orderStatus" class="col-4 col-form-label">Order Status </label>
+            <select id="orderStatus" class=" form-control col-8 form-control">
+            <?php
+            $OrderStatus=array("running","cancel","delieved","clear");
+            echo '<option value='.$orderDetail[0][4].'>'.$OrderStatus[$orderDetail[0][4]].'</option>';
+            for($i=0;$i<count($OrderStatus);$i++)
+            {
+                if($orderDetail[0][4]!=$i)
+                {
+
+                    echo '<option value='.$i.'>'.$OrderStatus[$i].'</option>';
+                }
+
+
+
+            }
+
+
+
+            ?>
+            </select>
+        </div>
+
+
+
         <h3 align="center"> Deliver Address</h3>
         <div class="form-group row">
             <label for="area" class="col-4 col-form-label">area / block </label>
@@ -132,8 +156,32 @@ $addresDetail=queryReceive($sql);
         </div>
 
         <div class="form-group row">
-            <a href="http://192.168.64.2/Catering/order/PreviewOrder.php?order=<?php echo $_GET['order'];?>"   id='cancel'class="form-control col-4 btn btn-danger"> cancel</a>
-            <a href="http://192.168.64.2/Catering/order/PreviewOrder.php?order=<?php echo $_GET['order'];?>"  id="submit" class="form-control col-4 btn-success"> ok</a>
+            <?php
+                if(isset($_GET['option']))
+                {
+                    if($_GET['option']=="dishDisplay")
+                    {
+
+                        echo '
+            <a href="http://192.168.64.2/Catering/customer/customerEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=customerAndOrderalreadyHave"   id="cancel" class="form-control col-4 btn btn-danger"> Customer Edit</a>
+            <a href="http://192.168.64.2/Catering/dish/dishDisplay.php?order='.$_GET['order'].'"  id="submit" class="form-control col-4 btn-success"> Display Dish</a>';
+                    }
+                    else if($_GET['option']=="customerEdit")
+                    {
+
+                        echo '
+            <a href="http://192.168.64.2/Catering/customer/customerEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=customerAndOrderalreadyHave"   id="cancel" class="form-control col-4 btn btn-danger"> Customer Edit</a>
+            <a href="http://192.168.64.2/Catering/dish/dishDisplay.php?order='.$_GET['order'].'&option=orderEdit"  id="submit" class="form-control col-4 btn-success"> Display Dish</a>';
+
+                    }
+                    else if($_GET['option']=="PreviewOrder")
+                    {
+
+                        echo '<a href="http://192.168.64.2/Catering/order/PreviewOrder.php?order='.$_GET['order'].'" class="col-6 form-control btn btn-outline-primary" >DONE</a>';
+                    }
+                }
+
+            ?>
 
         </div>
 
@@ -148,15 +196,33 @@ $addresDetail=queryReceive($sql);
     $(document).ready(function ()
     {
 
+      var orderid=  $("#orderid").val();
+
+
+
+      $("#orderStatus").change(function () {
+         var orderstatusid=$(this).val();
+          $.ajax({
+              url: "orderEditServer.php",
+              data:{orderstatusid:orderstatusid,option:'orderstatus',orderid:orderid},
+              dataType:"text",
+              method:"POST",
+              success:function (data) {
+                  if(data!='')
+                  {
+                      alert(data);
+                  }
+              }
+          });
+      });
 
 
         $(document).on("change",'.order',function () {
             var columnName=$(this).data("column");
             var text=$(this).val();
-
             $.ajax({
                 url: "orderEditServer.php",
-                data:{column_name:columnName,value:text,option:'orderChange'},
+                data:{column_name:columnName,value:text,option:'orderChange',orderid:orderid},
                 dataType:"text",
                 method:"POST",
                 success:function (data) {

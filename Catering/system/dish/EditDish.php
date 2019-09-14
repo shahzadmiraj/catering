@@ -29,7 +29,6 @@ function querySend($sql)
         echo("Error description: " . mysqli_error($connect));
     }
 }
-$_GET['dishid']=2;
 $dishID=$_GET['dishid'];
 $sql='SELECT d.name,(SELECT dt.name FROM dish_type as dt WHERE dt.id=d.dish_type_id), d.image, d.dish_type_id, d.isExpire FROM dish as d WHERE d.id='.$dishID.'';
 $dishDetail=queryReceive($sql);
@@ -60,7 +59,7 @@ $attributes=queryReceive($sql);
         <div class="col-12 shadow card p-4">
             <input id="dishid" type="number" hidden value="<?php echo $dishID; ?>">
             <div class="form-group row">
-                <a href="#" class="form-control col-3 btn-warning"> Previous</a>
+                <a href="http://192.168.64.2/Catering/system/dish/dishesDetail.php" class=" form-control col-3 btn-warning"> Previous</a>
                 <span class="font-weight-bold text-center col-9 form-control"> Edit Dish in System</span>
             </div>
             <div class="form-group row">
@@ -123,7 +122,19 @@ $attributes=queryReceive($sql);
             </form>
 
             <div class="form-group row">
-                <input id="RemoveDish" type="button" class=" col-4 form-control btn-danger" value="Remove dish">
+
+                <?php
+                    if($dishDetail[0][4]=="")
+                    {
+                        echo '<input id="RemoveDish" type="button" class=" col-4 form-control btn-danger" value="Hide dish">';
+                    }
+                    else
+                    {
+
+                        echo '<input id="RemoveDish" type="button" class=" col-4 form-control btn-primary " value="Show dish">';
+                    }
+                ?>
+
                 <input id="submit" type="button" value="Submit" class="col-8 form-control btn-success">
             </div>
 
@@ -147,17 +158,22 @@ $attributes=queryReceive($sql);
         $("#RemoveDish").click(function ()
         {
             var dishid=$("#dishid").val();
+            var value=$(this).val();
 
             $.ajax({
                 url:"dishServer.php",
                 method:"POST",
-                data:{dishid:dishid,option:"ExpireDish"},
+                data:{value:value,dishid:dishid,option:"ExpireDish"},
                 dataType:"text",
                 success:function (data)
                 {
                     if(data!='')
                     {
                         alert(data);
+                    }
+                    else
+                    {
+                        window.location.href='http://192.168.64.2/Catering/system/dish/dishesDetail.php';
                     }
                 }
             });
@@ -204,6 +220,10 @@ $attributes=queryReceive($sql);
                     if(data!='')
                     {
                         alert(data);
+                    }
+                    else
+                    {
+                        window.location.href="http://192.168.64.2/Catering/system/dish/dishesDetail.php";
                     }
                 }
             });

@@ -98,7 +98,7 @@ function querySend($sql)
             </select>
         </div>
         <div class="form-group row">
-            <a href="#" class="col-4 form-control btn-danger"> Cancel</a>
+            <a href="http://192.168.64.2/Catering/system/dish/dishesDetail.php" class="col-4 form-control btn-danger"> Cancel</a>
             <input id="submit" type="button" value="Submit" class="col-8 form-control btn-success">
         </div>
 
@@ -156,6 +156,10 @@ function querySend($sql)
                   if(data!='')
                   {
                       alert(data);
+                  }
+                  else
+                  {
+                      window.location.href='http://192.168.64.2/Catering/system/dish/dishesDetail.php';
                   }
               }
           });

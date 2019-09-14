@@ -9,38 +9,40 @@
 
 include_once ("../connection/connect.php");
 session_start();
-if(!isset($_SESSION['order']))
-{
-    echo "order of session is not create";
-    exit();
-}
 function querySend($sql)
 {
     global $connect;
     $result = mysqli_query($connect, $sql);
-    if (!$result) {
+    if (!$result)
+    {
+        echo  $sql;
         echo("Error description: " . mysqli_error($connect));
     }
 }
-if(!isset($_POST['column_name']))
-{
-    echo "column is not set";
-    exit();
-}
 
-$columnName=$_POST['column_name'];
-$coumnText=$_POST['value'];
 if($_POST['option']=="orderChange")
 {
-    $orderId=$_SESSION['order'];
+    $columnName=$_POST['column_name'];
+    $coumnText=$_POST['value'];
+    $orderId=$_POST['orderid'];
     $sql='UPDATE `orderTable` SET '.$columnName.'="'.$coumnText.'" WHERE id='.$orderId.'';
     querySend($sql);
 }
 else if($_POST['option']=="addressChange")
 {
+    $columnName=$_POST['column_name'];
+    $coumnText=$_POST['value'];
     $addressId=$_POST['addressId'];
     $sql='UPDATE `address` SET '.$columnName.'="'.$coumnText.'" WHERE id='.$addressId.'';
     querySend($sql);
+}
+else if($_POST['option']=="orderstatus")
+{
+        $orderstatusid=$_POST['orderstatusid'];
+        $orderid=$_POST['orderid'];
+        $dataTime=date('Y-m-d H:i:s');
+        $sql='INSERT INTO `change_status`(`id`, `orderTable_id`, `order_status_id`, `user_id`, `dateTime`) VALUES (NULL,'.$orderid.','.$orderstatusid.','.$_SESSION['userid'].',"'.$dataTime.'")';
+        querySend($sql);
 }
 
 ?>

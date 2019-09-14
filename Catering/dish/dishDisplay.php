@@ -7,10 +7,7 @@
  */
 include_once ("../connection/connect.php");
 
-//mysqli_insert_id($connect);
-// //$timestamp = date('Y-m-d G:i:s');
-//    $date = date('Y-m-d');
-//$timeSet=date('H:i',time($orderDetail[0][7]));
+
 function queryReceive($sql)
 {
     global $connect;
@@ -59,20 +56,40 @@ $dishTypeDetail=queryReceive($sql);
 
 <div class="container">
 
-    <form class="card" id="formid" method="post" action="dishCreate.php?order=<?php echo $_GET['order'];?>">
+    <form class="card" id="formid" method="post" action="dishCreate.php?order=<?php echo $_GET['order'];?>&option=dishDisplay">
         <div class="col-12" id="selected">
     <div class="form-group row border">
-        <label  class="text-center col-form-label col-4">Dish Name</label>
-        <label class="text-center col-form-label col-4">No of kind</label>
-        <label class=" text-center col-form-label col-4">Delete</label>
+        <label  class="text-center col-form-label col-7">Dish Name</label>
+        <label class="text-center col-form-label col-3">No of kind</label>
+        <label class=" text-center col-form-label col-2">Delete</label>
     </div>
 
 
 
         </div>
+        <div class="form-group row col-12 ">
 
-        <button id="submit" type="submit" class="btn-success">Submit</button>
-        <button id="cancelDish" type="button" class="btn-danger">cancel</button>
+        <?php
+            if(isset($_GET['option']))
+            {
+                if($_GET['option']=="orderCreate")
+                {
+                    echo '<a href="http://192.168.64.2/Catering/order/orderEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=dishDisplay" class="col-5 form-control btn btn-danger">Edit Order</a>';
+                }
+                else if($_GET['option']=="orderEdit")
+                {
+
+                    echo '<button id="cancelDish" type="button" class="col-5 btn btn-danger form-control">Edit order</button>';
+                }
+            }
+            else
+            {
+                echo '<button id="cancelDish" type="button" class="col-5 btn btn-danger form-control">Edit order</button>';
+            }
+        ?>
+
+            <button id="submit" type="submit" class="btn-success form-control btn col-5">Submit</button>
+        </div>
 
     </form>
 
@@ -86,21 +103,21 @@ $dishTypeDetail=queryReceive($sql);
         {
             $display.='<div class="col-12">
                 <h2 align="center"> '.$dishTypeDetail[$i][1].'</h2>
-        <div class="col-12 row p-4">';
+        <div class="col-12  row ">';
 
             $sql='SELECT `name`, `id`, `image`, `dish_type_id` FROM `dish` WHERE dish_type_id='.$dishTypeDetail[$i][0].'';
             $dishDetail=queryReceive($sql);
 
             for ($j=0;$j<count($dishDetail);$j++)
             {
-                $display .= '  <div class="card col-4 shadow-lg p-0 mb-1 bg-white " style="width:200px;">
+                $display .= '  <div class="card  shadow-lg  bg-white " style="width:200px;">
         <img class="card-img-top" src="../gmail.png" alt="Card image">
         <div class="card-body">
-            <h4 class="card-title">' . $dishDetail[$j][0] . '</h4>
+            <label class="card-title co">' . $dishDetail[$j][0] . '</label>
             <button type="button" data-dishname="'. $dishDetail[$j][0] .'" data-dishid="'. $dishDetail[$j][1] .'" class="add btn btn-primary col-12">Select</button>
-        </div>';
+        </div></div>';
             }
-            $display.='</div></div>';
+            $display.='</div>';
         }
         echo $display;
     ?>
@@ -120,10 +137,10 @@ $dishTypeDetail=queryReceive($sql);
            var dishId=$(this).data("dishid");
            $('#selected').append('\n' +
                '            <div class="form-group row " id="dishid_'+dishId+'">\n' +
-               '                <h2 class="form-control col-4">'+dishName+'</h2>\n' +
-               '                <input type="number" value="1" name="types[]" class="form-control col-4">\n' +
+               '                <h2 class="form-control col-7">'+dishName+'</h2>\n' +
+               '                <input type="number" value="1" name="types[]" class="form-control col-3">\n' +
                '                <input type="number" hidden name="dishid[]" value="'+dishId+'">\n' +
-               '                <input type="button" class="remove form-control col-4 btn-primary" data-dishid="'+dishId+'" value="-">\n' +
+               '                <input type="button" class="remove form-control col-2 btn-primary" data-dishid="'+dishId+'" value="-">\n' +
                '            </div>');
 
        }) ;
@@ -133,29 +150,7 @@ $dishTypeDetail=queryReceive($sql);
           $("#dishid_"+id).remove();
        });
 
-        // $('#submit').click(function (e) {
-        //     e.preventDefault();
-        //     var formdata=new FormData($('form')[0]);
-        //     $.ajax({
-        //         url:"dishCreate.php",
-        //         method:"POST",
-        //         data:formdata,
-        //         contentType: false,
-        //         processData: false,
-        //         success:function (data)
-        //         {
-        //             if(data!='')
-        //             {
-        //                 alert(data);
-        //             }
-        //             else
-        //             {
-        //                 window.location.href="http://192.168.64.2/Catering/dish/dishCreate.php";
-        //             }
-        //         }
-        //     });
-        //
-        // });
+
         $("#cancelDish").click(function () {
             window.history.back();
             return false;

@@ -7,6 +7,7 @@
  */
 
 include_once ("../connection/connect.php");
+session_start();
 function queryReceive($sql)
 {
     global $connect;
@@ -24,7 +25,7 @@ if(isset($_POST["option"]))
     {
         $userName=$_POST['username'];
         $password=$_POST['password'];
-        $sql='SELECT u.id FROM user as u WHERE (u.username="'.$userName.'")AND(u.password="'.$password.'")';
+        $sql='SELECT u.id,u.isOwner FROM user as u WHERE (u.username="'.$userName.'")AND(u.password="'.$password.'")';
         $userDetail=queryReceive($sql);
         if(count($userDetail)==0)
         {
@@ -35,6 +36,8 @@ if(isset($_POST["option"]))
             //one day
             setcookie("userName",$userName,time()+86400);
             setcookie("userid",$userDetail[0][0],time()+86400);
+            $_SESSION['userid']=$userDetail[0][0];
+            $_SESSION['isOwner']=$userDetail[0][1];
 
         }
     }

@@ -60,7 +60,7 @@ if(isset($_POST['option']))
         {
             $customerId = $_SESSION['customer'];
             $numberText=$_POST['number'];
-            $sql='INSERT INTO `number`(`number`, `id`, `is_number_active`, `person_id`) VALUES ('.$numberText.',NULL,1,'.$customerId.')';
+            $sql='INSERT INTO `number`(`number`, `id`, `is_number_active`, `person_id`) VALUES ("'.$numberText.'",NULL,1,"'.$customerId.'")';
             querySend($sql);
         }
     }

@@ -5,7 +5,7 @@
  * Date: 2019-09-10
  * Time: 14:04
  */
-
+session_start();
 
 if(!isset($_COOKIE['userName']))
 {
@@ -36,23 +36,26 @@ if(!isset($_COOKIE['userName']))
 <body>
 <div class="container">
 
-    <h1 align="center"> <?php
-        echo $_COOKIE['userName'];
-        ?>   </h1>
-    <div class="col-12 shadow card p-3">
+
+    <div class="col-12 shadow card p-5 ">
+<!--        $OrderStatus=array("running","cancel","delieved","clear");-->
+        <h1 align="center">User Display</h1>
+        <h2 align="center">Welcome  : <?php
+            echo $_COOKIE['userName'];
+            ?>   </h2>
         <div class="form-group row">
-            <a href="http://192.168.64.2/Catering/customer/CustomerCreate.php" class="text-center col-5 form-control btn-primary">Order Create</a>
-            <a href="http://192.168.64.2/Catering/order/FindOrder.php?order_status_id=1" class="text-center col-5 form-control btn-primary">Running Order</a>
+            <a href="http://192.168.64.2/Catering/customer/CustomerCreate.php?option=userDisplay" class="text-center col-5 form-control btn-primary">Order Create</a>
+            <a href="http://192.168.64.2/Catering/order/FindOrder.php?is_active=0" class="text-center col-5 form-control btn-primary">Running Order</a>
         </div>
 
         <div class="form-group row">
-            <a href="http://192.168.64.2/Catering/order/FindOrder.php?order_status_id=3" class="col-5  text-center form-control btn-primary">deliver Orders</a>
-            <a href="http://192.168.64.2/Catering/order/FindOrder.php?order_status_id=4" class="col-5 text-center form-control btn-primary">Clear Orders</a>
+            <a href="http://192.168.64.2/Catering/order/FindOrder.php?is_active=2" class="col-5  text-center form-control btn-primary">deliver Orders</a>
+            <a href="http://192.168.64.2/Catering/order/FindOrder.php?is_active=3" class="col-5 text-center form-control btn-primary">Clear Orders</a>
         </div>
         <div class="form-group row">
 
-            <a href="http://192.168.64.2/Catering/order/FindOrder.php?order_status_id=2" class="col-5 text-center form-control btn-primary">Cancel Orders</a>
-            <a href="#" class="col-5 text-center form-control btn-primary">Receive payment</a>
+            <a href="http://192.168.64.2/Catering/order/FindOrder.php?is_active=1" class="col-5 text-center form-control btn-primary">Cancel Orders</a>
+            <a href="http://192.168.64.2/Catering/payment/transferPaymentReceive.php?option=userDisplay" class="col-5 text-center form-control btn-primary">Receive payment</a>
         </div>
     </div>
 

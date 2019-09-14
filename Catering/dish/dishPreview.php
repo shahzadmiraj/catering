@@ -17,6 +17,7 @@ function queryReceive($sql)
         return mysqli_fetch_all($result);
     }
 }
+$orderid=$_GET['order'];
 
 
 ?>
@@ -91,10 +92,23 @@ WHERE dd.id='.$dishDetailId.'';
                 <label class="col-form-label col-4">describe</label>
                 <input  data-column="describe" class="dishDetailChange form-control col-8" type="text" value="'.$dishDetailOfDetai[0][0].'"></input>
             </div>
-            <div class="form-group row">
-                <input id="cancel_dish" type="button"  class="cancelForm form-control btn col-4 btn-danger" value="dish cancel">
-                <input  id="ok" type="button" class="submitForm form-control btn col-4 btn-primary" value="ok">
-            </div>
+            <div class="form-group row">';
+
+            if(isset($_GET['option']))
+            {
+                if($_GET['option']=="Allselected")
+                {
+                    $display.='<a href="http://192.168.64.2/Catering/dish/AllSelectedDishes.php?order='.$_GET['order'].'&option=PreviewOrder" class="submitForm form-control btn col-4 btn-primary">Done</a>
+<input id="cancel_dish" type="button"  class="cancelForm form-control btn col-4 btn-danger" value="dish cancel">';
+                }
+            }
+            else
+             {
+
+                $display .= '<input id="cancel_dish" type="button"  class="cancelForm form-control btn col-4 btn-danger" value="dish cancel">
+                <input  id="ok" type="button" class="submitForm form-control btn col-4 btn-primary" value="ok">';
+            }
+            $display.='</div>
         </div>
 
     </form>';
@@ -146,7 +160,8 @@ WHERE dd.id='.$dishDetailId.'';
            });
        });
 
-       $('#cancel_dish').click(function () {
+       $('#cancel_dish').click(function ()
+       {
            var dishDetailId=$("#dishDetailID").val();
            $.ajax({
                url:"dishServer.php",
@@ -161,14 +176,15 @@ WHERE dd.id='.$dishDetailId.'';
                    }
                    else
                    {
-                       window.history.back();
+                       window.location.href="http://192.168.64.2/Catering/dish/AllSelectedDishes.php?order=<?php echo json_decode($orderid);?>";
                    }
                }
            });
 
        });
-        $('#ok').click(function () {
-            window.history.back();
+        $('#ok').click(function ()
+        {
+            window.location.href="http://192.168.64.2/Catering/dish/AllSelectedDishes.php?order=<?php echo json_decode($orderid);?>";
         });
 
     });

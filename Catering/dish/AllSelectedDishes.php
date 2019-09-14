@@ -62,14 +62,14 @@ where
         $dishesDetail=queryReceive($sql);
         for($i=0;$i<count($dishesDetail);$i++)
         {
-            $totalAmount+=$dishesDetail[$i][2]*$dishesDetail[$i][3];
+            $totalAmount+=(int)$dishesDetail[$i][2]*(int)$dishesDetail[$i][3];
             echo '<div class=" row border ">
             <label class="border-right col-form-label col-1">'.$i.'</label>
             <label class="border-right col-form-label col-3">'.$dishesDetail[$i][1].'</label>
             <label class=" border-right col-form-label col-2">'.$dishesDetail[$i][2].'</label>
             <label class="border-right col-form-label col-2">'.$dishesDetail[$i][3].'</label>
-            <label class=" border-right col-form-label col-2">'.$dishesDetail[$i][2]*$dishesDetail[$i][3].'</label>
-            <a href="dishPreview.php?dishId='.$dishesDetail[$i][4].'&dishDetailId='.$dishesDetail[$i][0].'"  class="detailBtn form-control btn-primary col-2">Detail</a>
+            <label class=" border-right col-form-label col-2">'.(int)$dishesDetail[$i][2]*(int)$dishesDetail[$i][3].'</label>
+            <a href="http://192.168.64.2/Catering/dish/dishPreview.php?dishId='.$dishesDetail[$i][4].'&dishDetailId='.$dishesDetail[$i][0].'&order='.$_GET['order'].'&option=Allselected"  class="detailBtn form-control btn-primary col-2">Detail</a>
         </div>';
         }
         ?>
@@ -118,7 +118,7 @@ where
 
     </div>
     <div class="col-12  row ">
-        <a href="http://192.168.64.2/Catering/order/PreviewOrder.php?order=<?php echo $_GET['order'];?>"  class="form-control btn-info col-5">order Detail</a>
+        <a href="http://192.168.64.2/Catering/order/PreviewOrder.php?order=<?php echo $_GET['order'];?>"  class="form-control btn-info col-5">Order Preview</a>
         <a href="http://192.168.64.2/Catering/dish/dishDisplay.php?order=<?php echo $_GET['order'];?>" class="form-control btn-success col-5">dish Add +</a>
     </div>
 

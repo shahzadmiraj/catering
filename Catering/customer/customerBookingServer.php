@@ -5,45 +5,72 @@
  * Date: 2019-09-03
  * Time: 17:20
  */
-//session_start();
+
 include_once ("../connection/connect.php");
 
 
-    //new customer is created;
-
-//if(!isset($_SESSION['customer']))
-//{
-    $name = trim($_POST['name']);
-    //array of numbers
-    $numberArray = $_POST['number'];
-    $cnic = $_POST['cnic'];
-    $city = $_POST['city'];
-    $area = $_POST['area'];
-    $streetNo = $_POST['streetNo'];
-    $houseNo = $_POST['houseNo'];
-    //$timestamp = date('Y-m-d G:i:s');
-    $date = date('Y-m-d');
-    $sql = "INSERT INTO `person`(`name`, `cnic`, `date`) VALUES ('$name','$cnic','$date')";
+function queryReceive($sql)
+{
+    global $connect;
     $result = mysqli_query($connect, $sql);
-    if (!$result) {
+    if (!$result)
+    {
+
+        echo("Error description: " . mysqli_error($connect));
+    }else{
+        return mysqli_fetch_all($result);
+    }
+}
+
+
+function querySend($sql)
+{
+    global $connect;
+    $result = mysqli_query($connect, $sql);
+    if (!$result)
+    {
+        echo $sql;
         echo("Error description: " . mysqli_error($connect));
     }
-    $last_id = mysqli_insert_id($connect);
-    $sql = "INSERT INTO `address`(`id`, `address_city`, `address_town`, `address_street_no`, `address_house_no`, `person_id`) VALUES (NULL,'$city','$area',$streetNo,$houseNo,$last_id)";
-    $result = mysqli_query($connect, $sql);
-    if (!$result) {
-        echo("Error description: " . mysqli_error($connect));
-    }
+}
+if(isset($_POST['option']))
+{
+    if($_POST['option']=="customerCreate")
+    {
+        $name = trim($_POST['name']);
+        $numberArray = $_POST['number'];
+        $cnic = $_POST['cnic'];
+        $city = $_POST['city'];
+        $area = $_POST['area'];
+        $streetNo = $_POST['streetNo'];
+        $houseNo = $_POST['houseNo'];
+        $date = date('Y-m-d');
+        $sql = 'INSERT INTO `person`(`name`, `cnic`, `id`, `date`) VALUES ("' . $name . '","' . $cnic . '",NULL,"' . $date . '")';
+        querySend($sql);
+        $last_id = mysqli_insert_id($connect);
+        $sql = "INSERT INTO `address` (`id`, `address_street_no`, `address_house_no`, `person_id`, `address_city`, `address_town`) VALUES (NULL, '" . $streetNo . "', '" . $houseNo . "', '" . $last_id . "', '" . $city . "', '" . $area . "');";
+        querySend($sql);
+        for ($i = 0; $i < count($numberArray); $i++) {
 
-    foreach ($numberArray as $key => $value) {
-
-        $sql = "INSERT INTO `number`(`number`, `id`, `is_number_active`, `person_id`) VALUES ('$value',NULL,1,$last_id)";
-        $result = mysqli_query($connect, $sql);
-        if (!$result) {
-            echo("Error description: " . mysqli_error($connect));
+            $sql = "INSERT INTO `number`(`number`, `id`, `is_number_active`, `person_id`) VALUES ('" . $numberArray[$i] . "',NULL,1,$last_id)";
+            querySend($sql);
         }
+        $customerId = $last_id;
+        echo json_decode($customerId);
     }
-    $customerId=$last_id;
-    echo  json_decode($customerId);
-//}
+    else if($_POST['option']=="customerExist")
+    {
+
+        $value=$_POST['value'];
+            $sql='SELECT  n.person_id FROM number as n WHERE n.number="'.$value.'"';
+            $customerexist=queryReceive($sql);
+            if(count($customerexist)>0)
+            {
+                echo $customerexist[0][0];
+            }
+
+
+    }
+}
+
 ?>

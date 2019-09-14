@@ -9,20 +9,19 @@
 
 include_once ("../connection/connect.php");
 session_start();
+$userid=$_SESSION['userid'];
 
 function querySend($sql)
 {
     global $connect;
     $result = mysqli_query($connect, $sql);
-    if (!$result) {
+    if (!$result)
+    {
+        echo $sql;
         echo("Error description: " . mysqli_error($connect));
     }
 }
-//if(!$_SESSION['customer'])
-//{
-//    echo "session customer is not created";
-//    exit();
-//}
+
 if(!isset($_POST['function']))
 {
     echo "option in order is not created";
@@ -39,15 +38,18 @@ if($_POST['function']=="add")
     $houseno=$_POST['houseno'];
     $describe=$_POST['describe'];
     $currentDate=date('Y-m-d');
-    $sql='INSERT INTO `address`(`address_city`, `address_town`, `address_street_no`, `address_house_no`, `person_id`) VALUES ("lahore","'.$area.'",'.$streetno.','.$houseno.',NULL)';
+    $CurrenttimeDate = date('Y-m-d H:i:s');
+    $sql='INSERT INTO `address`(`id`, `address_street_no`, `address_house_no`, `person_id`, `address_city`, `address_town`) VALUES (NULL,"'.$streetno.'","'.$houseno.'","'.$customerId.'","lahore","'.$area.'")';
     querySend($sql);
     $address_id=mysqli_insert_id($connect);
-    //$customerId=$_SESSION['customer'];
-
-    $sql='INSERT INTO `orderTable`(`id`, `total_amount`, `order_comments`, `total_person`, `is_active`, `destination_date`, `booking_date`, `destination_time`, `address_id`, `extre_charges`, `person_id`) VALUES (NULL,0,"'.$describe.'",'.$persons.',1,"'.$date.'","'.$currentDate.'","'.$time.'",'.$address_id.',0,'.$customerId.')';
+    $sql='INSERT INTO `orderTable`(`id`, `total_amount`, `order_comments`, `total_person`, `is_active`, `destination_date`, `booking_date`, `destination_time`, `address_id`, `extre_charges`, `person_id`) VALUES (NULL,0,"'.$describe.'","'.$persons.'",0,"'.$date.'","'.$currentDate.'","'.$time.'","'.$address_id.'",0,"'.$customerId.'")';
     querySend($sql);
-    //$_SESSION['order']=mysqli_insert_id($connect);
     $ordeID=mysqli_insert_id($connect);
+    //$sql='INSERT INTO `change_status`(`id`, `orderTable_id`, `order_status_id`, `user_id`, `dateTime`) VALUES (NULL,'.$ordeID.',1,'.$userid.',"'.$CurrenttimeDate.'")';
+    //querySend($sql);
+
+
+
     echo json_decode($ordeID);
 }
 

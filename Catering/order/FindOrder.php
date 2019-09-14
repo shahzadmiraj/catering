@@ -10,13 +10,15 @@ function queryReceive($sql)
 {
     global $connect;
     $result = mysqli_query($connect, $sql);
-    if (!$result) {
+    if (!$result)
+    {
+        echo $sql;
         echo("Error description: " . mysqli_error($connect));
     }else{
         return mysqli_fetch_all($result);
     }
 }
-if(!isset($_GET['order_status_id']))
+if(!isset($_GET['is_active']))
 {
     exit();
 }
@@ -74,15 +76,16 @@ if(!isset($_GET['order_status_id']))
         </div>
         <div class="form-group row">
             <label class="col-form-label col-4">order status</label>
-            <select  name="cs_order_status_id" class="changeColumn form-control col-8 ">
+            <select  name="ot_is_active" class="changeColumn form-control col-8 ">
                 <option value="None">None</option>
                 <?php
-                    $sql='SELECT `id`, `name` FROM `order_status` WHERE 1';
-                    $order_status=queryReceive($sql);
-                    for($k=0;$k<count($order_status);$k++)
-                    {
-                        echo '<option  value="'.$order_status[$k][0].'" >'.$order_status[$k][1].'</option>';
-                    }
+                $OrderStatus=array("running","cancel","delieved","clear");
+                for($i=0;$i<count($OrderStatus);$i++)
+                {
+
+                        echo '<option value='.$i.'>'.$OrderStatus[$i].'</option>';
+
+                }
                 ?>
             </select>
         </div>
@@ -94,9 +97,13 @@ if(!isset($_GET['order_status_id']))
         </form>
         <div class="col-12 card shadow" id="recordsAll">
             <?php
-            $sql='SELECT p.id,p.name,ot.destination_date,ot.id FROM person as p INNER join number as n on p.id=n.person_id INNER join orderTable as ot on p.id=ot.person_id INNER join change_status as cs on ot.id=cs.orderTable_id where (cs.order_status_id = '.$_GET["order_status_id"].')
-order by 
-ot.destination_date DESC';
+            $sql='SELECT p.id,p.name,ot.destination_date,ot.id  FROM person as p INNER join number as n on p.id=n.person_id
+    INNER join orderTable as ot
+    on p.id=ot.person_id
+   WHERE
+    ot.is_active='.$_GET['is_active'].'
+    ORDER BY ot.destination_date DESC';
+
             $records=queryReceive($sql);
             if(count($records)>0)
             {
