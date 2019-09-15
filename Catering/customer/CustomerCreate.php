@@ -6,7 +6,7 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-
+session_start();
 ?>
 <!DOCTYPE html>
 <head>
@@ -27,11 +27,14 @@ include_once ("../connection/connect.php");
         }
     </style>
 </head>
-<body>
+<body class="alert-light">
+<?php
+include_once ("../webdesign/header/header.php");
+?>
+<div class="container"  style="margin-top:180px">
 
-<div class="container">
 
-    <form id="form" class="card shadow p-3">
+<form id="form" class="card shadow p-3">
         <h1 align="center">
             Customer create
         </h1>
@@ -86,7 +89,7 @@ include_once ("../connection/connect.php");
                 {
 
                     echo '
-            <a href="http://192.168.64.2/Catering/user/userDisplay.php" class=" col-5 form-control btn btn-danger">cancel</a>
+            <a href="../user/userDisplay.php" class=" col-5 form-control btn btn-danger">cancel</a>
             <button class="col-5 form-control btn btn-outline-primary" id="submit">submit</button>';
                 }
 
@@ -95,7 +98,7 @@ include_once ("../connection/connect.php");
             {
 
                 echo '
-            <a href="http://192.168.64.2/Catering/user/userDisplay.php" class=" col-5 form-control btn btn-danger">cancel</a>
+            <a href="../user/userDisplay.php" class=" col-5 form-control btn btn-danger">cancel</a>
             <button class="col-5 form-control btn btn-outline-primary" id="submit">submit</button>';
             }
 
@@ -128,7 +131,7 @@ include_once ("../connection/connect.php");
                    }
                    else
                    {
-                       window.location.href="http://192.168.64.2/Catering/customer/customerEdit.php?customer="+data+"&option=CustomerCreate";
+                       window.location.href="../customer/customerEdit.php?customer="+data+"&option=CustomerCreate";
                    }
                }
            });
@@ -205,7 +208,7 @@ include_once ("../connection/connect.php");
                     }
                     else
                     {
-                        window.location.href="http://192.168.64.2/Catering/order/orderCreate.php?customer="+data+"&option=CustomerCreate";
+                        window.location.href="../order/orderCreate.php?customer="+data+"&option=CustomerCreate";
                     }
                }
            });

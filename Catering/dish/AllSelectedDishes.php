@@ -8,6 +8,7 @@
 
 $orderId=$_GET['order'];
 include_once ("../connection/connect.php");
+session_start();
 function queryReceive($sql)
 {
     global $connect;
@@ -38,8 +39,12 @@ function queryReceive($sql)
         }
     </style>
 </head>
-<body>
-<div class="container">
+<body class="alert-light">
+<?php
+include_once ("../webdesign/header/header.php");
+?>
+<div class="container"  style="margin-top:180px">
+
     <h1 align="center"> Selected Dishes / items Detail</h1>
     <div class="col-12 border">
 
@@ -69,7 +74,7 @@ where
             <label class=" border-right col-form-label col-2">'.$dishesDetail[$i][2].'</label>
             <label class="border-right col-form-label col-2">'.$dishesDetail[$i][3].'</label>
             <label class=" border-right col-form-label col-2">'.(int)$dishesDetail[$i][2]*(int)$dishesDetail[$i][3].'</label>
-            <a href="http://192.168.64.2/Catering/dish/dishPreview.php?dishId='.$dishesDetail[$i][4].'&dishDetailId='.$dishesDetail[$i][0].'&order='.$_GET['order'].'&option=Allselected"  class="detailBtn form-control btn-primary col-2">Detail</a>
+            <a href="../dish/dishPreview.php?dishId='.$dishesDetail[$i][4].'&dishDetailId='.$dishesDetail[$i][0].'&order='.$_GET['order'].'&option=Allselected"  class="detailBtn form-control btn-primary col-2">Detail</a>
         </div>';
         }
         ?>
@@ -118,8 +123,8 @@ where
 
     </div>
     <div class="col-12  row ">
-        <a href="http://192.168.64.2/Catering/order/PreviewOrder.php?order=<?php echo $_GET['order'];?>"  class="form-control btn-info col-5">Order Preview</a>
-        <a href="http://192.168.64.2/Catering/dish/dishDisplay.php?order=<?php echo $_GET['order'];?>" class="form-control btn-success col-5">dish Add +</a>
+        <a href="../order/PreviewOrder.php?order=<?php echo $_GET['order'];?>"  class="form-control btn-info col-5">Order Preview</a>
+        <a href="../dish/dishDisplay.php?order=<?php echo $_GET['order'];?>" class="form-control btn-success col-5">dish Add +</a>
     </div>
 
 

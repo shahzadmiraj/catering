@@ -33,11 +33,10 @@ if(isset($_POST["option"]))
         }
         else
         {
-            //one day
-            setcookie("userName",$userName,time()+86400);
-            setcookie("userid",$userDetail[0][0],time()+86400);
+
             $_SESSION['userid']=$userDetail[0][0];
             $_SESSION['isOwner']=$userDetail[0][1];
+            $_SESSION['username']=$userName;
 
         }
     }

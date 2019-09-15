@@ -25,8 +25,12 @@ include_once ("../connection/connect.php");
         }
     </style>
 </head>
-<body>
-<div class="container">
+<body class="alert-light">
+<?php
+include_once ("../webdesign/header/header.php");
+?>
+<div class="container"  style="margin-top:180px">
+
     <h1 align="center"> Order Create</h1>
     <form >
         <input type="number" hidden id="customeridForm" value=<?php echo $_GET['customer'];?>   >
@@ -69,7 +73,7 @@ include_once ("../connection/connect.php");
                     if(($_GET['option']=="CustomerCreate")||($_GET['option']=="customerEdit"))
                     {
 
-                        echo '<a href="http://192.168.64.2/Catering/customer/customerEdit.php?customer='.$_GET['customer'].'&option=orderCreate" class="form-control col-4 btn btn-danger">Edit Customer</a>';
+                        echo '<a href="../customer/customerEdit.php?customer='.$_GET['customer'].'&option=orderCreate" class="form-control col-4 btn btn-danger">Edit Customer</a>';
                     }
                 }
                 else
@@ -112,7 +116,7 @@ include_once ("../connection/connect.php");
                   }
                   else
                   {
-                      window.location.href="http://192.168.64.2/Catering/dish/dishDisplay.php?order="+data+"&customer="+customerid+"&option=orderCreate";
+                      window.location.href="../dish/dishDisplay.php?order="+data+"&customer="+customerid+"&option=orderCreate";
                   }
                }
            });

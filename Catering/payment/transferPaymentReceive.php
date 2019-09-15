@@ -46,9 +46,12 @@ function queryReceive($sql)
         }
     </style>
 </head>
-<body>
+<body class="alert-light">
+<?php
+include_once ("../webdesign/header/header.php");
+?>
+<div class="container"  style="margin-top:180px">
 
-<div class="container">
     <div class="col-12 card shadow" id="from3">
         <h1 align="center">your payments Receive Requests</h1>
 
@@ -56,13 +59,13 @@ function queryReceive($sql)
         if(!isset($_GET['option']))
         {
           echo '
-        <a class="btn-success form-control col-4 " href="http://192.168.64.2/Catering/order/PreviewOrder.php?order='.$orderTable_id.'"> <- Preview Order</a>';
+        <a class="btn-success form-control col-4 " href="../order/PreviewOrder.php?order='.$orderTable_id.'"> <- Preview Order</a>';
         }
         else
         {
 
             echo '
-        <a class="btn-success form-control col-4 " href="http://192.168.64.2/Catering/user/userDisplay.php"> <- Preview Order</a>';
+        <a class="btn-success form-control col-4 " href="../user/userDisplay.php"> <- Preview Order</a>';
         }
         ?>
         <div class="form-group row border">

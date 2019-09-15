@@ -43,8 +43,12 @@ $customerID=$orderDetailPerson[0][1];
         }
     </style>
 </head>
-<body>
-<div class="container">
+<body class="alert-light">
+<?php
+include_once ("../webdesign/header/header.php");
+?>
+<div class="container"  style="margin-top:180px">
+
 
     <h1 align="center">Order Preview</h1>
     <div class="col-12 shadow card p-3">
@@ -64,22 +68,22 @@ $customerID=$orderDetailPerson[0][1];
             </div>
         </h4>
         <div class="form-group row">
-            <a href="http://192.168.64.2/Catering/customer/customerEdit.php?customer=<?php echo $customerID;?>&order=<?php echo $orderId;?>&option=PreviewOrder" class="text-center col-5 form-control btn-success">Customer Preview</a>
-            <a href="http://192.168.64.2/Catering/order/orderEdit.php?order=<?php echo $orderId;?>&option=PreviewOrder" class="text-center col-5 form-control btn-success">Order Preview</a>
+            <a href="../customer/customerEdit.php?customer=<?php echo $customerID;?>&order=<?php echo $orderId;?>&option=PreviewOrder" class="text-center col-5 form-control btn-success">Customer Preview</a>
+            <a href="../order/orderEdit.php?order=<?php echo $orderId;?>&option=PreviewOrder" class="text-center col-5 form-control btn-success">Order Preview</a>
         </div>
 
         <div class="form-group row">
-            <a href="http://192.168.64.2/Catering/dish/AllSelectedDishes.php?order=<?php echo $orderId;?>&option=PreviewOrder" class="col-5  text-center form-control btn-success">Dish Preview</a>
-            <a href="http://192.168.64.2/Catering/payment/paymentHistory.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>" class="col-5 text-center form-control btn-success">Payment History</a>
+            <a href="../dish/AllSelectedDishes.php?order=<?php echo $orderId;?>&option=PreviewOrder" class="col-5  text-center form-control btn-success">Dish Preview</a>
+            <a href="../payment/paymentHistory.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>" class="col-5 text-center form-control btn-success">Payment History</a>
         </div>
         <div class="form-group row">
-            <a href="http://192.168.64.2/Catering/payment/getPayment.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>" class="col-5 text-center form-control btn-success">Get payment</a>
-            <a href="http://192.168.64.2/Catering/payment/transferPayment.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>" class="col-5 text-center form-control btn-success">Transfer payment</a>
+            <a href="../payment/getPayment.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>" class="col-5 text-center form-control btn-success">Get payment</a>
+            <a href="../payment/transferPayment.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>" class="col-5 text-center form-control btn-success">Transfer payment</a>
         </div>
 
         <div class="form-group row">
-            <a href="http://192.168.64.2/Catering/payment/transferPaymentReceive.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>" class="col-5 text-center form-control btn-success">Receive payment</a>
-            <a href="http://192.168.64.2/Catering/user/userDisplay.php" class="col-5 text-center form-control btn-success">User Display</a>
+            <a href="../payment/transferPaymentReceive.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>" class="col-5 text-center form-control btn-success">Receive payment</a>
+            <a href="../user/userDisplay.php" class="col-5 text-center form-control btn-success">User Display</a>
         </div>
     </div>
 

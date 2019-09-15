@@ -52,9 +52,12 @@ $dishTypeDetail=queryReceive($sql);
 
     </style>
 </head>
-<body>
+<body class="alert-light">
+<?php
+include_once ("../webdesign/header/header.php");
+?>
+<div class="container"  style="margin-top:180px">
 
-<div class="container">
 
     <form class="card" id="formid" method="post" action="dishCreate.php?order=<?php echo $_GET['order'];?>&option=dishDisplay">
         <div class="col-12" id="selected">
@@ -74,7 +77,7 @@ $dishTypeDetail=queryReceive($sql);
             {
                 if($_GET['option']=="orderCreate")
                 {
-                    echo '<a href="http://192.168.64.2/Catering/order/orderEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=dishDisplay" class="col-5 form-control btn btn-danger">Edit Order</a>';
+                    echo '<a href="../order/orderEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=dishDisplay" class="col-5 form-control btn btn-danger">Edit Order</a>';
                 }
                 else if($_GET['option']=="orderEdit")
                 {

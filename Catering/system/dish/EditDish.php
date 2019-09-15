@@ -53,13 +53,16 @@ $attributes=queryReceive($sql);
         }
     </style>
 </head>
-<body>
-<div class="container">
+<body class="alert-light">
+<?php
+include_once ("../../webdesign/header/header.php");
+?>
+<div class="container"  style="margin-top:180px">
 
         <div class="col-12 shadow card p-4">
             <input id="dishid" type="number" hidden value="<?php echo $dishID; ?>">
             <div class="form-group row">
-                <a href="http://192.168.64.2/Catering/system/dish/dishesDetail.php" class=" form-control col-3 btn-warning"> Previous</a>
+                <a href="../system/dish/dishesDetail.php" class=" form-control col-3 btn-warning"> Previous</a>
                 <span class="font-weight-bold text-center col-9 form-control"> Edit Dish in System</span>
             </div>
             <div class="form-group row">
@@ -173,7 +176,7 @@ $attributes=queryReceive($sql);
                     }
                     else
                     {
-                        window.location.href='http://192.168.64.2/Catering/system/dish/dishesDetail.php';
+                        window.location.href='../system/dish/dishesDetail.php';
                     }
                 }
             });
@@ -223,7 +226,7 @@ $attributes=queryReceive($sql);
                     }
                     else
                     {
-                        window.location.href="http://192.168.64.2/Catering/system/dish/dishesDetail.php";
+                        window.location.href="../system/dish/dishesDetail.php";
                     }
                 }
             });

@@ -36,9 +36,12 @@ $orderTable_id=$_GET['order'];
         }
     </style>
 </head>
-<body>
+<body class="alert-light">
+<?php
+include_once ("../webdesign/header/header.php");
+?>
+<div class="container"  style="margin-top:180px">
 
-<div class="container">
     <form class="col-12 card shadow" id="from2">
         <input hidden name="user_id" value="<?php
         echo $userId;
@@ -74,7 +77,7 @@ $orderTable_id=$_GET['order'];
             <textarea type="text" name="personality" class="col-8 form-control"></textarea>
         </div>
         <div class="form-group row">
-            <a href="http://192.168.64.2/Catering/order/PreviewOrder.php?order=<?php echo $orderTable_id;?>" class="form-control col-3 btn-danger">cancel</a>
+            <a href="../order/PreviewOrder.php?order=<?php echo $orderTable_id;?>" class="form-control col-3 btn-danger">cancel</a>
             <button id="submitBtnfrom" type="submit" class="form-control col-3 btn-primary">Submit</button>
 
         </div>

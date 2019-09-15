@@ -6,11 +6,7 @@
  * Time: 21:31
  */
 include_once ("../../connection/connect.php");
-//date_default_timezone_set("asia/karachi");
-//mysqli_insert_id($connect);
-// //$timestamp = date('Y-m-d H:i:s');
-//    $date = date('Y-m-d');
-//$timeSet=date('H:i',time($orderDetail[0][7]));
+
 function queryReceive($sql)
 {
     global $connect;
@@ -21,17 +17,7 @@ function queryReceive($sql)
         return mysqli_fetch_all($result);
     }
 }
-//  $.ajax({
-//               url:"customerBookingServer.php",
-//               method:"POST",
-//               data:formdatd,
-//               contentType: false,
-//               processData: false,
-//               success:function (data)
-//               {
-//                   console.log(data);
-//               }
-//           });
+
 function querySend($sql)
 {
     global $connect;
@@ -60,18 +46,21 @@ function querySend($sql)
         }
     </style>
 </head>
-<body>
-<div class="container">
+<body class="alert-light">
+<?php
+include_once ("../../webdesign/header/header.php");
+?>
+<div class="container"  style="margin-top:180px">
 
 
-    <div class="form-group row col-12 p-2">
-        <a class="col-4    btn-warning form-control  btn">User Display</a>
-        <label class="font-weight-bold col-4  col-form-label " >System Dish info </label>
-        <a  href="http://192.168.64.2/Catering/system/dish/addDish.php" class="col-4 btn-outline-primary btn form-control ">Add dish +</a>
-    </div>
+    <h1 class="font-weight-bold  " align="center">System Dish info </h1>
 
 
-    <div class="col-12 card shadow">
+
+
+
+
+    <div class="col-12 card shadow mb-3 p-5">
         <h3 align="center"> Dish Type information</h3>
         <div class="form-group row font-weight-bold border">
             <label class="col-9  col-form-label ">Name Dish type</label>
@@ -130,8 +119,9 @@ function querySend($sql)
 
 
 
-    <div class="col-12 card shadow mb-5">
-        <h3 align="center"> Dish information</h3>
+    <div class="col-12 card shadow mb-2 p-4 ">
+        <h3 align="center"> Dish information        <a  href="/Catering/system/dish/addDish.php" class=" btn-outline-primary btn form-control ">Add dish +</a>
+        </h3>
         <div class="form-group row font-weight-bold border">
             <label class="col-4  col-form-label ">Dish Id</label>
             <label class="col-5  col-form-label " >Dish Name </label>
@@ -149,7 +139,7 @@ function querySend($sql)
             $display.= '<div class="form-group row  border">
             <label class="col-2  col-form-label ">'.$Dishes[$i][1].'</label>
             <label class="col-6  col-form-label " > '.$Dishes[$i][0].'</label>
-            <a href="http://192.168.64.2/Catering/system/dish/EditDish.php?dishid='.$Dishes[$i][1].'" class="col-4  form-control btn ';
+            <a href="/Catering/system/dish/EditDish.php?dishid='.$Dishes[$i][1].'" class="col-4  form-control btn ';
 
 
             if(($Dishes[$i][3]=="")&&($Dishes[$i][4]==""))

@@ -54,7 +54,15 @@ function querySend($sql)
     </style>
 </head>
 <body>
-<div class="container">
+
+<div class="badge-danger  w-100 shadow fixed-top  " style="height: 120px">
+    <h1 align="center">Welcome  to</h1>
+       <h2 align="center"> New Kashmir Food Center</h2>
+</div>
+
+
+
+<div class=" container badge-dark card p-5  m-6" style="margin-top:180px" >
     <h1 align="center">User Login</h1>
     <form class="col-12 shadow" id="formLogin">
     <div class="form-group row">
@@ -76,8 +84,6 @@ function querySend($sql)
 
 
 <script>
-    //window.history.back();
-
 
     $(document).ready(function () {
 

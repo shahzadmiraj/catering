@@ -36,13 +36,5 @@ else if($_POST['option']=="addressChange")
     $sql='UPDATE `address` SET '.$columnName.'="'.$coumnText.'" WHERE id='.$addressId.'';
     querySend($sql);
 }
-else if($_POST['option']=="orderstatus")
-{
-        $orderstatusid=$_POST['orderstatusid'];
-        $orderid=$_POST['orderid'];
-        $dataTime=date('Y-m-d H:i:s');
-        $sql='INSERT INTO `change_status`(`id`, `orderTable_id`, `order_status_id`, `user_id`, `dateTime`) VALUES (NULL,'.$orderid.','.$orderstatusid.','.$_SESSION['userid'].',"'.$dataTime.'")';
-        querySend($sql);
-}
 
 ?>

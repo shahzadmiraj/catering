@@ -7,7 +7,7 @@
  */
 session_start();
 
-if(!isset($_COOKIE['userName']))
+if(!isset($_SESSION['username']))
 {
     header("location:userLogin.php");
     exit();
@@ -33,39 +33,41 @@ if(!isset($_COOKIE['userName']))
         }
     </style>
 </head>
-<body>
-<div class="container">
+<body class="alert-light">
+<?php
+ include_once ("../webdesign/header/header.php");
+?>
+<div class="container"  style="margin-top:180px">
 
 
     <div class="col-12 shadow card p-5 ">
 <!--        $OrderStatus=array("running","cancel","delieved","clear");-->
         <h1 align="center">User Display</h1>
-        <h2 align="center">Welcome  : <?php
-            echo $_COOKIE['userName'];
-            ?>   </h2>
         <div class="form-group row">
-            <a href="http://192.168.64.2/Catering/customer/CustomerCreate.php?option=userDisplay" class="text-center col-5 form-control btn-primary">Order Create</a>
-            <a href="http://192.168.64.2/Catering/order/FindOrder.php?is_active=0" class="text-center col-5 form-control btn-primary">Running Order</a>
+            <a href="../customer/CustomerCreate.php?option=userDisplay" class="text-center col-5 form-control btn-primary">Order Create</a>
+            <a href="../order/FindOrder.php?is_active=0" class="text-center col-5 form-control btn-primary">Running Order</a>
         </div>
 
         <div class="form-group row">
-            <a href="http://192.168.64.2/Catering/order/FindOrder.php?is_active=2" class="col-5  text-center form-control btn-primary">deliver Orders</a>
-            <a href="http://192.168.64.2/Catering/order/FindOrder.php?is_active=3" class="col-5 text-center form-control btn-primary">Clear Orders</a>
+            <a href="../order/FindOrder.php?is_active=2" class="col-5  text-center form-control btn-primary">deliver Orders</a>
+            <a href="../order/FindOrder.php?is_active=3" class="col-5 text-center form-control btn-primary">Clear Orders</a>
         </div>
         <div class="form-group row">
-
-            <a href="http://192.168.64.2/Catering/order/FindOrder.php?is_active=1" class="col-5 text-center form-control btn-primary">Cancel Orders</a>
-            <a href="http://192.168.64.2/Catering/payment/transferPaymentReceive.php?option=userDisplay" class="col-5 text-center form-control btn-primary">Receive payment</a>
+            <a href="../order/FindOrder.php?is_active=1" class="col-5 text-center form-control btn-primary">Cancel Orders</a>
+            <a href="../payment/transferPaymentReceive.php?option=userDisplay" class="col-5 text-center form-control btn-primary">Receive payment</a>
+        </div>
+        <div class="form-group row">
+            <a href="../system/dish/dishesDetail.php" class="col-5 text-center form-control btn-primary">System Guideline Dishes</a>
+            <a href="../system/user/usercreate.php" class="col-5 text-center form-control btn-primary">User Create</a>
+        </div>
+        <div class="form-group row">
+            <a  href="../user/logout.php" class="col-5 text-center form-control btn-primary">Log out</a>
         </div>
     </div>
 
-
-
-
-
 </div>
 <script>
-    //window.history.back();
+
 
 
 

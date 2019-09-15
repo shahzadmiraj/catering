@@ -50,11 +50,15 @@ function querySend($sql)
         }
     </style>
 </head>
-<body>
-<div class="container">
+<body class="alert-light">
+<?php
+include_once ("../webdesign/header/header.php");
+?>
+<div class="container"  style="margin-top:180px">
+
 
     <h1 align="center">payment History</h1>
-    <a class="btn-success form-control col-4 " href="http://192.168.64.2/Catering/order/PreviewOrder.php?order=<?php echo $orderTable_id; ?>"> <- Preview Order</a>
+    <a class="btn-success form-control col-4 " href="../order/PreviewOrder.php?order=<?php echo $orderTable_id; ?>"> <- Preview Order</a>
     <div class="col-12  shadow border card" style="background-color: #80bdff">
         <?php
         $sql='SELECT py.id,(SELECT u.username FROM user as u where u.id=py.user_id) as sender,

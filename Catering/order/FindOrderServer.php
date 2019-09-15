@@ -86,7 +86,7 @@ if(count($records)>0)
                 <label class="col-form-label col-2">'.$records[$j][3].'</label>
                 <label class="col-form-label col-5">'.$records[$j][1].'</label>
                 <label class="col-form-label col-3">'.$records[$j][2].'</label>
-                <a href="http://192.168.64.2/Catering/order/PreviewOrder.php?order='.$records[$j][3].'" class="btn-primary col-2 form-control ">Detail</a>
+                <a href="../order/PreviewOrder.php?order='.$records[$j][3].'" class="btn-primary col-2 form-control ">Detail</a>
             </div>';
     }
 }

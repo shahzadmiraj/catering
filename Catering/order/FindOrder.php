@@ -41,10 +41,12 @@ if(!isset($_GET['is_active']))
         }
     </style>
 </head>
-<body>
+<body class="alert-light">
+<?php
+include_once ("../webdesign/header/header.php");
+?>
+<div class="container"  style="margin-top:180px">
 
-
-<div class="container">
     <h1 align="center"> Orders</h1>
 
         <form class="col-12 shadow card " id="formId1">
@@ -90,7 +92,7 @@ if(!isset($_GET['is_active']))
             </select>
         </div>
         <div class="form-group row">
-            <a href="http://192.168.64.2/Catering/user/userDisplay.php" class="col-4 form-control btn-danger">cancel</a>
+            <a href="http://192.168.64.2../user/userDisplay.php" class="col-4 form-control btn-danger">cancel</a>
             <button type="button" class="col-4 form-control btn-success">Find</button>
         </div>
 
@@ -122,7 +124,7 @@ if(!isset($_GET['is_active']))
                 <label class="col-form-label col-2">'.$records[$j][3].'</label>
                 <label class="col-form-label col-5">'.$records[$j][1].'</label>
                 <label class="col-form-label col-3">'.$records[$j][2].'</label>
-                <a href="http://192.168.64.2/Catering/order/PreviewOrder.php?order='.$records[$j][3].'" class="btn-primary col-2 form-control ">Detail</a>
+                <a href="http://192.168.64.2../order/PreviewOrder.php?order='.$records[$j][3].'" class="btn-primary col-2 form-control ">Detail</a>
             </div>';
                 }
             }

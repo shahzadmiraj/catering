@@ -61,8 +61,12 @@ function querySend($sql)
         }
     </style>
 </head>
-<body>
-<div class="container">
+<body class="alert-light">
+<?php
+include_once ("../webdesign/header/header.php");
+?>
+<div class="container"  style="margin-top:180px">
+
     <h1 align="center">Create dishes</h1>
     <input hidden type="number" id="orderIdindish" value="<?php echo $_GET["order"];?>">
 
@@ -144,7 +148,7 @@ WHERE d.id=' . $value . '';
             if(totalitems==0)
             {
                 var orderid=$("#orderIdindish").val();
-                window.location.href="http://192.168.64.2/Catering/dish/AllSelectedDishes.php?order="+orderid;
+                window.location.href="../dish/AllSelectedDishes.php?order="+orderid;
             }
        }
 

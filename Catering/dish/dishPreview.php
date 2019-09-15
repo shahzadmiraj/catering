@@ -41,9 +41,11 @@ $orderid=$_GET['order'];
         }
     </style>
 </head>
-<body>
-
-<div class="container">
+<body class="alert-light">
+<?php
+include_once ("../webdesign/header/header.php");
+?>
+<div class="container"  style="margin-top:180px">
 
 <h1 align="center">Preview of Dish</h1>
 
@@ -98,7 +100,7 @@ WHERE dd.id='.$dishDetailId.'';
             {
                 if($_GET['option']=="Allselected")
                 {
-                    $display.='<a href="http://192.168.64.2/Catering/dish/AllSelectedDishes.php?order='.$_GET['order'].'&option=PreviewOrder" class="submitForm form-control btn col-4 btn-primary">Done</a>
+                    $display.='<a href="http://192.168.64.2../dish/AllSelectedDishes.php?order='.$_GET['order'].'&option=PreviewOrder" class="submitForm form-control btn col-4 btn-primary">Done</a>
 <input id="cancel_dish" type="button"  class="cancelForm form-control btn col-4 btn-danger" value="dish cancel">';
                 }
             }
@@ -128,7 +130,7 @@ WHERE dd.id='.$dishDetailId.'';
            var  valueAttribute=$(this).val();
 
             $.ajax({
-              url:"dishServer.php",
+              url:".php",
                 data:{attributeid:attributeid,value:valueAttribute,option:"attributeChange"},
               method:"POST",
                 dataType:"text",
@@ -147,7 +149,7 @@ WHERE dd.id='.$dishDetailId.'';
            var columnValue=$(this).val();
 
            $.ajax({
-              url:"dishServer.php",
+              url:".php",
               data: {dishDetailId:dishDetailId,columnName:columnName,columnValue:columnValue,option:"dishDetailChange" },
                dataType: "text",
                method:"POST",
@@ -164,7 +166,7 @@ WHERE dd.id='.$dishDetailId.'';
        {
            var dishDetailId=$("#dishDetailID").val();
            $.ajax({
-               url:"dishServer.php",
+               url:".php",
                data: {dishDetailId:dishDetailId,option:"deleteDish" },
                dataType: "text",
                method:"POST",
@@ -176,7 +178,7 @@ WHERE dd.id='.$dishDetailId.'';
                    }
                    else
                    {
-                       window.location.href="http://192.168.64.2/Catering/dish/AllSelectedDishes.php?order=<?php echo json_decode($orderid);?>";
+                       window.location.href="http://192.168.64.2../dish/AllSelectedDishes.php?order=<?php echo json_decode($orderid);?>";
                    }
                }
            });
@@ -184,7 +186,7 @@ WHERE dd.id='.$dishDetailId.'';
        });
         $('#ok').click(function ()
         {
-            window.location.href="http://192.168.64.2/Catering/dish/AllSelectedDishes.php?order=<?php echo json_decode($orderid);?>";
+            window.location.href="http://192.168.64.2../dish/AllSelectedDishes.php?order=<?php echo json_decode($orderid);?>";
         });
 
     });

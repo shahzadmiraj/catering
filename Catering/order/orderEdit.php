@@ -43,8 +43,11 @@ $addresDetail=queryReceive($sql);
         }
     </style>
 </head>
-<body>
-<div class="container">
+<body class="alert-light">
+<?php
+include_once ("../webdesign/header/header.php");
+?>
+<div class="container"  style="margin-top:180px">
     <h1 align="center"> Order View and EDIT</h1>
     <form >
         <?php
@@ -82,7 +85,7 @@ $addresDetail=queryReceive($sql);
         </div>
         <div class="form-group row">
             <label for="orderStatus" class="col-4 col-form-label">Order Status </label>
-            <select id="orderStatus" class=" form-control col-8 form-control">
+            <select  data-column="is_active"   class="order form-control col-8 form-control">
             <?php
             $OrderStatus=array("running","cancel","delieved","clear");
             echo '<option value='.$orderDetail[0][4].'>'.$OrderStatus[$orderDetail[0][4]].'</option>';
@@ -163,21 +166,21 @@ $addresDetail=queryReceive($sql);
                     {
 
                         echo '
-            <a href="http://192.168.64.2/Catering/customer/customerEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=customerAndOrderalreadyHave"   id="cancel" class="form-control col-4 btn btn-danger"> Customer Edit</a>
-            <a href="http://192.168.64.2/Catering/dish/dishDisplay.php?order='.$_GET['order'].'"  id="submit" class="form-control col-4 btn-success"> Display Dish</a>';
+            <a href="http://192.168.64.2../customer/customerEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=customerAndOrderalreadyHave"   id="cancel" class="form-control col-4 btn btn-danger"> Customer Edit</a>
+            <a href="http://192.168.64.2../dish/dishDisplay.php?order='.$_GET['order'].'"  id="submit" class="form-control col-4 btn-success"> Display Dish</a>';
                     }
                     else if($_GET['option']=="customerEdit")
                     {
 
                         echo '
-            <a href="http://192.168.64.2/Catering/customer/customerEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=customerAndOrderalreadyHave"   id="cancel" class="form-control col-4 btn btn-danger"> Customer Edit</a>
-            <a href="http://192.168.64.2/Catering/dish/dishDisplay.php?order='.$_GET['order'].'&option=orderEdit"  id="submit" class="form-control col-4 btn-success"> Display Dish</a>';
+            <a href="http://192.168.64.2../customer/customerEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=customerAndOrderalreadyHave"   id="cancel" class="form-control col-4 btn btn-danger"> Customer Edit</a>
+            <a href="http://192.168.64.2../dish/dishDisplay.php?order='.$_GET['order'].'&option=orderEdit"  id="submit" class="form-control col-4 btn-success"> Display Dish</a>';
 
                     }
                     else if($_GET['option']=="PreviewOrder")
                     {
 
-                        echo '<a href="http://192.168.64.2/Catering/order/PreviewOrder.php?order='.$_GET['order'].'" class="col-6 form-control btn btn-outline-primary" >DONE</a>';
+                        echo '<a href="http://192.168.64.2../order/PreviewOrder.php?order='.$_GET['order'].'" class="col-6 form-control btn btn-outline-primary" >DONE</a>';
                     }
                 }
 
@@ -198,23 +201,6 @@ $addresDetail=queryReceive($sql);
 
       var orderid=  $("#orderid").val();
 
-
-
-      $("#orderStatus").change(function () {
-         var orderstatusid=$(this).val();
-          $.ajax({
-              url: "orderEditServer.php",
-              data:{orderstatusid:orderstatusid,option:'orderstatus',orderid:orderid},
-              dataType:"text",
-              method:"POST",
-              success:function (data) {
-                  if(data!='')
-                  {
-                      alert(data);
-                  }
-              }
-          });
-      });
 
 
         $(document).on("change",'.order',function () {

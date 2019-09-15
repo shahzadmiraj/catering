@@ -5,7 +5,7 @@
  * Date: 2019-09-01
  * Time: 21:31
  */
-include_once ("../connection/connect.php");
+//include  ("../connection/connect.php");
 //date_default_timezone_set("asia/karachi");
 //mysqli_insert_id($connect);
 // //$timestamp = date('Y-m-d H:i:s');
@@ -61,7 +61,7 @@ function querySend($sql)
     </style>
 </head>
 <body>
-
+<p>hellooo header</p>
 
 
 

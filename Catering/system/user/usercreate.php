@@ -24,9 +24,11 @@ include_once ("../../connection/connect.php");
         }
     </style>
 </head>
-<body>
-
-<div class="container">
+<body class="alert-light">
+<?php
+include_once ("../../webdesign/header/header.php");
+?>
+<div class="container"  style="margin-top:180px">
 
     <form id="form" class="card shadow col-12 p-4">
         <h1 align="center">
@@ -162,7 +164,7 @@ include_once ("../../connection/connect.php");
                     }
                     else
                     {
-                        window.location.href="";
+                        window.location.href="../user/userDisplay.php";
                     }
                 }
             });
