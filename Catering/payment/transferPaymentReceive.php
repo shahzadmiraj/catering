@@ -7,7 +7,7 @@
  */
 
 include_once ("../connection/connect.php");
-session_start();
+
 $userId='';
 $orderTable_id="";
 if(!isset($_GET['option']))
@@ -16,22 +16,13 @@ if(!isset($_GET['option']))
     $orderTable_id = $_GET['order'];
 }
 $userId = $_SESSION['userid'];
-function queryReceive($sql)
-{
-    global $connect;
-    $result = mysqli_query($connect, $sql);
-    if (!$result) {
-        echo("Error description: " . mysqli_error($connect));
-    }else{
-        return mysqli_fetch_all($result);
-    }
-}
+
 ?>
 
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/Catering/bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -50,22 +41,22 @@ function queryReceive($sql)
 <?php
 include_once ("../webdesign/header/header.php");
 ?>
-<div class="container"  style="margin-top:180px">
+<div class="container"  style="margin-top:200px">
 
-    <div class="col-12 card shadow" id="from3">
+    <div id="from3">
         <h1 align="center">your payments Receive Requests</h1>
 
         <?php
         if(!isset($_GET['option']))
         {
           echo '
-        <a class="btn-success form-control col-4 " href="../order/PreviewOrder.php?order='.$orderTable_id.'"> <- Preview Order</a>';
+        <a class="btn-success form-control col-4 " href="/Catering/order/PreviewOrder.php?order='.$orderTable_id.'"> <- Preview Order</a>';
         }
         else
         {
 
             echo '
-        <a class="btn-success form-control col-4 " href="../user/userDisplay.php"> <- Preview Order</a>';
+        <a class="btn-success form-control col-4 " href="/Catering/user/userDisplay.php"> <- Preview Order</a>';
         }
         ?>
         <div class="form-group row border">

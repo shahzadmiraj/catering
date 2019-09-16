@@ -11,16 +11,6 @@ $sql='SELECT p.id,p.name,ot.destination_date,ot.id  FROM person as p INNER join 
     INNER join orderTable as ot
     on p.id=ot.person_id where ';
 
-function queryReceive($sql)
-{
-    global $connect;
-    $result = mysqli_query($connect, $sql);
-    if (!$result) {
-        echo("Error description: " . mysqli_error($connect));
-    }else{
-        return mysqli_fetch_all($result);
-    }
-}
 
 
 
@@ -86,7 +76,7 @@ if(count($records)>0)
                 <label class="col-form-label col-2">'.$records[$j][3].'</label>
                 <label class="col-form-label col-5">'.$records[$j][1].'</label>
                 <label class="col-form-label col-3">'.$records[$j][2].'</label>
-                <a href="../order/PreviewOrder.php?order='.$records[$j][3].'" class="btn-primary col-2 form-control ">Detail</a>
+                <a href="/Catering/order/PreviewOrder.php?order='.$records[$j][3].'" class="btn-primary col-2 form-control ">Detail</a>
             </div>';
     }
 }

@@ -11,22 +11,12 @@ include_once ("../connection/connect.php");
 $userId=$_GET['user_id'];
 $orderTable_id=$_GET['order'];
 
-function queryReceive($sql)
-{
-    global $connect;
-    $result = mysqli_query($connect, $sql);
-    if (!$result) {
-        echo("Error description: " . mysqli_error($connect));
-    }else{
-        return mysqli_fetch_all($result);
-    }
-}
 ?>
 
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/Catering/bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -47,10 +37,10 @@ include_once ("../webdesign/header/header.php");
 ?>
 <div class="container"  style="margin-top:180px">
 
-    <div class="col-12 card shadow" id="from3">
+    <div  id="from3">
         <h1 align="center">your payments</h1>
 
-        <a class="btn-success form-control col-4 " href="../order/PreviewOrder.php?order=<?php echo $orderTable_id; ?>"> <- Preview Order</a>
+        <a class="btn-success form-control col-4 " href="/Catering/order/PreviewOrder.php?order=<?php echo $orderTable_id; ?>"> <- Preview Order</a>
         <div class="form-group row border">
             <label class="font-weight-bold col-2 col-form-label">ID</label>
             <label class="font-weight-bold col-4 col-form-label">Amount</label>
@@ -70,7 +60,7 @@ py.receive  DESC';
             <label class="col-2 col-form-label">'.$paymentDetail[$l][0].'</label>
             <label class="col-3 col-form-label">'.$paymentDetail[$l][1].'</label>
             <label class="col-5 col-form-label">'.$paymentDetail[$l][2].'</label>
-            <a href="../payment/paymentDisplaySend.php?user_id='.$userId.'&payment='.$paymentDetail[$l][0].'&order='.$orderTable_id.'" class="col-2 form-control btn-primary">Send</a>
+            <a href="/Catering/payment/paymentDisplaySend.php?user_id='.$userId.'&payment='.$paymentDetail[$l][0].'&order='.$orderTable_id.'" class="col-2 form-control btn-primary">Send</a>
         </div>';
         }
         ?>

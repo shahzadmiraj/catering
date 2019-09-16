@@ -14,31 +14,12 @@ if(isset($_SESSION["userid"]))
     header('location:userDisplay.php');
     exit();
 }
-function queryReceive($sql)
-{
-    global $connect;
-    $result = mysqli_query($connect, $sql);
-    if (!$result) {
-        echo("Error description: " . mysqli_error($connect));
-    }else{
-        return mysqli_fetch_all($result);
-    }
-}
-
-function querySend($sql)
-{
-    global $connect;
-    $result = mysqli_query($connect, $sql);
-    if (!$result) {
-        echo("Error description: " . mysqli_error($connect));
-    }
-}
 
 ?>
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/Catering/bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -53,29 +34,29 @@ function querySend($sql)
         }
     </style>
 </head>
-<body>
+<body class="container">
 
-<div class="badge-danger  w-100 shadow fixed-top  " style="height: 120px">
+<div class="badge-danger col-12 shadow fixed-top  " style="height: 170px">
     <h1 align="center">Welcome  to</h1>
        <h2 align="center"> New Kashmir Food Center</h2>
 </div>
 
 
 
-<div class=" container badge-dark card p-5  m-6" style="margin-top:180px" >
+<div class="col-12 card badge-dark" style="margin-top:180px;" >
     <h1 align="center">User Login</h1>
-    <form class="col-12 shadow" id="formLogin">
+    <form class="col-12" id="formLogin">
     <div class="form-group row">
-        <label class="col-form-label col-4">User Name</label>
-        <input  type="text" class="col-8 form-control" name="username">
+        <label class="col-form-label col-5">UserName</label>
+        <input  type="text" class="col-7 form-control" name="username">
     </div>
         <div class="form-group row">
-            <label class="col-form-label col-4">Password</label>
-            <input type="password" class="col-8 form-control" name="password">
+            <label class="col-form-label col-5">Password</label>
+            <input type="password" class="col-7 form-control" name="password">
         </div>
 
         <div class="form-group row">
-            <input id="login" type="submit" class="form-control btn btn-success"  value="logIN">
+            <input id="login" type="button" class="form-control btn btn-success"  value="logIN">
         </div>
     </form>
 </div>
@@ -89,6 +70,7 @@ function querySend($sql)
 
        $('#login').click(function ()
        {
+
            var formdata=new FormData($("#formLogin")[0]);
            formdata.append("option","login");
             $.ajax({
@@ -99,13 +81,14 @@ function querySend($sql)
               processData: false,
               success:function (data)
               {
+
                   if(data!='')
                   {
                       alert(data);
                   }
                   else
                   {
-                     // window.location.href='userDisplay.php?userid=<?php ; ?>';
+                     location.reload();
                   }
 
               }

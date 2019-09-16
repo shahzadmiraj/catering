@@ -21,7 +21,7 @@ $orderTable_id=$_GET['order'];
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/Catering/bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -36,13 +36,13 @@ $orderTable_id=$_GET['order'];
         }
     </style>
 </head>
-<body class="alert-light">
+<body >
 <?php
 include_once ("../webdesign/header/header.php");
 ?>
 <div class="container"  style="margin-top:180px">
 
-    <form class="col-12 card shadow" id="from2">
+    <form class="col-12 card shadow badge-warning" id="from2">
         <input hidden name="user_id" value="<?php
         echo $userId;
         ?>">
@@ -67,17 +67,17 @@ include_once ("../webdesign/header/header.php");
         </div>
         <div class="form-group row">
             <label class="col-4 col-form-label">Rating Customer</label>
-            <span id="showRange" class="form-control col-2"></span>
-            <input id="rangeInput" step="1" type="range" max="5" min="1" value="3" name="rating" class="form-control col-6">
+            <span  id="showRange" class="form-control col-2"></span>
+            <input  id="rangeInput" step="1" type="range" max="5" min="1" value="3" name="rating" class="col-6">
+
 
         </div>
-
         <div class="form-group row">
             <label class="col-4 col-form-label">personality</label>
             <textarea type="text" name="personality" class="col-8 form-control"></textarea>
         </div>
         <div class="form-group row">
-            <a href="../order/PreviewOrder.php?order=<?php echo $orderTable_id;?>" class="form-control col-3 btn-danger">cancel</a>
+            <a href="/Catering/order/PreviewOrder.php?order=<?php echo $orderTable_id;?>" class="form-control col-3 btn-danger">cancel</a>
             <button id="submitBtnfrom" type="submit" class="form-control col-3 btn-primary">Submit</button>
 
         </div>
@@ -94,7 +94,8 @@ include_once ("../webdesign/header/header.php");
 
     $(document).ready(function () {
 
-        $('#showRange').html($("#rangeInput").val());
+        $('#showRange').html($("#rangeInput").val())
+
         $("#rangeInput").change(function () {
             $('#showRange').html($("#rangeInput").val());
         });

@@ -10,16 +10,6 @@ include_once ("../connection/connect.php");
 $userId=$_GET['user_id'];
 $paymentId=$_GET['payment'];
 $orderid=$_GET['order'];
-function queryReceive($sql)
-{
-    global $connect;
-    $result = mysqli_query($connect, $sql);
-    if (!$result) {
-        echo("Error description: " . mysqli_error($connect));
-    }else{
-        return mysqli_fetch_all($result);
-    }
-}
 
 $sql='SELECT `id`, `amount`, `nameCustomer`, `receive`, `IsReturn`,`sendingStatus` FROM `payment` WHERE id='.$paymentId.'';
 $paymentDetail=queryReceive($sql);
@@ -28,7 +18,7 @@ $paymentDetail=queryReceive($sql);
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/Catering/bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -47,7 +37,7 @@ $paymentDetail=queryReceive($sql);
 <?php
 include_once ("../webdesign/header/header.php");
 ?>
-<div class="container"  style="margin-top:180px">
+<div class="container"  style="margin-top:200px">
 
 
     <div class="col-12 shadow card">
@@ -110,7 +100,7 @@ include_once ("../webdesign/header/header.php");
 
 
         <div class="form-group row">
-            <a href="../payment/transferPayment.php?order=<?php echo $orderid; ?>&user_id=<?php echo $userId;?> " class="col-6 btn btn-danger "> Cancel</a>
+            <a href="/Catering/payment/transferPayment.php?order=<?php echo $orderid; ?>&user_id=<?php echo $userId;?> " class="col-6 btn btn-danger "> Cancel</a>
             <input  id="paymentsend" type="button" class="col-6 btn btn-success" value="<?php
 
             if($paymentDetail[0][5]==0)
@@ -166,7 +156,7 @@ include_once ("../webdesign/header/header.php");
                         }
                         else
                         {
-                            window.location.href="../payment/transferPayment.php?order=<?php echo $orderid;?>&user_id=<?php echo $userId;?>";
+                            window.location.href="/Catering/payment/transferPayment.php?order=<?php echo $orderid;?>&user_id=<?php echo $userId;?>";
                         }
                   }
               });
@@ -175,7 +165,7 @@ include_once ("../webdesign/header/header.php");
           else if(btnsender=='Confirming')
           {
               alert("your request has been sent to the next user so please wait for it");
-              window.location.href="../payment/transferPayment.php?order=<?php echo $orderid; ?>&user_id=<?php echo $userId;?>";
+              window.location.href="/Catering/payment/transferPayment.php?order=<?php echo $orderid; ?>&user_id=<?php echo $userId;?>";
           }
        });
 

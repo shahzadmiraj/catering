@@ -6,14 +6,6 @@
  * Time: 16:25
  */
 include_once ("../../connection/connect.php");
-function querySend($sql)
-{
-    global $connect;
-    $result = mysqli_query($connect, $sql);
-    if (!$result) {
-        echo("Error description: " . mysqli_error($connect));
-    }
-}
 if(isset($_POST['option']))
 {
     if($_POST["option"]=="addDishsystem")

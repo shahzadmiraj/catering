@@ -8,17 +8,7 @@
 
 
 include_once ("../connection/connect.php");
-session_start();
-function querySend($sql)
-{
-    global $connect;
-    $result = mysqli_query($connect, $sql);
-    if (!$result)
-    {
-        echo  $sql;
-        echo("Error description: " . mysqli_error($connect));
-    }
-}
+
 
 if($_POST['option']=="orderChange")
 {

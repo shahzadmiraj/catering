@@ -7,17 +7,7 @@
  */
 
 include_once ("../connection/connect.php");
-session_start();
-function queryReceive($sql)
-{
-    global $connect;
-    $result = mysqli_query($connect, $sql);
-    if (!$result) {
-        echo("Error description: " . mysqli_error($connect));
-    }else{
-        return mysqli_fetch_all($result);
-    }
-}
+
 
 if(isset($_POST["option"]))
 {
@@ -37,6 +27,7 @@ if(isset($_POST["option"]))
             $_SESSION['userid']=$userDetail[0][0];
             $_SESSION['isOwner']=$userDetail[0][1];
             $_SESSION['username']=$userName;
+
 
         }
     }

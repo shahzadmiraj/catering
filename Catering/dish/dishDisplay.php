@@ -7,28 +7,6 @@
  */
 include_once ("../connection/connect.php");
 
-
-function queryReceive($sql)
-{
-    global $connect;
-    $result = mysqli_query($connect, $sql);
-    if (!$result) {
-        echo("Error description: " . mysqli_error($connect));
-    }else{
-        return mysqli_fetch_all($result);
-    }
-}
-function querySend($sql)
-{
-    global $connect;
-    $result = mysqli_query($connect, $sql);
-    if (!$result) {
-        echo("Error description: " . mysqli_error($connect));
-    }
-}
-
-
-
 $sql='SELECT `id`, `name` FROM `dish_type` WHERE 1';
 $dishTypeDetail=queryReceive($sql);
 
@@ -36,7 +14,7 @@ $dishTypeDetail=queryReceive($sql);
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/Catering/bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -56,15 +34,16 @@ $dishTypeDetail=queryReceive($sql);
 <?php
 include_once ("../webdesign/header/header.php");
 ?>
-<div class="container"  style="margin-top:180px">
+<div class="container"  style="margin-top:210px">
 
+    <h1 align="center" >Select Dishes</h1>
+    <form class="card " id="formid" method="post" action="dishCreate.php?order=<?php echo $_GET['order'];?>&option=dishDisplay">
 
-    <form class="card" id="formid" method="post" action="dishCreate.php?order=<?php echo $_GET['order'];?>&option=dishDisplay">
         <div class="col-12" id="selected">
-    <div class="form-group row border">
-        <label  class="text-center col-form-label col-7">Dish Name</label>
-        <label class="text-center col-form-label col-3">No of kind</label>
-        <label class=" text-center col-form-label col-2">Delete</label>
+    <div class="form-group row">
+        <label  class="text-center col-form-label col-5">Dish Name</label>
+        <label class="text-center col-form-label col-3">Types</label>
+        <label class=" text-center col-form-label col-3">Delete</label>
     </div>
 
 
@@ -77,7 +56,7 @@ include_once ("../webdesign/header/header.php");
             {
                 if($_GET['option']=="orderCreate")
                 {
-                    echo '<a href="../order/orderEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=dishDisplay" class="col-5 form-control btn btn-danger">Edit Order</a>';
+                    echo '<a href="/Catering/order/orderEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=dishDisplay" class="col-5 form-control btn btn-danger">Edit Order</a>';
                 }
                 else if($_GET['option']=="orderEdit")
                 {
@@ -98,27 +77,28 @@ include_once ("../webdesign/header/header.php");
 
 
 
-    <div class="card" style="margin-top: 20px">
+    <div class="col-12 border " style="margin-top: 20px;background-color: hsl(346, 100%, 64%);">
     <?php
 
         $display='';
         for($i=0;$i<count($dishTypeDetail);$i++)
         {
-            $display.='<div class="col-12">
-                <h2 align="center"> '.$dishTypeDetail[$i][1].'</h2>
-        <div class="col-12  row ">';
+            $display.='<h2 align="center " class="col-12 btn-warning"> '.$dishTypeDetail[$i][1].'</h2>';
 
             $sql='SELECT `name`, `id`, `image`, `dish_type_id` FROM `dish` WHERE dish_type_id='.$dishTypeDetail[$i][0].'';
             $dishDetail=queryReceive($sql);
-
+            $display.='<div class="form-group row">';
             for ($j=0;$j<count($dishDetail);$j++)
             {
-                $display .= '  <div class="card  shadow-lg  bg-white " style="width:200px;">
-        <img class="card-img-top" src="../gmail.png" alt="Card image">
-        <div class="card-body">
-            <label class="card-title co">' . $dishDetail[$j][0] . '</label>
-            <button type="button" data-dishname="'. $dishDetail[$j][0] .'" data-dishid="'. $dishDetail[$j][1] .'" class="add btn btn-primary col-12">Select</button>
-        </div></div>';
+                $display .= ' 
+         <div class="col-6 card mb-1 p-1 shadow bg-white" style="    height: 260px;">
+        <img class="card-img-top " src="../gmail.png" alt="Card image" style="height: 150px">
+        <div class="form-group col-12">
+            <p class="font-weight-bold p-0 card-title col-12
+            ">' . $dishDetail[$j][0] . '</p>
+            <button type="button" data-dishname="'. $dishDetail[$j][0] .'" data-dishid="'. $dishDetail[$j][1] .'" class="add col-12 mb-0 btn btn-primary">Select</button>
+        </div>
+        </div>';
             }
             $display.='</div>';
         }
@@ -143,7 +123,7 @@ include_once ("../webdesign/header/header.php");
                '                <h2 class="form-control col-7">'+dishName+'</h2>\n' +
                '                <input type="number" value="1" name="types[]" class="form-control col-3">\n' +
                '                <input type="number" hidden name="dishid[]" value="'+dishId+'">\n' +
-               '                <input type="button" class="remove form-control col-2 btn-primary" data-dishid="'+dishId+'" value="-">\n' +
+               '                <input type="button" class="remove form-control col-2 btn-danger" data-dishid="'+dishId+'" value="-">\n' +
                '            </div>');
 
        }) ;

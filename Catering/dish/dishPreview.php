@@ -7,16 +7,6 @@
  */
 include_once ("../connection/connect.php");
 
-function queryReceive($sql)
-{
-    global $connect;
-    $result = mysqli_query($connect, $sql);
-    if (!$result) {
-        echo("Error description: " . mysqli_error($connect));
-    }else{
-        return mysqli_fetch_all($result);
-    }
-}
 $orderid=$_GET['order'];
 
 
@@ -26,7 +16,7 @@ $orderid=$_GET['order'];
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/Catering/bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -100,15 +90,18 @@ WHERE dd.id='.$dishDetailId.'';
             {
                 if($_GET['option']=="Allselected")
                 {
-                    $display.='<a href="http://192.168.64.2../dish/AllSelectedDishes.php?order='.$_GET['order'].'&option=PreviewOrder" class="submitForm form-control btn col-4 btn-primary">Done</a>
-<input id="cancel_dish" type="button"  class="cancelForm form-control btn col-4 btn-danger" value="dish cancel">';
+                    $display.='
+                    <input id="cancel_dish" type="button"  class="cancelForm form-control btn col-4 btn-danger" value="dish cancel">
+                    <a href="/Catering/dish/AllSelectedDishes.php?order='.$_GET['order'].'&option=PreviewOrder" class="submitForm form-control btn col-4 btn-primary">Done</a>
+';
                 }
             }
             else
              {
 
-                $display .= '<input id="cancel_dish" type="button"  class="cancelForm form-control btn col-4 btn-danger" value="dish cancel">
-                <input  id="ok" type="button" class="submitForm form-control btn col-4 btn-primary" value="ok">';
+                $display .= '<input  id="ok" type="button" class="submitForm form-control btn col-4 btn-primary" value="ok">
+<input id="cancel_dish" type="button"  class="cancelForm form-control btn col-4 btn-danger" value="dish cancel">
+                ';
             }
             $display.='</div>
         </div>
@@ -178,7 +171,7 @@ WHERE dd.id='.$dishDetailId.'';
                    }
                    else
                    {
-                       window.location.href="http://192.168.64.2../dish/AllSelectedDishes.php?order=<?php echo json_decode($orderid);?>";
+                       window.location.href="/Catering/dish/AllSelectedDishes.php?order=<?php echo json_decode($orderid);?>";
                    }
                }
            });
@@ -186,7 +179,7 @@ WHERE dd.id='.$dishDetailId.'';
        });
         $('#ok').click(function ()
         {
-            window.location.href="http://192.168.64.2../dish/AllSelectedDishes.php?order=<?php echo json_decode($orderid);?>";
+            window.location.href="/Catering/dish/AllSelectedDishes.php?order=<?php echo json_decode($orderid);?>";
         });
 
     });

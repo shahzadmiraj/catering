@@ -5,27 +5,17 @@
  * Date: 2019-09-05
  * Time: 13:39
  */
-session_start();
+
 include_once ("../connection/connect.php");
 
-function querySend($sql)
-{
-    global $connect;
-    $result = mysqli_query($connect, $sql);
-    if (!$result) {
-        echo("Error description: " . mysqli_error($connect));
-    }
-}
 
 if(isset($_POST['option']))
 {
-
+;
     if($_POST['option']=="change")
     {
 
-        if (isset($_SESSION['customer']))
-        {
-            $customerId = $_SESSION['customer'];
+        $customerId = $_POST['customerid'];
             $column_name = $_POST['columnname'];
             $text = $_POST['value'];
             $number_table = $_POST['edittype'];
@@ -45,7 +35,6 @@ if(isset($_POST['option']))
             }
 
 
-        }
     }
     else if($_POST['option']=="deleteNumber")
     {
@@ -56,13 +45,12 @@ if(isset($_POST['option']))
     }
     else if($_POST['option']=="addNumber")
     {
-        if (isset($_SESSION['customer']))
-        {
-            $customerId = $_SESSION['customer'];
+
+        $customerId = $_POST['customerid'];
             $numberText=$_POST['number'];
             $sql='INSERT INTO `number`(`number`, `id`, `is_number_active`, `person_id`) VALUES ("'.$numberText.'",NULL,1,"'.$customerId.'")';
             querySend($sql);
-        }
+
     }
 }
 

@@ -7,31 +7,12 @@
  */
 include_once ("../../connection/connect.php");
 
-function queryReceive($sql)
-{
-    global $connect;
-    $result = mysqli_query($connect, $sql);
-    if (!$result) {
-        echo("Error description: " . mysqli_error($connect));
-    }else{
-        return mysqli_fetch_all($result);
-    }
-}
-
-function querySend($sql)
-{
-    global $connect;
-    $result = mysqli_query($connect, $sql);
-    if (!$result) {
-        echo("Error description: " . mysqli_error($connect));
-    }
-}
 
 ?>
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="../../bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/Catering/../bootstrap.min.css">
     <script src="../../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../../bootstrap.min.js"></script>
     <meta charset="utf-8">

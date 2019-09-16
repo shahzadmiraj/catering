@@ -10,7 +10,7 @@ include_once ("../../connection/connect.php");
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="../../bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/Catering/../bootstrap.min.css">
     <script src="../../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -164,7 +164,7 @@ include_once ("../../webdesign/header/header.php");
                     }
                     else
                     {
-                        window.location.href="../user/userDisplay.php";
+                        window.location.href="/Catering/user/userDisplay.php";
                     }
                 }
             });

@@ -6,29 +6,7 @@
  * Time: 21:31
  */
 include_once ("../../connection/connect.php");
-//date_default_timezone_set("asia/karachi");
-//mysqli_insert_id($connect);
-// //$timestamp = date('Y-m-d H:i:s');
-//    $date = date('Y-m-d');
-//$timeSet=date('H:i',time($orderDetail[0][7]));
-function queryReceive($sql)
-{
-    global $connect;
-    $result = mysqli_query($connect, $sql);
-    if (!$result) {
-        echo("Error description: " . mysqli_error($connect));
-    }else{
-        return mysqli_fetch_all($result);
-    }
-}
-function querySend($sql)
-{
-    global $connect;
-    $result = mysqli_query($connect, $sql);
-    if (!$result) {
-        echo("Error description: " . mysqli_error($connect));
-    }
-}
+
 $dishID=$_GET['dishid'];
 $sql='SELECT d.name,(SELECT dt.name FROM dish_type as dt WHERE dt.id=d.dish_type_id), d.image, d.dish_type_id, d.isExpire FROM dish as d WHERE d.id='.$dishID.'';
 $dishDetail=queryReceive($sql);
@@ -38,7 +16,7 @@ $attributes=queryReceive($sql);
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="../../bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/Catering/../bootstrap.min.css">
     <script src="../../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -62,7 +40,7 @@ include_once ("../../webdesign/header/header.php");
         <div class="col-12 shadow card p-4">
             <input id="dishid" type="number" hidden value="<?php echo $dishID; ?>">
             <div class="form-group row">
-                <a href="../system/dish/dishesDetail.php" class=" form-control col-3 btn-warning"> Previous</a>
+                <a href="/Catering/system/dish/dishesDetail.php" class=" form-control col-3 btn-warning"> Previous</a>
                 <span class="font-weight-bold text-center col-9 form-control"> Edit Dish in System</span>
             </div>
             <div class="form-group row">
@@ -176,7 +154,7 @@ include_once ("../../webdesign/header/header.php");
                     }
                     else
                     {
-                        window.location.href='../system/dish/dishesDetail.php';
+                        window.location.href="/Catering/system/dish/dishesDetail.php';
                     }
                 }
             });
@@ -226,7 +204,7 @@ include_once ("../../webdesign/header/header.php");
                     }
                     else
                     {
-                        window.location.href="../system/dish/dishesDetail.php";
+                        window.location.href="/Catering/system/dish/dishesDetail.php";
                     }
                 }
             });

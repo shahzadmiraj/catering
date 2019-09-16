@@ -6,11 +6,12 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
+
 ?>
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/Catering/bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -29,10 +30,10 @@ include_once ("../connection/connect.php");
 <?php
 include_once ("../webdesign/header/header.php");
 ?>
-<div class="container"  style="margin-top:180px">
+<div class="container"  style="margin-top:200px">
 
     <h1 align="center"> Order Create</h1>
-    <form >
+    <form>
         <input type="number" hidden id="customeridForm" value=<?php echo $_GET['customer'];?>   >
         <div class="form-group row">
         <label for="persons" class="col-4 col-form-label"> no of guests</label>
@@ -73,7 +74,7 @@ include_once ("../webdesign/header/header.php");
                     if(($_GET['option']=="CustomerCreate")||($_GET['option']=="customerEdit"))
                     {
 
-                        echo '<a href="../customer/customerEdit.php?customer='.$_GET['customer'].'&option=orderCreate" class="form-control col-4 btn btn-danger">Edit Customer</a>';
+                        echo '<a href="/Catering/customer/customerEdit.php?customer='.$_GET['customer'].'&option=orderCreate" class="form-control col-4 btn btn-danger">Edit Customer</a>';
                     }
                 }
                 else
@@ -116,7 +117,7 @@ include_once ("../webdesign/header/header.php");
                   }
                   else
                   {
-                      window.location.href="../dish/dishDisplay.php?order="+data+"&customer="+customerid+"&option=orderCreate";
+                      window.location.href="/Catering/dish/dishDisplay.php?order="+data+"&customer="+customerid+"&option=orderCreate";
                   }
                }
            });

@@ -6,40 +6,13 @@
  * Time: 16:48
  */
 include_once ("../connection/connect.php");
-//session_start();
-//if(!isset($_SESSION['order']))
-//{
-//        echo " session of order is not created";
-//        exit();
-//}
-//$_POST['dishid']=array(1,2);
-//$_POST['types']=array(1,2);
-if(!isset($_POST['dishid']))
+
+if((!isset($_POST['dishid']))&&($_GET['order']))
 {
-    echo "dish is not created";
+    header("location:AllSelectedDishes.php?order=".$_GET['order']."");
     exit();
 }
-
 $orderId=$_GET['order'];
-function queryReceive($sql)
-{
-    global $connect;
-    $result = mysqli_query($connect, $sql);
-    if (!$result) {
-        echo("Error description: " . mysqli_error($connect));
-    }else{
-        return mysqli_fetch_all($result);
-    }
-}
-
-function querySend($sql)
-{
-    global $connect;
-    $result = mysqli_query($connect, $sql);
-    if (!$result) {
-        echo("Error description: " . mysqli_error($connect));
-    }
-}
 
 ?>
 
@@ -47,7 +20,7 @@ function querySend($sql)
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/Catering/bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -65,7 +38,7 @@ function querySend($sql)
 <?php
 include_once ("../webdesign/header/header.php");
 ?>
-<div class="container"  style="margin-top:180px">
+<div class="container"  style="margin-top:200px">
 
     <h1 align="center">Create dishes</h1>
     <input hidden type="number" id="orderIdindish" value="<?php echo $_GET["order"];?>">
@@ -85,7 +58,7 @@ include_once ("../webdesign/header/header.php");
             $sql = 'SELECT d.id,d.name FROM dish as d WHERE d.id=' . $value . '';
             $dishDetail = queryReceive($sql);
             $display .= '
-    <form class="col-12" id="form_' . $number . '">
+    <form  id="form_' . $number . '">
 
         <div class="border shadow-lg p-4 mb-4 bg-white   col-12">
             <h2 align="center">' . $dishDetail[0][1] . '</h2>
@@ -148,7 +121,7 @@ WHERE d.id=' . $value . '';
             if(totalitems==0)
             {
                 var orderid=$("#orderIdindish").val();
-                window.location.href="../dish/AllSelectedDishes.php?order="+orderid;
+                window.location.href="/Catering/dish/AllSelectedDishes.php?order="+orderid;
             }
        }
 

@@ -6,18 +6,7 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-function queryReceive($sql)
-{
-    global $connect;
-    $result = mysqli_query($connect, $sql);
-    if (!$result)
-    {
-        echo $sql;
-        echo("Error description: " . mysqli_error($connect));
-    }else{
-        return mysqli_fetch_all($result);
-    }
-}
+
 if(!isset($_GET['is_active']))
 {
     exit();
@@ -26,7 +15,7 @@ if(!isset($_GET['is_active']))
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/Catering/bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -92,12 +81,15 @@ include_once ("../webdesign/header/header.php");
             </select>
         </div>
         <div class="form-group row">
-            <a href="http://192.168.64.2../user/userDisplay.php" class="col-4 form-control btn-danger">cancel</a>
+            <a href="/Catering/user/userDisplay.php" class="col-4 form-control btn-danger">cancel</a>
             <button type="button" class="col-4 form-control btn-success">Find</button>
         </div>
 
         </form>
-        <div class="col-12 card shadow" id="recordsAll">
+
+
+
+        <div  id="recordsAll">
             <?php
             $sql='SELECT p.id,p.name,ot.destination_date,ot.id  FROM person as p INNER join number as n on p.id=n.person_id
     INNER join orderTable as ot
@@ -124,7 +116,7 @@ include_once ("../webdesign/header/header.php");
                 <label class="col-form-label col-2">'.$records[$j][3].'</label>
                 <label class="col-form-label col-5">'.$records[$j][1].'</label>
                 <label class="col-form-label col-3">'.$records[$j][2].'</label>
-                <a href="http://192.168.64.2../order/PreviewOrder.php?order='.$records[$j][3].'" class="btn-primary col-2 form-control ">Detail</a>
+                <a href="/Catering/order/PreviewOrder.php?order='.$records[$j][3].'" class="btn-primary col-2 form-control ">Detail</a>
             </div>';
                 }
             }

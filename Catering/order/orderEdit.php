@@ -7,16 +7,6 @@
  */
 include_once ("../connection/connect.php");
 
-function queryReceive($sql)
-{
-    global $connect;
-    $result = mysqli_query($connect, $sql);
-    if (!$result) {
-        echo("Error description: " . mysqli_error($connect));
-    }else{
-        return mysqli_fetch_all($result);
-    }
-}
 $orderId=$_GET['order'];
 $sql='SELECT `id`, `total_amount`, `order_comments`, `total_person`, `is_active`, `destination_date`, `booking_date`, `destination_time`, `address_id`, `extre_charges`, `person_id` FROM `orderTable` WHERE id='.$orderId.'';
 $orderDetail=queryReceive($sql);
@@ -28,7 +18,7 @@ $addresDetail=queryReceive($sql);
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/Catering/bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -47,7 +37,7 @@ $addresDetail=queryReceive($sql);
 <?php
 include_once ("../webdesign/header/header.php");
 ?>
-<div class="container"  style="margin-top:180px">
+<div class="container"  style="margin-top:200px">
     <h1 align="center"> Order View and EDIT</h1>
     <form >
         <?php
@@ -166,21 +156,21 @@ include_once ("../webdesign/header/header.php");
                     {
 
                         echo '
-            <a href="http://192.168.64.2../customer/customerEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=customerAndOrderalreadyHave"   id="cancel" class="form-control col-4 btn btn-danger"> Customer Edit</a>
-            <a href="http://192.168.64.2../dish/dishDisplay.php?order='.$_GET['order'].'"  id="submit" class="form-control col-4 btn-success"> Display Dish</a>';
+            <a href="/Catering/customer/customerEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=customerAndOrderalreadyHave"   id="cancel" class="form-control col-4 btn btn-danger"> Customer Edit</a>
+            <a href="/Catering/dish/dishDisplay.php?order='.$_GET['order'].'"  id="submit" class="form-control col-4 btn-success"> Display Dish</a>';
                     }
                     else if($_GET['option']=="customerEdit")
                     {
 
                         echo '
-            <a href="http://192.168.64.2../customer/customerEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=customerAndOrderalreadyHave"   id="cancel" class="form-control col-4 btn btn-danger"> Customer Edit</a>
-            <a href="http://192.168.64.2../dish/dishDisplay.php?order='.$_GET['order'].'&option=orderEdit"  id="submit" class="form-control col-4 btn-success"> Display Dish</a>';
+            <a href="/Catering/customer/customerEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=customerAndOrderalreadyHave"   id="cancel" class="form-control col-4 btn btn-danger"> Customer Edit</a>
+            <a href="/Catering/dish/dishDisplay.php?order='.$_GET['order'].'&option=orderEdit"  id="submit" class="form-control col-4 btn-success"> Display Dish</a>';
 
                     }
                     else if($_GET['option']=="PreviewOrder")
                     {
 
-                        echo '<a href="http://192.168.64.2../order/PreviewOrder.php?order='.$_GET['order'].'" class="col-6 form-control btn btn-outline-primary" >DONE</a>';
+                        echo '<a href="/Catering/order/PreviewOrder.php?order='.$_GET['order'].'" class="col-6 form-control btn btn-outline-primary" >DONE</a>';
                     }
                 }
 
