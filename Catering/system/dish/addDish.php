@@ -28,7 +28,11 @@ include_once ("../../connection/connect.php");
     </style>
 </head>
 <body>
-<div class="container">
+<?php
+include_once ("../../webdesign/header/header.php");
+?>
+<div class="container"  style="margin-top:150px">
+
     <form>
     <div class="col-12 shadow card p-4">
     <div class="form-group row">
@@ -41,7 +45,7 @@ include_once ("../../connection/connect.php");
         </div>
         <div class="form-group row">
             <label class="col-4 col-form-label">Dish Image</label>
-            <input  name="dishimage" class="col-8 form-control" type="text">
+            <input  name="image" class="col-8 form-control" type="file">
         </div>
         <div class="form-group row">
             <label class="col-4 col-form-label">Attribute Name</label>
@@ -111,7 +115,7 @@ include_once ("../../connection/connect.php");
         $("#submit").click(function (e) {
            e.preventDefault();
            var formdata=new FormData($("form")[0]);
-            formdata.append("option","addDishsystem");
+            formdata.append("option","addDishsystem");//addDishsystem
              $.ajax({
               url:"dishServer.php",
               method:"POST",
@@ -126,7 +130,7 @@ include_once ("../../connection/connect.php");
                   }
                   else
                   {
-                      window.location.href="/Catering/system/dish/dishesDetail.php';
+                      window.location.href="/Catering/system/dish/dishesDetail.php";
                   }
               }
           });

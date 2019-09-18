@@ -29,15 +29,15 @@
 <!--<body >-->
 
 <div class=" btn-danger w-100 shadow fixed-top ">
-<h1 align="center">Welcome to New Kashmir Food Center</h1>
-    <h3 align="center " class="text-capitalize">
+<p align="center">Welcome to New Kashmir Food Center</p>
+    <p align="center " class="text-capitalize">
         <?php
         if(isset($_SESSION['username']))
         {
             echo '<span class="btn-light  shadow font-weight-bold btn col-4">'.$_SESSION['username'].'</span>';
         }
         ?>
-    </h3>
+    </p>
 <a href="/Catering/user/userLogin.php" class="btn btn-warning">Home Page</a>
 </div>
 

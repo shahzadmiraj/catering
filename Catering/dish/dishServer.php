@@ -29,9 +29,12 @@ if($_POST['option']=='createDish')
     $dishId=$_POST['dishId'];
     $attributesId=$_POST['attributeId'];
     $attributesValue=$_POST['attributeValue'];
-    $each_price=$_POST['each_price'];
-    $quantity=$_POST['quantity'];
+    $each_price=chechIsEmpty($_POST['each_price']);
+    $quantity=chechIsEmpty($_POST['quantity']);
     $describe=$_POST['describe'];
+
+
+
     $CurrentDateTime=date('Y-m-d H:i:s');
     $sql='INSERT INTO `dish_detail`(`id`, `describe`, `price`, `expire_date`, `quantity`, `dish_id`, `orderTable_id`)VALUES(NULL,"'.$describe.'","'.$each_price.'",NULL,"'.$quantity.'",'.$dishId.','.$orderId.')';
     querySend($sql);
@@ -47,7 +50,7 @@ VALUES (NULL,"'.$attributesValue[$i].'",'.$attributesId[$i].','.$dishDetailId.')
 else if($_POST["option"]=='attributeChange')
 {
     $attributeid=$_POST['attributeid'];
-    $valueAttribute=$_POST['value'];
+    $valueAttribute=chechIsEmpty($_POST['value']);
     $sql='UPDATE attribute_name as an SET an.quantity ='.$valueAttribute.' WHERE an.id='.$attributeid.'';
     querySend($sql);
 }
@@ -55,7 +58,7 @@ else if($_POST['option']=='dishDetailChange')
 {
     $dishDetailId=$_POST['dishDetailId'];
     $columnName=$_POST['columnName'];
-    $columnValue=$_POST['columnValue'];
+    $columnValue=chechIsEmpty($_POST['columnValue']);
     $sql='UPDATE dish_detail as dd SET dd.'.$columnName.'="'.$columnValue.'" WHERE dd.id='.$dishDetailId.'';
     querySend($sql);
 }

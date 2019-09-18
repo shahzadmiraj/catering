@@ -34,11 +34,11 @@ if(!isset($_GET['is_active']))
 <?php
 include_once ("../webdesign/header/header.php");
 ?>
-<div class="container"  style="margin-top:180px">
+<div class="container"  style="margin-top:150px">
 
     <h1 align="center"> Orders</h1>
 
-        <form class="col-12 shadow card " id="formId1">
+        <form class="col-12 shadow card mb-4" id="formId1" style="display: none">
         <h2>Search order :</h2>
 
         <div class="form-group row">
@@ -88,8 +88,9 @@ include_once ("../webdesign/header/header.php");
         </form>
 
 
-
+    <h3 align="center" ><button data-display="hide" id="searchBtn" class="btn-outline-info btn float-left ">Search Order</button>display records</h3>
         <div  id="recordsAll">
+
             <?php
             $sql='SELECT p.id,p.name,ot.destination_date,ot.id  FROM person as p INNER join number as n on p.id=n.person_id
     INNER join orderTable as ot
@@ -99,11 +100,10 @@ include_once ("../webdesign/header/header.php");
     ORDER BY ot.destination_date DESC';
 
             $records=queryReceive($sql);
+            $displayRecord='';
             if(count($records)>0)
             {
-
-                $displayRecord = '<h2 align="center">display records</h2>
-            <div class="form-group row border mb-0 p-1">
+            $displayRecord .= '<div class="form-group row border mb-0 p-1">
                 <label class="font-weight-bold col-form-label col-2">order Id</label>
                 <label class="font-weight-bold col-form-label col-5">customer Name</label>
                 <label class="font-weight-bold col-form-label col-3">destination Date</label>
@@ -156,6 +156,24 @@ include_once ("../webdesign/header/header.php");
                         // console.log(data);
                     }
                 });
+        });
+
+
+        $("#searchBtn").click(function () {
+           var display=$(this).data("display");
+           if(display=="hide")
+           {
+               $("#formId1").show('slow');
+               $(this).data("display","show");
+           }
+           else
+           {
+               $("#formId1").hide('slow');
+
+               $(this).data("display","hide");
+
+           }
+
         });
 
 

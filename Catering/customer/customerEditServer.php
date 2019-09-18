@@ -17,7 +17,7 @@ if(isset($_POST['option']))
 
         $customerId = $_POST['customerid'];
             $column_name = $_POST['columnname'];
-            $text = $_POST['value'];
+            $text = chechIsEmpty($_POST['value']);
             $number_table = $_POST['edittype'];
             if ($number_table == 1) {
                 //address table change
@@ -51,6 +51,24 @@ if(isset($_POST['option']))
             $sql='INSERT INTO `number`(`number`, `id`, `is_number_active`, `person_id`) VALUES ("'.$numberText.'",NULL,1,"'.$customerId.'")';
             querySend($sql);
 
+    }
+    else if($_POST['option']=="changeImage")
+    {
+        $customerid=$_POST['customerid'];
+        $previouspath=$_POST['image'];
+        $image="../images/customerimage/".$_FILES['image']['name'];
+        $resultimage=ImageUploaded($_FILES,$image);//$dishimage is destination file location;
+        if($resultimage!="")
+        {
+            print_r($resultimage);
+            exit();
+        }
+        $sql='UPDATE person as p SET p.image="'.$image.'" WHERE p.id='.$customerid.';';
+        querySend($sql);
+        if (file_exists($previouspath))
+        {
+            $deleted = unlink($previouspath);
+        }
     }
 }
 

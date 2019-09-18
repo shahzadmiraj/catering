@@ -7,7 +7,7 @@
  */
 include_once ("../connection/connect.php");
 
-$sql='SELECT `id`, `name` FROM `dish_type` WHERE 1';
+$sql='SELECT dt.id, dt.name FROM dish_type as dt WHERE ISNULL(dt.isExpire)';
 $dishTypeDetail=queryReceive($sql);
 
 ?>
@@ -34,7 +34,7 @@ $dishTypeDetail=queryReceive($sql);
 <?php
 include_once ("../webdesign/header/header.php");
 ?>
-<div class="container"  style="margin-top:210px">
+<div class="container"  style="margin-top:150px">
 
     <h1 align="center" >Select Dishes</h1>
     <form class="card " id="formid" method="post" action="dishCreate.php?order=<?php echo $_GET['order'];?>&option=dishDisplay">
@@ -85,7 +85,7 @@ include_once ("../webdesign/header/header.php");
         {
             $display.='<h2 align="center " class="col-12 btn-warning"> '.$dishTypeDetail[$i][1].'</h2>';
 
-            $sql='SELECT `name`, `id`, `image`, `dish_type_id` FROM `dish` WHERE dish_type_id='.$dishTypeDetail[$i][0].'';
+            $sql='SELECT `name`, `id`, `image`, `dish_type_id` FROM `dish` WHERE (dish_type_id='.$dishTypeDetail[$i][0].') AND (ISNULL(isExpire))';
             $dishDetail=queryReceive($sql);
             $display.='<div class="form-group row">';
             for ($j=0;$j<count($dishDetail);$j++)

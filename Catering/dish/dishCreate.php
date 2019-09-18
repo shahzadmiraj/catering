@@ -38,7 +38,7 @@ $orderId=$_GET['order'];
 <?php
 include_once ("../webdesign/header/header.php");
 ?>
-<div class="container"  style="margin-top:200px">
+<div class="container"  style="margin-top:150px">
 
     <h1 align="center">Create dishes</h1>
     <input hidden type="number" id="orderIdindish" value="<?php echo $_GET["order"];?>">
@@ -67,7 +67,7 @@ include_once ("../webdesign/header/header.php");
 
             $sql = 'SELECT a.id,a.name FROM attribute as a INNER JOIN dish as d
 on d.id=a.dish_id
-WHERE d.id=' . $value . '';
+WHERE (d.id=' . $value . ') AND (ISNULL(a.isExpire))';
 
             $attributeDetail = queryReceive($sql);
             for ($j = 0; $j < count($attributeDetail); $j++) {

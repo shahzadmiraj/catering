@@ -62,7 +62,7 @@ $records=queryReceive($sql);
 if(count($records)>0)
 {
 
-    $displayRecord = '<h2 align="center">display records</h2>
+    $displayRecord = '
             <div class="form-group row border mb-0 p-1">
                 <label class="font-weight-bold col-form-label col-2">order Id</label>
                 <label class="font-weight-bold col-form-label col-5">customer Name</label>

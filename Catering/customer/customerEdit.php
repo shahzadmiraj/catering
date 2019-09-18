@@ -8,7 +8,7 @@
 include_once ("../connection/connect.php");
 
 $customerId=$_GET['customer'];
-$sql = "SELECT `name`, `cnic`, `id`, `date` FROM `person` WHERE id=$customerId";
+$sql = "SELECT `name`, `cnic`, `id`, `date`, `image` FROM `person` WHERE id=".$customerId."";
 $person=queryReceive($sql);
 $sql = "SELECT a.id, a.address_city, a.address_town, a.address_street_no, a.address_house_no, a.person_id FROM address as a inner JOIN person p ON a.person_id=p.id
 WHERE a.person_id=$customerId
@@ -42,13 +42,31 @@ $numbers=queryReceive($sql);
 include_once ("../webdesign/header/header.php");
 ?>
 
-<div class="container " style="margin-top:200px" >
+<div class="container " style="margin-top:150px" >
+
+
+    <h3 align="center">
+        Customer Preview
+    </h3>
+
+    <form id="changeImage">
+
+        <?php
+        echo '<input name="customerid" hidden value="'.$_GET["customer"].'">';
+        ?>
+        <input name="image" hidden value="<?php echo $person[0][4] ?>">
+        <div class=" form-group row">
+            <img src="<?php echo $person[0][4];?> " style="height: 20vh" class="img-thumbnail figure-img" alt="image is not set">
+        </div>
+        <div class="form-group row">
+            <label class="form-check-label col-3">image:</label>
+            <input name="image" id="submitImage" type="file"  class="form-control float-right btn-warning col-9">
+        </div>
+
+    </form>
 
 
 <form id="form" >
-        <h1 align="center">
-            Customer Preview
-        </h1>
     <?php
 
 
@@ -185,6 +203,7 @@ p.id='.$customerId.'';
  {
 
     var customerid=$("#customerId").val();
+
      function execute_person_address(column,text,type)
      {
          $.ajax({
@@ -281,6 +300,32 @@ p.id='.$customerId.'';
              }
          });
      });
+
+     $("#submitImage").change(function () {
+        var formData=new  FormData($("#changeImage")[0]);
+        formData.append("option","changeImage");
+         $.ajax({
+             url:"customerEditServer.php",
+             method:"POST",
+             data:formData,
+             contentType: false,
+             processData: false,
+             success:function (data)
+             {
+                 if(data!='')
+                 {
+                     alert(data);
+                 }
+                 else
+                 {
+                     location.reload();
+                 }
+             }
+         });
+
+
+     });
+
 
  });
 </script>

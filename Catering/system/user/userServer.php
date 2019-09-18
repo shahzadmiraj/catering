@@ -13,8 +13,8 @@ if(isset($_POST['option']))
     if($_POST['option']=="createUser")
     {
 
-        $username=$_POST['username'];
-        $password=$_POST['password'];
+        $username=chechIsEmpty($_POST['username']);
+        $password=chechIsEmpty($_POST['password']);
         $sql='SELECT u.id FROM user as u WHERE (u.password="'.$password.'") AND (u.username="'.$username.'")';
         $userExist=queryReceive($sql);
         if(count($userExist)!=0)
@@ -31,15 +31,18 @@ if(isset($_POST['option']))
         $numberArray = $_POST['number'];
         $isowner=0;
 
-        if($_POST['isowner']=="yes")
+        if(isset($_POST['isowner']))
         {
-            $isowner=1;
+            if($_POST['isowner']=="yes")
+            {
+                $isowner=1;
+            }
         }
         $cnic = $_POST['cnic'];
         $city = $_POST['city'];
         $area = $_POST['area'];
-        $streetNo = $_POST['streetNo'];
-        $houseNo = $_POST['houseNo'];
+        $streetNo = chechIsEmpty($_POST['streetNo']);
+        $houseNo = chechIsEmpty($_POST['houseNo']);
         $date = date('Y-m-d');
         $sql='INSERT INTO `person`(`name`, `cnic`, `id`, `date`) VALUES ("'.$name.'","'.$cnic.'",NULL,"'.$date.'")';
         querySend($sql);

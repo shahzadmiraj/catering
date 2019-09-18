@@ -35,7 +35,7 @@ $orderTable_id=$_GET['order'];
 <?php
 include_once ("../webdesign/header/header.php");
 ?>
-<div class="container"  style="margin-top:180px">
+<div class="container"  style="margin-top:150px">
 
     <div  id="from3">
         <h1 align="center">your payments</h1>

@@ -37,7 +37,7 @@ $addresDetail=queryReceive($sql);
 <?php
 include_once ("../webdesign/header/header.php");
 ?>
-<div class="container"  style="margin-top:200px">
+<div class="container"  style="margin-top:150px">
     <h1 align="center"> Order View and EDIT</h1>
     <form >
         <?php
@@ -54,7 +54,7 @@ include_once ("../webdesign/header/header.php");
         <div class="form-group row">
             <label for="time" class="col-4 col-form-label">delivery Time</label>
             <?php
-                $timeSet=date("H:m",strtotime($orderDetail[0][7]));
+                $timeSet=$orderDetail[0][7];
                 echo '<input data-column="destination_time"  type="time" name="time" id="time"  class=" order col-8 form-control" value="'.$timeSet.'">';
             ?>
 
@@ -63,7 +63,8 @@ include_once ("../webdesign/header/header.php");
         <div class="form-group row">
             <label for="date" class="col-4 col-form-label">delivery Date</label>
             <?php
-                echo '<input data-column="destination_date"  type="date" name="date" id="date" class="order change col-8 form-control" value="'.$orderDetail[0][5].'">';
+
+                echo '<input  data-column="destination_date"  type="date" name="date" id="date" class="order change col-8 form-control" value="'.$orderDetail[0][5].'">';
             ?>
 
         </div>

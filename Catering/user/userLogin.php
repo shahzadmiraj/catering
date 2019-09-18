@@ -34,16 +34,16 @@ if(isset($_SESSION["userid"]))
         }
     </style>
 </head>
-<body class="container">
+<body class="container "style="background-color:rgba(244,181,7,0.62) " >
 
-<div class="badge-danger col-12 shadow fixed-top  " style="height: 170px">
+<div class="badge-danger col-12 shadow fixed-top  " >
     <h1 align="center">Welcome  to</h1>
-       <h2 align="center"> New Kashmir Food Center</h2>
+       <h4 align="center"> New Kashmir Food Center</h4>
 </div>
 
 
 
-<div class="col-12 card badge-dark" style="margin-top:180px;" >
+<div class="col-12 card badge-dark" style="margin-top:150px;" >
     <h1 align="center">User Login</h1>
     <form class="col-12" id="formLogin">
     <div class="form-group row">

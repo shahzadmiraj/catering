@@ -31,12 +31,12 @@ include_once ("../connection/connect.php");
 <?php
 include_once ("../webdesign/header/header.php");
 ?>
-<div class="container" style="margin-top:250px" >
+<div class="container" style="margin-top:150px" >
 
 <form id="form">
-        <h1 align="center" class="col-12 mb-4">
+        <p align="center" class="col-12 mb-4">
             Customer create
-        </h1>
+        </p>
         <input id="customer" hidden value="">
         <div class="form-group row">
         <label for="number" class="col-3 col-form-label">Phone no:</label>
@@ -46,22 +46,27 @@ include_once ("../webdesign/header/header.php");
         <div class="col-12 border mb-3 " id="number_records">
         </div>
         <div class="form-group row">
-        <label for="name" class="col-form-label col-3"> Name:</label>
+        <label for="name" class="col-form-label col-3">Name:</label>
         <input type="text" id="name"  name="name"class="form-control col-9" >
         </div>
         <div class="form-group row">
-        <label for="cnic" class="col-form-label col-3"> CNIC:</label>
+            <label for="name" class="col-form-label col-3">Image:</label>
+            <input type="file"  name="image"  class="form-control col-9" >
+        </div>
+
+        <div class="form-group row">
+        <label for="cnic" class="col-form-label col-3">CNIC:</label>
         <input type="number" id="cnic" name="cnic" class="form-control col-9" >
         </div>
 
             <h3 align="center"> Address</h3>
         <div class="form-group row">
-            <label for="city" class="col-form-label col-3"> City:</label>
+            <label for="city" class="col-form-label col-3">City:</label>
             <input type="text" id="city" name="city" class="form-control col-9" >
         </div>
 
         <div class="form-group row">
-            <label for="area" class="col-form-label col-3"> Area/ Block:</label>
+            <label for="area" class="col-form-label col-3">Area/ Block:</label>
             <input type="text"  id="area" name="area" class="form-control col-9">
         </div>
 

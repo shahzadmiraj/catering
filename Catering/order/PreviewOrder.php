@@ -36,13 +36,12 @@ $customerID=$orderDetailPerson[0][1];
 <?php
 include_once ("../webdesign/header/header.php");
 ?>
-<div class="container"  style="margin-top:200px">
+<div class="container"  style="margin-top:150px">
 
 
     <h1 align="center">Order Preview</h1>
     <div class="col-12 shadow card p-3">
         <h4 class="col-12">
-
             <div class="form-group row">
                 <label class="col-form-label col-6">Customer Name</label>
                 <label class="col-form-label col-6"><?php
@@ -62,7 +61,7 @@ include_once ("../webdesign/header/header.php");
         </div>
 
         <div class="form-group row">
-            <a href="/Catering/dish/AllSelectedDishes.php?order=<?php echo $orderId;?>&option=PreviewOrder" class="col-5  text-center form-control btn-success">Dish Preview</a>
+            <a href="/Catering/dish/AllSelectedDishes.php?order=<?php echo $orderId;?>&option=PreviewOrder" class="col-5  text-center form-control btn-success">Bill detail</a>
             <a href="/Catering/payment/paymentHistory.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>" class="col-5 text-center form-control btn-success">Payment History</a>
         </div>
         <div class="form-group row">

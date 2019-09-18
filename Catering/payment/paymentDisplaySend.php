@@ -37,7 +37,7 @@ $paymentDetail=queryReceive($sql);
 <?php
 include_once ("../webdesign/header/header.php");
 ?>
-<div class="container"  style="margin-top:200px">
+<div class="container"  style="margin-top:150px">
 
 
     <div class="col-12 shadow card">

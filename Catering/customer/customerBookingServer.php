@@ -8,19 +8,42 @@
 
 include_once ("../connection/connect.php");
 
+
+
+
 if(isset($_POST['option']))
 {
     if($_POST['option']=="customerCreate")
     {
+        $image='';
+
+        if(!empty($_FILES['image']["name"]))
+        {
+            $image = "../images/customerimage/" . $_FILES['image']['name'];
+            $resultimage = ImageUploaded($_FILES, $image);//$dishimage is destination file location;
+            if ($resultimage != "") {
+                print_r($resultimage);
+                exit();
+            }
+        }
+
         $name = trim($_POST['name']);
         $numberArray = $_POST['number'];
-        $cnic = $_POST['cnic'];
-        $city = $_POST['city'];
-        $area = $_POST['area'];
-        $streetNo = $_POST['streetNo'];
-        $houseNo = $_POST['houseNo'];
+        $cnic = chechIsEmpty($_POST['cnic']);
+        $city = chechIsEmpty($_POST['city']);
+        $area = chechIsEmpty($_POST['area']);
+        $streetNo = chechIsEmpty($_POST['streetNo']);
+        $houseNo = chechIsEmpty($_POST['houseNo']);
         $date = date('Y-m-d');
-        $sql = 'INSERT INTO `person`(`name`, `cnic`, `id`, `date`) VALUES ("' . $name . '","' . $cnic . '",NULL,"' . $date . '")';
+
+
+
+
+
+
+
+
+        $sql = 'INSERT INTO `person`(`name`, `cnic`, `id`, `date`, `image`) VALUES ("'.$name.'","'.$cnic.'",NULL,"'.$date.'","'.$image.'")';
         querySend($sql);
         $last_id = mysqli_insert_id($connect);
         $sql='INSERT INTO `address`(`id`, `address_street_no`, `address_house_no`, `person_id`, `address_city`, `address_town`) VALUES (NULL,"'.$streetNo.'","'.$houseNo.'",'.$last_id.',"'.$city.'","'.$area.'")';
@@ -37,6 +60,9 @@ if(isset($_POST['option']))
     {
 
         $value=$_POST['value'];
+
+
+
             $sql='SELECT  n.person_id FROM number as n WHERE n.number="'.$value.'"';
             $customerexist=queryReceive($sql);
             if(count($customerexist)>0)

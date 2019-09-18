@@ -35,22 +35,29 @@ $attributes=queryReceive($sql);
 <?php
 include_once ("../../webdesign/header/header.php");
 ?>
-<div class="container"  style="margin-top:180px">
+<div class="container"  style="margin-top:150px">
 
         <div class="col-12 shadow card p-4">
             <input id="dishid" type="number" hidden value="<?php echo $dishID; ?>">
             <div class="form-group row">
-                <a href="/Catering/system/dish/dishesDetail.php" class=" form-control col-3 btn-warning"> Previous</a>
+                <a href="/Catering/system/dish/dishesDetail.php" class=" form-control col-4 btn-warning">Previous</a>
                 <span class="font-weight-bold text-center col-9 form-control"> Edit Dish in System</span>
+            </div>
+
+            <div class="form-group row">
+                <img style="height: 30vh " src="<?php echo $dishDetail[0][2]; ?>"   class="col-8 form-control" alt="Image is not set" >
             </div>
             <div class="form-group row">
                 <label class="col-4 col-form-label">Dish Name</label>
                 <input data-column="name"  value="<?php echo $dishDetail[0][0]; ?>" class="dishchange col-8 form-control" type="text">
             </div>
+            <form id="formImage">
             <div class="form-group row">
-                <label class="col-4 col-form-label">Dish Image</label>
-                <input data-column="image" value="<?php echo $dishDetail[0][2]; ?>"  class="dishchange col-8 form-control" type="text">
+                <label class="col-4 col-form-label"> Changes images</label>
+                <input id="dishImage"  name="image"  class="col-8 form-control" type="file">
+                <input type="text" hidden name="imagepath" value="<?php echo $dishDetail[0][2]; ?>">
             </div>
+            </form>
             <div class="form-group row">
                 <label class="col-4 col-form-label">Dish Type</label>
                 <select data-column="dish_type_id" class="dishchange col-8 form-control">
@@ -136,9 +143,9 @@ include_once ("../../webdesign/header/header.php");
 
     $(document).ready(function ()
     {
+        var dishid=$("#dishid").val();
         $("#RemoveDish").click(function ()
         {
-            var dishid=$("#dishid").val();
             var value=$(this).val();
 
             $.ajax({
@@ -154,7 +161,7 @@ include_once ("../../webdesign/header/header.php");
                     }
                     else
                     {
-                        window.location.href="/Catering/system/dish/dishesDetail.php';
+                        window.location.href="/Catering/system/dish/dishesDetail.php";
                     }
                 }
             });
@@ -184,7 +191,8 @@ include_once ("../../webdesign/header/header.php");
         });
 
 
-        $("#submit").click(function (e) {
+        $("#submit").click(function (e)
+        {
             e.preventDefault();
             var dishid=$("#dishid").val();
             var formdata=new FormData($("#formAttribute")[0]);
@@ -273,6 +281,36 @@ include_once ("../../webdesign/header/header.php");
                 }
             });
         });
+
+        $("#dishImage").change(function ()
+        {
+           var formData=new FormData($("#formImage")[0]);
+           formData.append("dishId",dishid);
+           formData.append("option","changeImage");
+            $.ajax({
+                url:"dishServer.php",
+                method:"POST",
+                data:formData,
+                contentType: false,
+                processData: false,
+                success:function (data)
+                {
+                    if(data!='')
+                    {
+                        alert(data);
+                    }
+                    else
+                    {
+                        location.reload();
+                    }
+                }
+            });
+
+
+
+
+        });
+
 
     });
 

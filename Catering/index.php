@@ -6,7 +6,7 @@
  * Time: 11:41
  */
 
-//header("location:user/userLogin.php");
-//exit();
-echo '<a href="user/userLogin.php">hello world</a>';
+header("location:Catering/user/userLogin.php");
+exit();
+//echo '<a href="user/userLogin.php">hello world</a>';
 ?>

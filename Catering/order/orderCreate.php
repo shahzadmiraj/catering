@@ -30,7 +30,7 @@ include_once ("../connection/connect.php");
 <?php
 include_once ("../webdesign/header/header.php");
 ?>
-<div class="container"  style="margin-top:200px">
+<div class="container"  style="margin-top:150px">
 
     <h1 align="center"> Order Create</h1>
     <form>
@@ -42,7 +42,7 @@ include_once ("../webdesign/header/header.php");
 
         <div class="form-group row">
             <label for="time" class="col-4 col-form-label">delivery Time</label>
-            <input type="time" name="time" id="time" class="col-8 form-control">
+            <input type="time" name="time" id="time"  class="col-8 form-control">
         </div>
 
         <div class="form-group row">
@@ -111,6 +111,8 @@ include_once ("../webdesign/header/header.php");
                dataType:"text",
                success:function (data)
                {
+
+
                   if(!($.isNumeric(data)))
                   {
                       alert(data);

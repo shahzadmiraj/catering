@@ -41,7 +41,7 @@ $userId = $_SESSION['userid'];
 <?php
 include_once ("../webdesign/header/header.php");
 ?>
-<div class="container"  style="margin-top:200px">
+<div class="container"  style="margin-top:150px">
 
     <div id="from3">
         <h1 align="center">your payments Receive Requests</h1>
@@ -72,13 +72,13 @@ include_once ("../webdesign/header/header.php");
 
         if(!isset($_GET['option']))
         {
-            $sql = 'SELECT py.id,(SELECT u.username FROM user as u WHERE u.id=py.user_id) as username,py.amount,py.nameCustomer,py.IsReturn,t.senderTimeDate,py.receive,t.id FROM orderTable as ot INNER join payment as py on ot.id=py.orderTable_id INNER join transfer as t on py.id=t.payment_id where (ot.id=' . $orderTable_id . ') AND (py.sendingStatus=1) AND (ISNULL(t.Isconfirm)) AND (t.user_id=' . $userId . ')
+            $sql = 'SELECT py.id,(SELECT u.username FROM user as u WHERE u.id=py.user_id) as username,py.amount,py.nameCustomer,py.IsReturn,t.senderTimeDate,py.receive,t.id,py.sendingStatus FROM orderTable as ot INNER join payment as py on ot.id=py.orderTable_id INNER join transfer as t on py.id=t.payment_id where (ot.id=' . $orderTable_id . ') AND (t.user_id=' . $userId . ')AND (py.sendingStatus in (1,2))
 ';
         }
         else
         {
             //userDisplay
-            $sql = 'SELECT py.id,(SELECT u.username FROM user as u WHERE u.id=py.user_id) as username,py.amount,py.nameCustomer,py.IsReturn,t.senderTimeDate,py.receive,t.id FROM orderTable as ot INNER join payment as py on ot.id=py.orderTable_id INNER join transfer as t on py.id=t.payment_id where  (py.sendingStatus=1) AND (ISNULL(t.Isconfirm)) AND (t.user_id=' . $userId . ')
+            $sql = 'SELECT py.id,(SELECT u.username FROM user as u WHERE u.id=py.user_id) as username,py.amount,py.nameCustomer,py.IsReturn,t.senderTimeDate,py.receive,t.id,py.sendingStatus FROM orderTable as ot INNER join payment as py on ot.id=py.orderTable_id INNER join transfer as t on py.id=t.payment_id where   (t.user_id=' . $userId . ') AND (py.sendingStatus in (1,2))
 ';
         }
         $paymentDetail=queryReceive($sql);
@@ -139,10 +139,21 @@ include_once ("../webdesign/header/header.php");
             <label class="col-4 col-form-label">User senting amount Date</label>
             <label class="col-6 col-form-label">'.$paymentDetail[$l][5].'</label>
             </div>
-            <div class="form-group row">
-            <input  data-paymentid="'.$paymentDetail[$l][0].'" data-tranferid="'.$paymentDetail[$l][7].'" type="button"class="configration col-6 form-control btn btn-danger" value="unconfirm">
-            <input data-paymentid="'.$paymentDetail[$l][0].'" data-tranferid="'.$paymentDetail[$l][7].'" type="button"class="configration col-6 form-control btn btn-success" value="confirm">
-            </div>
+            <div class="form-group row">';
+
+            if($paymentDetail[$l][8]==1)
+            {
+
+                $displayDetailOfPayment.= '<input  data-paymentid="'.$paymentDetail[$l][0].'" data-tranferid="'.$paymentDetail[$l][7].'" type="button" class="configration col-6 form-control btn btn-danger" value="unconfirm">
+                                        <input data-paymentid="'.$paymentDetail[$l][0].'" data-tranferid="'.$paymentDetail[$l][7].'" type="button" class="configration col-6 form-control btn btn-success" value="confirm">';
+            }
+            else if($paymentDetail[$l][8]==2)
+            {
+
+                $displayDetailOfPayment.='<input  type="button" class="confirmed btn btn-info col-6" value="confirmed">';
+
+            }
+            $displayDetailOfPayment.='</div>
             </form>
             ';
         }
@@ -184,7 +195,8 @@ include_once ("../webdesign/header/header.php");
             }
         });
 
-        $(".configration").click(function () {
+        $(".configration").click(function ()
+        {
             var tranferid=$(this).data("tranferid");
             var paymentid=$(this).data("paymentid");
             var value=$(this).val();
@@ -206,7 +218,9 @@ include_once ("../webdesign/header/header.php");
                 }
             });
         });
-
+        $(".confirmed").click(function () {
+           alert("The payment has been confirmed by you");
+        });
 
     });
 </script>

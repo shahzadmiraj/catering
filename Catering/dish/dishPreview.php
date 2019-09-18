@@ -35,7 +35,7 @@ $orderid=$_GET['order'];
 <?php
 include_once ("../webdesign/header/header.php");
 ?>
-<div class="container"  style="margin-top:180px">
+<div class="container"  style="margin-top:150px">
 
 <h1 align="center">Preview of Dish</h1>
 
@@ -123,7 +123,7 @@ WHERE dd.id='.$dishDetailId.'';
            var  valueAttribute=$(this).val();
 
             $.ajax({
-              url:".php",
+              url:"/Catering/dish/dishServer.php",
                 data:{attributeid:attributeid,value:valueAttribute,option:"attributeChange"},
               method:"POST",
                 dataType:"text",
@@ -142,7 +142,7 @@ WHERE dd.id='.$dishDetailId.'';
            var columnValue=$(this).val();
 
            $.ajax({
-              url:".php",
+              url:"/Catering/dish/dishServer.php",
               data: {dishDetailId:dishDetailId,columnName:columnName,columnValue:columnValue,option:"dishDetailChange" },
                dataType: "text",
                method:"POST",
@@ -159,7 +159,7 @@ WHERE dd.id='.$dishDetailId.'';
        {
            var dishDetailId=$("#dishDetailID").val();
            $.ajax({
-               url:".php",
+               url:"/Catering/dish/dishServer.php",
                data: {dishDetailId:dishDetailId,option:"deleteDish" },
                dataType: "text",
                method:"POST",

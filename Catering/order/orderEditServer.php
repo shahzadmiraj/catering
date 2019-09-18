@@ -13,7 +13,7 @@ include_once ("../connection/connect.php");
 if($_POST['option']=="orderChange")
 {
     $columnName=$_POST['column_name'];
-    $coumnText=$_POST['value'];
+    $coumnText=chechIsEmpty($_POST['value']);
     $orderId=$_POST['orderid'];
     $sql='UPDATE `orderTable` SET '.$columnName.'="'.$coumnText.'" WHERE id='.$orderId.'';
     querySend($sql);
@@ -21,7 +21,7 @@ if($_POST['option']=="orderChange")
 else if($_POST['option']=="addressChange")
 {
     $columnName=$_POST['column_name'];
-    $coumnText=$_POST['value'];
+    $coumnText=chechIsEmpty($_POST['value']);
     $addressId=$_POST['addressId'];
     $sql='UPDATE `address` SET '.$columnName.'="'.$coumnText.'" WHERE id='.$addressId.'';
     querySend($sql);

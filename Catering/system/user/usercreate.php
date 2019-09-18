@@ -28,9 +28,9 @@ include_once ("../../connection/connect.php");
 <?php
 include_once ("../../webdesign/header/header.php");
 ?>
-<div class="container"  style="margin-top:180px">
+<div class="container"  style="margin-top:150px">
 
-    <form id="form" class="card shadow col-12 p-4">
+    <form id="form" >
         <h1 align="center">
             User Create
         </h1>

@@ -12,10 +12,11 @@ if(isset($_POST['option']))
     {
 
         $name=$_POST['name'];
-        $amount=$_POST['Amount'];
-        $status=$_POST['status'];
-        $rating=$_POST['rating'];
+        $amount=chechIsEmpty($_POST['Amount']);
+        $status=chechIsEmpty($_POST['status']);
+        $rating=chechIsEmpty($_POST['rating']);
         $personality=$_POST['personality'];
+
         $userId=$_POST['user_id'];
         $orderTable_id=$_POST['orderTable_id'];
         $dateTime=date('Y-m-d H:i:s');
