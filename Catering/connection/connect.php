@@ -7,8 +7,8 @@
  */
 session_start();
 date_default_timezone_set("asia/karachi");
-//$connect=mysqli_connect('localhost',"root","","a111");
-$connect=mysqli_connect("localhost","id10884474_shahzad","11111","id10884474_catering");
+$connect=mysqli_connect('localhost',"root","","a111");
+//$connect=mysqli_connect("localhost","id10884474_shahzad","11111","id10884474_catering");
     if(!$connect)
     {
         echo "fail connection";
@@ -93,10 +93,10 @@ function ImageUploaded($File,$DestinationFile)
             $errors[]='File size must be excately 2 MB';
         }
 
-        if (file_exists($DestinationFile))
-        {
-            $errors[]= "Sorry, file already exists.";
-        }
+//        if (file_exists($DestinationFile))
+//        {
+//            $errors[]= "Sorry, file already exists.";
+//        }
 
         if(empty($errors)==true)
         {

@@ -8,8 +8,11 @@
 
 
 session_start();
-if(isset($_SESSION["userid"]))
+if(isset($_COOKIE["userid"]))
 {
+     $_SESSION['userid']= $_COOKIE['userid'];
+     $_SESSION['isOwner']=$_COOKIE['isOwner'];
+     $_SESSION['username']=$_COOKIE['username'];
 
     header('location:userDisplay.php');
     exit();

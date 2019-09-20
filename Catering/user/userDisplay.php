@@ -41,32 +41,21 @@ if(!isset($_SESSION['username']))
 <div class="col-12 " style="margin-top:150px" >
 
 
-    <div class="col-12 shadow card p-0 ">
+    <div class="shadow card p-2 badge-warning">
 <!--        $OrderStatus=array("running","cancel","delieved","clear");-->
 
-        <h1 align="center" class="col-12">User Desplay</h1>
-        <div class="col-12">
-        <div class="form-group row">
-            <a href="/Catering/customer/CustomerCreate.php?option=userDisplay" class="text-center  col-5 form-control btn-primary">Order Create</a>
-            <a href="/Catering/order/FindOrder.php?is_active=0" class="text-center col-5  form-control btn-primary">Running Order</a>
-        </div>
+            <h1 align="center" class="col-12">User Desplay</h1>
+            <a href="/Catering/customer/CustomerCreate.php?option=userDisplay" class="mb-1 text-center   form-control btn-primary">Order Create</a>
+            <a href="/Catering/order/FindOrder.php?is_active=0" class="mb-1 text-center   form-control btn-primary">Running Order</a>
+            <a href="/Catering/order/FindOrder.php?is_active=2" class="mb-1  text-center form-control btn-primary">deliver Orders</a>
+            <a href="/Catering/order/FindOrder.php?is_active=3" class="mb-1 text-center form-control btn-primary">Clear Orders</a>
+            <a href="/Catering/order/FindOrder.php?is_active=1" class="mb-1 text-center form-control btn-primary">Cancel Orders</a>
+            <a href="/Catering/payment/transferPaymentReceive.php?option=userDisplay" class="mb-1 text-center form-control btn-primary">Receive payment</a>
+            <a href="/Catering/system/dish/dishesDetail.php" class="mb-1 text-center form-control btn-primary">Guideline Dishes</a>
+            <a href="/Catering/system/user/usercreate.php" class="mb-1 text-center form-control btn-primary">User Create</a>
+            <a  href="/Catering/payment/RemainingAmount.php" class="mb-1 text-center form-control btn-primary">Remaining payments</a>
+            <a  href="/Catering/user/logout.php" class="mb-1 text-center form-control btn-primary">Log out</a>
 
-        <div class="form-group row">
-            <a href="/Catering/order/FindOrder.php?is_active=2" class="col-5  text-center form-control btn-primary">deliver Orders</a>
-            <a href="/Catering/order/FindOrder.php?is_active=3" class="col-5 text-center form-control btn-primary">Clear Orders</a>
-        </div>
-        <div class="form-group row">
-            <a href="/Catering/order/FindOrder.php?is_active=1" class="col-5 text-center form-control btn-primary">Cancel Orders</a>
-            <a href="/Catering/payment/transferPaymentReceive.php?option=userDisplay" class="col-5 text-center form-control btn-primary">Receive payment</a>
-        </div>
-        <div class="form-group row">
-            <a href="/Catering/system/dish/dishesDetail.php" class="p-0 col-5 text-center form-control btn-primary">Guideline Dishes</a>
-            <a href="/Catering/system/user/usercreate.php" class="col-5 text-center form-control btn-primary">User Create</a>
-        </div>
-        <div class="form-group row">
-            <a  href="/Catering/user/logout.php" class="col-5 text-center form-control btn-primary">Log out</a>
-        </div>
-        </div>
     </div>
 
 </div>

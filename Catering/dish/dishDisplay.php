@@ -83,18 +83,25 @@ include_once ("../webdesign/header/header.php");
         $display='';
         for($i=0;$i<count($dishTypeDetail);$i++)
         {
-            $display.='<h2 align="center " class="col-12 btn-warning"> '.$dishTypeDetail[$i][1].'</h2>';
+            $display.='<h2 data-dishtype="'.$i.'" data-display="hide" align="center " class="dishtypes col-12 btn-warning"> '.$dishTypeDetail[$i][1].'</h2>';
 
             $sql='SELECT `name`, `id`, `image`, `dish_type_id` FROM `dish` WHERE (dish_type_id='.$dishTypeDetail[$i][0].') AND (ISNULL(isExpire))';
             $dishDetail=queryReceive($sql);
-            $display.='<div class="form-group row">';
+            $display.='<div id="dishtype'.$i.'"  class="form-group row" style="display: none">';
             for ($j=0;$j<count($dishDetail);$j++)
             {
                 $display .= ' 
-         <div class="col-6 card mb-1 p-1 shadow bg-white" style="    height: 260px;">
-        <img class="card-img-top " src="../gmail.png" alt="Card image" style="height: 150px">
+         <div  class="col-6 card mb-1 p-1 shadow bg-white" style="    height: 260px;">';
+
+
+
+
+         $image = substr($dishDetail[$j][2], 3);
+
+
+        $display.='<img class="card-img-top " src="'.$image.'" alt="Card image" style="height: 150px" >
         <div class="form-group col-12">
-            <p class="font-weight-bold p-0 card-title col-12
+            <p  class="font-weight-bold p-0 card-title col-12
             ">' . $dishDetail[$j][0] . '</p>
             <button type="button" data-dishname="'. $dishDetail[$j][0] .'" data-dishid="'. $dishDetail[$j][1] .'" class="add col-12 mb-0 btn btn-primary">Select</button>
         </div>
@@ -138,6 +145,26 @@ include_once ("../webdesign/header/header.php");
             window.history.back();
             return false;
         });
+
+
+        $(document).on("click",".dishtypes",function () {
+            var display=$(this).data("display");
+            var IdDisplay=$(this).data("dishtype");
+            if(display=="hide")
+            {
+                $("#dishtype"+IdDisplay).show('slow');
+                $(this).data("display","show");
+            }
+            else
+            {
+
+                $("#dishtype"+IdDisplay).hide('slow');
+                $(this).data("display","hide");
+            }
+
+        });
+
+
 
     });
 

@@ -24,10 +24,9 @@ if(isset($_POST["option"]))
         else
         {
 
-            $_SESSION['userid']=$userDetail[0][0];
-            $_SESSION['isOwner']=$userDetail[0][1];
-            $_SESSION['username']=$userName;
-
+            setcookie('userid',$userDetail[0][0] , time() + (86400 * 30), "/");
+            setcookie("isOwner",$userDetail[0][1],time() + (86400 * 30), "/");
+            setcookie("username",$userName,time() + (86400 * 30), "/");
 
         }
     }

@@ -38,7 +38,7 @@
         }
         ?>
     </p>
-<a href="/Catering/user/userLogin.php" class="btn btn-warning">Home Page</a>
+<a href="/Catering/user/userDisplay.php" class="btn btn-warning">Home Page</a>
 </div>
 
 

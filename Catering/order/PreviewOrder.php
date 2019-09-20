@@ -55,24 +55,19 @@ include_once ("../webdesign/header/header.php");
                     ?></label>
             </div>
         </h4>
-        <div class="form-group row">
-            <a href="/Catering/customer/customerEdit.php?customer=<?php echo $customerID;?>&order=<?php echo $orderId;?>&option=PreviewOrder" class="text-center col-5 form-control btn-success">Customer Preview</a>
-            <a href="/Catering/order/orderEdit.php?order=<?php echo $orderId;?>&option=PreviewOrder" class="text-center col-5 form-control btn-success">Order Preview</a>
-        </div>
 
-        <div class="form-group row">
-            <a href="/Catering/dish/AllSelectedDishes.php?order=<?php echo $orderId;?>&option=PreviewOrder" class="col-5  text-center form-control btn-success">Bill detail</a>
-            <a href="/Catering/payment/paymentHistory.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>" class="col-5 text-center form-control btn-success">Payment History</a>
-        </div>
-        <div class="form-group row">
-            <a href="/Catering/payment/getPayment.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>" class="col-5 text-center form-control btn-success">Get payment</a>
-            <a href="/Catering/payment/transferPayment.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>" class="col-5 text-center form-control btn-success">Transfer payment</a>
-        </div>
+            <a href="/Catering/customer/customerEdit.php?customer=<?php echo $customerID;?>&order=<?php echo $orderId;?>&option=PreviewOrder" class=" mb-1 text-center form-control btn-success">Customer Preview</a>
+            <a href="/Catering/order/orderEdit.php?order=<?php echo $orderId;?>&option=PreviewOrder" class="text-center  mb-1  form-control btn-success">Order Preview</a>
 
-        <div class="form-group row">
-            <a href="/Catering/payment/transferPaymentReceive.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>" class="col-5 text-center form-control btn-success">Receive payment</a>
-            <a href="/Catering/user/userDisplay.php" class="col-5 text-center form-control btn-success">User Display</a>
-        </div>
+            <a href="/Catering/dish/AllSelectedDishes.php?order=<?php echo $orderId;?>&option=PreviewOrder" class="  mb-1  text-center form-control btn-success">Bill detail</a>
+            <a href="/Catering/payment/paymentHistory.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>" class="  mb-1 text-center form-control btn-success">Payment History</a>
+
+            <a href="/Catering/payment/getPayment.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>" class=" mb-1  text-center form-control btn-success">Get payment</a>
+            <a href="/Catering/payment/transferPayment.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>" class=" mb-1  text-center form-control btn-success">Transfer payment</a>
+
+            <a href="/Catering/payment/transferPaymentReceive.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>" class=" mb-1  text-center form-control btn-success">Receive payment</a>
+            <a href="/Catering/user/userDisplay.php" class=" mb-1  text-center form-control btn-success">User Display</a>
+
     </div>
 
 </div>

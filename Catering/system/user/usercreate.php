@@ -89,8 +89,8 @@ include_once ("../../webdesign/header/header.php");
         </div>
 
         <div class="form-group row">
-        <button class="col-2 form-control btn btn-danger" id="cancelCustomer">cancel</button>
-        <button class="col-2 form-control btn btn-outline-primary" id="submit">submit</button>
+        <button class="col-6 form-control btn btn-danger" id="cancelCustomer">cancel</button>
+        <button class="col-6 form-control btn btn-outline-primary" id="submit">submit</button>
         </div>
     </form>
 </div>
