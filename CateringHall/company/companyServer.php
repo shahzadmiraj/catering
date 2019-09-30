@@ -195,5 +195,64 @@ if(isset($_POST['option']))
             querySend($sql);
         }
     }
+    else if($_POST['option']=="showdaytimelist")
+    {
+        $hallid=$_POST['hallid'];
+        $daytime=$_POST['daytime'];
+        $monthsArray = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+
+        $display='<table class=" table table-striped table-danger col-12 ">
+        <thead>
+
+        <tr>
+            <th scope="col" >
+                <h3 align="center">'.$daytime.' Prize list</h3>
+            </th>
+        </tr>
+        </thead>
+        <tbody>';
+        for($i=0;$i<count($monthsArray);$i++)
+        {
+            $sql='SELECT `id`,`price` FROM `hallprice` WHERE (hall_id='.$hallid.')AND (isFood=0) AND (dayTime="'.$daytime.'") AND ISNULL(expire)
+AND (month="'.$monthsArray[$i].'")';
+            $detailList=queryReceive($sql);
+            $display.='
+        <tr>
+            <td scope="col" >
+                <h4 align="center">'.$monthsArray[$i].'</h4>
+                <div class="form-group row p-2 shadow btn-light">
+                    <label class="col-form-label col-6 font-weight-bold"> Prize Only Seating </label>
+                    <input data-menuid="'.$detailList[0][0].'" class="changeSeating form-control col-6" type="number" value="'.$detailList[0][1].'">
+                    <h3 align="center" class="col-12 mt-3">List of prize with Food</h3>
+                    <a  href="addnewpackage.php?month='.$monthsArray[$i].'&daytime='.$daytime.'&hallid='.$hallid.'" class="form-control  btn-primary col-12 text-center"> Add New Package</a>';
+
+            $sql='SELECT `id`,`expire`, `package_name` FROM `hallprice` WHERE (hall_id=2)
+AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)';
+            $ALLpackages=queryReceive($sql);
+            for ($j=0;$j<count($ALLpackages);$j++)
+            {
+                $display.='    <a  href="#packageid='.$ALLpackages[$j][0].'" class="form-control  btn-success col-4 text-center m-2"> '.$ALLpackages[$j][2].'';
+                if($ALLpackages[$j][1]!=NULL)
+                {
+                    $display.='   Expired';
+                }
+
+
+                $display.='</a>';
+            }
+
+
+            $display.='</div>
+            </td>
+        </tr>';
+
+
+        }
+        $display.='
+        </tbody>
+    </table>';
+        echo $display;
+
+    }
 }
 ?>
