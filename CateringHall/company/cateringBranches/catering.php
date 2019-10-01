@@ -6,12 +6,12 @@
  * Time: 17:29
  */
 include_once ("../../connection/connect.php");
-$comapnyId=$_POST['companyid']=2;
-$CateringBranches=$_POST['CateringBranches']=2;
-$hallBranches=$_POST['hallBranches']=2;
+$companyid=$_GET['companyid'];
+$CateringBranches=$_GET['CateringBranches'];
+$hallBranches=$_GET['hallBranches'];
 if($CateringBranches==0)
 {
-    header("location:../hallBranches/hallRegister.php?hallBranches=$hallBranches&comapnyId=$comapnyId");
+    header("location:../hallBranches/hallRegister.php?hallBranches=$hallBranches&companyid=$companyid");
     exit();
 }
 $sql='SELECT name,id FROM systemDishType WHERE ISNULL(isExpire)';
@@ -150,7 +150,7 @@ $(document).ready(function () {
       NoCatering--;
       if(NoCatering<=0)
       {
-          window.location.href="../hallBranches/hallRegister.php?hallBranches=<?php echo $hallBranches; ?>&comapnyId=<?php echo $comapnyId; ?>";
+          window.location.href="../hallBranches/hallRegister.php?hallBranches=<?php echo $hallBranches; ?>&companyid=<?php echo $companyid; ?>";
       }
   }
 
@@ -159,7 +159,7 @@ $(document).ready(function () {
         var formid=$(this).data("formid");
         var formdata=new FormData($("#formsubmit"+formid)[0]);
         formdata.append("option","createCatering");
-        formdata.append("companyid",<?php  echo $comapnyId;?>);
+        formdata.append("companyid",<?php  echo $companyid;?>);
         $.ajax({
             url:"../companyServer.php",
             method:"POST",

@@ -63,7 +63,8 @@ $hallid=$_GET['hallid']=2;
 <!--</tr>-->
 <script>
 
-    $(document).ready(function () {
+    $(document).ready(function ()
+    {
        $(".daytime").click(function () {
            var daytime=$(this).data("daytime");
 
@@ -85,7 +86,47 @@ $hallid=$_GET['hallid']=2;
 
 
        }) ;
+
+        $(document).on("change",".changeSeating",function () {
+            var id=$(this).data("menuid");
+            var value=$(this).val();
+            var formdata=new FormData();
+            formdata.append("option","changeSeating");
+            formdata.append("packageid",id);
+            formdata.append("value",value);
+            $.ajax({
+                url:"../companyServer.php",
+                method:"POST",
+                data:formdata,
+                contentType: false,
+                processData: false,
+                success:function (data)
+                {
+                    if(data!='')
+                    {
+                        alert(data);
+                        return false;
+                    }
+
+                }
+            });
+
+
+        }) ;
+
+
+
+
+
+
+
+
+
+
+
+
     });
+
 
 
 </script>

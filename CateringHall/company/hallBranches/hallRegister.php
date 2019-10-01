@@ -6,8 +6,14 @@
  * Time: 21:31
  */
 include  ("../../connection/connect.php");
-$companyid=$_GET['companyid']=2;
-$hallBranches=$_GET['hallBranches']=2;
+$companyid=$_GET['companyid'];
+$hallBranches=$_GET['hallBranches'];
+if($hallBranches<=0)
+{
+    header("");
+    exit();
+}
+
 ?>
 <!DOCTYPE html>
 <head>
@@ -53,21 +59,6 @@ $hallBranches=$_GET['hallBranches']=2;
     <div class="form-group row">
         <label class="col-form-label col-4">Hall Branch Address</label>
     </div>
-    <div class="form-inline form-group">
-        <input name="morning" class="form-check-input" type="checkbox">
-        <label  class="form-check-label">Do you give Morning Service</label>
-    </div>
-
-    <div class="form-inline form-group">
-        <input name="afternoon" class="form-check-input" type="checkbox">
-        <label class="form-check-label">Do you give Afternoon Service</label>
-    </div>
-
-    <div class="form-inline form-group">
-        <input name="evening" class="form-check-input  " type="checkbox">
-        <label class="form-check-label ">Do you give Evening Service</label>
-    </div>
-
     <div class="form-group row">
         <label class="col-form-label col-8">Maximum Capacity of guests in hall:</label>
         <input name="capacity" class="form-control col-4" type="number">
@@ -83,7 +74,7 @@ $hallBranches=$_GET['hallBranches']=2;
         <label class="form-check-label ">Have Your own parking</label>
     </div>
     <div class="form-group row">
-        <input type="button" class="btn btn-danger col-4 form-control"  value="cancel">
+        <input id="cancel" type="button" class="btn btn-danger col-4 form-control"  value="cancel">
         <input id="submit" type="button" class=" btn btn-success col-4 form-control" value="Submit">
     </div>
 
@@ -107,17 +98,22 @@ $hallBranches=$_GET['hallBranches']=2;
                 data: formdata,
                 contentType: false,
                 processData: false,
-                success: function (data) {
-                    if(data.length<4)
-                    {
-                            window.location.href='';
-                    }
-                    else
+                success: function (data)
+                {
+                    if(data!="")
                     {
                         alert(data);
                     }
+                    else
+                    {
+                        window.location.href="";
+                    }
+
                 }
             });
+        });
+        $("#cancel").click(function () {
+            window.location.href="?hallBranches=<?php  $hallBranches--;  echo $hallBranches;?>&companyid=<?php echo $companyid;?>";
         });
     });
 

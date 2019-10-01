@@ -6,7 +6,15 @@
  * Time: 17:20
  */
 include_once ("../connection/connect.php");
-
+function createOnlyAllSeating($hallid,$daytime)
+{
+    $monthsArray=array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+    for($i=0;$i<count($monthsArray);$i++)
+    {
+        $sql='INSERT INTO `hallprice`(`id`, `month`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name`) VALUES (NULL,"'.$monthsArray[$i].'",0,0,NULL,"'.$daytime.'",NULL,'.$hallid.',NULL)';
+        querySend($sql);
+    }
+}
 
 if(isset($_POST['option']))
 {
@@ -129,22 +137,6 @@ if(isset($_POST['option']))
         }
         $daytime='';
         $parking=0;
-        if(isset($_POST['morning']))
-        {
-            $daytime.='M';
-        }
-
-        if(isset($_POST['afternoon']))
-        {
-
-            $daytime.='A';
-        }
-
-        if(isset($_POST['evening']))
-        {
-
-            $daytime.='E';
-        }
 
         if(isset($_POST['parking']))
         {
@@ -156,21 +148,25 @@ if(isset($_POST['option']))
         $partition=chechIsEmpty($_POST['partition']);
         $sql='INSERT INTO `hall`(`id`, `name`, `max_guests`, `function_per_Day`, `noOfPartitions`, `ownParking`, `expire`, `image`, `hallType`, `location_id`, `company_id`) VALUES (NULL,"'.$hallname.'",'.$capacity.',"'.$daytime.'",'.$partition.','.$parking.',NULL,"'.$hallimage.'",'.$halltype.',NULL,'.$companyid.')';
         querySend($sql);
-        echo $daytime;
+        $hallid=mysqli_insert_id($connect);
+
+
+        $daytimearray=array("Morning","Afternoon","Evening");
+        for($i=0;$i<count($daytimearray);$i++)
+        {
+
+            createOnlyAllSeating($hallid,$daytimearray[$i]);
+        }
+
+
 
     }
     else if($_POST['option']=='createOnlyseating')
     {
         $hallid=$_POST['hallid'];
-        $months=$_POST['month'];
         $daytime=$_POST['daytime'];
-        $monthsArray=array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
-        for($i=0;$i<count($months);$i++)
-        {
-            $months[$i]=chechIsEmpty($months[$i]);
-            $sql='INSERT INTO `hallprice`(`id`, `month`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name`) VALUES (NULL,"'.$monthsArray[$i].'",0,'.$months[$i].',NULL,"'.$daytime.'",NULL,'.$hallid.',NULL)';
-            querySend($sql);
-        }
+        createOnlyAllSeating($hallid,$daytime);
+
     }
     else if($_POST['option']=="CreatePackage")
     {
@@ -231,7 +227,7 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)';
             $ALLpackages=queryReceive($sql);
             for ($j=0;$j<count($ALLpackages);$j++)
             {
-                $display.='    <a  href="#packageid='.$ALLpackages[$j][0].'" class="form-control  btn-success col-4 text-center m-2"> '.$ALLpackages[$j][2].'';
+                $display.='    <a  href="Editpackage.php?packageid='.$ALLpackages[$j][0].'" class="form-control  btn-success col-4 text-center m-2"> '.$ALLpackages[$j][2].'';
                 if($ALLpackages[$j][1]!=NULL)
                 {
                     $display.='   Expired';
@@ -254,5 +250,64 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)';
         echo $display;
 
     }
+    else if($_POST['option']=="changeSeating")
+    {
+        $packageid=$_POST['packageid'];
+        $value=chechIsEmpty($_POST['value']);
+        $sql='UPDATE `hallprice` SET price='.$value.' WHERE id='.$packageid.'';
+        querySend($sql);
+    }
+    else if($_POST['option']=="ExpireBtn")
+    {
+
+        $packageid=$_POST['packageid'];
+        $expirevalue=$_POST['expirevalue'];
+
+        if($expirevalue=="Click Expire")
+        {
+            $dayAndTime=date('Y-m-d H:i:s');
+            $sql='UPDATE `hallprice` SET expire="'.$dayAndTime.'" WHERE id='.$packageid.'';
+        }
+        else
+        {
+            $sql='UPDATE `hallprice` SET expire=NULL WHERE id='.$packageid.'';
+        }
+        querySend($sql);
+
+    }
+    else if($_POST['option']=="packagechange")
+    {
+        $packageid=$_POST['packageid'];
+        $columnname=$_POST['columnname'];
+        $value=$_POST['value'];
+        $sql='UPDATE hallprice as hp SET hp.'.$columnname.' ="'.$value.'" WHERE hp.id='.$packageid.'';
+        querySend($sql);
+
+    }
+    else if($_POST['option']=="alreadydishremove")
+    {
+        $id=$_POST['id'];
+        $dayAndTime=date('Y-m-d H:i:s');
+        $sql='UPDATE `menu` SET expire="'.$dayAndTime.'" WHERE id='.$id.'';
+        querySend($sql);
+    }
+    else if($_POST['option']=="Extendmenu")
+    {
+        $packageid=$_POST['packageid'];
+        if(!isset($_POST['dishname']))
+        {
+            exit();
+        }
+        $dishnames=$_POST['dishname'];
+        $image=$_POST['image'];
+
+        for($i=0;$i<count($dishnames);$i++)
+        {
+            $sql='INSERT INTO `menu`(`id`, `dishname`, `image`, `expire`, `hallprice_id`) VALUES (NULL,"'.$dishnames[$i].'","'.$image[$i].'",NULL,'.$packageid.')';
+            querySend($sql);
+        }
+
+    }
+
 }
 ?>
