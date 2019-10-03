@@ -1,6 +1,6 @@
 <?php
 include_once ('../../connection/connect.php');
-$hallid=$_GET['hallid']=2;
+$hallid=$_GET['hallid']=1;
 ?>
 <!DOCTYPE html>
 <head>

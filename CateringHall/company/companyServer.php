@@ -308,6 +308,117 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)';
         }
 
     }
+    else if($_POST['option']=="checkpackages1")
+    {
+        $monthno=$_POST['month'];
+        $time=$_POST['time'];
+        $perheadwith=$_POST['perheadwith'];
+        $hallid=$_POST['hallid'];
+        $monthsArray = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+        $month=$monthsArray[$monthno];
+        $sql='SELECT `id`, `package_name`,`price`,`describe` FROM `hallprice` WHERE ISNULL(expire) AND (month="'.$month.'") AND (dayTime="'.$time.'") And (isFood='.$perheadwith.') AND (hall_id='.$hallid.')';
+        $detailpackage=queryReceive($sql);
+        $display='<h3 align="center">Packages Detail </h3>';
+        if($perheadwith==1)
+        {
+            //with food menu
+
+            for ($i=0;$i<count($detailpackage);$i++)
+            {
+                $display.=' <div class="checkclasshas custom-control custom-radio form-group  ">
+        <input type="radio" data-describe="'.$detailpackage[$i][0].'" value="'.$detailpackage[$i][0].'" class="changeradio custom-control-input" id="defaultUnchecked'.$i.'" name="defaultExampleRadios">
+        <label class="custom-control-label" for="defaultUnchecked'.$i.'">'.$detailpackage[$i][1].'  package with Rs'.$detailpackage[$i][2].' price</label>
+    </div> 
+    <input hidden id="describe'.$detailpackage[$i][0].'" type="text" value="'.$detailpackage[$i][3].'">';
+            }
+
+
+
+
+
+        }
+        else
+        {
+            //with seating menu
+            $display.=' <div class="checkclasshas custom-control custom-radio form-group ">
+        <input type="radio"  value="'.$detailpackage[0][0].'" class="custom-control-input" id="defaultUnchecked" name="defaultExampleRadios" checked>
+        <label class="custom-control-label" for="defaultUnchecked"> Only Seating price = '.$detailpackage[0][2].'</label>
+    </div>';
+
+        }
+        $sql='SELECT od.total_person FROM orderDetail od WHERE (od.hall_id='.$hallid.') AND (od.status_hall="Running")';
+        $detailhalls=queryReceive($sql);
+        if(count($detailhalls)>0)
+        {
+            $display.='<h4 class="btn-outline-danger">Already '.count($detailhalls).' has booked</h4>';
+            for ($i=0;$i<count($detailhalls);$i++)
+            {
+                $display.='<p>$i function booked with '.$detailhalls[$i][0].' Guests</p>';
+            }
+        }
+        echo $display;
+
+
+    }
+    else if($_POST['option']=="viewmenu")
+    {
+        $packageid=$_POST['packageid'];
+        $sql='SELECT `dishname`, `image` FROM `menu` WHERE (hallprice_id='.$packageid.') AND ISNULL(expire)';
+        $menu=queryReceive($sql);
+        $display='<h4 align="center" class="col-12">Menu</h4>';
+        for ($i=0;$i<count($menu);$i++)
+        {
+            $display.='
+            <div  class="col-3 alert-danger shadow border m-2 form-group rounded" style="height: 30vh;" >
+                <img src="'.$menu[$i][1].'" class="col-12 " style="height: 15vh">
+                <p class="col-form-label" class="form-control col-12">'.$menu[$i][0].'</p>
+            </div>';
+        }
+        echo $display;
+    }
+    else if($_POST['option']=="createOrderofHall")
+    {
+        $packageid='';
+            if(isset($_POST['packageid']))
+                $packageid=$_POST['packageid'];
+            $hallid=$_POST['hallid'];
+            $userid=$_POST['userid'];
+            $personid=$_POST['personid'];
+            $guests=chechIsEmpty($_POST['guests']);
+            $date=$_POST['date'];
+            $time=$_POST['time'];
+            $perheadwith=$_POST['perheadwith'];
+            $describe=$_POST['describe'];
+            $totalamount=chechIsEmpty($_POST['totalamount']);
+            $currentdate=date('Y-m-d');
+            if($time=="Morning")
+            {
+                $time="9:00";
+            }
+            else if($time="Afternoon")
+            {
+
+                $time="12:00";
+            }
+            else {
+
+                    $time="18:00";
+                }
+
+
+            $catering="";
+            if($perheadwith==1)
+            {
+                $catering="Running";
+            }
+            $sql='INSERT INTO `orderDetail`(`id`, `hall_id`, `catering_id`, `hallprice_id`, `user_id`, 
+        `sheftCatering`, `sheftHall`, `sheftCateringUser`, `sheftHallUser`, `address_id`, `person_id`, 
+        `total_amount`, `total_person`, `status_hall`, `destination_date`, `booking_date`, `destination_time`, 
+        `status_catering`, `notice`) VALUES (NULL,'.$hallid.',NULL,'.$packageid.','.$userid.',NULL,
+        NULL,NULL,NULL,NULL,'.$personid.','.$totalamount.','.$guests.',"Running","'.$date.'","'.$currentdate.'",
+        "'.$time.'","'.$catering.'",1)';
+    }
+
 
 }
 ?>
