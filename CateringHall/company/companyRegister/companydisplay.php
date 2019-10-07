@@ -6,7 +6,7 @@
  * Time: 21:31
  */
 include  ("../../connection/connect.php");
-$companyid=$_GET['company']=2;
+$companyid=$_GET['companyid'];
 $sql='SELECT `id`, `name`,`image` FROM `hall` WHERE ISNULL(expire) AND (company_id='.$companyid.')';
 $halls=queryReceive($sql);
 
@@ -43,7 +43,7 @@ $display='';
 for ($i=0;$i<count($halls);$i++)
 {
   $display.= '
-    <a href="'.$halls[$i][0].'" class="col-5 m-2">
+    <a href="../../user/userDisplay.php?hallid='.$halls[$i][0].'" class="col-5 m-2">
     <div class="card  col-12  rounded-circle shadow" style="height: 25vh"  >
         <img class="card-img-top  col-12 rounded-circle" src="';
   if(file_exists($halls[$i][2]))
@@ -76,7 +76,7 @@ echo $display;
     for ($i=0;$i<count($caterings);$i++)
     {
         $display.= '
-    <a href="'.$caterings[$i][0].'" class="col-5 m-2">
+    <a href="../../user/userDisplay.php?cateringid='.$caterings[$i][0].'" class="col-5 m-2">
     <div class="card  col-12  rounded-circle shadow" style="height: 25vh"  >
         <img class="card-img-top  col-12 rounded-circle" src="';
         if(file_exists($caterings[$i][2]))

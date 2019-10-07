@@ -1,7 +1,10 @@
 <?php
 include_once ("../../connection/connect.php");
 
-$packageid=$_GET['packageid']=98;
+$packageid=$_GET['packageid'];
+$hallid=$_GET['hallid'];
+$companyid=$_GET['companyid'];
+$hallBranches=$_GET['hallBranches'];
 
 $sql='SELECT `id`, `month`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name` FROM `hallprice` WHERE id='.$packageid.'';
 $packageDetail=queryReceive($sql);

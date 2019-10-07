@@ -6,8 +6,8 @@
  * Time: 21:31
  */
 include  ("../../connection/connect.php");
-$hallid=$_GET['hallid']=1;
-$personid=$_GET['personid']=1;
+$hallid=$_GET['hallid'];
+$personid=$_GET['customer'];
 $userid=$_GET['userid']=1;
 
 
@@ -78,7 +78,7 @@ $userid=$_GET['userid']=1;
 </div>
 
     <div class="form-group row">
-        <input type="button" class=" col-4  btn btn-danger"  value="Back">
+        <a href="../../customer/customerEdit.php?option=hallorder&customer=<?php echo $personid; ?>&hallid=<?php echo $hallid;?>" class=" col-4  btn btn-danger"  >Edit customer</a>
         <input id="submitform" type="button" class=" col-4 btn btn-success" value="Submit">
     </div>
 
@@ -190,7 +190,14 @@ $userid=$_GET['userid']=1;
                 processData: false,
                 success: function (data)
                 {
-
+                    if(!($.isNumeric(data)))
+                    {
+                        alert(data);
+                    }
+                    else
+                    {
+                        window.location.href='../../order/PreviewOrder.php?order='+data+"&hallid=<?php echo $hallid;?>";
+                    }
 
 
                 }

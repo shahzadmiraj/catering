@@ -38,9 +38,7 @@ $numbers=queryReceive($sql);
     </style>
 </head>
 <body class="">
-<?php
-include_once ("../webdesign/header/header.php");
-?>
+
 
 <div class="container " style="margin-top:150px" >
 
@@ -140,10 +138,10 @@ include_once ("../webdesign/header/header.php");
         <div class="col-12 shadow">
             <h4 align="center">Customer personality</h4>
             <?php
-            $sql='SELECT py.personality,py.rating FROM person as p INNER join orderTable as ot
-on p.id=ot.person_id
+            $sql='SELECT py.personality,py.rating FROM person as p INNER join orderDetail as od
+on p.id=od.person_id
 INNER JOIN payment as py
-on ot.id=py.orderTable_id
+on od.id=py.orderDetail_id
 WHERE
 p.id='.$customerId.'';
             $personalitydetails=queryReceive($sql);
@@ -185,7 +183,11 @@ p.id='.$customerId.'';
                 }
                 else if($_GET['option']=="PreviewOrder")
                 {
-                    echo '<a href="/Catering/order/PreviewOrder.php?order='.$_GET['order'].'" class="col-6 form-control btn btn-outline-primary" >DONE</a>';
+                    echo '<input type="button" id="btnbackhistory" class="col-6  form-control btn btn-outline-primary" value="Done">';
+                }
+                else if($_GET['option']=="hallorder")
+                {
+                    echo '<a href="../company/hallBranches/hallorder.php?customer='.$customerId.'&hallid='.$_GET['hallid'].'" class="btn btn-outline-warning col-5">Done</a>';
                 }
             }
 
@@ -324,6 +326,9 @@ p.id='.$customerId.'';
          });
 
 
+     });
+     $("#btnbackhistory").click(function () {
+        window.history.back();
      });
 
 

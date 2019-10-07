@@ -8,9 +8,10 @@
 include  ("../../connection/connect.php");
 $companyid=$_GET['companyid'];
 $hallBranches=$_GET['hallBranches'];
-if($hallBranches<=0)
+if($hallBranches==0)
 {
-    header("");
+    //go to display company detail
+    header("Location:../companyRegister/companydisplay.php?companyid=".$companyid."");
     exit();
 }
 
@@ -34,6 +35,7 @@ if($hallBranches<=0)
     </style>
 </head>
 <body class="container" >
+
 
 <h1 align="center">
     Hall Branches Register
@@ -100,19 +102,22 @@ if($hallBranches<=0)
                 processData: false,
                 success: function (data)
                 {
-                    if(data!="")
+                    if(!($.isNumeric(data)))
                     {
                         alert(data);
                     }
                     else
                     {
-                        window.location.href="";
+                        //hall detail
+                        window.location.href="daytimeAll.php?companyid=<?php echo $companyid; ?>&hallid="+data+"&hallBranches=<?php  $hallBranches--;  echo $hallBranches;?>";
                     }
 
                 }
             });
         });
-        $("#cancel").click(function () {
+        $("#cancel").click(function ()
+        {
+            //remove one hall
             window.location.href="?hallBranches=<?php  $hallBranches--;  echo $hallBranches;?>&companyid=<?php echo $companyid;?>";
         });
     });

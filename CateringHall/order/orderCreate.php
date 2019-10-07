@@ -6,6 +6,8 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
+$cateringid=$_GET['cateringid'];
+$customer=$_GET['customer'];
 
 ?>
 <!DOCTYPE html>
@@ -27,14 +29,13 @@ include_once ("../connection/connect.php");
     </style>
 </head>
 <body class="alert-light">
-<?php
-include_once ("../webdesign/header/header.php");
-?>
+
 <div class="container"  style="margin-top:150px">
 
     <h1 align="center"> Order Create</h1>
     <form>
-        <input type="number" hidden id="customeridForm" value=<?php echo $_GET['customer'];?>   >
+        <input type="number" hidden name="customer" value=<?php echo $customer;?>   >
+        <input type="number" hidden name="cateringid" value="<?php echo $cateringid;?>">
         <div class="form-group row">
         <label for="persons" class="col-4 col-form-label"> no of guests</label>
         <input type="number" name="persons" id="persons" class="col-8 form-control">
@@ -99,11 +100,10 @@ include_once ("../webdesign/header/header.php");
        $("#submit").click(function (e)
        {
            e.preventDefault();
-           var customerid=$("#customeridForm").val();
            var formdata=new FormData($('form')[0]);
            formdata.append('function',"add");
            $.ajax({
-              url:"orderServer.php?customer="+customerid,
+              url:"orderServer.php
               data:formdata,
                method:"POST",
                contentType: false,

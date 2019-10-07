@@ -170,8 +170,7 @@ include_once ("../webdesign/header/header.php");
                     }
                     else if($_GET['option']=="PreviewOrder")
                     {
-
-                        echo '<a href="/Catering/order/PreviewOrder.php?order='.$_GET['order'].'" class="col-6 form-control btn btn-outline-primary" >DONE</a>';
+                        echo '<input type="button" id="btnbackhistory" class="col-6  form-control btn btn-outline-primary" value="Done">';
                     }
                 }
 
@@ -230,6 +229,12 @@ include_once ("../webdesign/header/header.php");
             });
 
         });
+
+
+        $("#btnbackhistory").click(function () {
+            window.history.back();
+        });
+
 
     });
 

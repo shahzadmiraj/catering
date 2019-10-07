@@ -4,7 +4,8 @@ include_once ("../../connection/connect.php");
 $month=$_GET['month'];
 $daytime=$_GET['daytime'];
 $hallid=$_GET['hallid'];
-
+$companyid=$_GET['companyid'];
+$hallBranches=$_GET['hallBranches'];
 $sql='SELECT name,id FROM systemDishType WHERE ISNULL(isExpire)';
 $dishtype=queryReceive($sql);
 

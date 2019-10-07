@@ -66,18 +66,18 @@ for($M=0;$M<$CateringBranches;$M++)
     </div>
     <h3 align="center"> select Dishes</h3>
 
-
+    <div class="form-group row">
     <?php
 
     $display = '';
     for ($i = 0; $i < count($dishType); $i++) {
-        $display = '<h1 align="center">' . $dishType[$i][0] . '</h1>';
+        $display = '<h1 align="center" class="col-12">' . $dishType[$i][0] . '</h1>';
         $sql = 'SELECT `name`, `id`, `image` FROM `systemDish` WHERE ISNULL(isExpire)AND
 systemDishType_id=' . $dishType[$i][1] . '';
         $dishDetail = queryReceive($sql);
         for ($j = 0; $j < count($dishDetail); $j++) {
             $display .= '
-    <div class="col-4 table-bordered">
+    <div class="col-4 shadow border btn-outline-warning m-2">
     
     <input id="dishtypename' .$H. '"  hidden type="text" name="dishtypename[]" value="' . $dishType[$i][0] . '">
     <input id="dishid' .$H. '"  hidden type="number" name="dishid[]" value="' . $dishDetail[$j][1] . '">
@@ -95,6 +95,7 @@ systemDishType_id=' . $dishType[$i][1] . '';
 
 
     ?>
+    </div>
     <div class="form-group row mt-3">
         <input data-formid="<?php echo $M; ?>" type="button" class="cancelform btn btn-outline-danger col-5 form-control " value="cancel">
     <input data-formid="<?php echo $M; ?>" type="button" class="submitform btn btn-primary col-5  form-control" value="submit">

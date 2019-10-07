@@ -35,9 +35,7 @@ $orderId=$_GET['order'];
     </style>
 </head>
 <body class="alert-light">
-<?php
-include_once ("../webdesign/header/header.php");
-?>
+
 <div class="container"  style="margin-top:150px">
 
     <h1 align="center">Create dishes</h1>

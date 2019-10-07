@@ -1,6 +1,8 @@
 <?php
 include_once ('../../connection/connect.php');
-$hallid=$_GET['hallid']=1;
+$hallid=$_GET['hallid'];
+$companyid=$_GET['companyid'];
+$hallBranches=$_GET['hallBranches'];
 ?>
 <!DOCTYPE html>
 <head>
@@ -47,6 +49,9 @@ $hallid=$_GET['hallid']=1;
 
 
 </div>
+<div class="form-group row">
+    <a href="hallRegister.php?companyid=<?php echo $companyid;?>&hallBranches=<?php echo $hallBranches;?>" class="btn btn-outline-success col-5"> Save And Next </a>
+</div>
 
 <!---->
 <!--<tr>-->
@@ -65,13 +70,16 @@ $hallid=$_GET['hallid']=1;
 
     $(document).ready(function ()
     {
-       $(".daytime").click(function () {
+       $(".daytime").click(function ()
+       {
            var daytime=$(this).data("daytime");
 
            var formdata=new FormData();
            formdata.append("option","showdaytimelist");
            formdata.append("daytime",daytime);
            formdata.append("hallid",<?php echo $hallid; ?>);
+           formdata.append("companyid",<?php echo $companyid;?>);
+           formdata.append("hallBranches",<?php echo $hallBranches;?>)
            $.ajax({
                url:"../companyServer.php",
                method:"POST",

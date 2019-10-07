@@ -157,6 +157,7 @@ if(isset($_POST['option']))
 
             createOnlyAllSeating($hallid,$daytimearray[$i]);
         }
+        echo $hallid;
 
 
 
@@ -195,6 +196,8 @@ if(isset($_POST['option']))
     {
         $hallid=$_POST['hallid'];
         $daytime=$_POST['daytime'];
+        $companyid=$_POST['companyid'];
+        $hallBranches=$_POST['hallBranches'];
         $monthsArray = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 
         $display='<table class=" table table-striped table-danger col-12 ">
@@ -220,14 +223,14 @@ AND (month="'.$monthsArray[$i].'")';
                     <label class="col-form-label col-6 font-weight-bold"> Prize Only Seating </label>
                     <input data-menuid="'.$detailList[0][0].'" class="changeSeating form-control col-6" type="number" value="'.$detailList[0][1].'">
                     <h3 align="center" class="col-12 mt-3">List of prize with Food</h3>
-                    <a  href="addnewpackage.php?month='.$monthsArray[$i].'&daytime='.$daytime.'&hallid='.$hallid.'" class="form-control  btn-primary col-12 text-center"> Add New Package</a>';
+                    <a  href="addnewpackage.php?month='.$monthsArray[$i].'&daytime='.$daytime.'&hallid='.$hallid.'&companyid='.$companyid.'&hallBranches='.$hallBranches.'" class="form-control  btn-primary col-12 text-center"> Add New Package</a>';
 
-            $sql='SELECT `id`,`expire`, `package_name` FROM `hallprice` WHERE (hall_id=2)
+            $sql='SELECT `id`,`expire`, `package_name` FROM `hallprice` WHERE (hall_id='.$hallid.')
 AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)';
             $ALLpackages=queryReceive($sql);
             for ($j=0;$j<count($ALLpackages);$j++)
             {
-                $display.='    <a  href="Editpackage.php?packageid='.$ALLpackages[$j][0].'" class="form-control  btn-success col-4 text-center m-2"> '.$ALLpackages[$j][2].'';
+                $display.='    <a  href="Editpackage.php?packageid='.$ALLpackages[$j][0].'&hallid='.$hallid.'&companyid='.$companyid.'&hallBranches='.$hallBranches.'" class="form-control  btn-success col-4 text-center m-2"> '.$ALLpackages[$j][2].'';
                 if($ALLpackages[$j][1]!=NULL)
                 {
                     $display.='   Expired';
@@ -327,7 +330,7 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)';
             {
                 $display.=' <div class="checkclasshas custom-control custom-radio form-group  ">
         <input type="radio" data-describe="'.$detailpackage[$i][0].'" value="'.$detailpackage[$i][0].'" class="changeradio custom-control-input" id="defaultUnchecked'.$i.'" name="defaultExampleRadios">
-        <label class="custom-control-label" for="defaultUnchecked'.$i.'">'.$detailpackage[$i][1].'  package with Rs'.$detailpackage[$i][2].' price</label>
+        <label class="custom-control-label" for="defaultUnchecked'.$i.'">'.$detailpackage[$i][1].'  package with Rs='.$detailpackage[$i][2].' price</label>
     </div> 
     <input hidden id="describe'.$detailpackage[$i][0].'" type="text" value="'.$detailpackage[$i][3].'">';
             }
@@ -350,10 +353,10 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)';
         $detailhalls=queryReceive($sql);
         if(count($detailhalls)>0)
         {
-            $display.='<h4 class="btn-outline-danger">Already '.count($detailhalls).' has booked</h4>';
+            $display.='<h4 class="btn-outline-danger">Already '.count($detailhalls).' function has booked</h4>';
             for ($i=0;$i<count($detailhalls);$i++)
             {
-                $display.='<p>$i function booked with '.$detailhalls[$i][0].' Guests</p>';
+                $display.='<p>'.($i+1).' function booked with '.$detailhalls[$i][0].' Guests</p>';
             }
         }
         echo $display;
@@ -407,16 +410,22 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)';
 
 
             $catering="";
+            $notice="";
             if($perheadwith==1)
             {
                 $catering="Running";
+                $notice="alert";
             }
             $sql='INSERT INTO `orderDetail`(`id`, `hall_id`, `catering_id`, `hallprice_id`, `user_id`, 
         `sheftCatering`, `sheftHall`, `sheftCateringUser`, `sheftHallUser`, `address_id`, `person_id`, 
         `total_amount`, `total_person`, `status_hall`, `destination_date`, `booking_date`, `destination_time`, 
-        `status_catering`, `notice`) VALUES (NULL,'.$hallid.',NULL,'.$packageid.','.$userid.',NULL,
+        `status_catering`, `notice`,`describe`) 
+        VALUES (NULL,'.$hallid.',NULL,'.$packageid.','.$userid.',NULL,
         NULL,NULL,NULL,NULL,'.$personid.','.$totalamount.','.$guests.',"Running","'.$date.'","'.$currentdate.'",
-        "'.$time.'","'.$catering.'",1)';
+        "'.$time.'","'.$catering.'","'.$notice.'","'.$describe.'")';
+            querySend($sql);
+            echo mysqli_insert_id($connect);
+
     }
 
 

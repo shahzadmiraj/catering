@@ -14,7 +14,7 @@ $dishTypeDetail=queryReceive($sql);
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="/Catering/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -31,9 +31,7 @@ $dishTypeDetail=queryReceive($sql);
     </style>
 </head>
 <body class="alert-light">
-<?php
-include_once ("../webdesign/header/header.php");
-?>
+
 <div class="container"  style="margin-top:150px">
 
     <h1 align="center" >Select Dishes</h1>

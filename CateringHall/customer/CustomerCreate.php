@@ -6,6 +6,8 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
+$hallid=$_GET['hallid'];
+$cateringid=$_GET['cateringid'];
 
 ?>
 <!DOCTYPE html>
@@ -28,9 +30,6 @@ include_once ("../connection/connect.php");
     </style>
 </head>
 <body class="alert-light">
-<?php
-include_once ("../webdesign/header/header.php");
-?>
 <div class="container" style="margin-top:150px" >
 
 <form id="form">
@@ -38,7 +37,7 @@ include_once ("../webdesign/header/header.php");
             Customer create
         </p>
         <input id="customer" hidden value="">
-        <div class="form-group row">
+    <div class="form-group row">
         <label for="number" class="col-3 col-form-label">Phone no:</label>
         <input id="number"class="allnumber form-control col-7" type="number" name="number[]"  >
         <input type="button" class="form-control btn-primary col-2" id="Add_btn" value="+">
@@ -80,33 +79,9 @@ include_once ("../webdesign/header/header.php");
             <input type="number" id="houseNo" name="houseNo" class="form-control col-9">
         </div>
         <div class="form-group row col-12">
-            <?php
-            if(isset($_GET['option']))
-            {
-                if($_GET['option']=="userDisplay")
-                {
-                   echo '
-            <button class="col-5 form-control btn btn-danger" id="cancelCustomer">cancel</button>
-            <button class="col-5 form-control btn btn-outline-primary" id="submit">submit</button>';
-                }
-                else
-                {
 
-                    echo '
-            <a href="/Catering/user/userDisplay.php" class=" col-5 form-control btn btn-danger">cancel</a>
-            <button class="col-5 form-control btn btn-outline-primary" id="submit">submit</button>';
-                }
-
-            }
-            else
-            {
-
-                echo '
-            <a href="/Catering/user/userDisplay.php" class=" col-5 form-control btn btn-danger">cancel</a>
-            <button class="col-5 form-control btn btn-outline-primary" id="submit">submit</button>';
-            }
-
-            ?>
+            <button type="button" class="col-5 form-control btn btn-danger" id="cancelCustomer">cancel</button>
+            <button type="button" class="col-5 form-control btn btn-outline-primary" id="submit">submit</button>
         </div>
     </form>
 </div>
@@ -135,18 +110,16 @@ include_once ("../webdesign/header/header.php");
                    }
                    else
                    {
-                       window.location.href="/Catering/customer/customerEdit.php?customer="+data+"&option=CustomerCreate";
+                       window.location.href="/Catering/customer/customerEdit.php?customer="+data+"&option=CustomerCreate&hallid=<?php echo $hallid;?>&cateringid=<?php echo $cateringid;?>";
                    }
                }
            });
        });
 
 
-       $("#cancelCustomer").click(function (e)
+       $("#cancelCustomer").click(function ()
        {
-           e.preventDefault();
           window.history.back();
-          return false;
        });
        var number=0;
 
@@ -212,7 +185,16 @@ include_once ("../webdesign/header/header.php");
                     }
                     else
                     {
-                        window.location.href="/Catering/order/orderCreate.php?customer="+data+"&option=CustomerCreate";
+                        if(<?php echo $hallid;?>=="")
+                        {
+                            //this is the oder of catering
+                            window.location.href="/Catering/order/orderCreate.php?customer="+data+"&option=CustomerCreate&cateringid=<?php echo $cateringid;?>";
+                        }
+                        else
+                        {
+                            //this is the order of hall
+                            window.location.href="../company/hallBranches/hallorder.php?customer="+data+"&hallid=<?php echo $hallid;?>";
+                        }
                     }
                }
            });
