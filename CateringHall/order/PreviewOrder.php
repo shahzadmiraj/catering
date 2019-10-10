@@ -7,7 +7,7 @@
  */
 include_once ("../connection/connect.php");
 
-$hallid='';
+$hallid="";
 $cateringid='';
 if(isset($_GET['hallid']))
     $hallid=$_GET['hallid'];
@@ -67,7 +67,7 @@ $customerID=$orderDetailPerson[0][1];
             if($hallid!='')
             {
                 //hall order edit
-                echo '<a></a>';
+                echo '<a href="../company/hallBranches/EdithallOrder.php?hallid='.$hallid.'&order='.$orderId.'" class="text-center  mb-1  form-control btn-success">Hall order Edit</a>';
             }
             else
             {

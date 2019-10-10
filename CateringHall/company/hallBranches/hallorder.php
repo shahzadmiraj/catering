@@ -105,6 +105,7 @@ $userid=$_GET['userid']=1;
             }
 
             var formdata = new FormData;
+            formdata.append("date",date);
             formdata.append("month", month);
             formdata.append("time", time);
             formdata.append("perheadwith", perheadwith);

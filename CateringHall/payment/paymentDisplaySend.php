@@ -10,6 +10,7 @@ include_once ("../connection/connect.php");
 $userId=$_GET['user_id'];
 $paymentId=$_GET['payment'];
 $orderid=$_GET['order'];
+$companyid=$_GET['companyid'];
 
 $sql='SELECT `id`, `amount`, `nameCustomer`, `receive`, `IsReturn`,`sendingStatus` FROM `payment` WHERE id='.$paymentId.'';
 $paymentDetail=queryReceive($sql);
@@ -49,7 +50,7 @@ include_once ("../webdesign/header/header.php");
             <select id="userIdlabel" class="col-8">
                 <option value="none">None</option>
                 <?php
-                    $sql='SELECT id, username FROM user WHERE id !='.$userId.' ';
+                    $sql='SELECT id, username FROM user WHERE (id !='.$userId.') AND (company_id='.$companyid.') ';
                     $userDetail=queryReceive($sql);
                     for($y=0;$y<count($userDetail);$y++)
                     {

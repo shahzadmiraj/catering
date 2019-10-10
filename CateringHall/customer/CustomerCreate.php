@@ -180,12 +180,11 @@ $cateringid=$_GET['cateringid'];
 
                     if(!($.isNumeric(data)))
                     {
-                        alert(data);
                         return false;
                     }
                     else
                     {
-                        if(<?php echo $hallid;?>=="")
+                        if("<?php echo $hallid;?>"=="")
                         {
                             //this is the oder of catering
                             window.location.href="/Catering/order/orderCreate.php?customer="+data+"&option=CustomerCreate&cateringid=<?php echo $cateringid;?>";

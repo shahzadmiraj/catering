@@ -314,6 +314,7 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)';
     else if($_POST['option']=="checkpackages1")
     {
         $monthno=$_POST['month'];
+        $date=$_POST['date'];
         $time=$_POST['time'];
         $perheadwith=$_POST['perheadwith'];
         $hallid=$_POST['hallid'];
@@ -321,6 +322,7 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)';
         $month=$monthsArray[$monthno];
         $sql='SELECT `id`, `package_name`,`price`,`describe` FROM `hallprice` WHERE ISNULL(expire) AND (month="'.$month.'") AND (dayTime="'.$time.'") And (isFood='.$perheadwith.') AND (hall_id='.$hallid.')';
         $detailpackage=queryReceive($sql);
+
         $display='<h3 align="center">Packages Detail </h3>';
         if($perheadwith==1)
         {
@@ -349,7 +351,20 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)';
     </div>';
 
         }
-        $sql='SELECT od.total_person FROM orderDetail od WHERE (od.hall_id='.$hallid.') AND (od.status_hall="Running")';
+        if($time=="Morning")
+        {
+            $time="09:00:00";
+        }
+        else if($time="Afternoon")
+        {
+
+            $time="12:00:00";
+        }
+        else {
+
+            $time="18:00:00";
+        }
+        $sql='SELECT id FROM orderDetail as od WHERE (od.booking_date= "'.$date.'") AND (od.destination_time="'.$time.'") AND (od.sheftHall="Running") AND (od.hall_id='.$hallid.')';
         $detailhalls=queryReceive($sql);
         if(count($detailhalls)>0)
         {
@@ -426,6 +441,53 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)';
             querySend($sql);
             echo mysqli_insert_id($connect);
 
+    }
+    else if($_POST['option']=="Edithallorder")
+    {
+        $order=$_POST['order'];
+        $packageid='';
+        if(isset($_POST['packageid']))
+            $packageid=$_POST['packageid'];
+        $guests=chechIsEmpty($_POST['guests']);
+        $date=$_POST['date'];
+        $time=$_POST['time'];
+        $perheadwith=$_POST['perheadwith'];
+        $describe=$_POST['describe'];
+        $totalamount=chechIsEmpty($_POST['totalamount']);
+        $catering="";
+        $notice="";
+        if($time=="Morning")
+        {
+            $time="9:00";
+        }
+        else if($time="Afternoon")
+        {
+
+            $time="12:00";
+        }
+        else {
+
+            $time="18:00";
+        }
+        $orderStatus=$_POST['orderStatus'];
+        if($perheadwith==0)
+        {
+            //just cancel of catering /../
+            $catering="Cancel";
+            $notice="";
+        }
+        else
+            {
+                $catering=$orderStatus;
+                if($catering=="Running")
+                $notice="alert";
+            }
+        $sql='UPDATE `orderDetail` SET `hallprice_id`='.$packageid.',
+`total_amount`='.$totalamount.',`total_person`='.$guests.',`status_hall`
+="'.$orderStatus.'",`destination_date`="'.$date.'",`destination_time`="'.$time.'",
+`status_catering`="'.$catering.'",`notice`="'.$notice.'",`describe`="'.$describe.'" 
+WHERE  id='.$order.'';
+        querySend($sql);
     }
 
 

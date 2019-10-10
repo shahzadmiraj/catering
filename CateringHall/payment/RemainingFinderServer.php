@@ -7,9 +7,9 @@
  */
 
 include_once ("../connection/connect.php");
-$sql='SELECT DISTINCT ot.id, (SELECT p.name FROM person as p WHERE p.id=ot.person_id), (SELECT sum(py.amount) FROM payment as py WHERE (py.IsReturn=0)AND(py.orderTable_id=ot.id)) ,ot.extre_charges,ot.total_amount, (SELECT SUM(dd.price*dd.quantity) FROM dish_detail as dd WHERE dd.orderTable_id=ot.id) FROM person as p INNER JOIN orderTable as ot
+$sql='SELECT DISTINCT ot.id, (SELECT p.name FROM person as p WHERE p.id=ot.person_id), (SELECT sum(py.amount) FROM payment as py WHERE (py.IsReturn=0)AND(py.orderDetail_id=ot.id)) ,ot.extre_charges,ot.total_amount, (SELECT SUM(dd.price*dd.quantity) FROM dish_detail as dd WHERE dd.orderDetail_id=ot.id) FROM person as p INNER JOIN orderDetail as ot
 on p.id=ot.person_id
-LEFT join payment as py on ot.id=py.orderTable_id WHERE   ';
+LEFT join payment as py on ot.id=py.orderDetail_id WHERE   ';
 
 if(isset($_POST['p_name']))
 {

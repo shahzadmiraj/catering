@@ -36,10 +36,10 @@ if(isset($_GET['cateringid']))
 
             <h1 align="center" class="col-12">User Desplay</h1>
             <a href="/Catering/customer/CustomerCreate.php?option=userDisplay&hallid=<?php echo $hallid;?>&cateringid=<?php echo $cateringid;?>" class="mb-1 text-center   form-control btn-primary">Order Create</a>
-            <a href="/Catering/order/FindOrder.php?is_active=0" class="mb-1 text-center   form-control btn-primary">Running Order</a>
-            <a href="/Catering/order/FindOrder.php?is_active=2" class="mb-1  text-center form-control btn-primary">deliver Orders</a>
-            <a href="/Catering/order/FindOrder.php?is_active=3" class="mb-1 text-center form-control btn-primary">Clear Orders</a>
-            <a href="/Catering/order/FindOrder.php?is_active=1" class="mb-1 text-center form-control btn-primary">Cancel Orders</a>
+            <a href="/Catering/order/FindOrder.php?order_status=Running" class="mb-1 text-center   form-control btn-primary">Running Order</a>
+            <a href="/Catering/order/FindOrder.php?order_status=Deliever" class="mb-1  text-center form-control btn-primary">Deliever Orders</a>
+            <a href="/Catering/order/FindOrder.php?order_status=Clear" class="mb-1 text-center form-control btn-primary">Clear Orders</a>
+            <a href="/Catering/order/FindOrder.php?order_status=Cancel" class="mb-1 text-center form-control btn-primary">Cancel Orders</a>
             <a href="/Catering/payment/transferPaymentReceive.php?option=userDisplay" class="mb-1 text-center form-control btn-primary">Receive payment</a>
             <a href="/Catering/system/dish/dishesDetail.php" class="mb-1 text-center form-control btn-primary">Guideline Dishes</a>
             <a href="/Catering/system/user/usercreate.php" class="mb-1 text-center form-control btn-primary">User Create</a>

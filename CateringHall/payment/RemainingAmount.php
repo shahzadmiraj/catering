@@ -101,7 +101,7 @@ include_once ("../webdesign/header/header.php");
     </tbody>
     <?php
     //$OrderStatus=array("running","cancel","delieved","clear");
-    $sql="SELECT DISTINCT ot.id, (SELECT p.name FROM person as p WHERE p.id=ot.person_id), (SELECT sum(py.amount) FROM payment as py WHERE (py.IsReturn=0)AND(py.orderTable_id=ot.id)) ,ot.extre_charges,ot.total_amount, (SELECT SUM(dd.price*dd.quantity) FROM dish_detail as dd WHERE dd.orderTable_id=ot.id) FROM orderTable as ot LEFT join payment as py on ot.id=py.orderTable_id WHERE ot.is_active in(0,2)";
+    $sql="SELECT DISTINCT ot.id, (SELECT p.name FROM person as p WHERE p.id=ot.person_id), (SELECT sum(py.amount) FROM payment as py WHERE (py.IsReturn=0)AND(py.orderDetail_id=ot.id)) ,ot.extre_charges,ot.total_amount, (SELECT SUM(dd.price*dd.quantity) FROM dish_detail as dd WHERE dd.orderDetail_id=ot.id) FROM orderDetail as ot LEFT join payment as py on ot.id=py.orderDetail_id WHERE ot.is_active in(0,2)";
 $details=queryReceive($sql);
 //print_r($details);
     $display='';

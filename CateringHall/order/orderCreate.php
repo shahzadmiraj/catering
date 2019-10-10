@@ -75,7 +75,7 @@ $customer=$_GET['customer'];
                     if(($_GET['option']=="CustomerCreate")||($_GET['option']=="customerEdit"))
                     {
 
-                        echo '<a href="/Catering/customer/customerEdit.php?customer='.$_GET['customer'].'&option=orderCreate" class="form-control col-4 btn btn-danger">Edit Customer</a>';
+                        echo '<a href="/Catering/customer/customerEdit.php?customer='.$_GET['customer'].'&option=orderCreate&cateringid='.$cateringid.'" class="form-control col-4 btn btn-danger">Edit Customer</a>';
                     }
                 }
                 else
@@ -103,7 +103,7 @@ $customer=$_GET['customer'];
            var formdata=new FormData($('form')[0]);
            formdata.append('function',"add");
            $.ajax({
-              url:"orderServer.php
+              url:"orderServer.php",
               data:formdata,
                method:"POST",
                contentType: false,
@@ -119,7 +119,7 @@ $customer=$_GET['customer'];
                   }
                   else
                   {
-                      window.location.href="/Catering/dish/dishDisplay.php?order="+data+"&customer="+customerid+"&option=orderCreate";
+                      window.location.href="../dish/dishDisplay.php?order="+data+"&customer=<?php echo $customer;?>&option=orderCreate&cateringid=<?php echo $cateringid;?>";
                   }
                }
            });

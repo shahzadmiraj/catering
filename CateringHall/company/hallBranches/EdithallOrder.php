@@ -6,10 +6,8 @@
  * Time: 21:31
  */
 include  ("../../connection/connect.php");
-$hallid=$_GET['hallid']=4;
-
-$userid=$_GET['userid']=1;
-$orderid=$_GET['order']=1;
+$hallid=$_GET['hallid'];
+$orderid=$_GET['order'];
 $sql='SELECT `id`, `hall_id`, `catering_id`, (SELECT hp.isFood from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),
  `user_id`, `sheftCatering`, `sheftHall`, `sheftCateringUser`, 
  `sheftHallUser`, `address_id`, `person_id`, `total_amount`, 
@@ -127,35 +125,48 @@ $detailorder=queryReceive($sql);
         <input name="totalamount" type="number" class="form-control col-8" value="<?php echo $detailorder[0][11]; ?>">
     </div>
 
+    <?php
 
+        $status=array("Running","Deliever","Cancel","Clear");
+        $display='
     <div class="form-group row">
-        <label class="col-form-label col-4">Hall status</label>
-        <select  name="hallstatus" class="form-control col-8">
-            <option value="Running">Running</option>
-        </select>
-    </div>
+        <label class="col-form-label col-4">Order status</label>
+        <select  name="orderStatus" class=" form-control col-8">
+        <option value="'.$detailorder[0][13].'">'.$detailorder[0][13].'</option>';
+        for($i=0;$i<count($status);$i++)
+        {
+            if($status[$i]!=$detailorder[0][13])
+            {
+                $display.='<option value="'.$status[$i].'">'.$status[$i].'</option>';
+            }
+        }
+        $display.=' </select>
+    </div>';
+       echo $display;
 
-    <div class="form-group row">
-        <label class="col-form-label col-4">Catering status</label>
-        <select  name="cateringstatus" class=" form-control col-8">
-            <option value="Running">Running</option>
-        </select>
-    </div>
+
+    ?>
+
 
     <div class="form-group row">
         <label class="col-form-label col-4">Booked date</label>
-        <input readonly type="date" class="form-control col-8" value="<?php echo $detailorder[0][12]; ?>">
+        <input readonly type="date" class="form-control col-8" value="<?php echo $detailorder[0][15]; ?>">
     </div>
 
     <div class="form-group row">
-        <a href="../../customer/customerEdit.php?option=hallorder&customer=<?php echo $personid; ?>&hallid=<?php echo $hallid;?>" class=" col-4  btn btn-danger"  >Edit customer</a>
-        <input id="submitform" type="button" class=" col-4 btn btn-success" value="Submit">
+
+        <input id="cancel" type="button" class=" col-4 btn btn-danger" value="Cancel">
+        <input id="submitform" type="button" class=" col-4 btn btn-success" value="Save">
     </div>
 
 </form>
 
 <script>
     $(document).ready(function () {
+        $("#cancel").click(function ()
+        {
+            window.history.back();
+        });
         function checkpackage(date, time, perheadwith)
         {
             if ((date != "") && (time != "") && (perheadwith != "")) {
@@ -170,6 +181,7 @@ $detailorder=queryReceive($sql);
             var month = new Date(date).getMonth();
             var time = $("#time").val();
             var perheadwith = $("#perheadwith").val();
+            $("#selectmenu").html("");
             if (!checkpackage(date, time, perheadwith))
             {
 
@@ -177,6 +189,7 @@ $detailorder=queryReceive($sql);
             }
 
             var formdata = new FormData;
+            formdata.append("date",date);
             formdata.append("month", month);
             formdata.append("time", time);
             formdata.append("perheadwith", perheadwith);
@@ -236,9 +249,11 @@ $detailorder=queryReceive($sql);
 
 
         });
+
+        var packageid=<?php echo $detailorder[0][21]; ?>;
+
         $("#submitform").click(function ()
         {
-            var packageid='';
             var date = $("#date").val();
             var time = $("#time").val();
             var perheadwith = $("#perheadwith").val();
@@ -252,14 +267,15 @@ $detailorder=queryReceive($sql);
                 packageid=$("input[name='defaultExampleRadios']:checked").val();
                 if(!packageid)
                 {
-                    alert("please select Package From Package Detail");
+                    alert("Please select Package From Package Detail");
                     return false;
                 }
             }
             var formdata = new FormData($("form")[0]);
+            formdata.append("perheadwith",perheadwith);
             formdata.append("packageid", packageid);
-            formdata.append("option", "createOrderofHall");
-
+            formdata.append("order",<?php echo $orderid;  ?>);
+            formdata.append("option", "Edithallorder");
             $.ajax({
                 url: "../companyServer.php",
                 method: "POST",
@@ -268,13 +284,13 @@ $detailorder=queryReceive($sql);
                 processData: false,
                 success: function (data)
                 {
-                    if(!($.isNumeric(data)))
+                    if(data!="")
                     {
                         alert(data);
                     }
                     else
                     {
-                        window.location.href='../../order/PreviewOrder.php?order='+data+"&hallid=<?php echo $hallid;?>";
+                        window.history.back();
                     }
 
 

@@ -9,7 +9,10 @@ include_once ("../connection/connect.php");
 
 $sql='SELECT dt.id, dt.name FROM dish_type as dt WHERE ISNULL(dt.isExpire)';
 $dishTypeDetail=queryReceive($sql);
-
+$order=$_GET['order'];
+$sql='SELECT od.hallprice_id,(SELECT hp.describe from hallprice as hp WHERE hp.id=od.hallprice_id),(SELECT hp.isFood from hallprice as hp WHERE hp.id=od.hallprice_id) FROM orderDetail as od
+WHERE od.id='.$order.'';
+$hallpackage=queryReceive($sql);
 ?>
 <!DOCTYPE html>
 <head>
@@ -31,6 +34,11 @@ $dishTypeDetail=queryReceive($sql);
     </style>
 </head>
 <body class="alert-light">
+
+<div id="selectmenu" class="alert-info  m-2 form-group row shadow" >
+
+
+</div>
 
 <div class="container"  style="margin-top:150px">
 
@@ -54,7 +62,7 @@ $dishTypeDetail=queryReceive($sql);
             {
                 if($_GET['option']=="orderCreate")
                 {
-                    echo '<a href="/Catering/order/orderEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=dishDisplay" class="col-5 form-control btn btn-danger">Edit Order</a>';
+                    echo '<a href="../order/orderEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=dishDisplay" class="col-5 form-control btn btn-danger">Edit Order</a>';
                 }
                 else if($_GET['option']=="orderEdit")
                 {
@@ -161,6 +169,37 @@ $dishTypeDetail=queryReceive($sql);
             }
 
         });
+
+
+        function menushow(packageid,describe)
+        {
+            var formdata = new FormData;
+            formdata.append("packageid", packageid);
+            formdata.append("option", "viewmenu");
+
+            $.ajax({
+                url: "dishServer.php",
+                method: "POST",
+                data: formdata,
+                contentType: false,
+                processData: false,
+                success: function (data)
+                {
+                    if(data!="")
+                    {
+                        $("#selectmenu").html('<h1 align="center" class=\'col-12\'>Package Menu</h1>');
+                        $("#selectmenu").append(data);
+                        $("#selectmenu").append("<h3 align='center' class='col-12'>Menu Description</h3><p class='col-12'>" + describe + "</p>");
+                    }
+                }
+
+
+            });
+        }
+
+        menushow(<?php  echo $hallpackage[0][0]; ?>,"<?php echo $hallpackage[0][1]; ?>");
+
+
 
 
 
