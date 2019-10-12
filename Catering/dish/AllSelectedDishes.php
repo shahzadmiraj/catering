@@ -29,16 +29,14 @@ include_once ("../connection/connect.php");
     </style>
 </head>
 <body>
-<?php
-include_once ("../webdesign/header/header.php");
-?>
+
 <div class="container"  style="margin-top:150px">
 
     <h4 align="center"> Selected Dishes / items Detail</h4>
 
     <?php
 
-    $sql="SELECT DISTINCT ot.id, (SELECT p.name FROM person as p WHERE p.id=ot.person_id), (SELECT sum(py.amount) FROM payment as py WHERE (py.IsReturn=0)AND(py.orderTable_id=ot.id)) ,ot.extre_charges,ot.total_amount, (SELECT SUM(dd.price*dd.quantity) FROM dish_detail as dd WHERE dd.orderTable_id=ot.id) FROM orderTable as ot LEFT join payment as py on ot.id=py.orderTable_id WHERE ot.id=".$orderId."";
+    $sql="SELECT DISTINCT ot.id, (SELECT p.name FROM person as p WHERE p.id=ot.person_id), (SELECT sum(py.amount) FROM payment as py WHERE (py.IsReturn=0)AND(py.orderDetail_id=ot.id)) ,ot.id,ot.total_amount, (SELECT SUM(dd.price*dd.quantity) FROM dish_detail as dd WHERE dd.orderDetail_id=ot.id) FROM orderDetail as ot LEFT join payment as py on ot.id=py.orderDetail_id WHERE ot.id=".$orderId."";
     $details=queryReceive($sql);
 
     echo ' 
@@ -93,7 +91,7 @@ include_once ("../webdesign/header/header.php");
 dish as d 
 on d.id=dd.dish_id
 where 
- (dd.orderTable_id='.$orderId.') AND ISNULL(dd.expire_date)';
+ (dd.orderDetail_id='.$orderId.') AND ISNULL(dd.expire_date)';
         $totalAmount=0;
         $dishesDetail=queryReceive($sql);
         for($i=0;$i<count($dishesDetail);$i++)

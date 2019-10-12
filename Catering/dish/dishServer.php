@@ -27,8 +27,13 @@ if(isset($_GET['order']))
 if($_POST['option']=='createDish')
 {
     $dishId=$_POST['dishId'];
-    $attributesId=$_POST['attributeId'];
-    $attributesValue=$_POST['attributeValue'];
+    $attributesId=array();
+    $attributesValue=array();
+    if(isset($_POST['attributeId']))
+    {
+        $attributesId=$_POST['attributeId'];
+        $attributesValue=$_POST['attributeValue'];
+    }
     $each_price=chechIsEmpty($_POST['each_price']);
     $quantity=chechIsEmpty($_POST['quantity']);
     $describe=$_POST['describe'];
@@ -36,7 +41,7 @@ if($_POST['option']=='createDish')
 
 
     $CurrentDateTime=date('Y-m-d H:i:s');
-    $sql='INSERT INTO `dish_detail`(`id`, `describe`, `price`, `expire_date`, `quantity`, `dish_id`, `orderTable_id`)VALUES(NULL,"'.$describe.'","'.$each_price.'",NULL,"'.$quantity.'",'.$dishId.','.$orderId.')';
+    $sql='INSERT INTO `dish_detail`(`id`, `describe`, `price`, `expire_date`, `quantity`, `dish_id`, `orderDetail_id`)VALUES(NULL,"'.$describe.'","'.$each_price.'",NULL,"'.$quantity.'",'.$dishId.','.$orderId.')';
     querySend($sql);
     $dishDetailId=mysqli_insert_id($connect);
     for ($i=0;$i<count($attributesId);$i++)
@@ -69,4 +74,20 @@ else if($_POST['option']=='deleteDish')
     $sql='UPDATE dish_detail as dd SET dd.expire_date="'.$currentDate.'"  WHERE dd.id='.$dishDetailId.'';
     querySend($sql);
 
+}
+else if($_POST['option']=="viewmenu")
+{
+    $packageid=$_POST['packageid'];
+    $sql='SELECT `dishname`, `image` FROM `menu` WHERE (hallprice_id='.$packageid.') AND ISNULL(expire)';
+    $menu=queryReceive($sql);
+    $display='<h4 align="center" class="col-12">Menu</h4>';
+    for ($i=0;$i<count($menu);$i++)
+    {
+        $display.='
+            <div  class="col-3 alert-danger shadow border m-2 form-group rounded" style="height: 30vh;" >
+                <img src="'.substr($menu[$i][1],3).'" class="col-12 " style="height: 15vh">
+                <p class="col-form-label" class="form-control col-12">'.$menu[$i][0].'</p>
+            </div>';
+    }
+    echo $display;
 }

@@ -1,18 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: shahzadmiraj
- * Date: 2019-09-10
- * Time: 14:04
- */
-session_start();
-
-if(!isset($_SESSION['username']))
-{
-    header("location:userLogin.php");
-    exit();
-}
-
+$hallid='';
+$cateringid='';
+if(isset($_GET['hallid']))
+ $hallid =$_GET['hallid'];
+if(isset($_GET['cateringid']))
+    $cateringid=$_GET['cateringid'];
 ?>
 
 <!DOCTYPE html>
@@ -34,9 +26,7 @@ if(!isset($_SESSION['username']))
     </style>
 </head>
 <body class="alert-light container">
-<?php
- include_once ("../webdesign/header/header.php");
-?>
+
 
 <div class="col-12 " style="margin-top:150px" >
 
@@ -45,11 +35,11 @@ if(!isset($_SESSION['username']))
 <!--        $OrderStatus=array("running","cancel","delieved","clear");-->
 
             <h1 align="center" class="col-12">User Desplay</h1>
-            <a href="/Catering/customer/CustomerCreate.php?option=userDisplay" class="mb-1 text-center   form-control btn-primary">Order Create</a>
-            <a href="/Catering/order/FindOrder.php?is_active=0" class="mb-1 text-center   form-control btn-primary">Running Order</a>
-            <a href="/Catering/order/FindOrder.php?is_active=2" class="mb-1  text-center form-control btn-primary">deliver Orders</a>
-            <a href="/Catering/order/FindOrder.php?is_active=3" class="mb-1 text-center form-control btn-primary">Clear Orders</a>
-            <a href="/Catering/order/FindOrder.php?is_active=1" class="mb-1 text-center form-control btn-primary">Cancel Orders</a>
+            <a href="/Catering/customer/CustomerCreate.php?option=userDisplay&hallid=<?php echo $hallid;?>&cateringid=<?php echo $cateringid;?>" class="mb-1 text-center   form-control btn-primary">Order Create</a>
+            <a href="/Catering/order/FindOrder.php?order_status=Running&cateringid=<?php  echo $cateringid;?>&hallid=<?php echo $hallid;?>" class="mb-1 text-center   form-control btn-primary">Running Order</a>
+            <a href="/Catering/order/FindOrder.php?order_status=Deliever&cateringid=<?php  echo $cateringid;?>&hallid=<?php echo $hallid;?>" class="mb-1  text-center form-control btn-primary">Deliever Orders</a>
+            <a href="/Catering/order/FindOrder.php?order_status=Clear&cateringid=<?php  echo $cateringid;?>&hallid=<?php echo $hallid;?>" class="mb-1 text-center form-control btn-primary">Clear Orders</a>
+            <a href="/Catering/order/FindOrder.php?order_status=Cancel&cateringid=<?php  echo $cateringid;?>&hallid=<?php echo $hallid;?>" class="mb-1 text-center form-control btn-primary">Cancel Orders</a>
             <a href="/Catering/payment/transferPaymentReceive.php?option=userDisplay" class="mb-1 text-center form-control btn-primary">Receive payment</a>
             <a href="/Catering/system/dish/dishesDetail.php" class="mb-1 text-center form-control btn-primary">Guideline Dishes</a>
             <a href="/Catering/system/user/usercreate.php" class="mb-1 text-center form-control btn-primary">User Create</a>

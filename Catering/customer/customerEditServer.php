@@ -11,7 +11,7 @@ include_once ("../connection/connect.php");
 
 if(isset($_POST['option']))
 {
-;
+
     if($_POST['option']=="change")
     {
 

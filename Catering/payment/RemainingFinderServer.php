@@ -7,9 +7,11 @@
  */
 
 include_once ("../connection/connect.php");
-$sql='SELECT DISTINCT ot.id, (SELECT p.name FROM person as p WHERE p.id=ot.person_id), (SELECT sum(py.amount) FROM payment as py WHERE (py.IsReturn=0)AND(py.orderTable_id=ot.id)) ,ot.extre_charges,ot.total_amount, (SELECT SUM(dd.price*dd.quantity) FROM dish_detail as dd WHERE dd.orderTable_id=ot.id) FROM person as p INNER JOIN orderTable as ot
-on p.id=ot.person_id
-LEFT join payment as py on ot.id=py.orderTable_id WHERE   ';
+$hallorcater=$_POST['hallorcater'];
+$sql="SELECT DISTINCT od.id,p.name, (SELECT sum(py.amount) FROM payment as py WHERE (py.IsReturn=0)AND(py.orderDetail_id=od.id)) ,od.total_amount,od.total_amount, (SELECT SUM(dd.price*dd.quantity) FROM dish_detail as dd WHERE dd.orderDetail_id=od.id),od.status_catering,od.status_hall FROM orderDetail as od LEFT join payment as py on (od.id=py.orderDetail_id) left JOIN person as p 
+on (p.id=od.person_id) LEFT join number as n 
+on (p.id=n.person_id) where ";
+
 
 if(isset($_POST['p_name']))
 {
@@ -32,26 +34,32 @@ if(isset($_POST['n_number']))
     if($_POST['n_number']!='')
         $sql.=' (n.number LIKE "%'.$_POST["n_number"].'%") AND ';
 }
-if(isset($_POST['ot_booking_date']))
+if(isset($_POST['od_booking_date']))
 {
-    if($_POST['ot_booking_date']!='')
-        $sql.=' (ot.booking_date = "'.$_POST["ot_booking_date"].'") AND ';
+    if($_POST['od_booking_date']!='')
+        $sql.=' (od.booking_date = "'.$_POST["od_booking_date"].'") AND ';
 }
-if(isset($_POST['ot_destination_date']))
+if(isset($_POST['od_destination_date']))
 {
-    if($_POST['ot_destination_date']!='')
-        $sql.=' (ot.destination_date ="'.$_POST["ot_destination_date"].'") AND ';
+    if($_POST['od_destination_date']!='')
+        $sql.=' (od.destination_date ="'.$_POST["od_destination_date"].'") AND ';
 }
-if(isset($_POST['ot_is_active']))
+if(isset($_POST['od_status_catering']))
 {
-    if($_POST['ot_is_active']!='None')
-        $sql.=' (ot.is_active = '.$_POST["ot_is_active"].') AND ';
+    if($_POST['od_status_catering']!='None')
+        $sql.=' (od.status_catering = "'.$_POST["od_status_catering"].'") AND ';
+}
+
+if(isset($_POST['od_status_hall']))
+{
+    if($_POST['od_status_hall']!='None')
+        $sql.=' (od.status_hall = "'.$_POST["od_status_hall"].'") AND ';
 }
 
 
-$sql.='  (p.id IS NOT NULL)
+$sql.=''.$hallorcater.' 
 order by 
-ot.destination_date DESC';
+od.destination_date DESC';
 $details=queryReceive($sql);
 
 
@@ -59,6 +67,7 @@ $display='<table class="table table-bordered table-responsive" style="width: 100
     <tbody class="font-weight-bold">
             <td >order Id</td>
             <td>customer Name</td>
+            <td>order status</td>
             <td>received amount</td>
             <td>System  Amount</td>
             <td>remaining system amount </td>
@@ -68,11 +77,27 @@ $display='<table class="table table-bordered table-responsive" style="width: 100
     </tbody>';
 
 
-    for ($i=0;$i<count($details);$i++)
-    {
-        $display.=' <tr data-orderid="'.$details[$i][0].'" class="orderDetail">
+for ($i=0;$i<count($details);$i++)
+{
+    $display.=' <tr data-orderid="'.$details[$i][0].'" class="orderDetail">
         <td >'.$details[$i][0].'</td>
         <td>'.$details[$i][1].'</td>
+        <td>';
+    if(!empty($hallid))
+    {
+        //if order status is hall
+        $display.=$details[$i][7];
+
+    }
+    else
+    {
+        //if order status is catering
+        $display.=$details[$i][6];
+
+    }
+
+
+    $display.='</td>
         <td>'.(int)$details[$i][2].'</td>
         <td>'.(int)$details[$i][5].'</td>
         <td> '.(int) ($details[$i][5]-$details[$i][2]).'</td>
@@ -82,8 +107,9 @@ $display='<table class="table table-bordered table-responsive" style="width: 100
 
 
 
-        $display.='</tr>';
-    }
+    $display.='</tr>';
+}
+
 
 
 $display.='</table>';

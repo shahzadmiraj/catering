@@ -18,9 +18,9 @@ if(isset($_POST['option']))
         $personality=$_POST['personality'];
 
         $userId=$_POST['user_id'];
-        $orderTable_id=$_POST['orderTable_id'];
+        $orderDetail_id=$_POST['orderDetail_id'];
         $dateTime=date('Y-m-d H:i:s');
-        $sql='INSERT INTO `payment`(`id`, `amount`, `nameCustomer`, `receive`, `personality`, `rating`, `IsReturn`, `orderTable_id`, `user_id`, `sendingStatus`) VALUES (NULL,'.$amount.',"'.$name.'","'.$dateTime.'","'.$personality.'",'.$rating.','.$status.','.$orderTable_id.','.$userId.',0)';
+        $sql='INSERT INTO `payment`(`id`, `amount`, `nameCustomer`, `receive`, `personality`, `rating`, `IsReturn`, `orderDetail_id`, `user_id`, `sendingStatus`) VALUES (NULL,'.$amount.',"'.$name.'","'.$dateTime.'","'.$personality.'",'.$rating.','.$status.','.$orderDetail_id.','.$userId.',0)';
         querySend($sql);
     }
     else if($_POST['option']=='paymentsend')

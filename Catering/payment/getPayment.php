@@ -6,16 +6,16 @@
  * Time: 14:15
  */
 
-
-if(!isset($_GET["user_id"]) && !isset($_GET["order"]))
-{
-    echo 'orderTable id and user id is not GET';
-    exit();
-}
+//
+//if(!isset($_GET["user_id"]) && !isset($_GET["order"]))
+//{
+//    echo 'orderDetail id and user id is not GET';
+//    exit();
+//}
 
 
 $userId=$_GET['user_id'];
-$orderTable_id=$_GET['order'];
+$orderDetail_id=$_GET['order'];
 ?>
 
 <!DOCTYPE html>
@@ -37,17 +37,15 @@ $orderTable_id=$_GET['order'];
     </style>
 </head>
 <body >
-<?php
-include_once ("../webdesign/header/header.php");
-?>
+
 <div class="container"  style="margin-top:150px">
 
     <form class="col-12 card shadow badge-warning" id="from2">
         <input hidden name="user_id" value="<?php
         echo $userId;
         ?>">
-        <input hidden name="orderTable_id" value="<?php
-        echo $orderTable_id;
+        <input hidden name="orderDetail_id" value="<?php
+        echo $orderDetail_id;
         ?>">
         <h1 align="center"> Get Payment</h1>
         <div class="form-group row">
@@ -77,7 +75,7 @@ include_once ("../webdesign/header/header.php");
             <textarea type="text" name="personality" class="col-8 form-control"></textarea>
         </div>
         <div class="form-group row">
-            <a href="/Catering/order/PreviewOrder.php?order=<?php echo $orderTable_id;?>" class="form-control col-3 btn-danger">cancel</a>
+            <a href="/Catering/order/PreviewOrder.php?order=<?php echo $orderDetail_id;?>" class="form-control col-3 btn-danger">cancel</a>
             <button id="submitBtnfrom" type="submit" class="form-control col-3 btn-primary">Submit</button>
 
         </div>

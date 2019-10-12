@@ -10,7 +10,7 @@ include_once ("../connection/connect.php");
 
 
 $userId=$_GET['user_id'];
-$orderTable_id=$_GET['order'];
+$orderDetail_id=$_GET['order'];
 
 
 ?>
@@ -33,24 +33,21 @@ $orderTable_id=$_GET['order'];
     </style>
 </head>
 <body class="alert-light">
-<?php
-include_once ("../webdesign/header/header.php");
-?>
 <div class="container"  style="margin-top:150px">
 
 
     <h1 align="center">payment History</h1>
-    <a class="btn-success form-control col-4 " href="/Catering/order/PreviewOrder.php?order=<?php echo $orderTable_id; ?>"> <- Preview Order</a>
+    <a class="btn-success form-control col-4 " href="/Catering/order/PreviewOrder.php?order=<?php echo $orderDetail_id; ?>"> <- Preview Order</a>
     <div class="col-12  shadow border card" style="background-color: #80bdff">
         <?php
         $sql='SELECT py.id,(SELECT u.username FROM user as u where u.id=py.user_id) as sender,
 (SELECT u.username FROM user as u where u.id=t.user_id) as receiver,py.amount,
 t.senderTimeDate,t.Isconfirm,py.receive,py.nameCustomer,py.IsReturn,t.Isget
-FROM orderTable as ot INNER JOIN payment as py
-on ot.id=py.orderTable_id
+FROM orderDetail as ot INNER JOIN payment as py
+on ot.id=py.orderDetail_id
 INNER join transfer as t
 on py.id=t.payment_id
-WHERE (ot.id='.$orderTable_id.')';
+WHERE (ot.id='.$orderDetail_id.')';
         $historyPayment=queryReceive($sql);
         $display='';
 
@@ -148,7 +145,7 @@ for($k=0;$k<count($historyPayment);$k++)
 
         <?php
 
-        $sql='SELECT py.id,(SELECT u.username FROM user as u where u.id=py.user_id), py.amount,py.receive,py.nameCustomer,py.IsReturn FROM orderTable as ot INNER JOIN payment as py on ot.id=py.orderTable_id WHERE (ot.id='.$orderTable_id.') AND (py.sendingStatus=0)';
+        $sql='SELECT py.id,(SELECT u.username FROM user as u where u.id=py.user_id), py.amount,py.receive,py.nameCustomer,py.IsReturn FROM orderDetail as ot INNER JOIN payment as py on ot.id=py.orderDetail_id WHERE (ot.id='.$orderDetail_id.') AND (py.sendingStatus=0)';
         $WhyPayment=queryReceive($sql);
 $display='';
         for($t=0;$t<count($WhyPayment);$t++)

@@ -9,11 +9,11 @@
 include_once ("../connection/connect.php");
 
 $userId='';
-$orderTable_id="";
+$orderDetail_id="";
 if(!isset($_GET['option']))
 {
     $userId = $_GET['user_id'];
-    $orderTable_id = $_GET['order'];
+    $orderDetail_id = $_GET['order'];
 }
 $userId = $_SESSION['userid'];
 
@@ -50,7 +50,7 @@ include_once ("../webdesign/header/header.php");
         if(!isset($_GET['option']))
         {
           echo '
-        <a class="btn-success form-control col-4 " href="/Catering/order/PreviewOrder.php?order='.$orderTable_id.'"> <- Preview Order</a>';
+        <a class="btn-success form-control col-4 " href="/Catering/order/PreviewOrder.php?order='.$orderDetail_id.'"> <- Preview Order</a>';
         }
         else
         {
@@ -72,13 +72,13 @@ include_once ("../webdesign/header/header.php");
 
         if(!isset($_GET['option']))
         {
-            $sql = 'SELECT py.id,(SELECT u.username FROM user as u WHERE u.id=py.user_id) as username,py.amount,py.nameCustomer,py.IsReturn,t.senderTimeDate,py.receive,t.id,py.sendingStatus FROM orderTable as ot INNER join payment as py on ot.id=py.orderTable_id INNER join transfer as t on py.id=t.payment_id where (ot.id=' . $orderTable_id . ') AND (t.user_id=' . $userId . ')AND (py.sendingStatus in (1,2))
+            $sql = 'SELECT py.id,(SELECT u.username FROM user as u WHERE u.id=py.user_id) as username,py.amount,py.nameCustomer,py.IsReturn,t.senderTimeDate,py.receive,t.id,py.sendingStatus FROM orderDetail as ot INNER join payment as py on ot.id=py.orderDetail_id INNER join transfer as t on py.id=t.payment_id where (ot.id=' . $orderDetail_id . ') AND (t.user_id=' . $userId . ')AND (py.sendingStatus in (1,2))
 ';
         }
         else
         {
             //userDisplay
-            $sql = 'SELECT py.id,(SELECT u.username FROM user as u WHERE u.id=py.user_id) as username,py.amount,py.nameCustomer,py.IsReturn,t.senderTimeDate,py.receive,t.id,py.sendingStatus FROM orderTable as ot INNER join payment as py on ot.id=py.orderTable_id INNER join transfer as t on py.id=t.payment_id where   (t.user_id=' . $userId . ') AND (py.sendingStatus in (1,2))
+            $sql = 'SELECT py.id,(SELECT u.username FROM user as u WHERE u.id=py.user_id) as username,py.amount,py.nameCustomer,py.IsReturn,t.senderTimeDate,py.receive,t.id,py.sendingStatus FROM orderDetail as ot INNER join payment as py on ot.id=py.orderDetail_id INNER join transfer as t on py.id=t.payment_id where   (t.user_id=' . $userId . ') AND (py.sendingStatus in (1,2))
 ';
         }
         $paymentDetail=queryReceive($sql);

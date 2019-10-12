@@ -15,7 +15,7 @@ if($_POST['option']=="orderChange")
     $columnName=$_POST['column_name'];
     $coumnText=chechIsEmpty($_POST['value']);
     $orderId=$_POST['orderid'];
-    $sql='UPDATE `orderTable` SET '.$columnName.'="'.$coumnText.'" WHERE id='.$orderId.'';
+    $sql='UPDATE orderDetail as od SET od.'.$columnName.'="'.$coumnText.'" WHERE od.id='.$orderId.'';
     querySend($sql);
 }
 else if($_POST['option']=="addressChange")
