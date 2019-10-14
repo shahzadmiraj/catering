@@ -5,20 +5,22 @@
  * Date: 2019-09-01
  * Time: 21:31
  */
-include_once ("../../connection/connect.php");
+include_once ("../../../connection/connect.php");
 
-$dishID=$_GET['dishid']=1;
-$sql='SELECT d.name,(SELECT dt.name FROM systemDishType as dt WHERE dt.id=d.systemDishType_id), d.image, d.systemDishType_id, d.isExpire FROM systemDish as d WHERE d.id='.$dishID.'';
+$cateringid=$_GET['cateringid'];
+$dishID=$_GET['dishid'];
+$sql='SELECT d.name,(SELECT dt.name FROM dish_type as dt WHERE dt.id=d.dish_type_id), d.image, d.dish_type_id, d.isExpire FROM dish as d WHERE d.id='.$dishID.'';
 $dishDetail=queryReceive($sql);
-$sql='SELECT `name`, `id`, `systemDish_id`, `isExpire` FROM `SystemAttribute` WHERE ISNULL(isExpire) AND (systemDish_id='.$dishID.')';
+
+$sql='SELECT `name`, `id`, `dish_id`, `isExpire` FROM `attribute` WHERE ISNULL(isExpire) AND (dish_id='.$dishID.')';
 $attributes=queryReceive($sql);
 ?>
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="/Catering/../bootstrap.min.css">
-    <script src="../../jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../../bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../bootstrap.min.css">
+    <script src="../../../jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../../../bootstrap.min.js"></script>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -37,35 +39,49 @@ $attributes=queryReceive($sql);
         <div class="col-12 shadow card p-4">
             <input id="dishid" type="number" hidden value="<?php echo $dishID; ?>">
             <div class="form-group row">
-                <a href="dishesDetail.php" class=" form-control col-4 btn-warning">Previous</a>
+                <a href="cateringEDIT.php" class=" form-control col-4 btn-warning">Previous</a>
                 <span class="font-weight-bold text-center col-9 form-control"> Edit Dish in System</span>
             </div>
 
             <div class="form-group row">
-                <img style="height: 30vh " src="<?php echo $dishDetail[0][2]; ?>"   class="col-8 form-control" alt="Image is not set" >
+                <img style="height: 30vh " src="<?php
+
+
+                if(file_exists($dishDetail[0][2])&&($dishDetail[0][2]!=""))
+                {
+                    echo $dishDetail[0][2];
+                }
+                else
+                {
+                    echo '../../../gmail.png';
+                }
+
+
+
+
+
+                ?>"   class="col-8 form-control" alt="Image is not set" >
             </div>
             <div class="form-group row">
                 <label class="col-4 col-form-label">Dish Name</label>
                 <input data-column="name"  value="<?php echo $dishDetail[0][0]; ?>" class="dishchange col-8 form-control" type="text">
             </div>
-            <form id="formImage">
-            <div class="form-group row">
+            <form id="formImage" class="form-group row">
                 <label class="col-4 col-form-label"> Changes images</label>
                 <input id="dishImage"  name="image"  class="col-8 form-control" type="file">
                 <input type="text" hidden name="imagepath" value="<?php echo $dishDetail[0][2]; ?>">
-            </div>
+
             </form>
             <div class="form-group row">
                 <label class="col-4 col-form-label">Dish Type</label>
-                <select data-column="systemDishType_id" class="dishchange col-8 form-control">
+                <select data-column="dishType_id" class="dishchange col-8 form-control">
 
                     <?php
                     echo '<option value="'.$dishDetail[0][3].'">'.$dishDetail[0][1].'</option>';
 
-                    $sql='SELECT `id`, `name` FROM `systemDishType` WHERE id!='.$dishDetail[0][3].'' ;
-                    $dish_type=queryReceive($sql);
-                    //print_r($dish_type);
+                    $sql='SELECT `id`, `name` FROM `dish_type` WHERE (id!='.$dishDetail[0][3].') AND (catering_id='.$cateringid.')' ;
 
+                    $dish_type=queryReceive($sql);
                     for($i=0;$i<count($dish_type);$i++)
                     {
                         echo '<option value="'.$dish_type[$i][0].'">'.$dish_type[$i][1].'</option>';
@@ -158,7 +174,8 @@ $attributes=queryReceive($sql);
                     }
                     else
                     {
-                        window.location.href="dishesDetail.php";
+
+                        window.history.back();
                     }
                 }
             });
@@ -209,7 +226,8 @@ $attributes=queryReceive($sql);
                     }
                     else
                     {
-                        window.location.href="dishesDetail.php";
+
+                        window.history.back();
                     }
                 }
             });

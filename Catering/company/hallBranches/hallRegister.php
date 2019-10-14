@@ -7,12 +7,16 @@
  */
 include  ("../../connection/connect.php");
 $companyid=$_GET['companyid'];
-$hallBranches=$_GET['hallBranches'];
-if($hallBranches==0)
+$hallBranches='';
+
+if (isset($_GET['hallBranches']))
 {
-    //go to display company detail
-    header("Location:../companyRegister/companydisplay.php?companyid=".$companyid."");
-    exit();
+    $hallBranches = $_GET['hallBranches'];
+    if ($hallBranches == 0) {
+        //go to display company detail
+        header("Location:../companyRegister/companydisplay.php?companyid=" . $companyid . "");
+        exit();
+    }
 }
 
 ?>
@@ -109,7 +113,27 @@ if($hallBranches==0)
                     else
                     {
                         //hall detail
+
+                        <?php
+                        if (isset($_GET['hallBranches']))
+                        {
+                            ?>
+
                         window.location.href="daytimeAll.php?companyid=<?php echo $companyid; ?>&hallid="+data+"&hallBranches=<?php  $hallBranches--;  echo $hallBranches;?>";
+
+                            <?php
+
+                        }
+                        else
+                        {
+                            ?>
+
+                        window.history.back();
+                            <?php
+
+                        }
+
+                        ?>
                     }
 
                 }
@@ -117,8 +141,31 @@ if($hallBranches==0)
         });
         $("#cancel").click(function ()
         {
+
+
+            <?php
+            if (isset($_GET['hallBranches']))
+            {
+                ?>
+
+
             //remove one hall
             window.location.href="?hallBranches=<?php  $hallBranches--;  echo $hallBranches;?>&companyid=<?php echo $companyid;?>";
+
+                <?php
+
+            }
+            else
+            {
+                ?>
+
+            window.history.back();
+                <?php
+
+            }
+
+            ?>
+
         });
     });
 

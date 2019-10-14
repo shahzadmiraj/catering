@@ -71,7 +71,7 @@ if(isset($_POST['option']))
         $sql='';
         if(!empty($_FILES['image']["name"]))
         {
-            $Cateringimage = "../../images/catering/" . $_FILES['image']['name'];
+            $Cateringimage = "../images/catering/" . $_FILES['image']['name'];
             $resultimage = ImageUploaded($_FILES, $Cateringimage);//$dishimage is destination file location;
             if ($resultimage != "") {
                 print_r($resultimage);
@@ -128,7 +128,8 @@ if(isset($_POST['option']))
         $hallimage='';
         if(!empty($_FILES['image']["name"]))
         {
-            $hallimage = "../../images/hall/" . $_FILES['image']['name'];
+            $hallimage = "../images/hall/" . $_FILES['image']['name'];
+            $resultimage = ImageUploaded($_FILES, $hallimage);//$dishimage is destination file location;
             if ($resultimage != "")
             {
                 print_r($resultimage);
@@ -489,7 +490,53 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)';
 WHERE  id='.$order.'';
         querySend($sql);
     }
+    else if($_POST['option']=="halledit")
+    {
+        $hallid=$_POST['hallid'];
+        $hallname=$_POST['hallname'];
+        $hallimage=$_POST['previousimage'];
+        if(!empty($_FILES['image']["name"]))
+        {
+            $hallimage = "../images/hall/" . $_FILES['image']['name'];
+            $resultimage = ImageUploaded($_FILES, $hallimage);//$dishimage is destination file location;
+            if ($resultimage != "")
+            {
+                print_r($resultimage);
+                exit();
+            }
+        }
+        $daytime='';
+        $parking=0;
 
+        if(isset($_POST['parking']))
+        {
+            $parking=1;
+
+        }
+        $halltype=$_POST['halltype'];
+        $capacity=chechIsEmpty($_POST['capacity']);
+        $partition=chechIsEmpty($_POST['partition']);
+        $sql='UPDATE `hall` SET `name`="'.$hallname.'",`max_guests`='.$capacity.',`noOfPartitions`='.$partition.',`ownParking`='.$parking.',`image`="'.$hallimage.'",`hallType`='.$halltype.' WHERE id='.$hallid.'';
+        querySend($sql);
+    }
+    else if($_POST['option']=="cateringedit")
+    {
+        $cateringid=$_POST['cateringid'];
+        $cateringname=$_POST['cateringname'];
+        $cateringimage=$_POST['previousimage'];
+        if(!empty($_FILES['image']["name"]))
+        {
+            $cateringimage = "../images/catering/" . $_FILES['image']['name'];
+            $resultimage = ImageUploaded($_FILES, $cateringimage);//$dishimage is destination file location;
+            if ($resultimage != "")
+            {
+                print_r($resultimage);
+                exit();
+            }
+        }
+        $sql='UPDATE `catering` SET `name`="'.$cateringname.'",`image`="'.$cateringimage.'" WHERE id='.$cateringid.'';
+        querySend($sql);
+    }
 
 }
 ?>

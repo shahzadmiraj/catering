@@ -1,6 +1,6 @@
 <?php
 include_once ('../../connection/connect.php');
-$hallid=4;
+$hallid='';
 $companyid='';
 $hallBranches='';
 if(isset($_GET['hallid']))
@@ -11,6 +11,7 @@ if(isset($_GET['hallBranches']))
 $hallBranches=$_GET['hallBranches'];
 $sql='SELECT `name`, `max_guests`, `noOfPartitions`, `ownParking`, `expire`, `image`, `hallType`, `location_id` FROM `hall` WHERE id='.$hallid.'';
 $halldetail=queryReceive($sql);
+
 
 ?>
 <!DOCTYPE html>
@@ -35,9 +36,9 @@ $halldetail=queryReceive($sql);
 <h1 align="center">Setting OF Hall</h1>
 <img src="
 <?php
-if(file_exists($halldetail[0][5]))
+if(file_exists("../".$halldetail[0][5])&&($halldetail[0][5]!=""))
 {
-    echo $halldetail[0][5];
+    echo "../".$halldetail[0][5];
 }
 else
 {
@@ -45,9 +46,12 @@ else
 }
 ?>
 
-" class="rounded mx-auto d-block" alt="..." style="height: 30vh">
+" class="rounded mx-auto d-block m-4" alt="..." style="height: 30vh">
 
-<form class="col-12 shadow " >
+<form class="col-12 shadow" id="formhall" >
+    <input type="number" hidden name="hallid" value="<?php echo $hallid; ?>">
+
+    <input type="text" hidden name="previousimage" value="<?php echo $halldetail[0][5]; ?>">
     <div class="form-group row">
         <label class="col-form-label col-4">Hall Branch Name:</label>
         <input name="hallname" class="form-control col-8" type="text" value="<?php echo $halldetail[0][0]; ?>">
@@ -56,10 +60,21 @@ else
     <div class="form-group row">
         <label class="col-form-label col-4">Hall Type:</label>
         <select name="halltype" class="form-control col-8">
+            <?php
+            $halltype=array("Marquee","Hall","Deera /Open area");
 
-            <option value="1">Marquee</option>
-            <option value="2">Hall</option>
-            <option value="3">Deera /Open area</option>
+            echo '<option value="'.$halldetail[0][6].'">'.$halltype[$halldetail[0][6]].'</option>';
+            for($i=0;$i<count($halltype);$i++)
+            {
+                if($i!=$halldetail[0][6])
+                {
+
+                    echo '<option value="'.$i.'">'.$halltype[$i].'</option>';
+                }
+            }
+
+
+            ?>
         </select>
     </div>
     <div class="form-group row">
@@ -80,11 +95,14 @@ else
     </div>
 
     <div class="col-12 form-group form-inline">
-        <input name="parking" class="form-check-input" type="checkbox">
+        <input name="parking" class="form-check-input" type="checkbox" <?php if($halldetail[0][3]==1){ echo "checked";} ?> >
         <label class="form-check-label ">Have Your own parking</label>
     </div>
     <div class="form-group row col-12 mb-5">
-        <input id="submit" type="button" class="rounded mx-auto d-block btn btn-success col-5 " value="Submit">
+
+        <input id="expirehall" type="button" class="rounded mx-auto d-block btn btn-outline-danger col-5 " value="Expire hall">
+        <input id="submitedithall" type="button" class="rounded mx-auto d-block btn btn-primary col-5 " value="Submit">
+
     </div>
 
 
@@ -191,6 +209,35 @@ else
 
 
         }) ;
+
+        $("#submitedithall").click(function ()
+        {
+            var formdata=new FormData($("#formhall")[0]);
+            formdata.append("option","halledit");
+            $.ajax({
+                url:"../companyServer.php",
+                method:"POST",
+                data:formdata,
+                contentType: false,
+                processData: false,
+                success:function (data)
+                {
+                    if(data!='')
+                    {
+                        alert(data);
+                        return false;
+                    }
+                    else
+                    {
+
+                    }
+
+
+                }
+            });
+
+
+        });
 
 
 

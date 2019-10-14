@@ -6,13 +6,19 @@
  * Time: 17:29
  */
 include_once ("../../connection/connect.php");
-$companyid=$_GET['companyid'];
-$CateringBranches=$_GET['CateringBranches'];
-$hallBranches=$_GET['hallBranches'];
-if($CateringBranches==0)
+$companyid=$_GET['companyid']=3;
+$CateringBranches=1;
+$hallBranches='';
+if(isset($_GET['CateringBranches']))
 {
-    header("location:../hallBranches/hallRegister.php?hallBranches=$hallBranches&companyid=$companyid");
-    exit();
+
+    $CateringBranches = $_GET['CateringBranches'];
+    $hallBranches = $_GET['hallBranches'];
+    if ($CateringBranches == 0)
+    {
+        header("location:../hallBranches/hallRegister.php?hallBranches=$hallBranches&companyid=$companyid");
+        exit();
+    }
 }
 $sql='SELECT name,id FROM systemDishType WHERE ISNULL(isExpire)';
 $dishType=queryReceive($sql);
@@ -37,7 +43,6 @@ $dishType=queryReceive($sql);
     </style>
 </head>
 <body>
-
 <?php
 
 $H=0;
@@ -67,16 +72,16 @@ for($M=0;$M<$CateringBranches;$M++)
     <h3 align="center"> select Dishes</h3>
 
     <div class="form-group row">
-    <?php
+        <?php
 
-    $display = '';
-    for ($i = 0; $i < count($dishType); $i++) {
-        $display = '<h1 align="center" class="col-12">' . $dishType[$i][0] . '</h1>';
-        $sql = 'SELECT `name`, `id`, `image` FROM `systemDish` WHERE ISNULL(isExpire)AND
+        $display = '';
+        for ($i = 0; $i < count($dishType); $i++) {
+            $display = '<h1 align="center" class="col-12">' . $dishType[$i][0] . '</h1>';
+            $sql = 'SELECT `name`, `id`, `image` FROM `systemDish` WHERE ISNULL(isExpire)AND
 systemDishType_id=' . $dishType[$i][1] . '';
-        $dishDetail = queryReceive($sql);
-        for ($j = 0; $j < count($dishDetail); $j++) {
-            $display .= '
+            $dishDetail = queryReceive($sql);
+            for ($j = 0; $j < count($dishDetail); $j++) {
+                $display .= '
     <div class="col-4 shadow border btn-outline-warning m-2">
     
     <input id="dishtypename' .$H. '"  hidden type="text" name="dishtypename[]" value="' . $dishType[$i][0] . '">
@@ -87,20 +92,20 @@ systemDishType_id=' . $dishType[$i][1] . '';
     <p class="col-12"> ' . $dishDetail[$j][0] . '</p>
     <input   data-dishshow="' .$H. '" type="button" class="selectdish form-control col-12 btn-danger" value="Remove">
     </div>';
-            $H++;
+                $H++;
+            }
+
         }
-
-    }
-    echo $display;
+        echo $display;
 
 
-    ?>
+        ?>
     </div>
     <div class="form-group row mt-3">
         <input data-formid="<?php echo $M; ?>" type="button" class="cancelform btn btn-outline-danger col-5 form-control " value="cancel">
-    <input data-formid="<?php echo $M; ?>" type="button" class="submitform btn btn-primary col-5  form-control" value="submit">
+        <input data-formid="<?php echo $M; ?>" type="button" class="submitform btn btn-primary col-5  form-control" value="submit">
     </div>
-        </form>
+    </form>
 
     <?php
     echo '</div>';
@@ -113,90 +118,97 @@ systemDishType_id=' . $dishType[$i][1] . '';
 
 
 <script>
-$(document).ready(function () {
+    $(document).ready(function () {
 
-    var NoCatering=<?php echo $CateringBranches;?>;
-  $(document).on("click",".selectdish",function ()
-  {
-      var id=$(this).data("dishshow");
-      var value=$(this).val();
-      if(value=="Remove")
-      {
-          $("#dishtypename"+id).attr("name","");
-          $("#dishid"+id).attr("name","");
+        var NoCatering="<?php echo $CateringBranches;?>";
+        $(document).on("click",".selectdish",function ()
+        {
+            var id=$(this).data("dishshow");
+            var value=$(this).val();
+            if(value=="Remove")
+            {
+                $("#dishtypename"+id).attr("name","");
+                $("#dishid"+id).attr("name","");
 
-          $("#dishname"+id).attr("name","");
-          $("#image"+id).attr("name","");
-          $(this).val("Select");
-          $(this).removeClass("btn-danger");
-          $(this).addClass("btn-success");
-      }
-      else
-      {
-
-          $("#dishtypename"+id).attr("name","dishtypename[]");
-          $("#dishid"+id).attr("name","dishid[]");
-          $("#dishname"+id).attr("name","dishname[]");
-          $("#image"+id).attr("name","image[]");
-          $(this).val("Remove");
-          $(this).removeClass("btn-success");
-          $(this).addClass("btn-danger");
-      }
-
-  });
-
-  function nextpage(formid)
-  {
-      $("#removeform"+formid).remove();
-      NoCatering--;
-      if(NoCatering<=0)
-      {
-          window.location.href="../hallBranches/hallRegister.php?hallBranches=<?php echo $hallBranches; ?>&companyid=<?php echo $companyid; ?>";
-      }
-  }
-
-
-    $(".submitform").click(function () {
-        var formid=$(this).data("formid");
-        var formdata=new FormData($("#formsubmit"+formid)[0]);
-        formdata.append("option","createCatering");
-        formdata.append("companyid",<?php  echo $companyid;?>);
-        $.ajax({
-            url:"../companyServer.php",
-            method:"POST",
-            data:formdata,
-            contentType: false,
-            processData: false,
-            success:function (data)
+                $("#dishname"+id).attr("name","");
+                $("#image"+id).attr("name","");
+                $(this).val("Select");
+                $(this).removeClass("btn-danger");
+                $(this).addClass("btn-success");
+            }
+            else
             {
 
-                if(data!="")
+                $("#dishtypename"+id).attr("name","dishtypename[]");
+                $("#dishid"+id).attr("name","dishid[]");
+                $("#dishname"+id).attr("name","dishname[]");
+                $("#image"+id).attr("name","image[]");
+                $(this).val("Remove");
+                $(this).removeClass("btn-success");
+                $(this).addClass("btn-danger");
+            }
+
+        });
+
+        function nextpage(formid)
+        {
+            $("#removeform"+formid).remove();
+            if(<?php if(isset($_GET['CateringBranches'])){echo 1;}else{echo 0;} ?>==1)
+            {
+                NoCatering--;
+                if(NoCatering<=0)
                 {
-                    alert(data);
-                    return false;
-                }
-                else
-                {
-                    nextpage(formid);
+                    window.location.href="../hallBranches/hallRegister.php?hallBranches=<?php echo $hallBranches; ?>&companyid=<?php echo $companyid; ?>";
                 }
             }
+            else
+            {
+                window.history.back();
+            }
+        }
+
+
+        $(".submitform").click(function () {
+            var formid=$(this).data("formid");
+            var formdata=new FormData($("#formsubmit"+formid)[0]);
+            formdata.append("option","createCatering");
+            formdata.append("companyid",<?php  echo $companyid;?>);
+            $.ajax({
+                url:"../companyServer.php",
+                method:"POST",
+                data:formdata,
+                contentType: false,
+                processData: false,
+                success:function (data)
+                {
+
+                    if(data!="")
+                    {
+                        alert(data);
+                        return false;
+                    }
+                    else
+                    {
+                        nextpage(formid);
+                    }
+                }
+            });
+
+
+        });
+        $(".cancelform").click(function ()
+        {
+            var formid=$(this).data("formid");
+            nextpage(formid);
+
         });
 
 
-    });
-    $(".cancelform").click(function ()
-    {
-        var formid=$(this).data("formid");
-        nextpage(formid);
+
+
+
 
     });
-
-
-
-
-
-
-});
 
 
 </script>
