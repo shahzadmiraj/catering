@@ -12,39 +12,43 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <style>
-        *{
-            margin:auto;
-            padding: auto;
-        }
+
     </style>
 </head>
-<body class="container">
-<h1>Company Register</h1>
-<form>
+<body>
+<?php
+include_once ("../../webdesign/header/header.php");
+?>
+
+
+
+<div class="card-body jumbotron container " style="margin-top: 90px">
+<h1 class="display-4 text-center">Company Register</h1>
+<form >
     <div  class="form-group row">
-    <label  class="form-check-label col-4">company name</label>
-    <input id="companyName" class="col-8 form-control" type="text" name="companyName">
+    <label  class="form-check-label">Company Name</label>
+    <input id="companyName" class="form-control" type="text" name="companyName">
     </div>
 
     <div  class="form-group row">
-        <label class="form-check-label col-9">No of Catering Branches</label>
-        <input id="CateringBranches" class="col-3 form-control" type="number" name="CateringBranches">
+        <label class="form-check-label col-6">No of Catering Branches</label>
+        <input id="CateringBranches" class="form-control col-3" type="number" name="CateringBranches">
     </div>
 
     <div  class="form-group row">
-        <label class="form-check-label col-9">No of Hall Branches</label>
-        <input id="hallBranches" class="col-3 form-control" type="number" name="hallBranches">
+        <label class="form-check-label col-6 ">No of Hall Branches</label>
+        <input id="hallBranches" class="form-control col-3" type="number" name="hallBranches">
     </div>
     <div class="form-group row">
-        <label for="username" class="col-form-label col-4 ">User Name</label>
-        <input type="text" id="username" name="username" class="form-control col-8">
+        <label for="username" class="col-form-label  ">User Name</label>
+        <input type="text" id="username" name="username" class="form-control ">
     </div>
     <div class="form-group row">
-        <label for="password" class="col-form-label col-4">Password</label>
-        <input type="text" id="password" name="password" class="form-control col-8">
+        <label for="password" class="col-form-label ">Password</label>
+        <input type="text" id="password" name="password" class="form-control ">
     </div>
     <div class="form-group row">
-        <label for="number" class="col-2 col-form-label">Phone no:</label>
+        <label for="number" class="col-form-label">Phone no:</label>
         <input id="number"class="allnumber form-control col-8" name="number[]"  >
         <input type="button" class="form-control btn-primary col-2" id="Add_btn" value="+">
     </div>
@@ -53,33 +57,34 @@
 
     </div>
     <div class="form-group row">
-        <label for="name" class="col-form-label col-2"> Name:</label>
-        <input type="text" id="name"  name="name"class="form-control col-10" >
+        <label for="name" class="col-form-label "> Name:</label>
+        <input type="text" id="name"  name="name"class="form-control " >
     </div>
     <div class="form-group row">
-        <label for="cnic" class="col-form-label col-2"> CNIC:</label>
-        <input type="number" id="cnic" name="cnic" class="form-control col-10" >
-    </div>
-
-    <h3 align="center"> Address</h3>
-    <div class="form-group row">
-        <label for="city" class="col-form-label col-2"> City:</label>
-        <input type="text" id="city" name="city" class="form-control col-10" >
+        <label for="cnic" class="col-form-label "> CNIC:</label>
+        <input type="number" id="cnic" name="cnic" class="form-control" >
     </div>
 
+    <h3 align="center"> Address (optional)</h3>
+
     <div class="form-group row">
-        <label for="area" class="col-form-label col-2"> Area/ Block:</label>
-        <input type="text"  id="area" name="area" class="form-control col-10">
+        <label for="city" class="col-form-label "> City:</label>
+        <input type="text" id="city" name="city" class="form-control " >
     </div>
 
     <div class="form-group row">
-        <label for="streetNo" class="col-form-label col-2">Street No :</label>
-        <input type="number" id="streetNo" name="streetNo" class="form-control col-10">
+        <label for="area" class="col-form-label "> Area/ Block:</label>
+        <input type="text"  id="area" name="area" class="form-control ">
     </div>
 
     <div class="form-group row">
-        <label for="houseNo" class="col-form-label col-2">House No:</label>
-        <input type="number" id="houseNo" name="houseNo" class="form-control col-10">
+        <label for="streetNo" class="col-form-label ">Street No :</label>
+        <input type="number" id="streetNo" name="streetNo" class="form-control">
+    </div>
+
+    <div class="form-group row">
+        <label for="houseNo" class="col-form-label ">House No:</label>
+        <input type="number" id="houseNo" name="houseNo" class="form-control">
     </div>
 
     <div class="form-group row">
@@ -87,10 +92,14 @@
         <button class="col-6 form-control btn btn-outline-primary" id="submit">submit</button>
     </div>
 </form>
+</div>
 
 
 
 
+<?php
+include_once ("../../webdesign/footer/footer.php");
+?>
 <script>
 
     $(document).ready(function ()
