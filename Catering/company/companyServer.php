@@ -195,18 +195,19 @@ if(isset($_POST['option']))
     }
     else if($_POST['option']=="showdaytimelist")
     {
+        $hallname=$_POST['hallname'];
         $hallid=$_POST['hallid'];
         $daytime=$_POST['daytime'];
         $companyid=$_POST['companyid'];
         $hallBranches=$_POST['hallBranches'];
         $monthsArray = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 
-        $display='<table class=" table table-striped table-danger col-12 ">
+        $display='<table class="col-8 m-auto">
         <thead>
 
         <tr>
             <th scope="col" >
-                <h3 align="center">'.$daytime.' Prize list</h3>
+                <h4 align="center"><i class="fas fa-list-ol mr-3"></i>'.$daytime.' Prize list</h4>
             </th>
         </tr>
         </thead>
@@ -220,18 +221,33 @@ AND (month="'.$monthsArray[$i].'")';
         <tr>
             <td scope="col" >
                 <h4 align="center">'.$monthsArray[$i].'</h4>
-                <div class="form-group row p-2 shadow btn-light">
-                    <label class="col-form-label col-6 font-weight-bold"> Prize Only Seating </label>
-                    <input data-menuid="'.$detailList[0][0].'" class="changeSeating form-control col-6" type="number" value="'.$detailList[0][1].'">
+                <div class="form-group row p-2 card-body ">
+                    <label class="col-form-label  font-weight-bold"> Prize Only Seating </label>
+                   
+                   
+                   
+                   
+                <div class="input-group mb-3 input-group-lg justify-content-center">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
+                    </div>
+                      <input data-menuid="'.$detailList[0][0].'" class="changeSeating form-control col-6" type="number" value="'.$detailList[0][1].'">
+                </div>
+
+                   
+                   
+                   
+                   
+                   
                     <h3 align="center" class="col-12 mt-3">List of prize with Food</h3>
-                    <a  href="addnewpackage.php?month='.$monthsArray[$i].'&daytime='.$daytime.'&hallid='.$hallid.'&companyid='.$companyid.'&hallBranches='.$hallBranches.'" class="form-control  btn-primary col-12 text-center"> Add New Package</a>';
+                    <a  href="addnewpackage.php?hallname='.$hallname.'&month='.$monthsArray[$i].'&daytime='.$daytime.'&hallid='.$hallid.'&companyid='.$companyid.'&hallBranches='.$hallBranches.'" class="form-control  btn-primary col-12 text-center"><i class="fas fa-plus-square"></i> Add New Package</a>';
 
             $sql='SELECT `id`,`expire`, `package_name` FROM `hallprice` WHERE (hall_id='.$hallid.')
 AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)';
             $ALLpackages=queryReceive($sql);
             for ($j=0;$j<count($ALLpackages);$j++)
             {
-                $display.='    <a  href="Editpackage.php?packageid='.$ALLpackages[$j][0].'&hallid='.$hallid.'&companyid='.$companyid.'&hallBranches='.$hallBranches.'" class="form-control  btn-success col-4 text-center m-2"> '.$ALLpackages[$j][2].'';
+                $display.='    <a  href="Editpackage.php?hallname='.$hallname.'&month='.$monthsArray[$i].'&daytime='.$daytime.'&packageid='.$ALLpackages[$j][0].'&hallid='.$hallid.'&companyid='.$companyid.'&hallBranches='.$hallBranches.'" class="form-control  btn-success col-4 text-center m-2"> '.$ALLpackages[$j][2].'';
                 if($ALLpackages[$j][1]!=NULL)
                 {
                     $display.='   Expired';

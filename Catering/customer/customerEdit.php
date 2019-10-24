@@ -29,40 +29,58 @@ $numbers=queryReceive($sql);
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../webdesign/css/complete.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 
     <style>
-        *{
-            margin:auto;
-            padding: auto;
-        }
+
     </style>
 </head>
-<body class="">
+<body>
+<?php
+include_once ("../webdesign/header/header.php");
+?>
 
+<div class="jumbotron  shadow" style="background-image: url(https://www.livechatinc.com/wp-content/uploads/2017/01/customer-centric@2x.png);background-size:100% 115%;background-repeat: no-repeat">
 
-<div class="container " style="margin-top:150px" >
+    <div class="card-body text-center" style="opacity: 0.7 ;background: white;">
+        <h3 ><i class="fas fa-user-edit"></i>Edit Customer info </h3>
+    </div>
 
+</div>
+<form id="changeImage" class="col-12 row justify-content-center" style="margin-top: -60px">
+    <?php
+    echo '<input name="customerid" hidden value="'.$_GET["customer"].'">';
+    ?>
+    <input name="image" hidden value="<?php echo $person[0][4] ?>">
 
-    <h3 align="center">
-        Customer Preview
-    </h3>
+        <img src="<?php
 
-    <form id="changeImage">
+        if($person[0][4]=="")
+        {
+            echo 'http://pngwebicons.com/uploads/user/512/user_icon9133.png';
+        }
+        else
+        {
+            echo $person[0][4];
+        }
 
-        <?php
-        echo '<input name="customerid" hidden value="'.$_GET["customer"].'">';
-        ?>
-        <input name="image" hidden value="<?php echo $person[0][4] ?>">
-        <div class=" form-group row">
-            <img src="<?php echo $person[0][4];?> " style="height: 20vh" class="img-thumbnail figure-img" alt="image is not set">
+        ?> " style="height: 30vh;" class="img-thumbnail figure-img rounded-circle" alt="image is not set">
+    <div class="form-group row col-12 justify-content-center ">
+        <label class="form-check-label ">change image:</label>
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-camera"></i></span>
+            </div>
+            <input name="image" id="submitImage" type="file"  class="form-control">
         </div>
-        <div class="form-group row">
-            <label class="form-check-label col-3">image:</label>
-            <input name="image" id="submitImage" type="file"  class="form-control float-right btn-warning col-9">
-        </div>
 
-    </form>
+    </div>
+</form>
 
+
+<div class="container card-body" >
 
 <form id="form" >
     <?php
@@ -70,73 +88,154 @@ $numbers=queryReceive($sql);
 
     echo '<input id="customerId" type="number" hidden value="'.$_GET["customer"].'">';
     ?>
-        <div class="col-12" id="number_records">
+        <div id="number_records">
             <?php
             for($i=0;$i<count($numbers);$i++)
             {
                 echo '
         <div class="form-group row" id="Each_number_row_'.$numbers[$i][1].'">
-                <label  class="col-3 col-form-label" for="number_'.$numbers[$i][1].'">Phone no:</label>
-                <input  class=" numberchange  allnumber form-control col-7" type="text" name="number[]" value="'.$numbers[$i][0].'" id="number_'.$numbers[$i][1].'" data-columne="number" data-columneid='.$numbers[$i][1].'>
-                <input class="form-control btn btn-danger col-2 remove_number " id="remove_numbers_'.$numbers[$i][1].'" data-removenumber="'.$numbers[$i][1].'" value="-">
+                <label  class="col-form-label" for="number_'.$numbers[$i][1].'">Phone no:</label>
+                
+                
+             <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-phone-volume"></i></span>
+            </div>
+             <input  class=" numberchange  allnumber form-control " type="text" name="number[]" value="'.$numbers[$i][0].'" id="number_'.$numbers[$i][1].'" data-columne="number" data-columneid='.$numbers[$i][1].'>
+             <input class="form-control btn btn-danger remove_number col-3 " id="remove_numbers_'.$numbers[$i][1].'" data-removenumber="'.$numbers[$i][1].'" value="-">
+            
+            </div>
+                        
             </div>';
             }
             ?>
 
         </div>
         <div class="form-group row" >
-            <label for="newNumber" class="col-form-label col-3">New Number</label>
-            <input id="newNumber"  name="newNumber"class="form-control col-7" >
-            <input type="button" value="+" class="col-2 btn-success form-control" id="newadd">
+            <label for="newNumber" class="col-form-label">New Number</label>
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
+                </div>
+                <input id="newNumber"  name="newNumber"class="form-control" placeholder="New number 092xxxxx" >
+                <input type="button" value="+" class="col-3 btn-success form-control" id="newadd">
+            </div>
+
+
+
+        </div>
+
+
+        <div class="form-group row">
+            <label for="name" class="col-form-label"> Name:</label>
+
+
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                </div>
+                <?php
+                echo'<input type="text" id="name"  name="name" class=" personchange form-control" value="'.$person[0][0].'" data-columne="name">';
+                ?>
+            </div>
+
+
+
+
         </div>
         <div class="form-group row">
-            <label for="name" class="col-form-label col-3"> Name:</label>
-            <?php
-                echo'<input type="text" id="name"  name="name" class=" personchange form-control col-9" value="'.$person[0][0].'" data-columne="name">';
-            ?>
-        </div>
-        <div class="form-group row">
-            <label for="cnic" class="col-form-label col-3"> CNIC:</label>
-            <?php
+            <label for="cnic" class="col-form-label "> CNIC:</label>
+
+
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="far fa-id-card"></i></span>
+                </div>
+                <?php
                 echo '
-            <input type="number" id="cnic" name="cnic" class=" personchange form-control col-9" value="'.$person[0][1].'" data-columne="cnic">';
-            ?>
-        </div>
+            <input type="number" id="cnic" name="cnic" class=" personchange form-control " value="'.$person[0][1].'" data-columne="cnic">';
+                ?>
+            </div>
 
-        <h3 align="center"> Address</h3>
-        <div class="form-group row">
-            <label for="city" class="col-form-label col-3"> City:</label>
-            <?php
-                echo '<input  type="text"  id="city" name="city" class=" addresschange form-control col-9" value="'.$address[0][1].'" data-columne="address_city">';
-            ?>
+
 
         </div>
 
+        <h3 align="center">  <i class="fas fa-map-marker-alt"></i>Address(optional)</h3>
         <div class="form-group row">
-            <label for="area" class="col-form-label col-3"> Area/ Block:</label>
-            <?php
-                echo '<input  type="text" id="area" name="area" class=" addresschange form-control col-9" value="'.$address[0][2].'" data-columne="address_town">';
-            ?>
+            <label for="city" class="col-form-label"> City:</label>
+
+
+
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-city"></i></span>
+                </div>
+                <?php
+                echo '<input  type="text"  id="city" name="city" class=" addresschange form-control" value="'.$address[0][1].'" data-columne="address_city">';
+                ?>
+            </div>
+
+
 
         </div>
 
         <div class="form-group row">
-            <label for="streetNo" class="col-form-label col-3">Street No :</label>
-            <?php
-                echo '     <input type="number"  id="streetNo" name="streetNo" class=" addresschange form-control col-9" value="'.$address[0][3].'" data-columne="address_street_no">';
-            ?>
+            <label for="area" class="col-form-label "> Area/ Block:</label>
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-road"></i></span>
+                </div>
+
+                <?php
+                echo '<input  type="text" id="area" name="area" class=" addresschange form-control " value="'.$address[0][2].'" data-columne="address_town">';
+                ?>
+            </div>
+
 
         </div>
 
         <div class="form-group row">
-            <label for="houseNo" class="col-form-label col-3">House No:</label>
-            <?php
-                echo '<input type="number" id="houseNo" name="houseNo" class=" addresschange form-control col-9" value="'.$address[0][4].'" data-columne="address_house_no">';
-            ?>
+            <label for="streetNo" class="col-form-label ">Street No :</label>
+
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-street-view"></i></span>
+                </div>
+                <?php
+                echo '     <input type="number"  id="streetNo" name="streetNo" class=" addresschange form-control" value="'.$address[0][3].'" data-columne="address_street_no">';
+                ?>
+            </div>
+
+        </div>
+
+        <div class="form-group row">
+            <label for="houseNo" class="col-form-label ">House No:</label>
+
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-home"></i></span>
+                </div>
+                <?php
+                echo '<input type="number" id="houseNo" name="houseNo" class=" addresschange form-control" value="'.$address[0][4].'" data-columne="address_house_no">';
+                ?>
+            </div>
 
         </div>
         <div class="col-12 shadow">
-            <h4 align="center">Customer personality</h4>
+            <h4 align="center"><i class="fas fa-user-tag mr-2"></i>Customer personality</h4>
             <?php
             $sql='SELECT py.personality,py.rating FROM person as p INNER join orderDetail as od
 on p.id=od.person_id
@@ -165,7 +264,7 @@ p.id='.$customerId.'';
                 {
                     echo '
         <a href="/Catering/customer/CustomerCreate.php" class="col-6 form-control btn btn-danger" id="cancel">Not this customer</a>
-        <a href="/Catering/order/orderCreate.php?customer='.$customerId.'" class="col-6 form-control btn btn-outline-primary" id="submit">Next</a>';
+        <a href="/Catering/order/orderCreate.php?customer='.$customerId.'" class="col-6 form-control btn btn-outline-primary" id="submit"><i class="fas fa-check "></i>Next</a>';
                 }
                 else if(($_GET['option']=="orderCreate") || ($_GET['option']=="CustomerCreate"))
                 {
@@ -179,15 +278,15 @@ p.id='.$customerId.'';
 
                     echo '
         <a href="/Catering/customer/CustomerCreate.php" class="col-6 form-control btn btn-danger" id="cancel">Not this customer</a>
-        <a href="/Catering/order/orderEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=customerEdit" class="col-6 form-control btn btn-outline-primary" id="submit">Edit order</a>';
+        <a href="/Catering/order/orderEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=customerEdit" class="m-auto col-6 form-control btn btn-primary" id="submit">Edit order</a>';
                 }
                 else if($_GET['option']=="PreviewOrder")
                 {
-                    echo '<input type="button" id="btnbackhistory" class="col-6  form-control btn btn-outline-primary" value="Done">';
+                    echo '<input type="button" id="btnbackhistory" class="m-auto col-6 form-control btn btn-primary" value="Done">';
                 }
                 else if($_GET['option']=="hallorder")
                 {
-                    echo '<a href="../company/hallBranches/hallorder.php?customer='.$customerId.'&hallid='.$_GET['hallid'].'" class="btn btn-outline-warning col-5">Done</a>';
+                    echo '<a href="../company/hallBranches/hallorder.php?customer='.$customerId.'&hallid='.$_GET['hallid'].'" class="btn btn-warning m-auto col-6"><i class="fas fa-check "></i>Done</a>';
                 }
             }
 
@@ -198,7 +297,9 @@ p.id='.$customerId.'';
 </div>
 
 
-
+    <?php
+    include_once ("../webdesign/footer/footer.php");
+    ?>
 
 <script>
  $(document).ready(function ()

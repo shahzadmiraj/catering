@@ -13,7 +13,10 @@
 
 </head>
 <body >-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-danger fixed-top" style="background-color: red;box-shadow: 2px 20px 20px 0px #f8f9faad;  ">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style=" background: #ee0979;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #ff6a00, #ee0979);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #ff6a00, #ee0979); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+">
     <div class="container">
         <a class="navbar-brand" href="#"><img src="/Catering/gmail.png" style="width: 50px"></a>
         <span class="navbar-text font-weight-bold text-white ">Event Guru</span>
@@ -24,18 +27,18 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto w-100 justify-content-end">
                 <li class="nav-item ">
-                    <a class="nav-link" href="/Catering/index.php">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/Catering/index.php"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">My Company <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#"><i class="fas fa-building"></i>My Company <span class="sr-only">(current)</span></a>
                 </li>
 
                 <li class="nav-item ">
-                    <a class="nav-link" href="/Catering/company/companyRegister/companyRegister.php">Company Register<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/Catering/company/companyRegister/companyRegister.php"><i class="far fa-registered"></i> Company Register<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Order Preview
+                        <i class="fas fa-shopping-cart"></i> Order Preview
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="#">Action</a>
@@ -45,20 +48,21 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link" href="#"><i class="fas fa-question"></i>  Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Sign out</a>
+                    <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i> Sign out</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Sign in</a>
+                    <a class="nav-link" href="#"><i class="fas fa-sign-in-alt"></i> Sign in</a>
                 </li>
             </ul>
 
         </div>
     </div>
 </nav>
+<div style="margin-top: 75px"></div>
 
 
 

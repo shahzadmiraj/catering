@@ -20,17 +20,26 @@ $customer=$_GET['customer'];
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../webdesign/css/complete.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 
     <style>
-        *{
-            margin:auto;
-            padding: auto;
-        }
+
     </style>
 </head>
-<body class="alert-light">
+<body >
+<?php
+include_once ("../webdesign/header/header.php");
+?>
 
-<div class="container"  style="margin-top:150px">
+<div class="jumbotron  shadow" style="background-image: url(https://www.livechatinc.com/wp-content/uploads/2017/01/customer-centric@2x.png);background-size:100% 115%;background-repeat: no-repeat">
+
+    <div class="card-body text-center" style="opacity: 0.7 ;background: white;">
+        <h3 ><i class="fas fa-user-edit"></i>Edit Customer info </h3>
+    </div>
+
+</div>
+<div class="container">
 
     <h1 align="center"> Order Create</h1>
     <form>
@@ -93,7 +102,9 @@ $customer=$_GET['customer'];
 
 
 
-
+<?php
+include_once ("../webdesign/footer/footer.php");
+?>
 <script>
     $(document).ready(function ()
     {

@@ -10,8 +10,18 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 
+    <link rel="stylesheet" href="../../webdesign/css/complete.css">
     <style>
+
+        form
+        {
+            margin: 5%;
+            font-weight: bold;
+            color: #000000;
+
+        }
 
     </style>
 </head>
@@ -20,82 +30,186 @@
 include_once ("../../webdesign/header/header.php");
 ?>
 
-
-
-<div class="card-body jumbotron container " style="margin-top: 90px">
-<h1 class="display-4 text-center">Company Register</h1>
-<form >
+<div class="card-body jumbotron container">
+<h1 class="display-4 text-center"><i class="fas fa-registered"></i> Company Register</h1>
+<form>
     <div  class="form-group row">
     <label  class="form-check-label">Company Name</label>
-    <input id="companyName" class="form-control" type="text" name="companyName">
+<!--    <input id="companyName" class="form-control" type="text" name="companyName">-->
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text" ><i class="fas fa-building"></i>
+</span>
+            </div>
+            <input placeholder="Your Company Name" id="companyName"  class="form-control" type="text" name="companyName">
+        </div>
+
+
     </div>
 
     <div  class="form-group row">
-        <label class="form-check-label col-6">No of Catering Branches</label>
-        <input id="CateringBranches" class="form-control col-3" type="number" name="CateringBranches">
+        <label class="form-check-label ">No of Catering Branches</label>
+<!--        <input id="CateringBranches" class="form-control" type="number" name="CateringBranches">-->
+
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-utensils"></i>
+
+</span>
+            </div>
+            <input placeholder="No of Catering Branches"   id="CateringBranches" class="form-control" type="number" name="CateringBranches">
+        </div>
     </div>
 
     <div  class="form-group row">
         <label class="form-check-label col-6 ">No of Hall Branches</label>
-        <input id="hallBranches" class="form-control col-3" type="number" name="hallBranches">
+<!--        <input id="hallBranches" class="form-control col-3" type="number" name="hallBranches">-->
+
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-mosque"></i></span>
+            </div>
+            <input placeholder="No of Hall Branches"  id="hallBranches" class="form-control" type="number" name="hallBranches">
+        </div>
     </div>
     <div class="form-group row">
         <label for="username" class="col-form-label  ">User Name</label>
-        <input type="text" id="username" name="username" class="form-control ">
+<!--        <input type="text" id="username" name="username" class="form-control ">-->
+
+
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
+            <input placeholder="User Name"  type="text" id="username" name="username" class="form-control">
+        </div>
     </div>
     <div class="form-group row">
         <label for="password" class="col-form-label ">Password</label>
-        <input type="text" id="password" name="password" class="form-control ">
+<!--        <input type="text" id="password" name="password" class="form-control ">-->
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-key"></i></span>
+            </div>
+            <input placeholder="Password"  type="text" id="password" name="password" class="form-control">
+        </div>
     </div>
     <div class="form-group row">
         <label for="number" class="col-form-label">Phone no:</label>
-        <input id="number"class="allnumber form-control col-8" name="number[]"  >
-        <input type="button" class="form-control btn-primary col-2" id="Add_btn" value="+">
+<!--        <input type="number" id="number" class="allnumber form-control col-8" name="number[]"  >-->
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-phone-volume"></i></span>
+            </div>
+            <input  placeholder="Phone no"  id="number" type="number" class="form-control allnumber" name="number[]">
+            <input type="button" class="col-3 btn-primary" id="Add_btn" value="+">
+        </div>
     </div>
     <div class="col-12" id="number_records">
 
 
     </div>
     <div class="form-group row">
-        <label for="name" class="col-form-label "> Name:</label>
-        <input type="text" id="name"  name="name"class="form-control " >
+        <label for="name" class="col-form-label"> Name:</label>
+<!--        <input type="text" id="name"  name="name" class="form-control " >-->
+
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-address-book"></i></span>
+            </div>
+            <input  placeholder="Your Name"  type="text" id="name"  name="name" class="form-control">
+        </div>
     </div>
     <div class="form-group row">
         <label for="cnic" class="col-form-label "> CNIC:</label>
-        <input type="number" id="cnic" name="cnic" class="form-control" >
+<!--        <input type="number" id="cnic" name="cnic" class="form-control" >-->
+
+
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="far fa-id-card"></i></span>
+            </div>
+            <input  placeholder="your CNIC" type="number" id="cnic" name="cnic" class="form-control">
+        </div>
     </div>
 
-    <h3 align="center"> Address (optional)</h3>
+    <h3 align="center"><i class="fas fa-map-marker-alt"></i> Address (optional)</h3>
 
     <div class="form-group row">
         <label for="city" class="col-form-label "> City:</label>
-        <input type="text" id="city" name="city" class="form-control " >
+<!--        <input type="text" id="city" name="city" class="form-control " >-->
+
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-city"></i></span>
+            </div>
+            <input   placeholder="City"  type="text" id="city" name="city" class="form-control">
+        </div>
     </div>
 
     <div class="form-group row">
         <label for="area" class="col-form-label "> Area/ Block:</label>
-        <input type="text"  id="area" name="area" class="form-control ">
+<!--        <input type="text"  id="area" name="area" class="form-control ">-->
+
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-road"></i></span>
+            </div>
+            <input placeholder="Area/ Block"  type="text"  id="area" name="area" class="form-control">
+        </div>
     </div>
 
     <div class="form-group row">
         <label for="streetNo" class="col-form-label ">Street No :</label>
-        <input type="number" id="streetNo" name="streetNo" class="form-control">
+<!--        <input type="number" id="streetNo" name="streetNo" class="form-control">-->
+
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-street-view"></i></span>
+            </div>
+            <input placeholder="Street No"  type="number" id="streetNo" name="streetNo" class="form-control">
+        </div>
     </div>
 
     <div class="form-group row">
         <label for="houseNo" class="col-form-label ">House No:</label>
-        <input type="number" id="houseNo" name="houseNo" class="form-control">
+<!--        <input type="number" id="houseNo" name="houseNo" class="form-control">-->
+
+
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-home"></i></span>
+            </div>
+            <input placeholder="House No"  type="number" id="houseNo" name="houseNo" class="form-control">
+        </div>
     </div>
 
     <div class="form-group row">
-        <button class="col-6 form-control btn btn-danger" id="cancelCustomer">cancel</button>
-        <button class="col-6 form-control btn btn-outline-primary" id="submit">submit</button>
+        <button class="col-6 form-control btn btn-danger" id="cancelCustomer"><i class="fas fa-window-close"></i>Cancel</button>
+        <button class="col-6 form-control btn btn-outline-primary" id="submit"><i class="fas fa-check "></i>Submit</button>
     </div>
 </form>
 </div>
 
 
-
+<div class="input-group mb-3 input-group-lg">
+    <div class="input-group-prepend">
+        <span class="input-group-text">Large</span>
+    </div>
+    <input type="text" class="form-control">
+</div>
 
 <?php
 include_once ("../../webdesign/footer/footer.php");
@@ -121,6 +235,9 @@ include_once ("../../webdesign/footer/footer.php");
                 "                <input id=\"number_"+number+"\" class=\"allnumber form-control col-8\" type=\"number\" name=\"number[]\">\n" +
                 "                <input class=\"form-control btn btn-danger col-2 remove_number \" id=\"remove_numbers_"+number+"\" data-removenumber=\""+number+"\" value=\"-\">\n" +
                 "            </div>");
+
+
+
             number++;
         });
 

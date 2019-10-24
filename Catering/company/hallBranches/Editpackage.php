@@ -1,6 +1,8 @@
 <?php
 include_once ("../../connection/connect.php");
-
+$hallname=$_GET['hallname'];
+$month=$_GET['month'];
+$daytime=$_GET['daytime'];
 $packageid=$_GET['packageid'];
 $hallid=$_GET['hallid'];
 $companyid=$_GET['companyid'];
@@ -25,34 +27,96 @@ $dishtype=queryReceive($sql);
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../../webdesign/css/complete.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 
     <style>
-        *{
-            margin:0;
-            padding: 0;
+
+        #selectedmenu
+        {
+            background: #F09819;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #EDDE5D, #F09819);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #EDDE5D, #F09819); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+        }
+        #selectmenu
+        {
+            background: #9796f0;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #fbc7d4, #9796f0);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #fbc7d4, #9796f0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
         }
     </style>
 </head>
 <body>
-<h1 align="center">Add new Package</h1>
 
+<?php
+include_once ("../../webdesign/header/header.php");
+
+?>
+
+<div class="jumbotron  shadow" style="background-image: url(https://thumbs.dreamstime.com/z/spicy-dishes-dinner-menu-icon-design-grilled-chicken-curry-sauce-vegetable-stew-pasta-pesto-sauce-ham-curry-84629311.jpg);background-size:100% 115%;background-repeat: no-repeat;">
+
+    <div class="card-body text-center" style="opacity: 0.7 ;background: white;">
+        <h1 class="display-5 "><i class="fas fa-edit"></i>Edit Package <?php echo $packageDetail[0][8]?></h1>
+        <ol class="list-unstyled">
+            <li><i class="fas fa-place-of-worship"></i>Hall name:<?php echo $hallname;?></li>
+            <li><i class="fas fa-table"></i>Month:<?php  echo $month?></li>
+            <li><i class="far fa-clock"></i>Daytime:<?php echo $daytime;?></li>
+        </ol>
+    </div>
+</div>
+
+<div class="container">
     <div class="form-group row">
-        <lable class="col-4 col-form-label">Packages Name</lable>
-        <input data-columnname="package_name"     class="packagechange col-8 form-control" type="text" value="<?php echo $packageDetail[0][8]?>">
+        <lable class="col-form-label">Packages Name</lable>
+
+
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-hamburger"></i></span>
+            </div>
+            <input data-columnname="package_name"     class="packagechange form-control" type="text" value="<?php echo $packageDetail[0][8]?>">
+        </div>
+
+
     </div>
 
     <div class="form-group row">
-        <lable class="col-4 col-form-label">Packages Rate per head</lable>
-        <input data-columnname="price" class="packagechange col-3 form-control" type="number" value="<?php echo $packageDetail[0][3]?>">
+        <lable class="col-form-label">Packages Rate per head</lable>
+
+
+
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
+            </div>
+            <input data-columnname="price" class="packagechange form-control" type="number" value="<?php echo $packageDetail[0][3]?>">
+        </div>
+
     </div>
 
     <div class="form-group row">
-        <lable class="col-4 col-form-label">Packages Description</lable>
-        <input data-columnname="describe" type="text"  class="packagechange col-6 form-control" value="<?php echo $packageDetail[0][4]?>" >
+        <lable class="col-form-label">Packages Description</lable>
+
+
+
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-comments"></i></span>
+            </div>
+            <input data-columnname="describe" type="text"  class="packagechange  form-control" value="<?php echo $packageDetail[0][4]?>" >
+        </div>
+
+
+
     </div>
 <form id="submitpackage">
-    <h3  align="center"> Selected Menu of Package</h3>
-    <div id="selectedmenu" class="alert-warning row form-group shadow" style="height: 40vh">
+    <h3  align="center"><i class="fas fa-thumbs-up"></i> Selected Menu of Package</h3>
+    <div id="selectedmenu" class="row  form-group shadow m-auto " style="height: 40vh">
 
         <?php
         $sql='SELECT `id`, `dishname`, `image`, `expire`, `hallprice_id` FROM `menu` WHERE (hallprice_id='.$packageid.') AND ISNULL(expire)';
@@ -61,7 +125,7 @@ $dishtype=queryReceive($sql);
         {
 
             echo '
-        <div id="alreadydishid'.$menuDetail[$i][0].'" class="col-3 alert-danger border m-2 form-group" style="height: 30vh;" >
+        <div id="alreadydishid'.$menuDetail[$i][0].'" class="col-4 border m-2 form-group p-0 card-body shadow " style="height: 30vh;" >
             <img src="'.$menuDetail[$i][2].'" class="col-12" style="height: 15vh">
             <p class="col-form-label" class="form-control col-12">'.$menuDetail[$i][1].'</p>
             <input data-dishid="'.$menuDetail[$i][0].'" type="button" value="Remove" class="form-control alreadydishid col-12  btn btn-success">
@@ -77,8 +141,8 @@ $dishtype=queryReceive($sql);
 
 
     </div>
-    <div class="col-12">
-        <input id="btncancel" type="button" value="<?php
+    <div class="mt-3 shadow" >
+        <button id="btncancel" type="button" value="<?php
 
         if($packageDetail[0][6]==NULL)
         {
@@ -88,16 +152,26 @@ $dishtype=queryReceive($sql);
         {
             echo "Click Show";
         }
-        ?>" class="btn btn-danger col-4">
-        <input id="btnsubmit" type="button" value="OK" class="btn btn-primary col-4">
+        ?>" class="btn btn-danger col-4"><i class="fas fa-ban"></i><?php
+
+            if($packageDetail[0][6]==NULL)
+            {
+                echo "Click Expire";
+            }
+            else
+            {
+                echo "Click Show";
+            }
+            ?></button>
+        <button id="btnsubmit" type="button" value="OK" class="btn btn-primary col-4"><i class="fas fa-check "></i>OK</button>
     </div>
 
 </form>
 
 
 
-<h3  align="center" class="mt-5">Select Dishes</h3>
-<div id="selectmenu" class="alert-dark border m-2 form-group row shadow" >
+<h3  align="center" class="mt-5"><i class="far fa-hand-pointer mr-2"></i>SelectSelect Dishes</h3>
+<div id="selectmenu" class="border  row m-auto"  style="overflow:auto;width: 100% ;height: 40vh" >
 
     <?php
 
@@ -109,7 +183,7 @@ $dishtype=queryReceive($sql);
         for ($j=0;$j<count($dishdetail);$j++)
         {
             echo '
-        <div id="dishid'.$dishdetail[$j][1].'" class="col-3 alert-danger border m-2 form-group" style="height: 30vh;" >
+        <div id="dishid'.$dishdetail[$j][1].'" class="col-4 border m-2 form-group p-0 card-body shadow" style="height: 30vh;" >
             <img src="'.$dishdetail[$j][2].'" class="col-12" style="height: 15vh">
             <p class="col-form-label" class="form-control col-12">'.$dishdetail[$j][0].'</p>
             <input data-dishid="'.$dishdetail[$j][1].'" type="button" value="Select" class="form-control col-12 touchdish btn btn-success">
@@ -125,8 +199,11 @@ $dishtype=queryReceive($sql);
 
 
 </div>
+</div>
 
-
+<?php
+include_once ("../../webdesign/footer/footer.php");
+?>
 <script>
     $(document).ready(function () {
 

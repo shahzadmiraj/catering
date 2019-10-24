@@ -22,42 +22,99 @@ $userid=$_GET['userid']=1;
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="../../webdesign/css/complete.css">
 
     <style>
-        *{
-            margin:auto;
-            padding: auto;
+        form
+        {
+            margin: 5%;
+            font-weight: bold;
+
+
         }
+
     </style>
 </head>
-<body class="container" >
-<h1 align="center">Order Create of Hall</h1>
-<form class="form">
+<body>
+
+<?php
+include_once ("../../webdesign/header/header.php");
+?>
+
+<div class="jumbotron  shadow" style="background-image: url(https://cdn.flatworldsolutions.com/featured-images/outsource-outbound-call-center-services.jpg);background-size:100% 115%;background-repeat: no-repeat">
+
+    <div class="card-header text-center" style="opacity: 0.7 ;background: white;">
+        <h3 ><i class="fas fa-cart-plus fa-2x"></i>Hall Booking </h3>
+
+    </div>
+
+</div>
+<form class="form container">
     <input type="number" hidden name="hallid" value="<?php echo $hallid;?>">
     <input type="number" hidden name="personid" value="<?php echo $personid;?>">
     <input type="number" hidden name="userid" value="<?php echo $userid;?>">
 <div class="form-group row">
-    <label class="col-form-label col-4">No of Guests</label>
-    <input name="guests" type="number" class="form-control col-8">
+    <label class="col-form-label">No of Guests</label>
+
+
+
+
+    <div class="input-group mb-3 input-group-lg">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-users"></i></span>
+        </div>
+        <input name="guests" type="number" class="form-control" placeholder="etc 250,300,....persons">
+    </div>
+
+
 </div>
 <div class="form-group row">
-    <label class="col-form-label col-4">Date</label>
-    <input   id="date" name="date" type="date" class="checkpackage form-control col-8">
+    <label class="col-form-label">Date</label>
+
+
+
+
+
+    <div class="input-group mb-3 input-group-lg">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+        </div>
+        <input   id="date" name="date" type="date" class="checkpackage form-control">
+    </div>
 </div>
 <div class="form-group row">
-    <label class="col-form-label col-4">Time</label>
-    <select id="time" name="time" class="checkpackage form-control col-8">
-        <option value="Morning">Morning</option>
-        <option value="Afternoon">Afternoon</option>
-        <option value="Evening">Evening</option>
-    </select>
+    <label class="col-form-label">Time</label>
+
+
+
+    <div class="input-group mb-3 input-group-lg">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-clock"></i></span>
+        </div>
+        <select id="time" name="time" class="checkpackage form-control">
+            <option value="Morning">Morning</option>
+            <option value="Afternoon">Afternoon</option>
+            <option value="Evening">Evening</option>
+        </select>
+    </div>
 </div>
 <div class="form-group row">
-    <label class="col-form-label col-4">Per Head With</label>
-    <select id="perheadwith" name="perheadwith" class="checkpackage form-control col-8">
-        <option value="0">Only seating</option>
-        <option value="1">Food + Seating</option>
-    </select>
+    <label class="col-form-label">Per Head With</label>
+
+
+
+
+
+    <div class="input-group mb-3 input-group-lg">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-utensils"></i></span>
+        </div>
+        <select id="perheadwith" name="perheadwith" class="checkpackage form-control">
+            <option value="0">Only seating</option>
+            <option value="1">Food + Seating</option>
+        </select>
+    </div>
 </div>
 <div id="groupofpackages" class="col-12 alert-warning shadow">
 
@@ -69,21 +126,42 @@ $userid=$_GET['userid']=1;
 
     </div>
     <div class="form-group row">
-        <label class="col-form-label col-4">Describe /Comments</label>
-        <textarea  name="describe" class="form-control col-8"></textarea>
+        <label class="col-form-label">Describe /Comments</label>
+
+
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-comments"></i></span>
+            </div>
+            <textarea  name="describe" class="form-control" placeholder="order comments /describe"></textarea>
+
+        </div>
     </div>
 <div class="form-group row">
-    <label class="col-form-label col-4">Total amount:</label>
-    <input name="totalamount" type="number" class="form-control col-8">
+    <label class="col-form-label">Total amount:</label>
+
+
+
+
+
+    <div class="input-group mb-3 input-group-lg">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
+        </div>
+        <input name="totalamount" type="number" class="form-control" placeholder="etc 10000,20000 total amount">
+    </div>
 </div>
 
-    <div class="form-group row">
-        <a href="../../customer/customerEdit.php?option=hallorder&customer=<?php echo $personid; ?>&hallid=<?php echo $hallid;?>" class=" col-4  btn btn-danger"  >Edit customer</a>
-        <input id="submitform" type="button" class=" col-4 btn btn-success" value="Submit">
+    <div class="form-group row justify-content-center shadow">
+        <a href="../../customer/customerEdit.php?option=hallorder&customer=<?php echo $personid; ?>&hallid=<?php echo $hallid;?>" class=" col-5  btn btn-danger"  ><i class="fas fa-arrow-circle-left"></i>Edit customer</a>
+        <button id="submitform" type="button" class=" col-4 btn btn-success" value="Submit"><i class="fas fa-check "></i>Submit</button>
     </div>
 
 </form>
-
+<?php
+include_once ("../../webdesign/footer/footer.php");
+?>
 <script>
     $(document).ready(function () {
         function checkpackage(date, time, perheadwith) {

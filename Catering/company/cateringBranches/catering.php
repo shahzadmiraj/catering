@@ -34,42 +34,81 @@ $dishType=queryReceive($sql);
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="../../webdesign/css/complete.css">
 
     <style>
-        *{
-            margin:0;
-            padding: 0;
+        form
+        {
+            margin: 5%;
+
         }
+
+        .jumbotron
+        {
+            background-color: rgba(253, 253, 255, 0.95);
+        }
+
     </style>
 </head>
 <body>
+<?php
+include_once ("../../webdesign/header/header.php");
+
+?>
+<div class="jumbotron  shadow" style="background-image: url(https://www.hnfc.com.my/data1/images/slide2.jpg);background-size:100% 100%;background-repeat: no-repeat">
+
+    <div class="card-body " style="opacity: 0.7 ;background: white;">
+        <h1 class="display-5 text-center"><i class="fas fa-registered"></i> Catering Branches</h1>
+    <p class="lead">Free register catering branches and also get free software . Book your order easily</p>
+    </div>
+</div>
+
+
+
 <?php
 
 $H=0;
 for($M=0;$M<$CateringBranches;$M++)
 {
 
-    echo '<div  class="col-12 border shadow mb-4" id="removeform'.$M.'">';
+    echo '<div  class=" jumbotron container card-body border shadow mb-4" id="removeform'.$M.'">';
     $M++;
-    echo '<h1 align="center"> Catering Registeration '.$M.'</h1>';
+    echo '<h1 align="center"><i class="fas fa-utensils"></i> <i class="fas fa-registered"></i>Catering Registeration '.$M.'</h1>';
     $M--;
     echo '<form id="formsubmit'.$M.'" >';
 
 
     ?>
-    <div class="form-group row">
-        <label class="col-form-label col-4">Catering Branch name:</label>
-        <input name="namecatering" type="text" class="form-control col-8">
+    <div class="form-group row ">
+        <label class="col-form-label">Catering Branch name:</label>
+<!--        <input name="namecatering" type="text" class="form-control col-8">-->
+
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-utensils"></i></span>
+            </div>
+            <input placeholder="Catering Branch name" name="namecatering" type="text" class="form-control">
+        </div>
     </div>
     <div class="form-group row">
-        <label class="col-form-label col-4">Catering Branch Image:</label>
-        <input name="image" type="file" class="form-control col-8">
+        <label class="col-form-label ">Catering Branch Image:</label>
+<!--        <input name="image" type="file" class="form-control col-8">-->
+
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-camera"></i></span>
+            </div>
+            <input name="image" type="file" class="form-control">
+        </div>
     </div>
 
     <div class="col-5">
         <p> Map of address</p>
     </div>
-    <h3 align="center"> select Dishes</h3>
+    <h3 align="center"><i class="far fa-hand-pointer"></i> Select Dishes</h3>
 
     <div class="form-group row">
         <?php
@@ -102,8 +141,11 @@ systemDishType_id=' . $dishType[$i][1] . '';
         ?>
     </div>
     <div class="form-group row mt-3">
-        <input data-formid="<?php echo $M; ?>" type="button" class="cancelform btn btn-outline-danger col-5 form-control " value="cancel">
-        <input data-formid="<?php echo $M; ?>" type="button" class="submitform btn btn-primary col-5  form-control" value="submit">
+
+
+
+        <button data-formid="<?php echo $M; ?>" type="button" class="cancelform  btn btn-outline-danger col-5 form-control " value="cancel" ><span class="fas fa-window-close "></span>  Cancel</button>
+        <button data-formid="<?php echo $M; ?>" type="button" class="submitform btn btn-primary col-5  form-control" value="submit"><i class="fas fa-check "></i>  Submit</button>
     </div>
     </form>
 
@@ -117,6 +159,9 @@ systemDishType_id=' . $dishType[$i][1] . '';
 
 
 
+<?php
+include_once ("../../webdesign/footer/footer.php");
+?>
 <script>
     $(document).ready(function () {
 
@@ -209,7 +254,6 @@ systemDishType_id=' . $dishType[$i][1] . '';
 
 
     });
-
 
 </script>
 </body>

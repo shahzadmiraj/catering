@@ -27,11 +27,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
+    <link rel="stylesheet" href="webdesign/css/complete.css">
     <style>
-        html,body{
-            height: 100%;
-            width: 100%;
-        }
+
         .carousel-item img
         {
             margin: 0;
@@ -101,16 +99,16 @@ include_once ("webdesign/header/header.php");
                         <h4 class="text-uppercase font-weight-bold">Software Features</h4>
                         <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                         <p>
-                            <a href="#!" class="text-dark">Marquee Management software</a>
+                            <a href="/Catering/company/companyRegister/companyRegister.php" class="text-dark">Marquee Management software</a>
                         </p>
                         <p>
-                            <a href="#!" class="text-dark">Hall Management software</a>
+                            <a href="/Catering/company/companyRegister/companyRegister.php" class="text-dark">Hall Management software</a>
                         </p>
                         <p>
-                            <a href="#!" class="text-dark">Catering Management software</a>
+                            <a href="/Catering/company/companyRegister/companyRegister.php" class="text-dark">Catering Management software</a>
                         </p>
                         <p>
-                            <a href="#!" class="text-dark">Dera / Open area Management software</a>
+                            <a href="/Catering/company/companyRegister/companyRegister.php" class="text-dark">Dera / Open area Management software</a>
                         </p>
                     </div>
                 </div>
@@ -141,7 +139,7 @@ include_once ("webdesign/header/header.php");
     <div class="text-white  text-center  row" >
         <div class="input-group mb-2 mr-sm-2">
             <div class="input-group-prepend">
-                <div class="input-group-text"><i class="fas fa-comments"></i></div>
+                <div class="input-group-text"><i class="fas fa-clock"></i></div>
             </div>
             <select class="custom-select "  size="1">
                 <option>Morning Time </option>
@@ -157,7 +155,7 @@ include_once ("webdesign/header/header.php");
     <div class="text-white  text-center  row" >
         <div class="input-group mb-2 mr-sm-2">
             <div class="input-group-prepend">
-                <div class="input-group-text"><i class="fas fa-comments"></i></div>
+                <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
             </div>
             <input type="date" class="form-control py-0" id="inlineFormInputGroupUsername2" placeholder="Booking Date">
         </div>
@@ -167,7 +165,7 @@ include_once ("webdesign/header/header.php");
     <div class="text-white  text-center  row" >
         <div class="input-group mb-2 mr-sm-2">
             <div class="input-group-prepend">
-                <div class="input-group-text"><i class="fas fa-comments"></i></div>
+                <div class="input-group-text"><i class="fas fa-utensils"></i></div>
             </div>
             <select class="custom-select "  size="1">
                 <option>Per head Only Seating</option>
@@ -178,7 +176,8 @@ include_once ("webdesign/header/header.php");
 
 
 <div class="m-auto">
-<button class="btn btn-danger"><i class="fas fa-comments"></i> Submit</button>
+<button class="btn btn-danger"><i class="fas fa-check"></i>
+    Submit</button>
 </div>
 
 </div>
@@ -200,7 +199,7 @@ include_once ("webdesign/header/header.php");
 
 
 
-<div class="row mt-5 ml-1 p-0" style="background: url(https://htmlcolorcodes.com/assets/images/html-color-codes-color-tutorials-903ea3cb.jpg);background-repeat: no-repeat; background-size: cover;"">
+<div class="row mt-5 ml-1 p-0" >
 
 
 
