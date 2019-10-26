@@ -78,7 +78,7 @@ $display='';
 for ($i=0;$i<count($orderdetail);$i++)
 {
     $display.='
-        <a href="#'.$orderdetail[$i][0].'" class="col-12   row  shadow m-3">
+        <a href="#'.$orderdetail[$i][0].'" class="col-12   row  shadow m-3 newcolor">
         <img src="';
     if(file_exists($orderdetail[$i][2]))
     {
@@ -86,7 +86,7 @@ for ($i=0;$i<count($orderdetail);$i++)
     }
     else
     {
-        $display.="../gmail.png";
+        $display.="https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png";
     }
 
 

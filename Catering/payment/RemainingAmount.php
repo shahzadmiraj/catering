@@ -11,7 +11,6 @@ include_once ("../connection/connect.php");
 
 $hallid="";
 $cateringid='';
-$_GET['hallid']=1;
 if(isset($_GET['hallid']))
     $hallid=$_GET['hallid'];
 if(isset($_GET['cateringid']))
@@ -32,98 +31,193 @@ else
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/Catering/bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="../webdesign/css/complete.css">
     <style>
-        *{
-            margin:auto;
-            padding: auto;
+
+        .newcolor
+        {
+            background: #77A1D3;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #E684AE, #79CBCA, #77A1D3);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #E684AE, #79CBCA, #77A1D3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
         }
     </style>
 </head>
 <body>
 
-<div class="container"  style="margin-top:150px">
+<?php
+include_once ("../webdesign/header/header.php");
+?>
 
-<form class="col-12 shadow card mb-4" id="formId1" style="display: none">
-    <h2>Search order :</h2>
+<div class="jumbotron  shadow" style="background-image: url(https://www.opengovguide.com/wp-content/uploads/2019/07/RM_Banner_Large.jpg);background-size:100% 100%;background-repeat: no-repeat">
 
-    <div class="form-group row">
-        <label class="col-form-label col-4"> Customer Name</label>
-        <input  name="p_name" type="text" class="changeColumn form-control col-8">
-    </div>
-    <div class="form-group row">
-        <label class="col-form-label col-4"> Customer CNIC</label>
-        <input  name="p_cnic" type="number" class="changeColumn form-control col-8">
-    </div>
-    <div class="form-group row">
-        <label class="col-form-label col-4"> Customer ID</label>
-        <input  name="p_id" type="number" class="changeColumn form-control col-8">
-    </div>
-    <div class="form-group row">
-        <label class="col-form-label col-4"> Customer Phone</label>
-        <input  name="n_number" type="text" class="changeColumn form-control col-8">
-    </div>
-    <div class="form-group row">
-        <label class="col-form-label col-4">booking Date</label>
-        <input  name="od_booking_date" type="date" class="changeColumn form-control col-8">
-    </div>
-    <div class="form-group row">
-        <label class="col-form-label col-4"> Destination Date</label>
-        <input  name="od_destination_date" type="date" class="changeColumn form-control col-8">
+    <div class="card-header text-center" style="opacity: 0.7 ;background: white;">
+        <h3 class="text-dark"> <i class="fab fa-amazon-pay fa-2x"></i>Records managements</h3>
+        <p>Check All orders remaining amount,total amount,Event Guru system calculated amount  </p>
+        <button data-display="hide" id="searchBtn" class="btn-warning btn justify-content-center "><i class="fas fa-search"></i>Search Order</button>
     </div>
 
-    <div class="form-group row">
-        <label class="col-form-label col-4">Order Status</label>
-        <select  name="<?php
-        if($hallid=="")
-        {
-            echo "od_status_catering";
-        }
-        else
-        {
-            echo "od_status_hall";
-        }
-        ?>" class="changeColumn form-control col-8 ">
-            <option value="None">None</option>
-            <?php
-            $OrderStatus=array("Running","Cancel","Delieved","Clear");
-            for($i=0;$i<count($OrderStatus);$i++)
-            {
+</div>
 
-                echo '<option value='.$OrderStatus[$i].'>'.$OrderStatus[$i].'</option>';
+<div class="container">
 
-            }
-            ?>
-        </select>
-    </div>
-    <div class="form-group row">
-        <a href="/Catering/payment/RemainingAmount.php" class="col-4 form-control btn-danger">cancel</a>
-        <button type="button" class="col-4 form-control btn-success">Find</button>
-    </div>
+    <form class="col-12 shadow mb-4 newcolor card " id="formId1" style="display: none">
 
-</form>
+        <div class="form-group row">
+            <label class="col-form-label"> Customer name</label>
 
-<h4 align="center" ><button data-display="hide" id="searchBtn" class="btn-outline-info btn float-left ">Search Order</button>Payments Records</h4>
+
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                </div>
+                <input  name="p_name" type="text" class="changeColumn form-control" placeholder="or customer name etc ali,....">
+            </div>
+
+
+
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label"> Customer CNIC</label>
+
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="far fa-id-card"></i></span>
+                </div>
+                <input  name="p_cnic" type="number" class="changeColumn form-control" placeholder="or cnic 23212xxxxx">
+            </div>
+
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label"> Customer ID</label>
+
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                </div>
+                <input  name="p_id" type="number" class="changeColumn form-control" placeholder="customer ID 1,2,3,4,.....">
+            </div>
+
+
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label"> Customer phone</label>
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
+                </div>
+                <input  name="n_number" type="text" class="changeColumn form-control" placeholder="number 03231xxxxxx">
+            </div>
+
+
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label">Booking Date</label>
+
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                </div>
+                <input  name="od_booking_date" type="date" class="changeColumn form-control">
+            </div>
+
+
+
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label"> Destination Date</label>
+
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-business-time"></i></span>
+                </div>
+                <input  name="od_destination_date" type="date" class="changeColumn form-control">
+            </div>
+
+
+        </div>
+
+        <div class="form-group row">
+            <label class="col-form-label ">order status</label>
+
+
+
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="far fa-eye"></i></span>
+                </div>
+
+                <select  name="<?php
+                if($hallid=="")
+                {
+                    echo "od_status_catering";
+                }
+                else
+                {
+                    echo "od_status_hall";
+                }
+                ?>" class="changeColumn form-control">
+                    <option value="None">None</option>
+                    <?php
+                    $OrderStatus=array("Running","Cancel","Delieved","Clear");
+                    for($i=0;$i<count($OrderStatus);$i++)
+                    {
+
+                        echo '<option value='.$OrderStatus[$i].'>'.$OrderStatus[$i].'</option>';
+
+                    }
+                    ?>
+                </select>
+            </div>
+
+
+        </div>
+
+        <div class="form-group row justify-content-center">
+            <button type="button" class="form-control btn-success col-6"><i class="fas fa-search"></i>Find</button>
+        </div>
+
+    </form>
+
+
 <div  class="w-100" id="recordsAll1">
-<table class="table table-bordered table-responsive" style="width: 100%;">
-    <tbody class="font-weight-bold">
-            <td >order Id</td>
-            <td>customer Name</td>
-            <td>order status</td>
-            <td>received amount</td>
-            <td>System  Amount</td>
-            <td>remaining system amount </td>
-            <td>your demanded amount</td>
-            <td>remaining demand amount</td>
+<table class="table table-striped newcolor table-responsive" style="width: 100%;">
+    <thead class="font-weight-bold">
+    <tr>
+            <th scope="col"><h1 class="fas fa-id-card col-12"></h1>order Id</th>
+            <th scope="col"><h1 class="fas fa-user col-12"></h1>customer Name</th>
+            <th scope="col"><h1 class="far fa-eye col-12"></h1>order status</th>
+            <th scope="col"><h1 class="fab fa-amazon-pay col-12"></h1>received amount</th>
+            <th scope="col">System  Amount</th>
+            <th scope="col">remaining system amount </th>
+            <th scope="col"><h1 class="far fa-money-bill-alt col-12"></h1>your demanded amount</th>
+            <th scope="col">remaining demand amount</th>
+    </tr>
 
-    </tbody>
+    </thead>
+    <tbody>
     <?php
     $sql="SELECT DISTINCT od.id, (SELECT p.name FROM person as p WHERE p.id=od.person_id), (SELECT sum(py.amount) FROM payment as py WHERE (py.IsReturn=0)AND(py.orderDetail_id=od.id)) ,od.total_amount,od.total_amount, (SELECT SUM(dd.price*dd.quantity) FROM dish_detail as dd WHERE dd.orderDetail_id=od.id),od.status_catering,od.status_hall FROM orderDetail as od LEFT join payment as py on od.id=py.orderDetail_id where ".$hallorcater."";
 $details=queryReceive($sql);
@@ -131,7 +225,7 @@ $details=queryReceive($sql);
     for ($i=0;$i<count($details);$i++)
     {
         $display.=' <tr data-orderid="'.$details[$i][0].'" class="orderDetail">
-        <td >'.$details[$i][0].'</td>
+        <td  scope="row">'.$details[$i][0].'</td>
         <td>'.$details[$i][1].'</td>
         <td>';
         if(!empty($hallid))
@@ -177,7 +271,7 @@ $details=queryReceive($sql);
 
 
     ?>
-
+    </tbody>
 
 </table>
 

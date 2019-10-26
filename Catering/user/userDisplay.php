@@ -110,7 +110,7 @@ echo $display;
     <!--        <a href="/Catering/system/dish/dishesDetail.php" class="h-25 col-6"><h1>Guideline Dishes</h1></a>
             <a href="/Catering/system/user/usercreate.php" class="h-25 col-6"><h1>User Create</h1></a>
     -->
-        <a  href="/Catering/payment/RemainingAmount.php" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fab fa-amazon-pay fa-5x"></i><h3>Remaining payments</h3></a>
+        <a  href="/Catering/payment/RemainingAmount.php?hallid=<?php echo $hallid;?>&cateringid=<?php echo $cateringid;?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fab fa-amazon-pay fa-5x"></i><h3>Remaining payments</h3></a>
     </div>
 
 

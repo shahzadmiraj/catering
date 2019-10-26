@@ -25,8 +25,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="webdesign/css/complete.css">
     <style>
 
@@ -66,9 +65,11 @@
 <body>
 <?php
 include_once ("webdesign/header/header.php");
+
 ?>
 
-<<div class="bd-example">
+
+<div class="bd-example">
     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
@@ -91,7 +92,7 @@ include_once ("webdesign/header/header.php");
                 </div>
             </div>
             <div class="carousel-item ">
-                <img src="manage.jpeg" class="d-block w-100" alt="...">
+                <img src="https://indiebookbutler.com/wp-content/uploads/2015/08/Free.jpg" class="d-block w-100" alt="...">
                 <div class="carousel-caption ">
                     <div class="col-12 p-0 m-0">
 
@@ -130,7 +131,7 @@ include_once ("webdesign/header/header.php");
 
 
 
-
+<div class="container">
 
 <div class="jumbotron card card-image mr-5 ml-5 " style="background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTggd_nzKxicPajH1Mw7Jvwb1JSakcZFoHgsqEZH3Z1Dj2RMYWk);margin-top: -15px;background-repeat: no-repeat; background-size: cover;">
 
@@ -199,81 +200,89 @@ include_once ("webdesign/header/header.php");
 
 
 
-<div class="row mt-5 ml-1 p-0" >
+<div class="row mt-5" >
 
 
 
 
-<!-- Card -->
-<div class="card booking-card col-4 p-0 m-2">
+        <!-- Card -->
+        <div class="card-body booking-card col-sm-6 col-md-4 col-xl-3 p-0 m-2">
 
-    <!-- Card image -->
-    <div class="view overlay">
-        <div class="container pictures">
-            <img src="https://mdbootstrap.com/img/Photos/Horizontal/Food/8-col/img (5).jpg" alt="Snow" style="width:100%;">
-            <h5 class="top-right text-dark">43.3Km</h5>
+            <!-- Card image -->
+            <div class="view overlay">
+                <div class="container pictures">
+                    <img src="https://mdbootstrap.com/img/Photos/Horizontal/Food/8-col/img (5).jpg" alt="Snow" style="width:100%;height: 100%">
+                    <h5 class="top-right text-dark">43.3Km</h5>
+                </div>
+            </div>
+
+            <!-- Card content -->
+            <div class="card-body">
+
+                <!-- Title -->
+                <h4 class="card-title font-weight-bold text-center"><a> La Sirena restaurant</a></h4>
+                <!-- Data -->
+
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+
+                <p class="mb-2"><i class="material-icons">
+                        airline_seat_recline_normal
+                    </i>with Seating/<i class="material-icons">
+                        fastfood
+                    </i>package name</p>
+                <!-- Text -->
+                <i class="material-icons">
+                        attach_money
+                    </i><span class="font-weight-bold">RS:<i class="text-danger"> 1000 </i></span>
+            </div>
+
+
         </div>
-    </div>
 
-    <!-- Card content -->
-    <div class="card-body">
 
-        <!-- Title -->
-        <h4 class="card-title font-weight-bold text-center"><a> La Sirena restaurant</a></h4>
-        <!-- Data -->
 
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star"></span>
-        <span class="fa fa-star"></span>
 
-        <p class="mb-2"><i class="material-icons">
-                airline_seat_recline_normal
-            </i>with Seating/<i class="material-icons">
-                fastfood
-            </i>package name</p>
-        <!-- Text -->
-        <i class="material-icons">
-                attach_money
-            </i><span class="font-weight-bold">RS:<i class="text-danger"> 1000 </i></span>
-    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </div>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div>
 
 
     <a href="company/companyRegister/companyRegister.php" class="col-3 btn btn-outline-danger">Company Register</a>
     <a href="company/companyRegister/companydisplay.php?companyid=3" class="col-3 btn btn-outline-danger">Log in</a>
 
+
+
+
+
+
+
+
+
+
 </div>
-
-
-
-
-
-
-
-
-
 
 
 <?php

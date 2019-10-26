@@ -20,35 +20,65 @@ include_once ("../connection/connect.php");
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="../webdesign/css/complete.css">
 
     <style>
-        *{
-            margin:auto;
-            padding: auto;
-        }
+
     </style>
 </head>
-<body>
+<body class="text-white">
 
-<div class="container"  style="margin-top:150px">
+<?php
+include_once ("../webdesign/header/header.php");
+?>
+<div class="jumbotron  shadow" style="background-image: url(https://qph.fs.quoracdn.net/main-qimg-b1822af85b86aabaa253ad7948880cb7);background-size:100% 115%;background-repeat: no-repeat">
 
-    <h4 align="center"> Selected Dishes / items Detail</h4>
+    <div class="card-header text-center" style="opacity: 0.7 ;background: white;">
+        <h3 class="text-dark"><i class="fas fa-file-word fa-3x mr-2 "></i>BILL DETAIL</h3>
+    </div>
+
+</div>
+
+
+
+
+<div class="container">
+
+
+    <div class="row justify-content-center col-12" style="margin-top: -60px">
+
+        <div class="card text-center card-header">
+            <img src="
+
+            <?php
+
+            $sql="SELECT DISTINCT ot.id, (SELECT p.name FROM person as p WHERE p.id=ot.person_id), (SELECT sum(py.amount) FROM payment as py WHERE (py.IsReturn=0)AND(py.orderDetail_id=ot.id)) ,ot.id,ot.total_amount, (SELECT SUM(dd.price*dd.quantity) FROM dish_detail as dd WHERE dd.orderDetail_id=ot.id),(SELECT p.image FROM person as p WHERE p.id=ot.person_id) FROM orderDetail as ot LEFT join payment as py on ot.id=py.orderDetail_id WHERE ot.id=".$orderId."";
+            $details=queryReceive($sql);
+            if($details[0][6]=="")
+            {
+                echo 'https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
+            }
+            else
+            {
+                echo $details[0][6];
+            }
+
+            ?> " style="height: 20vh;" class="figure-img rounded-circle" alt="image is not set">
+            <h5 ><?php
+                echo  $details[0][1];
+                ?></h5>
+            <label >Order ID:<?php
+                echo  $details[0][0];
+                ?></label>
+        </div>
+    </div>
 
     <?php
 
-    $sql="SELECT DISTINCT ot.id, (SELECT p.name FROM person as p WHERE p.id=ot.person_id), (SELECT sum(py.amount) FROM payment as py WHERE (py.IsReturn=0)AND(py.orderDetail_id=ot.id)) ,ot.id,ot.total_amount, (SELECT SUM(dd.price*dd.quantity) FROM dish_detail as dd WHERE dd.orderDetail_id=ot.id) FROM orderDetail as ot LEFT join payment as py on ot.id=py.orderDetail_id WHERE ot.id=".$orderId."";
-    $details=queryReceive($sql);
 
-    echo ' 
-        <div class="col-12 shadow card mb-3">
-        <div class="form-group row">
-        <label class="col-6 form-check-label">order Id </label>
-        <label class="col-6 form-check-label"> '.$details[0][0].'</label>
-    </div>
-    <div class="form-group row">
-        <label class="col-6 form-check-label">customer name </label>
-        <label class="col-6 form-check-label">'.$details[0][1].' </label>
-    </div>
+    echo '
+        <div class="col-12 shadow card-header mb-3 border">
     <div class="form-group row">
         <label class="col-6 form-check-label"> received amount</label>
         <label class="col-6 form-check-label">'.(int)$details[0][2].' </label>
@@ -77,13 +107,13 @@ include_once ("../connection/connect.php");
     ?>
 
 
+<div class="col-12" style="overflow: auto">
+        <div class="form-group row border">
+            <label class="font-weight-bold border-right col-3 "><h1 class="fas fa-concierge-bell mr-2"></h1> dish name</label>
+            <label class=" font-weight-bold border-right col-3 "><h1 class="fas fa-hashtag mr-2"></h1>quantity</label>
+            <label class=" font-weight-bold border-right col-3 "><h1 class="far fa-money-bill-alt mr-2"></h1>each price</label>
+            <label class="font-weight-bold border-right col-3 "><h1 class="fas fa-list-alt mr-2"></h1>total</label>
 
-        <div class="form-group row border ">
-            <label class="font-weight-bold border-right col-2 ">dish name</label>
-            <label class=" font-weight-bold border-right col-3 ">quantity</label>
-            <label class=" font-weight-bold border-right col-2 ">each price</label>
-            <label class="font-weight-bold border-right col-2 ">total</label>
-            <label class=" font-weight-bold col-2 ">Detail</label>
         </div>
 
         <?php
@@ -97,13 +127,15 @@ where
         for($i=0;$i<count($dishesDetail);$i++)
         {
             $totalAmount+=(int)$dishesDetail[$i][2]*(int)$dishesDetail[$i][3];
-            echo '<div class=" row border ">
+            echo '    
+            <a href="/Catering/dish/dishPreview.php?dishId='.$dishesDetail[$i][4].'&dishDetailId='.$dishesDetail[$i][0].'&order='.$_GET['order'].'&option=Allselected" class="row card-body border text-white p-0 shadow" >
             <label class="border-right col-form-label col-3">'.$dishesDetail[$i][1].'</label>
-            <label class=" border-right col-form-label col-2">'.$dishesDetail[$i][2].'</label>
-            <label class="border-right col-form-label col-2">'.$dishesDetail[$i][3].'</label>
-            <label class=" border-right col-form-label col-2">'.(int)$dishesDetail[$i][2]*(int)$dishesDetail[$i][3].'</label>
-            <a href="/Catering/dish/dishPreview.php?dishId='.$dishesDetail[$i][4].'&dishDetailId='.$dishesDetail[$i][0].'&order='.$_GET['order'].'&option=Allselected"  class="detailBtn form-control btn-primary col-2">Detail</a>
-        </div>';
+            <label class="border-right col-form-label col-3">'.$dishesDetail[$i][2].'</label>
+            <label class="border-right col-form-label col-3">'.$dishesDetail[$i][3].'</label>
+            <label class="border-right col-form-label col-3">'.(int)$dishesDetail[$i][2]*(int)$dishesDetail[$i][3].'</label>
+            
+            
+            </a>';
         }
 
 
@@ -114,6 +146,7 @@ where
 
 
         ?>
+</div>
 
 
 
@@ -122,9 +155,9 @@ where
 
 
 
-    <div class="col-12  row ">
-        <a href="/Catering/order/PreviewOrder.php?order=<?php echo $_GET['order'];?>"  class="form-control btn-info col-5">Order Preview</a>
-        <a href="/Catering/dish/dishDisplay.php?order=<?php echo $_GET['order'];?>" class="form-control btn-success col-5">dish Add +</a>
+    <div class="col-12  row justify-content-center mt-4 ">
+        <a href="/Catering/order/PreviewOrder.php?order=<?php echo $_GET['order'];?>"  class="form-control btn-info col-5 mr-2"><i class="fas fa-book"></i>Order Preview</a>
+        <a href="/Catering/dish/dishDisplay.php?order=<?php echo $_GET['order'];?>" class="form-control btn-success col-5"><i class="fas fa-concierge-bell"></i>dish Add +</a>
     </div>
 
 
@@ -134,6 +167,9 @@ where
 
 
 
+<?php
+include_once ("../webdesign/footer/footer.php");
+?>
 <script>
 
 </script>

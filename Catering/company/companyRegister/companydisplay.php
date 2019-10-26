@@ -66,7 +66,7 @@ include_once ("../../webdesign/header/header.php");
     <div class="card-body text-center" style="opacity: 0.7 ;background: white;">
         <h1 class="display-5 "><i class="fas fa-city mr-2"></i><?php echo $companydetail[0][0];?></h1>
         <p>check your orders of hall and as well as catering</p>
-        <a href="#" class="btn-info btn"><i class="fas fa-edit mr-1"></i>Edit company</a>
+        <a href="companyEdit.php?companyid=<?php echo $companyid;?>" class="btn-info btn"><i class="fas fa-edit mr-1"></i>Edit company</a>
     </div>
 </div>
 <h1 align="center"  ><i class="fas fa-place-of-worship"></i>Branches of Hall</h1>

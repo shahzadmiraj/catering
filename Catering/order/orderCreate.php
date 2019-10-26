@@ -32,51 +32,130 @@ $customer=$_GET['customer'];
 include_once ("../webdesign/header/header.php");
 ?>
 
-<div class="jumbotron  shadow" style="background-image: url(https://www.livechatinc.com/wp-content/uploads/2017/01/customer-centric@2x.png);background-size:100% 115%;background-repeat: no-repeat">
+<div class="jumbotron  shadow" style="background-image: url(https://cdn.flatworldsolutions.com/featured-images/outsource-outbound-call-center-services.jpg);background-size:100% 115%;background-repeat: no-repeat">
 
-    <div class="card-body text-center" style="opacity: 0.7 ;background: white;">
-        <h3 ><i class="fas fa-user-edit"></i>Edit Customer info </h3>
+    <div class="card-header text-center" style="opacity: 0.7 ;background: white;">
+        <h3 ><i class="fas fa-cart-plus fa-2x"></i>Order Booking </h3>
     </div>
-
 </div>
-<div class="container">
 
-    <h1 align="center"> Order Create</h1>
-    <form>
+
+
+
+<div class="container ">
+    <form class="card-body">
         <input type="number" hidden name="customer" value=<?php echo $customer;?>   >
         <input type="number" hidden name="cateringid" value="<?php echo $cateringid;?>">
         <div class="form-group row">
-        <label for="persons" class="col-4 col-form-label"> no of guests</label>
-        <input type="number" name="persons" id="persons" class="col-8 form-control">
+        <label for="persons" class="col-form-label"> No of guests</label>
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-users"></i></span>
+                </div>
+                <input type="number" name="persons" id="persons" class="form-control" placeholder="etc 250,300,....persons">
+            </div>
+
         </div>
 
         <div class="form-group row">
-            <label for="time" class="col-4 col-form-label">delivery Time</label>
-            <input type="time" name="time" id="time"  class="col-8 form-control">
+            <label for="time" class="col-form-label">Delivery Time</label>
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                </div>
+                <input type="time" name="time" id="time"  class="form-control">
+
+            </div>
+
+
+
         </div>
 
         <div class="form-group row">
-            <label for="date" class="col-4 col-form-label">delivery Date</label>
-            <input type="date" name="date" id="date" class="col-8 form-control">
+            <label for="date" class="col-form-label">Delivery Date</label>
+
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                </div>
+                <input type="date" name="date" id="date" class="form-control">
+            </div>
+
+
+
+
         </div>
-            <h3 align="center"> Deliver Address</h3>
+
+        <h3 align="center">  <i class="fas fa-map-marker-alt mr-2"></i>Delivery Address(optional)</h3>
+
         <div class="form-group row">
-            <label for="area" class="col-4 col-form-label">area / block </label>
-            <input type="text" name="area" id="area" class="col-8 form-control">
+            <label for="area" class="col-form-label">Area / Block </label>
+
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-city"></i></span>
+                </div>
+                <input type="text" name="area" id="area" class="form-control" placeholder="block address ..">
+
+            </div>
+
         </div>
         <div class="form-group row">
-            <label for="streetNO" class="col-4 col-form-label">Street no #</label>
-            <input type="number" name="streetno" id="streetNO" class="col-8 form-control">
+            <label for="streetNO" class="col-form-label">Street no #</label>
+
+
+
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-road"></i></span>
+                </div>
+
+                <input type="number" name="streetno" id="streetNO" class="form-control" placeholder="street no 1,2,3....">
+            </div>
         </div>
         <div class="form-group row">
-            <label for="houseno" class="col-4 col-form-label">house no# </label>
-            <input  type="number" name="houseno" id="houseno" class="col-8 form-control">
+            <label for="houseno" class="col-form-label">House no# </label>
+
+
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-street-view"></i></span>
+                </div>
+                <input  type="number" name="houseno" id="houseno" class="form-control" placeholder="house no 1,2,.....">
+            </div>
+
+
+
         </div>
         <div class="form-group row">
-            <label for="describe" class="col-4 col-form-label">describe order </label>
-            <textarea  id="describe" name="describe" class="form-control col-8 form-control"></textarea>
+            <label for="describe" class="col-form-label">Describe order </label>
+
+
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                </div>
+                <textarea  id="describe" name="describe" class="form-control form-control" placeholder="order comment /requirements"></textarea>
+            </div>
+
+
+
+
         </div>
-        <div class="form-group row">
+        <div class="form-group row justify-content-center">
 
             <?php
                 if(isset($_GET['option']))
@@ -84,17 +163,17 @@ include_once ("../webdesign/header/header.php");
                     if(($_GET['option']=="CustomerCreate")||($_GET['option']=="customerEdit"))
                     {
 
-                        echo '<a href="/Catering/customer/customerEdit.php?customer='.$_GET['customer'].'&option=orderCreate&cateringid='.$cateringid.'" class="form-control col-4 btn btn-danger">Edit Customer</a>';
+                        echo '<a href="/Catering/customer/customerEdit.php?customer='.$_GET['customer'].'&option=orderCreate&cateringid='.$cateringid.'" class="form-control col-5 btn btn-danger"><i class="fas fa-arrow-left"></i>Edit Customer</a>';
                     }
                 }
                 else
                 {
                     echo '
-            <button  type="button"  id=\'cancelorder\'class="form-control col-4 btn btn-danger"> cancel</button>';
+            <button  type="button"  id=\'cancelorder\'class="form-control col-5 btn btn-danger"><i class="fas fa-arrow-left"></i> cancel</button>';
                 }
 
             ?>
-            <button type="button" id="submit" class="form-control col-4 btn-success"> submit</button>
+            <button type="button" id="submit" class="form-control col-5 btn-success"><i class="fas fa-check "></i> Submit</button>
         </div>
     </form>
 

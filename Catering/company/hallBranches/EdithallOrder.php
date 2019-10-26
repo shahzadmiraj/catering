@@ -26,86 +26,142 @@ $detailorder=queryReceive($sql);
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="../../webdesign/css/complete.css">
 
     <style>
-        *{
-            margin:auto;
-            padding: auto;
-        }
+
     </style>
 </head>
-<body class="container" >
-<h1 align="center">Order Create of Hall</h1>
+<body>
+
+
+<?php
+include_once ("../../webdesign/header/header.php");
+?>
+
+<div class="jumbotron  shadow" style="background-image: url(https://cdn.flatworldsolutions.com/featured-images/outsource-outbound-call-center-services.jpg);background-size:100% 115%;background-repeat: no-repeat">
+
+    <div class="card-header text-center" style="opacity: 0.7 ;background: white;">
+        <h3 ><i class="fas fa-cart-arrow-down fa-3x mr-2"></i>Edit order</h3>
+    </div>
+
+</div>
+
+<div class="container card-header shadow">
 <form class="form">
     <div class="form-group row">
-        <label class="col-form-label col-4">No of Guests</label>
-        <input name="guests" type="number" class="form-control col-8" value="<?php echo $detailorder[0][12]; ?>">
-    </div>
-    <div class="form-group row">
-        <label class="col-form-label col-4">Date</label>
-        <input   id="date" name="date" type="date" class="checkpackage form-control col-8" value="<?php echo $detailorder[0][14]; ?>">
-    </div>
-    <div class="form-group row">
-        <label class="col-form-label col-4">Time</label>
-        <select id="time" name="time" class="checkpackage form-control col-8">
-            <?php
+        <label class="col-form-label">No of Guests</label>
 
-            ///////set time
-            if($detailorder[0][16]=="09:00:00")
-            {
-                //morning
-                echo '
+
+
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-users"></i></span>
+            </div>
+            <input name="guests" type="number" class="form-control" value="<?php echo $detailorder[0][12]; ?>">
+        </div>
+
+
+
+    </div>
+    <div class="form-group row">
+        <label class="col-form-label">Date</label>
+
+
+
+
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+            </div>
+            <input   id="date" name="date" type="date" class="checkpackage form-control" value="<?php echo $detailorder[0][14]; ?>">
+        </div>
+
+    </div>
+    <div class="form-group row">
+        <label class="col-form-label">Time</label>
+
+
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-clock"></i></span>
+            </div>
+
+            <select id="time" name="time" class="checkpackage form-control">
+                <?php
+
+                ///////set time
+                if($detailorder[0][16]=="09:00:00")
+                {
+                    //morning
+                    echo '
             <option value="Morning">Morning</option>
             <option value="Afternoon">Afternoon</option>
             <option value="Evening">Evening</option>';
 
-            }
-            else if($detailorder[0][16]=="12:00:00")
-            {
-                //afternoon
-                echo '
+                }
+                else if($detailorder[0][16]=="12:00:00")
+                {
+                    //afternoon
+                    echo '
 
             <option value="Afternoon">Afternoon</option>
             <option value="Morning">Morning</option>
             <option value="Evening">Evening</option>';
-            }
-            else
-            {
-                //evening
-                echo '
+                }
+                else
+                {
+                    //evening
+                    echo '
             <option value="Evening">Evening</option>
             <option value="Morning">Morning</option>
             <option value="Afternoon">Afternoon</option>';
 
 
-            }
-            ?>
+                }
+                ?>
 
-        </select>
+            </select>
+        </div>
     </div>
     <div class="form-group row">
-        <label class="col-form-label col-4">Per Head With</label>
-        <select id="perheadwith" name="perheadwith" class="checkpackage form-control col-8">
+        <label class="col-form-label ">Per Head With</label>
 
-            <?php
 
-            if($detailorder[0][3]==0)
-            {
-                // only seating
-                echo '
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-utensils"></i></span>
+            </div>
+            <select id="perheadwith" name="perheadwith" class="checkpackage form-control">
+
+                <?php
+
+                if($detailorder[0][3]==0)
+                {
+                    // only seating
+                    echo '
             <option value="0">Only seating</option>
             <option value="1">Food + Seating</option>';
-            }
-            else
-            {
-                //food and seating
-                echo '
+                }
+                else
+                {
+                    //food and seating
+                    echo '
             <option value="1">Food + Seating</option>
             <option value="0">Only seating</option>';
-            }
-            ?>
+                }
+                ?>
 
-        </select>
+            </select>
+        </div>
+
+
+
+
     </div>
     <div id="groupofpackages" class="col-12 alert-warning shadow">
 
@@ -117,21 +173,53 @@ $detailorder=queryReceive($sql);
 
     </div>
     <div class="form-group row">
-        <label class="col-form-label col-4">Describe /Comments</label>
-        <textarea  name="describe" class="form-control col-8"><?php echo $detailorder[0][19]; ?></textarea>
+        <label class="col-form-label">Describe /Comments</label>
+
+
+
+
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-comments"></i></span>
+            </div>
+
+            <textarea  name="describe" class="form-control"><?php echo $detailorder[0][19]; ?></textarea></textarea>
+
+        </div>
+
+
     </div>
     <div class="form-group row">
-        <label class="col-form-label col-4">Total amount:</label>
-        <input name="totalamount" type="number" class="form-control col-8" value="<?php echo $detailorder[0][11]; ?>">
+        <label class="col-form-label">Total amount:</label>
+
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
+            </div>
+            <input name="totalamount" type="number" class="form-control" value="<?php echo $detailorder[0][11]; ?>">
+        </div>
     </div>
+
 
     <?php
 
         $status=array("Running","Deliever","Cancel","Clear");
         $display='
     <div class="form-group row">
-        <label class="col-form-label col-4">Order status</label>
-        <select  name="orderStatus" class=" form-control col-8">
+        <label class="col-form-label">Order status</label>
+        
+        
+        
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="far fa-eye"></i></span>
+            </div>';
+
+
+
+       $display.=' <select  name="orderStatus" class=" form-control">
         <option value="'.$detailorder[0][13].'">'.$detailorder[0][13].'</option>';
         for($i=0;$i<count($status);$i++)
         {
@@ -141,6 +229,10 @@ $detailorder=queryReceive($sql);
             }
         }
         $display.=' </select>
+            
+        </div>
+ 
+      
     </div>';
        echo $display;
 
@@ -149,18 +241,31 @@ $detailorder=queryReceive($sql);
 
 
     <div class="form-group row">
-        <label class="col-form-label col-4">Booked date</label>
-        <input readonly type="date" class="form-control col-8" value="<?php echo $detailorder[0][15]; ?>">
+        <label class="col-form-label">Booked date</label>
+
+
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-business-time"></i></span>
+            </div>
+            <input readonly type="date" class="form-control" value="<?php echo $detailorder[0][15]; ?>">
+        </div>
     </div>
 
-    <div class="form-group row">
 
-        <input id="cancel" type="button" class=" col-4 btn btn-danger" value="Cancel">
-        <input id="submitform" type="button" class=" col-4 btn btn-success" value="Save">
+
+    <div class="form-group row justify-content-center">
+
+        <button id="cancel" type="button" class=" col-4 btn btn-danger" value="Cancel"><i class="fas fa-arrow-circle-left"></i>back</button>
+        <button id="submitform" type="button" class=" col-4 btn btn-success" value="Save"><i class="fas fa-check "></i>Save</button>
     </div>
 
 </form>
-
+</div>
+<?php
+include_once ("../../webdesign/footer/footer.php");
+?>
 <script>
     $(document).ready(function () {
         $("#cancel").click(function ()

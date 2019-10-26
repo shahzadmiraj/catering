@@ -45,7 +45,7 @@ include_once ("../../webdesign/header/header.php");
 <div class="jumbotron  shadow" style="background-image: url(https://cdn.flatworldsolutions.com/featured-images/outsource-outbound-call-center-services.jpg);background-size:100% 115%;background-repeat: no-repeat">
 
     <div class="card-header text-center" style="opacity: 0.7 ;background: white;">
-        <h3 ><i class="fas fa-cart-plus fa-2x"></i>Hall Booking </h3>
+        <h3 ><i class="fas fa-cart-plus fa-2x"></i>Order Booking </h3>
 
     </div>
 
@@ -155,7 +155,7 @@ include_once ("../../webdesign/header/header.php");
 
     <div class="form-group row justify-content-center shadow">
         <a href="../../customer/customerEdit.php?option=hallorder&customer=<?php echo $personid; ?>&hallid=<?php echo $hallid;?>" class=" col-5  btn btn-danger"  ><i class="fas fa-arrow-circle-left"></i>Edit customer</a>
-        <button id="submitform" type="button" class=" col-4 btn btn-success" value="Submit"><i class="fas fa-check "></i>Submit</button>
+        <button id="submitform" type="button" class=" col-4 btn btn-success" value="Submit"><i class="fas fa-check "></i> Submit</button>
     </div>
 
 </form>

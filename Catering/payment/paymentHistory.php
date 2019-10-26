@@ -24,20 +24,53 @@ $orderDetail_id=$_GET['order'];
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../webdesign/css/complete.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 
     <style>
-        *{
-            margin:auto;
-            padding: auto;
-        }
+
     </style>
 </head>
-<body class="alert-light">
-<div class="container"  style="margin-top:150px">
+<body>
+
+<?php
+include_once ("../webdesign/header/header.php");
+?>
+
+<div class="jumbotron  shadow" style="background-image: url(https://primerevenue.com/wp-content/uploads/2016/08/News_New-Blogs_005blog-understanding-early-payment-discount-terms.jpg);background-size:100% 100%;background-repeat: no-repeat">
+
+    <div class="card-body text-center" style="opacity: 0.7 ;background: #fdfdff;">
+        <h3 ><i class="fas fa-history fa-2x mr-2"></i> Payment  History </h3>
+        <h5>All history of transfer payments</h5>
+    </div>
+
+</div>
+<div class="row justify-content-center col-12" style="margin-top: -60px">
+
+    <div class="card text-center card-header">
+        <img src="<?php
+
+        if($_GET['image']=="")
+        {
+            echo 'https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
+        }
+        else
+        {
+            echo $_GET['image'];
+        }
+
+        ?> " style="height: 20vh;" class="figure-img rounded-circle" alt="image is not set">
+        <h5 ><?php
+            echo  $_GET['name'];
+            ?></h5>
+        <label >Order ID:<?php
+            echo  $orderDetail_id;
+            ?></label>
+    </div>
+</div>
 
 
-    <h1 align="center">payment History</h1>
-    <a class="btn-success form-control col-4 " href="/Catering/order/PreviewOrder.php?order=<?php echo $orderDetail_id; ?>"> <- Preview Order</a>
+<div class="container">
     <div class="col-12  shadow border card" style="background-color: #80bdff">
         <?php
         $sql='SELECT py.id,(SELECT u.username FROM user as u where u.id=py.user_id) as sender,
@@ -54,7 +87,7 @@ WHERE (ot.id='.$orderDetail_id.')';
 for($k=0;$k<count($historyPayment);$k++)
 {
 
-   $display.=' <div class="col-12  shadow border card" >
+   $display.=' <div class="col-12  shadow border card-body mt-3" >
         <div class="form-group row" >
             <label class="col-4 col-form-label" > Payment Id </label >
             <label class="col-8 col-form-label" > '.$historyPayment[$k][0].'</label >
@@ -140,8 +173,8 @@ for($k=0;$k<count($historyPayment);$k++)
 
 
 
-    <h1 align = "center" > Payment user have on to it </h1 >
-    <div class="col-12  shadow border card" style="background-color: #c69500" >
+    <h1 align = "center" >Your received Payment </h1 >
+    <div class="col-12">
 
         <?php
 
@@ -151,7 +184,7 @@ $display='';
         for($t=0;$t<count($WhyPayment);$t++)
         {
 
-    $display.='<div class="col-12  shadow border card mb-3" >
+    $display.='<div class="col-12  shadow border card-body mb-3" >
         <div class="form-group row" >
             <label class="col-4 col-form-label" > Payment Id </label >
             <label class="col-8 col-form-label" > '.$WhyPayment[$t][0].'</label >
@@ -202,7 +235,9 @@ $display='';
 
 
 
-
+<?php
+include_once ("../webdesign/footer/footer.php");
+?>
 <script>
 
 

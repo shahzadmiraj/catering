@@ -28,55 +28,143 @@ $orderDetail_id=$_GET['order'];
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../webdesign/css/complete.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 
     <style>
-        *{
-            margin:auto;
-            padding: auto;
-        }
+
     </style>
 </head>
 <body >
+<?php
+include_once ("../webdesign/header/header.php");
+?>
 
-<div class="container"  style="margin-top:150px">
+<div class="jumbotron  shadow" style="background-image: url(https://insidesmallbusiness.com.au/wp-content/uploads/2018/12/bigstock-204968347.jpg);background-size:100% 100%;background-repeat: no-repeat">
 
-    <form class="col-12 card shadow badge-warning" id="from2">
+    <div class="card-body text-center" style="opacity: 0.7 ;background: #fdfdff;">
+        <h3 ><i class="far fa-money-bill-alt fa-1x mr-3"></i>Get payment from customer </h3>
+    </div>
+
+</div>
+<div class="row justify-content-center col-12" style="margin-top: -60px">
+
+    <div class="card text-center card-header">
+        <img src="<?php
+
+        if($_GET['image']=="")
+        {
+            echo 'https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
+        }
+        else
+        {
+            echo $_GET['image'];
+        }
+
+        ?> " style="height: 20vh;" class="figure-img rounded-circle" alt="image is not set">
+        <h5 ><?php
+            echo  $_GET['name'];
+            ?></h5>
+        <label >Order ID:<?php
+            echo  $orderDetail_id;
+            ?></label>
+    </div>
+</div>
+<div class="container">
+
+    <form class="col-12 shadow card-body" id="from2">
         <input hidden name="user_id" value="<?php
         echo $userId;
         ?>">
         <input hidden name="orderDetail_id" value="<?php
         echo $orderDetail_id;
         ?>">
-        <h1 align="center"> Get Payment</h1>
         <div class="form-group row">
-            <label class="col-4 col-form-label">Name</label>
-            <input type="text" name="name" class="col-8 form-control">
-        </div>
-        <div class="form-group row">
-            <label class="col-4 col-form-label">Amount</label>
-            <input type="number" name="Amount" class="col-8 form-control">
-        </div>
-        <div class="form-group row">
-            <label class="col-4 col-form-label">Status amount</label>
-            <select name="status" class="custom-select col-8">
-                <option value="0">Get Amount</option>
-                <option value="1">Return Amount</option>
-            </select>
-        </div>
-        <div class="form-group row">
-            <label class="col-4 col-form-label">Rating Customer</label>
-            <span  id="showRange" class="form-control col-2"></span>
-            <input  id="rangeInput" step="1" type="range" max="5" min="1" value="3" name="rating" class="col-6">
+            <label class="col-form-label">Name</label>
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                </div>
+                <input type="text" name="name" class="form-control" placeholder="person name etc Ali,Hassan,....">
+
+            </div>
+
 
 
         </div>
         <div class="form-group row">
-            <label class="col-4 col-form-label">personality</label>
-            <textarea type="text" name="personality" class="col-8 form-control"></textarea>
+            <label class="col-form-label">Amount</label>
+
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
+                </div>
+                <input type="number" name="Amount" class="form-control" placeholder="amount total etc 1200xxx">
+
+            </div>
+
+
+
         </div>
         <div class="form-group row">
-            <a href="/Catering/order/PreviewOrder.php?order=<?php echo $orderDetail_id;?>" class="form-control col-3 btn-danger">cancel</a>
-            <button id="submitBtnfrom" type="submit" class="form-control col-3 btn-primary">Submit</button>
+            <label class="col-form-label">Status amount</label>
+
+
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-exchange-alt"></i></span>
+                </div>
+
+                <select name="status" class="custom-select">
+                    <option value="0">Get Amount </option>
+                    <option value="1">Return Amount</option>
+                </select>
+            </div>
+
+
+
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label">Rating Customer</label>
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-star"></i></span>
+                </div>
+                <span  id="showRange" class="form-control col-2"></span>
+                <input  id="rangeInput" step="1" type="range" max="5" min="1" value="3" name="rating" class="col-6">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label">personality</label>
+
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                </div>
+
+                <textarea type="text" name="personality" class="form-control" placeholder="comment on customer personality"></textarea>
+
+            </div>
+
+
+
+        </div>
+
+
+
+
+
+        <div class="form-group row justify-content-center m-auto">
+            <a href="/Catering/order/PreviewOrder.php?order=<?php echo $orderDetail_id;?>" class="form-control col-4 btn-danger btn"><i class="fas fa-times-circle"></i>Cancel</a>
+            <button id="submitBtnfrom" type="submit" class="form-control col-4 btn-primary btn"><i class="fas fa-check "></i>Submit</button>
 
         </div>
 
@@ -85,7 +173,9 @@ $orderDetail_id=$_GET['order'];
 </div>
 
 
-
+<?php
+include_once ("../webdesign/footer/footer.php");
+?>
 
 
 <script>
