@@ -110,5 +110,116 @@ function ImageUploaded($File,$DestinationFile)
 
 
 }
+function showarray($arrays)
+{
+    echo '<pre>';
+    print_r($arrays);
+    echo '</pre>';
+}
+function reArray($file_post)
+{
+    $file_ary=array();
+    $file_count=count($file_post['name']);
+    $file_key=array_keys($file_post);
+    for ($i=0;$i<$file_count;$i++)
+    {
+        foreach ($file_key as $key)
+        {
+            $file_ary[$i][$key]=$file_post[$key][$i];
+        }
+    }
+    return $file_ary;
+}
+
+function MutipleUploadFile($File,$DestinationFile)
+{
+        $errors= array();
+
+        $file_size = $File['size'];
+        $file_tmp = $File['tmp_name'];
+        $file_type = $File['type'];
+        $passbyreference=explode('.',$File['name']);
+        $file_ext=strtolower(end($passbyreference));
+
+        $extensions= array("jpeg","jpg","png","mp4");
+
+        if(in_array($file_ext,$extensions)=== false){
+            $errors[]="extension not allowed, please choose a JPEG or PNG file or MP4 or JPEG.";
+        }
+
+        if($file_size > 10097152)
+        {
+            $errors[]='File size must be excately 2 MB';
+        }
+
+//        if (file_exists($DestinationFile))
+//        {
+//            $errors[]= "Sorry, file already exists.";
+//        }
+        if(empty($errors)==true)
+        {
+            move_uploaded_file($file_tmp,$DestinationFile);
+            return $errors;
+        }else{
+            return $errors;
+        }
+
+
+
+}
+    function showGallery($sql)
+    {
+        $result=queryReceive($sql);
+
+        $source='';
+        $display='';
+        $extensions= array("jpeg","jpg","png");
+        for($k=0;$k<count($result);$k++)
+        {
+            if(file_exists($result[$k][1]))
+            {
+
+
+                $passbyreference = explode('.', $result[$k][1]);
+                $file_ext = strtolower(end($passbyreference));
+
+                if (in_array($file_ext, $extensions) === true) {
+                    //image file
+
+                    $display .= '
+                        <div class="col-lg-4 col-md-6 col-12 mb-2 mt-2">
+                            <a href="#" class="d-block mb-4 h-100">
+                                <img class="img-fluid img-thumbnail" src="' . $result[$k][1] . '" alt="">
+                            </a>
+                        </div>';
+                } else {
+                    //video file
+
+                    $source = $result[$k][1];
+                    $video = substr_replace($source, "", -4);
+                    $display .= '
+                         
+                          <div class="col-lg-4 col-md-6 col-12 mb-2 mt-2">
+                                <div class="embed-responsive embed-responsive-16by9 d-block mb-4 h-100">
+                                    <video width="320" height="440" controls class="card"  >
+                                        <source src="' . $video . '.mp4" type="video/mp4">
+                                        <source src="' . $video . '.ogg" type="video/ogg">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                           </div>
+                         
+                         ';
+                }
+            }
+
+
+        }
+        return $display;
+
+
+    }
+
+
 
 ?>

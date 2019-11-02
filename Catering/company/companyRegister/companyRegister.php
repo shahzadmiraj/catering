@@ -4,13 +4,13 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="/Catering/bootstrap.min.css">
-    <script src="../jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../bootstrap.min.js"></script>
+    <script src="../../jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../../bootstrap.min.js"></script>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="../webdesign/css/complete.css">
+    <link rel="stylesheet" href="../../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 
     <style>
@@ -19,7 +19,6 @@
         {
             margin: 5%;
             font-weight: bold;
-            color: #000000;
 
         }
 
@@ -30,8 +29,16 @@
 include_once ("../../webdesign/header/header.php");
 ?>
 
-<div class="card-body jumbotron container">
-<h1 class="display-4 text-center"><i class="fas fa-registered"></i> Company Register</h1>
+<div class="jumbotron  shadow " style="background-image: url(https://i2.wp.com/findlawyer.com.ng/wp-content/uploads/2018/05/Pros-and-Cons-of-Working-at-Large-Companies.jpg?resize=1024%2C512&ssl=1);background-size:100% 115%;background-repeat: no-repeat;">
+
+    <div class="text-center transparencyjumbo">
+        <h1 class="text-center"><i class="fas fa-registered"></i> Free Company Register</h1>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="transparencyinputs">
 <form>
     <div  class="form-group row">
     <label  class="form-check-label">Company Name</label>
@@ -64,7 +71,7 @@ include_once ("../../webdesign/header/header.php");
     </div>
 
     <div  class="form-group row">
-        <label class="form-check-label col-6 ">No of Hall Branches</label>
+        <label class="form-check-label">No of Hall Branches</label>
 <!--        <input id="hallBranches" class="form-control col-3" type="number" name="hallBranches">-->
 
 
@@ -127,6 +134,23 @@ include_once ("../../webdesign/header/header.php");
             <input  placeholder="Your Name"  type="text" id="name"  name="name" class="form-control">
         </div>
     </div>
+
+    <div class="form-group row">
+        <label for="name" class="col-form-label">Image:</label>
+
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-camera"></i></span>
+            </div>
+            <input type="file"  name="image"  class="form-control" >
+        </div>
+
+
+
+    </div>
+
+
     <div class="form-group row">
         <label for="cnic" class="col-form-label "> CNIC:</label>
 <!--        <input type="number" id="cnic" name="cnic" class="form-control" >-->
@@ -201,6 +225,7 @@ include_once ("../../webdesign/header/header.php");
         <button class="col-6 form-control btn btn-outline-primary" id="submit"><i class="fas fa-check "></i>Submit</button>
     </div>
 </form>
+    </div>
 </div>
 
 

@@ -5,8 +5,9 @@
  * Date: 2019-09-01
  * Time: 21:31
  */
+
 include  ("../../connection/connect.php");
-$companyid=$_GET['companyid'];
+$companyid=$_SESSION['companyid'];
 
 $sql='SELECT  c.name FROM company as c WHERE c.id='.$companyid.'';
 $companydetail=queryReceive($sql);
@@ -39,7 +40,6 @@ $caterings=queryReceive($sql);
             width: 100%;
             height: 50vh;
             overflow: auto;
-            background-image: url(https://www.mahaweli.com/wp-content/uploads/2016/12/destination-weddings-mobile-5.jpg);
             background-size: 100% 100%;
         }
         #cateringbranches
@@ -47,7 +47,6 @@ $caterings=queryReceive($sql);
             width: 100%;
             height: 50vh;
             overflow: auto;
-            background-image: url(https://www.thornhillcatering.com/wp-content/uploads/2016/01/slide2_final.png);
             background-size: 100% 100%;
 
 
@@ -69,7 +68,8 @@ include_once ("../../webdesign/header/header.php");
         <a href="companyEdit.php?companyid=<?php echo $companyid;?>" class="btn-info btn"><i class="fas fa-edit mr-1"></i>Edit company</a>
     </div>
 </div>
-<h1 align="center"  ><i class="fas fa-place-of-worship"></i>Branches of Hall</h1>
+<h1><i class="fas fa-place-of-worship"></i>Hall Branches</h1>
+<hr class="border border-white">
 <div class="col-12 m-1 mb-5 form-group row shadow" id="hallbranches" >
 
 
@@ -79,7 +79,7 @@ $display='';
 for ($i=0;$i<count($halls);$i++)
 {
   $display.= '
-    <a href="../../user/userDisplay.php?hallid='.$halls[$i][0].'" class="col-5 m-2 shadow border  text-white" >
+    <a href="../../user/userDisplay.php?hallid='.$halls[$i][0].'" class="col-sm-12 col-md-4 col-xl-3 m-2 shadow border  text-white" >
         <img class="card-img-top  col-12 p-0" src="';
   if(file_exists($halls[$i][2]))
   {
@@ -93,7 +93,7 @@ for ($i=0;$i<count($halls);$i++)
 
   $display.='" alt="Card image" style="height: 25vh" >
    
-    <p align="center" class="alert-dark">'.$halls[$i][1].'</p>
+    <h4 align="center" class="alert-dark"><i class="fas fa-place-of-worship mr-1"></i>'.$halls[$i][1].'</h4>
     </a>';
 }
 echo $display;
@@ -101,8 +101,8 @@ echo $display;
 
 </div>
 
-<h2 align="center"><i class="fas fa-utensils mr-2"></i>Branches of Catering</h2>
-
+<h2><i class="fas fa-utensils mr-2"></i>Catering Branches</h2>
+<hr class="border border-white">
 <div class="col-12 m-1 mb-5 form-group row shadow border  " id="cateringbranches" >
 
 
@@ -111,10 +111,10 @@ echo $display;
     for ($i=0;$i<count($caterings);$i++)
     {
         $display.= '
-    <a href="../../user/userDisplay.php?cateringid='.$caterings[$i][0].'" class="col-5 m-2 border text-white">
+    <a href="../../user/userDisplay.php?cateringid='.$caterings[$i][0].'" class="col-sm-12 col-md-4 col-xl-3 m-2 border text-white">
    
         <img class="card-img-top  col-12  p-0" src="';
-        if(file_exists($caterings[$i][2]))
+        if(file_exists($caterings[$i][2])&&($caterings[$i][2]!=""))
         {
             $display.=$caterings[$i][2];
         }
@@ -123,9 +123,9 @@ echo $display;
             $display.='data:image/jpeg;base64,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CdSbWuSSb8VsNktgqPDXmWLPJMWlvSyEFzWniGhoAbw42vpx422u3b6qLD534exzqkNblDRmcAXtD3sZ984NLiB3gaGwCrjYPaaWSvgifiMxD2ZZKWsiDHukI4wPjFhqBlDiD1TpwsFt88+75uy3Vy6f7kJ0DV3a0DQIOyIiAiIgIiICIiAiIgIiIChe0WyFXJWCuoK4wSGPo3xPYZYni1swYXWBtbs+9HDW80UcxraeWnmMTMOrZwAD0sTYyw3F7DM8G49SDx2B2ObhUMjOlMss8vSSSZQ0F1rAMYCbD28SeAsB03h7IOxaCGFswhMU/S5izPfqPba2Yf07+xePntUeh8S+CH6RPPao9D4l8EP0iD22ewLFIJ2vq8U8phDXAw+TxR3JHVdnbrot1tHhhq6OopQ7IaiB8ee18udpGa1xe1+9R/z2qPQ+JfBD9InntUeh8S+CH6RBqKzdaX0dFDHVdHVUL3FlU2M3LXOL8uUPuCHZSDm7D3qxacODGiQgvDRmIFgXW1IHYL9iiPntUeh8S+CH6RPPao9D4l8EP0iDD3hbuPspPHUR1HQPbCYXnIXdIy92jRwtbM/15h3KbUVOyGOOGMBrY2BrW6aNaABp7vesSlxCaamEzKd0crgbQTnI4WNrOLc1rgXHsUOm2ilNW2YsaXUzJ43wwl0rpGlsR6JgcGESB9nODgMrbE6G4Dcba7HuxGailEwj8jnEpBZmz2ex2W+YW+4+dSxYMNVKIHSyw2eGucIWOzuIAu1l9BnPCwuLnQnio357VHofEvgh+kQazFN3lU2rqKrCsQdSeVkmVhjDwXOJLnNcTpcuJ4XBJse6U7GbONw2kZSskfJlJJe7tJ7m3OVoAADewBanz2qPQ+JfBD9InntUeh8S+CH6RB13gbEyYnLSTRVIgfRl7mno85zudE5rh1gNDEON73Wdszg2IwTOfW4l5VGYy0R9BFFlfmaRJmZqdARb8ZYfntUeh8S+CH6RPPao9D4l8EP0iDc7WYF5fSvpulkhc4gtljJDmOabg2BFx2EX4HsOqiWH7uql9XS1WJVrajyEN6JrYQwuLCC10j73JBa0+OXjxvtPPao9D4l8EP0i96La+eSWOM4ViEYe9rTI9sQawOIBe4iS+UXufUglYREQEREBERAREQEREBERAREQEREBERAREQEREHBWgOyVOY2Ndm6WNz3snGUPZJISZHtsMozFxzAizr2NwpAiDrG2wAJuQOPf4rsiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiD//Z';
         }
 
-        $display.='" alt="Card image" style="height: 25vh">
+        $display.='" alt="Card image" style="height: 25vh ;background-size:150% 140%;">
     
-    <p align="center" class="alert-dark">'.$caterings[$i][1].'</p>
+    <h4 align="center" class="alert-dark"><i class="fas fa-utensils mr-2"></i>'.$caterings[$i][1].'</h4>
     </a>';
     }
     echo $display;

@@ -68,23 +68,9 @@ else
         <p class="lead">You can control hall setting and also month wise prize list.Prize list consist of per head with food  and per head only seating .</p>
     </div>
 </div>
-
-
-<!--<h1 align="center">Setting OF Hall</h1>-->
-<!--<img src="-->
-<?php
-//if(file_exists("../".$halldetail[0][5])&&($halldetail[0][5]!=""))
-//{
-//    echo "../".$halldetail[0][5];
-//}
-//else
-//{
-//    echo "../../gmail.png";
-//}
-//?>
-<!---->
-<!--" class="rounded mx-auto d-block m-4" alt="..." style="height: 30vh">-->
-
+<div class="container">
+<h1>Hall Setting</h1>
+<hr class="mt-2 mb-3 border-white">
 <form class="shadow card-body" id="formhall" >
     <input type="number" hidden name="hallid" value="<?php echo $hallid; ?>">
 
@@ -214,6 +200,8 @@ else
 
 </form>
 
+    <h1>Prize list Setting</h1>
+    <hr class="mt-2 mb-3 border-white">
 
 <div class="form-group row ">
     <div data-daytime="Morning" class="col-4 daytime p-0 "style="height: 25vh">
@@ -235,11 +223,135 @@ else
         </div>
     </div>
 </div>
-<div  class="border" id="showDaytimes" style="margin-top: 25%;height: 60vh;width:100%; overflow: auto">
+<div  class="border" id="showDaytimes" style="margin-top: 20%;height: 60vh;width:100%; overflow: auto">
 
 
 
 </div>
+
+
+    <div class="container">
+
+        <h1 class="font-weight-light text-lg-left mt-4 mb-3">Gallery</h1>
+
+
+        <form action="" method="POST" enctype="multipart/form-data" class="form-inline">
+            <input type="file" name="userfile[]" value="" multiple="" class="col-8 btn  btn-light">
+            <input type="submit" name="submit" value="Upload" class="btn btn-success col-4">
+        </form>
+        <?php
+
+        if(isset($_FILES['userfile']))
+        {
+
+            $file_array=reArray($_FILES['userfile']);
+            $Distination='';
+            for ($i=0;$i<count($file_array);$i++)
+            {
+                $Distination= '../../images/hall/'.$file_array[$i]['name'];
+                $error=MutipleUploadFile($file_array[$i],$Distination);
+                if(count($error)>0)
+                {
+                    echo '<h4 class="badge-danger">'.$file_array[$i]['name'].'.'.$error[0].'</h4>';
+                }
+                else
+                {
+                    $sql='INSERT INTO `images`(`id`, `image`, `expire`, `catering_id`, `hall_id`) VALUES (NULL,"'.$Distination.'",NULL,NULL,'.$hallid.')';
+                    querySend($sql);
+                }
+
+            }
+            unset($_FILES['userfile']);
+
+        }
+
+
+
+        ?>
+
+
+
+        <hr class="mt-3 mb-5 border-white">
+
+        <div class="row text-center text-lg-left" style="height: 70vh;overflow: auto">
+
+
+            <?php
+
+
+            $sql='SELECT `id`, `image` FROM `images` WHERE hall_id='.$hallid.'' ;
+            echo showGallery($sql);
+
+            ?>
+
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+        <h1 class="font-weight-light text-lg-left mt-4 mb-0">Comments</h1>
+
+        <hr class="mt-2 mb-3">
+        <div class="row bootstrap snippets">
+
+            <div class="col-md-12 col-md-offset-2 col-sm-12 m-auto">
+                <div class="comment-wrapper">
+                    <div class="panel panel-info ">
+
+                        <div class="panel-body">
+                            <textarea class="form-control" placeholder="write a comment..." rows="3"></textarea>
+                            <br>
+
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fas fa-comments"></i></div>
+                                </div>
+                                <input type="email" class="form-control "  placeholder="Email">
+                            </div>
+
+
+                            <button type="button" class="btn btn-info pull-right float-right col-5">Post</button>
+                            <div class="clearfix"></div>
+                            <hr>
+                            <ul class="media-list">
+
+
+
+
+
+                                <li class="media">
+                                    <a href="#" class="pull-left">
+                                        <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
+                                    </a>
+                                    <div class="media-body">
+                                <span class="text-muted pull-right">
+                                    <small class="text-muted">30 min ago</small>
+                                </span>
+                                        <strong class="text-success">@MartinoMont</strong>
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                            Lorem ipsum dolor sit amet, <a href="#">#consecteturadipiscing </a>.
+                                        </p>
+                                    </div>
+                                </li>
+
+
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
 <div class="col-12 mt-2">
     <a href="hallRegister.php?companyid=<?php echo $companyid;?>&hallBranches=<?php echo $hallBranches;?>" class="btn btn-success col-5 float-right"><i class="fas fa-arrow-right"></i> Save And Next </a>
 </div>
@@ -259,7 +371,7 @@ else
 <!--</tr>-->
 
 
-
+</div>
 <?php
 include_once ("../../webdesign/footer/footer.php");
 ?>

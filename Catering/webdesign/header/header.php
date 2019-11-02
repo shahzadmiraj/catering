@@ -13,30 +13,52 @@
 
 </head>
 <body >-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style=" background: #ee0979;  /* fallback for old browsers */
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="background: #ee0979;  /* fallback for old browsers */
 background: -webkit-linear-gradient(to right, #ff6a00, #ee0979);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #ff6a00, #ee0979); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+background: linear-gradient(to right, #ff6a00, #ee0979);/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 ">
     <div class="container">
-        <a class="navbar-brand" href="#"><img src="/Catering/gmail.png" style="width: 50px"></a>
-        <span class="navbar-text font-weight-bold text-white ">Event Guru</span>
+
+        <h6 class="navbar-brand" href="#"><img src="/Catering/gmail.png" style="width: 70px">  <span class="navbar-text font-weight-bold text-white">Event Guru</span></h6>
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto w-100 justify-content-end">
                 <li class="nav-item ">
                     <a class="nav-link" href="/Catering/index.php"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#"><i class="fas fa-building"></i>My Company <span class="sr-only">(current)</span></a>
-                </li>
 
+
+                <?php
+                if(isset($_SESSION["userid"]))
+                {
+                    echo '
+                <li class="nav-item active">
+                    <a class="nav-link" href="/Catering/company/companyRegister/companydisplay.php"><i class="fas fa-building"></i> My Company<span class="sr-only">(current)</span></a>
+                </li>';
+
+                }
+                ?>
+
+                <?php
+                if(!isset($_SESSION["userid"]))
+                {
+                    echo '
                 <li class="nav-item ">
                     <a class="nav-link" href="/Catering/company/companyRegister/companyRegister.php"><i class="far fa-registered"></i> Company Register<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item dropdown">
+                </li>';
+
+                }
+                ?>
+
+
+
+                <!--<li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-shopping-cart"></i> Order Preview
                     </a>
@@ -46,23 +68,41 @@ background: linear-gradient(to right, #ff6a00, #ee0979); /* W3C, IE 10+/ Edge, F
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">Something else here</a>
                     </div>
-                </li>
+                </li>-->
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-question"></i>  Contact</a>
+                    <a class="nav-link" href="#"><i class="fas fa-question"></i> Contact</a>
                 </li>
+                <?php
+                if(isset($_SESSION["userid"]))
+                {
+                    echo '
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i> Sign out</a>
-                </li>
+                    <a class="nav-link" href="/Catering/user/logout.php"><i class="fas fa-sign-out-alt"></i> Sign out</a>
+                </li>';
 
+                }
+                ?>
+                <?php
+                if(!isset($_SESSION["userid"]))
+                {
+                    echo '
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-sign-in-alt"></i> Sign in</a>
-                </li>
+                    <a class="nav-link" href="/Catering/user/userLogin.php"><i class="fas fa-sign-in-alt"></i> Sign in</a>
+                </li>';
+
+                }
+                ?>
             </ul>
 
         </div>
     </div>
+
+
 </nav>
-<div style="margin-top: 75px"></div>
+<div style="margin-top: 104px">
+
+</div>
+
 
 
 

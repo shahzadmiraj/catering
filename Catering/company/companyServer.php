@@ -30,6 +30,17 @@ if(isset($_POST['option']))
             echo "user is already exist";
             exit();
         }
+        $image='';
+
+        if(!empty($_FILES['image']["name"]))
+        {
+            $image = "../images/users/" . $_FILES['image']['name'];
+            $resultimage = ImageUploaded($_FILES, $image);//$dishimage is destination file location;
+            if ($resultimage != "") {
+                print_r($resultimage);
+                exit();
+            }
+        }
 
         $name = trim($_POST['name']);
         $numberArray = $_POST['number'];
@@ -40,7 +51,7 @@ if(isset($_POST['option']))
         $streetNo = chechIsEmpty($_POST['streetNo']);
         $houseNo = chechIsEmpty($_POST['houseNo']);
         $date = date('Y-m-d');
-        $sql='INSERT INTO `person`(`name`, `cnic`, `id`, `date`) VALUES ("'.$name.'","'.$cnic.'",NULL,"'.$date.'")';
+        $sql='INSERT INTO `person`(`name`, `cnic`, `id`, `date`, `image`) VALUES ("'.$name.'","'.$cnic.'",NULL,"'.$date.'","'.$image.'")';
         querySend($sql);
         $last_id = mysqli_insert_id($connect);
         $sql="INSERT INTO `address` (`id`, `address_street_no`, `address_house_no`, `person_id`, `address_city`, `address_town`) VALUES (NULL, '".$streetNo."', '".$houseNo."', '".$last_id."', '".$city."', '".$area."');";

@@ -89,9 +89,9 @@ include_once ("../../webdesign/header/header.php");
             </div>
 
             <select name="halltype" class="form-control">
-                <option value="1">Marquee</option>
-                <option value="2">Hall</option>
-                <option value="3">Deera /Open area</option>
+                <option value="0">Marquee</option>
+                <option value="1">Hall</option>
+                <option value="2">Deera /Open area</option>
             </select>
         </div>
 

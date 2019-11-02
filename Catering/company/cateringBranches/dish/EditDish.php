@@ -25,25 +25,31 @@ $attributes=queryReceive($sql);
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="../../../webdesign/css/complete.css">
 
     <style>
-        *{
-            margin:auto;
-            padding: auto;
-        }
+
     </style>
 </head>
-<body class="alert-light">
-<div class="container"  style="margin-top:150px">
+<body>
+<?php
+include_once ("../../../webdesign/header/header.php");
 
-        <div class="col-12 shadow card p-4">
+?>
+<div class="jumbotron  shadow text-center" style="background-image: url(https://shaadishopblog.files.wordpress.com/2015/10/indian-wedding-punjabi-jain-kunal-shveta-bride-groom-hotel-irvine-global-photography-lehenga-sherwani-sera-manohar-delhi-palace-indian-food.jpg?w=720&h=480);background-size:100% 100%;background-repeat: no-repeat">
+
+    <div class="card-body " style="opacity: 0.7 ;background: white;">
+        <h1 class="display-5 text-center"><i class="fas fa-utensils fa-3x mr-1"></i> Edit Dish</h1>
+        <p class="lead">Edit dish such as chieken biryan,halwa ...</p>
+    </div>
+</div>
+<div class="container">
+
+        <div class="col-12 shadow card-header p-4">
             <input id="dishid" type="number" hidden value="<?php echo $dishID; ?>">
-            <div class="form-group row">
-                <a href="cateringEDIT.php" class=" form-control col-4 btn-warning">Previous</a>
-                <span class="font-weight-bold text-center col-9 form-control"> Edit Dish in System</span>
-            </div>
 
-            <div class="form-group row">
+            <div class="form-group row justify-content-center">
                 <img style="height: 30vh " src="<?php
 
 
@@ -53,54 +59,95 @@ $attributes=queryReceive($sql);
                 }
                 else
                 {
-                    echo '../../../gmail.png';
+                    echo 'https://shaadishopblog.files.wordpress.com/2015/10/indian-wedding-punjabi-jain-kunal-shveta-bride-groom-hotel-irvine-global-photography-lehenga-sherwani-sera-manohar-delhi-palace-indian-food.jpg?w=720&h=480';
                 }
 
 
 
 
 
-                ?>"   class="col-8 form-control" alt="Image is not set" >
+                ?>"   class="col-8 " alt="Image is not set" >
             </div>
             <div class="form-group row">
-                <label class="col-4 col-form-label">Dish Name</label>
-                <input data-column="name"  value="<?php echo $dishDetail[0][0]; ?>" class="dishchange col-8 form-control" type="text">
+                <label class="col-form-label">Dish Name</label>
+
+
+                <div class="input-group mb-3 input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                    </div>
+                    <input data-column="name"  value="<?php echo $dishDetail[0][0]; ?>" class="dishchange form-control" type="text">
+                </div>
+
+
+
             </div>
             <form id="formImage" class="form-group row">
-                <label class="col-4 col-form-label"> Changes images</label>
-                <input id="dishImage"  name="image"  class="col-8 form-control" type="file">
+                <label class="col-form-label"> Changes images</label>
                 <input type="text" hidden name="imagepath" value="<?php echo $dishDetail[0][2]; ?>">
+
+                <div class="input-group mb-3 input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                    </div>
+                    <input id="dishImage"  name="image"  class="form-control" type="file">
+
+                </div>
+
+
+
 
             </form>
             <div class="form-group row">
-                <label class="col-4 col-form-label">Dish Type</label>
-                <select data-column="dishType_id" class="dishchange col-8 form-control">
+                <label class="col-form-label">Dish Type</label>
 
-                    <?php
-                    echo '<option value="'.$dishDetail[0][3].'">'.$dishDetail[0][1].'</option>';
 
-                    $sql='SELECT `id`, `name` FROM `dish_type` WHERE (id!='.$dishDetail[0][3].') AND (catering_id='.$cateringid.')' ;
 
-                    $dish_type=queryReceive($sql);
-                    for($i=0;$i<count($dish_type);$i++)
-                    {
-                        echo '<option value="'.$dish_type[$i][0].'">'.$dish_type[$i][1].'</option>';
-                    }
 
-                    ?>
-                </select>
+                <div class="input-group mb-3 input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                    </div>
+
+
+                    <select data-column="dishType_id" class="dishchange form-control">
+
+                        <?php
+                        echo '<option value="'.$dishDetail[0][3].'">'.$dishDetail[0][1].'</option>';
+
+                        $sql='SELECT `id`, `name` FROM `dish_type` WHERE (id!='.$dishDetail[0][3].') AND (catering_id='.$cateringid.')' ;
+
+                        $dish_type=queryReceive($sql);
+                        for($i=0;$i<count($dish_type);$i++)
+                        {
+                            echo '<option value="'.$dish_type[$i][0].'">'.$dish_type[$i][1].'</option>';
+                        }
+
+                        ?>
+                    </select>
+
+                </div>
+
             </div>
 
-            <div class="col-12  card mb-3 p-4" id="existAttributes">
+            <div class="card mb-3 p-4" id="existAttributes">
                 <h4 align="center">Exist Attributes</h4>
 
                 <?php
                 for($i=0;$i<count($attributes);$i++)
                 {
-                    echo ' <div class="form-group row " id="delete_'.$attributes[$i][1].'">
-                    <label class="col-4 col-form-label">Attribute Name</label>
-                    <input data-attributeid="'.$attributes[$i][1].'" value="'.$attributes[$i][0].'" class="changeAttributes col-6 form-control" type="text">
-                    <input data-attributeid="'.$attributes[$i][1].'" type="button" class="RemoveAttribute col-2 form-control btn-secondary" value="-">
+                    echo ' 
+                <div class="form-group row " id="delete_'.$attributes[$i][1].'">
+                    <label class="col-form-label">Attribute Name</label>
+                    
+                    <div class="input-group mb-3 input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                        </div>
+                        <input data-attributeid="'.$attributes[$i][1].'" value="'.$attributes[$i][0].'" class="changeAttributes form-control" type="text">
+                        <input data-attributeid="'.$attributes[$i][1].'" type="button" class="RemoveAttribute col-2 form-control btn-secondary" value="-">
+                    </div>
+                 
                 </div>';
                 }
 
@@ -109,11 +156,23 @@ $attributes=queryReceive($sql);
 
 
             </div>
-            <h4 align="center">New attribute</h4>
+            <h1 class="m-5">New attribute</h1>
+            <hr>
             <div class="form-group row">
-                <label class="col-4 col-form-label">Attribute Name</label>
-                <input id="attributetext" class="col-6 form-control" type="text">
-                <input id="addAttribute" type="button" class="col-2 form-control btn-primary" value="+">
+                <label class="col-form-label">Attribute Name</label>
+
+                <div class="input-group mb-3 input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                    </div>
+                    <input id="attributetext" class="form-control" type="text" placeholder="add new rice,mutton,...">
+                    <input id="addAttribute" type="button" class="col-2 form-control btn-primary" value="+">
+
+                </div>
+
+
+
+
             </div>
 
             <form id="formAttribute">
@@ -147,7 +206,9 @@ $attributes=queryReceive($sql);
 </div>
 
 
-
+<?php
+include_once ("../../../webdesign/footer/footer.php");
+?>
 
 <script>
     //window.history.back();

@@ -22,63 +22,97 @@ $cateringdetail=queryReceive($sql);
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="../../webdesign/css/complete.css">
 
     <style>
-        *{
-            margin:auto;
-            padding: auto;
-        }
+
     </style>
 </head>
-<body class="alert-light">
+<body>
+<?php
+include_once ("../../webdesign/header/header.php");
+
+?>
+<div class="jumbotron  shadow text-center" style="background-image: url(<?php
+if(file_exists('../'.$cateringdetail[0][2]) &&($cateringdetail[0][2]!=""))
+{
+    echo '../'.$cateringdetail[0][2];
+}
+else
+{
+    echo "https://www.hnfc.com.my/data1/images/slide2.jpg";
+}
+?>
+        );background-size:100% 100%;background-repeat: no-repeat">
+
+    <div class="card-body " style="opacity: 0.7 ;background: white;">
+        <h1 class="display-5 text-center"><i class="fas fa-utensils fa-3x mr-1"></i><?php echo $cateringdetail[0][0];?> Edit Catering Branches</h1>
+        <p class="lead">Edit dishes information,dishes type,images and others </p>
+    </div>
+</div>
+
+
+
 
 <div class="container" >
-
-    <h1 align="center">Setting OF Catering</h1>
-    <img src="
-<?php
-    if(file_exists('../'.$cateringdetail[0][2]) &&($cateringdetail[0][2]!=""))
-    {
-        echo '../'.$cateringdetail[0][2];
-    }
-    else
-    {
-        echo "../../gmail.png";
-    }
-    ?>
-
-" class="rounded mx-auto d-block m-4" alt="..." style="height: 30vh">
 
     <form id="formcatering">
         <input type="number" hidden name="cateringid" value="<?php echo $cateringid; ?>">
         <input type="text" hidden name="previousimage" value="<?php echo $cateringdetail[0][2]; ?>">
         <div class="form-group row">
-            <label class="col-form-label col-4">Catering Branch Name:</label>
-            <input name="cateringname" class="form-control col-8" type="text" value="<?php echo $cateringdetail[0][0]; ?>">
+            <label class="col-form-label ">Catering Branch Name:</label>
+
+
+
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-utensils"></i></span>
+                </div>
+                <input name="cateringname" class="form-control" type="text" value="<?php echo $cateringdetail[0][0]; ?>">
+            </div>
+
+
         </div>
         <div class="form-group row">
-            <label class="col-form-label col-4">Catering Branch Image:</label>
-            <input name="image" class="form-control col-8" type="file">
+            <label class="col-form-label ">Catering Branch Image:</label>
+
+
+
+
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                </div>
+                <input name="image" class="form-control" type="file">
+            </div>
+
+
+
         </div>
         <div class="form-group row">
-            <label class="col-form-label col-4">Catering Branch Address</label>
+            <h3 align="center">  <i class="fas fa-map-marker-alt"></i>Address(optional)</h3>
         </div>
         <div class="form-group row col-12 mb-5">
 
-            <input id="expirecatering" type="button" class="rounded mx-auto d-block btn btn-outline-danger col-5 " value="Expire catering">
-            <input id="submiteditcatering" type="button" class="rounded mx-auto d-block btn btn-primary col-5 " value="Submit">
+            <input id="expirecatering" type="button" class="rounded mx-auto d-block btn btn-danger col-5 " value="Expire catering">
+                <button id="submiteditcatering" type="button" class="rounded mx-auto d-block btn btn-primary col-5 " value="Submit"><i class="fas fa-check "></i>Submit</button>
 
         </div>
     </form>
 
-    <h1 class="font-weight-bold  " align="center">System Dish info </h1>
-
+    <h1 class="font-weight-bold">System Dish info </h1>
+<hr>
 
 
 
     <h3 align="center"> Dish Type information</h3>
     <div class="col-12 form-group row font-weight-bold border">
-        <label class="col-9  col-form-label ">Name Dish type</label>
+        <label class="col-9  col-form-label "><i class="fas fa-utensils mr-1"></i>Name Dish type</label>
         <label class="col-3  col-form-label ">Detail</label>
     </div>
 
@@ -130,14 +164,13 @@ $cateringdetail=queryReceive($sql);
     </div>
 
 
-
+    <div class="col-12 row mb-4">
+        <h3 class="rounded mx-auto d-block m-4 col-6" align="center"> Dish information</h3>
+        <a  href="dish/addDish.php?cateringid=<?php echo $cateringid; ?>" class="float-right btn btn-success col-4 form-control mt-4">Add dish +</a>
+    </div>
+    <hr>
 
     <div class="col-12 card shadow mb-2 p-4 ">
-
-        <div class="col-12 row alert-dark">
-            <h3 class="rounded mx-auto d-block m-4 col-8" align="center"> Dish information</h3>
-            <a  href="dish/addDish.php?cateringid=<?php echo $cateringid; ?>" class="float-right btn btn-outline-primary col-4 ">Add dish +</a>
-        </div>
 
         <?php
 
@@ -149,7 +182,7 @@ $cateringdetail=queryReceive($sql);
         {
 
 
-            $display.='<h4 class="col-12" align="center">'.$dishTypes[$j][1].'</h4>';
+            $display.='<h4 class="col-12 newcolor" align="center">'.$dishTypes[$j][1].'</h4>';
             $sql = 'SELECT d.name, d.id, (SELECT dt.name from dish_type as dt WHERE dt.id=d.dish_type_id),(SELECT dt.isExpire from dish_type as dt WHERE dt.id=d.dish_type_id), d.isExpire,d.image FROM dish as d WHERE dish_type_id=' . $dishTypes[$j][0] . ' ';
             $Dishes = queryReceive($sql);
 
@@ -157,7 +190,7 @@ $cateringdetail=queryReceive($sql);
 
 
             for ($i = 0; $i < count($Dishes); $i++) {
-                $display .= '<a href="dish/EditDish.php?dishid=' . $Dishes[$i][1] . '&cateringid='.$cateringid.'" class="col-4">
+                $display .= '<a href="dish/EditDish.php?dishid=' . $Dishes[$i][1] . '&cateringid='.$cateringid.'" class="col-sm-12 col-md-6 col-xl-4 border">
               <img src="';
 
                 if(file_exists(substr($Dishes[$i][5],3))&&($Dishes[$i][5]!=""))
@@ -173,14 +206,14 @@ $cateringdetail=queryReceive($sql);
 
 
                 $display.='" style="height: 20vh" class="col-12">  
-            <p class="col-12 p-0" > ' . $Dishes[$i][0] . '</p>
+            <p class="col-12 p-0" ><i class="fas fa-utensils mr-1"></i>' . $Dishes[$i][0] . '</p>
             <i class="col-12 ';
 
 
                 if (($Dishes[$i][3] == "") && ($Dishes[$i][4] == "")) {
                     $display .= " text-primary ";
                 } else {
-                    $display .= " text-danger ";
+                    $display .= "text-danger ";
                 }
 
                 $display .= '">';
@@ -214,7 +247,71 @@ $cateringdetail=queryReceive($sql);
 
 </div>
 
+<div class="container">
 
+    <h1 class="font-weight-light text-lg-left mt-4 mb-3">Gallery</h1>
+
+
+    <form action="" method="POST" enctype="multipart/form-data" class="form-inline">
+        <input type="file" name="userfile[]" value="" multiple="" class="col-8 btn  btn-light">
+        <input type="submit" name="submit" value="Upload" class="btn btn-success col-4">
+    </form>
+    <?php
+
+    if(isset($_FILES['userfile']))
+    {
+
+        $file_array=reArray($_FILES['userfile']);
+        $Distination='';
+        for ($i=0;$i<count($file_array);$i++)
+        {
+            $Distination= '../../images/catering/'.$file_array[$i]['name'];
+            $error=MutipleUploadFile($file_array[$i],$Distination);
+            if(count($error)>0)
+            {
+                echo '<h4 class="badge-danger">'.$file_array[$i]['name'].'.'.$error[0].'</h4>';
+            }
+            else
+            {
+                $sql='INSERT INTO `images`(`id`, `image`, `expire`, `catering_id`, `hall_id`) VALUES (NULL,"'.$Distination.'",NULL,'.$cateringid.',NULL)';
+                querySend($sql);
+            }
+
+        }
+        unset($_FILES['userfile']);
+
+    }
+
+
+
+    ?>
+
+
+
+    <hr class="mt-3 mb-5 border-white">
+
+    <div class="row text-center text-lg-left" style="height: 70vh;overflow: auto">
+
+
+        <?php
+
+
+        $sql='SELECT `id`, `image` FROM `images` WHERE catering_id='.$cateringid.'' ;
+        echo showGallery($sql);
+
+        ?>
+
+
+    </div>
+
+</div>
+
+
+
+
+<?php
+include_once ("../../webdesign/footer/footer.php");
+?>
 <script>
 $(document).ready(function () {
 

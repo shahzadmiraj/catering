@@ -111,7 +111,8 @@ $('.showDetail').click(function ()
 //$daytimearray=array("Morning","Afternoon","Evening");
 
 //                $monthsArray = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
-
+//
+//$halltype=array("Marquee","Hall","Deera /Open area");
 
 </script>
 </body>

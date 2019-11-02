@@ -27,7 +27,6 @@ $companydetail=queryReceive($sql);
             width: 100%;
             height: 50vh;
             overflow: auto;
-            background-image: url(https://www.mahaweli.com/wp-content/uploads/2016/12/destination-weddings-mobile-5.jpg);
             background-size: 100% 100%;
             margin: auto;
 
@@ -39,10 +38,8 @@ $companydetail=queryReceive($sql);
             width: 100%;
             height: 50vh;
             overflow: auto;
-            background-image: url(https://www.thornhillcatering.com/wp-content/uploads/2016/01/slide2_final.png);
             background-size: 100% 100%;
             margin: auto;
-
 
         }
         #userbranches
@@ -51,10 +48,10 @@ $companydetail=queryReceive($sql);
             width: 100%;
             height: 50vh;
             overflow: auto;
-            background-image: url(https://www.percona.com/sites/default/files/icons/users.png);
             background-size: 100% 100%;
             margin: auto;
         }
+
     </style>
 </head>
 
@@ -62,7 +59,6 @@ $companydetail=queryReceive($sql);
 
 <?php
 include_once ("../../webdesign/header/header.php");
-
 ?>
 
 
@@ -70,9 +66,8 @@ include_once ("../../webdesign/header/header.php");
 <div class="jumbotron  shadow " style="background-image: url(https://i2.wp.com/findlawyer.com.ng/wp-content/uploads/2018/05/Pros-and-Cons-of-Working-at-Large-Companies.jpg?resize=1024%2C512&ssl=1);background-size:100% 115%;background-repeat: no-repeat;">
 
     <div class="card-body text-center" style="opacity: 0.7 ;background: white;">
-        <h1 class="display-5 "><i class="fas fa-city mr-2"></i><?php echo $companydetail[0][0];?> Edit your company</h1>
+        <h1 class="display-5 "><i class="fas fa-city mr-2"></i><?php echo $companydetail[0][1];?> Edit your company</h1>
         <p>setting you company of hall branches,catering branches ,user informations ,packages edit</p>
-        <a href="companyEdit.php?companyid=<?php echo $companyid;?>" class="btn-info btn"><i class="fas fa-edit mr-1"></i>Edit company</a>
     </div>
 </div>
 
@@ -81,11 +76,29 @@ include_once ("../../webdesign/header/header.php");
 <div class="container">
 <div class="form-group row">
     <label class="col-form-label">Company Name</label>
-    <input type="text" class="form-control" value="<?php echo $companydetail[0][1]?>">
+
+
+
+
+    <div class="input-group mb-3 input-group-lg">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-camera"></i></span>
+        </div>
+        <input type="text" class="form-control" value="<?php echo $companydetail[0][1]?>">
+    </div>
+
+
+
+
+
 </div>
 <div class="form-group row">
     <label class="col-form-label">Block/Unblock company</label>
-    <input type="button" class="btn btn-outline-danger" value="
+
+
+
+
+    <input type="button" class="btn btn-danger ml-2" value="
 <?php
 if($companydetail[0][2]=="")
 {
@@ -107,11 +120,12 @@ else
 </div>
 
                     <!--USERS-->
-<div class="col-12 row m-3">
-    <h2 align="center" class="col-9">Users</h2>
-    <a href="../../system/user/usercreate.php" class="btn btn-success col-3">Add User</a>
+<div class="col-12 row mt-5">
+    <h2 align="center" class="col-7"><i class="fas fa-user  mr-1"></i>Users</h2>
+    <a href="../../system/user/usercreate.php" class="btn btn-success col-5"><i class="fas fa-user-plus"></i>Add User</a>
 </div>
-<div class="form-group row shadow m-auto" id="userbranches">
+    <hr class="border border-white">
+<div class="form-group row shadow m-auto newcolor" id="userbranches">
     <?php
     $sql='SELECT u.id, u.username, u.isExpire,(SELECT p.image FROM person as p WHERE p.id=u.person_id) FROM user as u WHERE u.company_id='.$companyid.'';
     $users=queryReceive($sql);
@@ -119,7 +133,7 @@ else
     for($i=0;$i<count($users);$i++)
     {
       $display.='
-    <a href="../../system/user/userEdit.php?userid='.$users[$i][0].'" class="col-5">
+    <a href="../../system/user/userEdit.php?userid='.$users[$i][0].'" class="col-sm-12 col-md-4 col-xl-3 m-2">
         <div class="card  col-12  rounded-circle shadow" style="height: 25vh"  >
             <img class="card-img-top  col-12 rounded-circle" src="';
 
@@ -130,16 +144,16 @@ else
       }
       else
           {
-              $display.='http://pngwebicons.com/uploads/user/512/user_icon9133.png';
+              $display.='https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
           }
 
       $display.='" alt="Card image" >
         </div>
-        <h4 align="center"  class="form-control">'.$users[$i][1].'</h4>';
+        <h4 align="center" ><i class="fas fa-user mr-1"></i> '.$users[$i][1].'</h4>';
       if($users[$i][2]!="")
       {
           $display.='
-        <i class="text-danger ">Expire</i>';
+        <i>Expire</i>';
       }
     $display.='</a>';
         
@@ -155,11 +169,12 @@ else
 
 
                     <!--Hall Branches-->
-<div class="col-12 m-3 row">
-    <h2 align="center" class=" col-9">Halls</h2>
-    <a href="../hallBranches/hallRegister.php?companyid=<?php echo $companyid;?>" class="btn btn-success col-3">Add Hall</a>
+<div class="col-12 mt-5 row">
+    <h2 align="center" class=" col-6"><i class="fas fa-place-of-worship mr-2"></i>Halls</h2>
+    <a href="../hallBranches/hallRegister.php?companyid=<?php echo $companyid;?>" class="btn btn-success col-6"><i class="fas fa-plus"></i><i class="fas fa-place-of-worship mr-2"></i>Add Hall</a>
 </div>
-<div class="form-group row shadow " id="hallbranches">
+    <hr class="border border-white">
+<div class="form-group row shadow newcolor " id="hallbranches">
     <?php
     $sql='SELECT `id`, `name`, `expire`, `image` FROM `hall` WHERE company_id='.$companyid.'';
     $halldetails=queryReceive($sql);
@@ -167,7 +182,7 @@ else
     for($i=0;$i<count($halldetails);$i++)
     {
         $display.='
-    <a href="../hallBranches/daytimeAll.php?hallid='.$halldetails[$i][0].'" class="col-5">
+    <a href="../hallBranches/daytimeAll.php?hallid='.$halldetails[$i][0].'" class="col-sm-12 col-md-4 col-xl-3 m-2">
         <div class="card  col-12  rounded-circle shadow" style="height: 25vh"  >
             <img class="card-img-top  col-12 rounded-circle" src="';
 
@@ -183,11 +198,11 @@ else
 
         $display.='" alt="Card image" >
         </div>
-        <h4 align="center" class="form-control" >'.$halldetails[$i][1].'</h4>';
+        <h4 align="center" ><i class="fas fa-place-of-worship mr-1"></i>'.$halldetails[$i][1].'</h4>';
         if($halldetails[$i][2]!="")
         {
             $display.='
-        <i class="text-danger ">Expire</i>';
+        <i>Expire</i>';
         }
         $display.='</a>';
 
@@ -201,11 +216,12 @@ else
 
 
                         <!--Catering Branches-->
-<div class="col-12 m-3  row">
-    <h2 align="center" class="col-8">Caterings</h2>
-    <a href="../cateringBranches/catering.php?companyid=<?php echo $companyid; ?>" class="btn btn-success col-4">Add Catering</a>
+<div class="col-12 mt-5  row">
+    <h2 align="center" class="col-7"><i class="fas fa-utensils"></i>Caterings</h2>
+    <a href="../cateringBranches/catering.php?companyid=<?php echo $companyid; ?>" class="btn btn-success col-5"><i class="fas fa-plus"></i>Add Catering</a>
 </div>
-<div class="form-group row shadow" id="cateringbranches">
+    <hr class="border border-white">
+<div class="form-group row shadow newcolor" id="cateringbranches">
     <?php
     $sql='SELECT `id`, `name`, `expire`, `image` FROM `catering` WHERE company_id='.$companyid.'';
     $cateringdetails=queryReceive($sql);
@@ -213,7 +229,7 @@ else
     for($i=0;$i<count($cateringdetails);$i++)
     {
         $display.='
-    <a href="../cateringBranches/cateringEDIT.php?cateringid='.$cateringdetails[$i][0].'" class="col-5 m-2">
+    <a href="../cateringBranches/cateringEDIT.php?cateringid='.$cateringdetails[$i][0].'" class="col-sm-12 col-md-4 col-xl-3 m-2">
         <div class="card  col-12  rounded-circle shadow" style="height: 25vh"  >
             <img class="card-img-top  col-12 rounded-circle" src="';
 
@@ -229,11 +245,11 @@ else
 
         $display.='" alt="Card image" >
         </div>
-        <h4 align="center" class="form-control" >'.$cateringdetails[$i][1].'</h4>';
+        <h4 align="center"><i class="fas fa-utensils mr-1"></i>'.$cateringdetails[$i][1].'</h4>';
         if($cateringdetails[$i][2]!="")
         {
             $display.='
-        <i class="text-danger ">Expire</i>';
+        <i>Expire</i>';
         }
         $display.='</a>';
 

@@ -19,19 +19,39 @@ include_once ("../../connection/connect.php");
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="../../webdesign/css/complete.css">
     <style>
-        *{
-            margin:auto;
-            padding: auto;
-        }
+
     </style>
 </head>
 <body>
 <?php
-include_once("../../webdesign/header/headerclient.php");
+include_once ("../../webdesign/header/header.php");
+
 ?>
-<div class="container"  style="margin-top:150px">
+<div class="jumbotron  shadow text-center" style="background-image: url(<?php
+if(file_exists('../'.$cateringdetail[0][2]) &&($cateringdetail[0][2]!=""))
+{
+    echo '../'.$cateringdetail[0][2];
+}
+else
+{
+    echo "https://www.hnfc.com.my/data1/images/slide2.jpg";
+}
+?>
+        );background-size:100% 100%;background-repeat: no-repeat">
+
+    <div class="card-body " style="opacity: 0.7 ;background: white;">
+        <h1 class="display-5 text-center"><i class="fas fa-utensils fa-3x mr-1"></i><?php echo $cateringdetail[0][0];?> Edit Catering Branches</h1>
+        <p class="lead">Edit dishes information,dishes type,images and others </p>
+    </div>
+</div>
+
+
+
+
+<div class="container">
 
     <form>
     <div class="col-12 shadow card p-4">
@@ -82,6 +102,10 @@ include_once("../../webdesign/header/headerclient.php");
 
 
 
+
+<?php
+include_once ("../../webdesign/footer/footer.php");
+?>
 
 <script>
     //window.history.back();

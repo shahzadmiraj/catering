@@ -19,71 +19,125 @@ $cateringid=$_GET['cateringid'];
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="../../../webdesign/css/complete.css">
 
     <style>
-        *{
-            margin:auto;
-            padding: auto;
-        }
+
     </style>
 </head>
 <body>
+<?php
+include_once ("../../../webdesign/header/header.php");
 
-<div class="container"  style="margin-top:150px">
+?>
+<div class="jumbotron  shadow text-center" style="background-image: url(https://shaadishopblog.files.wordpress.com/2015/10/indian-wedding-punjabi-jain-kunal-shveta-bride-groom-hotel-irvine-global-photography-lehenga-sherwani-sera-manohar-delhi-palace-indian-food.jpg?w=720&h=480);background-size:100% 100%;background-repeat: no-repeat">
+
+    <div class="card-body " style="opacity: 0.7 ;background: white;">
+        <h1 class="display-5 text-center"><i class="fas fa-utensils fa-3x mr-1"></i> Add new Dish</h1>
+        <p class="lead">Add new dish such as chieken biryan,halwa ...</p>
+    </div>
+</div>
+
+<div class="container">
 
     <form>
         <input type="number" hidden name="cateringid" value="<?php echo $cateringid;?>">
-    <div class="col-12 shadow card p-4">
-    <div class="form-group row">
-<!--        <a href="#" class="form-control col-3 btn-warning"> Previous</a>-->
-        <span class="font-weight-bold text-center col-9 form-control"> Add Dish in System</span>
-    </div>
         <div class="form-group row">
-            <label class="col-4 col-form-label">Dish Name</label>
-            <input name="dishname" class="col-8 form-control" type="text">
+            <label class="col-form-label">Dish Name</label>
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                </div>
+                <input name="dishname" class="form-control" type="text" placeholder="Dish name etc chicken biryan">
+            </div>
+
         </div>
         <div class="form-group row">
-            <label class="col-4 col-form-label">Dish Image</label>
-            <input  name="image" class="col-8 form-control" type="file">
+            <label class="col-form-label">Dish Image</label>
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                </div>
+                <input  name="image" class="form-control" type="file">
+            </div>
+
+
         </div>
         <div class="form-group row">
-            <label class="col-4 col-form-label">Attribute Name</label>
-            <input id="attributetext" class="col-6 form-control" type="text">
-            <input id="addAttribute" type="button" class="col-2 form-control btn-primary" value="+">
+            <label class="col-form-label">Attribute Name</label>
+
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                </div>
+                <input id="attributetext" class="form-control" type="text" placeholder="etc rice,chieken ,... ">
+                <input id="addAttribute" type="button" class="col-2 form-control btn-primary" value="+">
+            </div>
+
+
         </div>
        <div class="col-12" id="attributeHere">
 
        </div>
         <div class="form-group row">
-            <label class="col-4 col-form-label">Dish Type</label>
-            <select id="dishtype" name="dishtype" class="col-8 form-control">
-                <?php
+            <label class="col-form-label">Dish Type</label>
 
-                $sql='SELECT `id`, `name` FROM `dish_type` WHERE (ISNULL(isExpire))AND(catering_id='.$cateringid.')';
-                $dish_type=queryReceive($sql);
 
-                for($i=0;$i<count($dish_type);$i++)
-                {
-                    echo '<option value="'.$dish_type[$i][0].'">'.$dish_type[$i][1].'</option>';
-                }
-                echo '<option value="others">others</option>'
-                ?>
-            </select>
+
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                </div>
+
+                <select id="dishtype" name="dishtype" class="form-control">
+                    <?php
+
+                    $sql='SELECT `id`, `name` FROM `dish_type` WHERE (ISNULL(isExpire))AND(catering_id='.$cateringid.')';
+                    $dish_type=queryReceive($sql);
+
+                    for($i=0;$i<count($dish_type);$i++)
+                    {
+                        echo '<option value="'.$dish_type[$i][0].'">'.$dish_type[$i][1].'</option>';
+                    }
+                    echo '<option value="others">others</option>'
+                    ?>
+                </select>
+            </div>
+
+
+
         </div>
 
         <div id="showdishtype" class="row" style="display: none">
-            <label class="col-4 form-check-label">Other Dish Type</label>
-            <input type="text" name="otherdishType" class="col-8 form-control">
+            <label class="form-check-label">Other Dish Type</label>
+
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                </div>
+                <input type="text" name="otherdishType" class="form-control" placeholder="add new dish type">
+            </div>
+
+
         </div>
 
 
-        <div class="form-group row">
-            <input id="cancel" class="col-4 form-control btn-danger" value="cancel">
-            <input id="submit" type="button" value="Submit" class="col-8 form-control btn-success">
+        <div class="form-group row justify-content-center">
+            <button id="cancel" type="button" class="col-5 form-control btn-danger btn" value="cancel"><span class="fas fa-window-close "></span>  Cancel</button>
+            <button id="submit" type="button" value="Submit" class="col-5 form-control btn-success btn"><i class="fas fa-check "></i>  Submit</button>
         </div>
 
 
-    </div>
     </form>
 
 
@@ -91,6 +145,10 @@ $cateringid=$_GET['cateringid'];
 
 
 
+
+<?php
+include_once ("../../../webdesign/footer/footer.php");
+?>
 
 <script>
 
@@ -167,8 +225,8 @@ $cateringid=$_GET['cateringid'];
               }
           });
         });
-        $("#cancel").click(function () {
-
+        $("#cancel").click(function (e)
+        {
             window.history.back();
         });
 

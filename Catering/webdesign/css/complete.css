@@ -10,6 +10,7 @@ html,body{
     font-weight: bold;
     color: #000000;
 
+
 }
 .card-body
 {
@@ -31,4 +32,15 @@ html,body{
     background: -webkit-linear-gradient(to right, #E684AE, #79CBCA, #77A1D3);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #E684AE, #79CBCA, #77A1D3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
+}
+.transparencyjumbo
+{
+    background-color: rgba(253, 253, 255, 0.4) !important;
+    color: #000000;
+
+}
+.transparencyinputs
+{
+    background-color: rgba(0,0,0,0.3) !important;
+    color: #fdfdff;
 }

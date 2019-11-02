@@ -7,10 +7,11 @@
  */
 session_start();
 session_destroy();
-
-setcookie('userid',"" , time() - (86400 * 30), "/");
-setcookie("isOwner","",time() - (86400 * 30), "/");
-setcookie("username","",time() - (86400 * 30), "/");
-header("location:userLogin.php");
+//setcookie('userid',"" , time() - (86400 * 30), "/");
+//setcookie("isOwner","",time() - (86400 * 30), "/");
+//setcookie("username","",time() - (86400 * 30), "/");
+//setcookie("companyid","",time() -(86400 * 30), "/");
+//setcookie("userimage","",time() - (86400 * 30), "/");
+header("location:/Catering/index.php");
 exit();
 ?>
