@@ -8,7 +8,7 @@
 include  ("../../connection/connect.php");
 $hallid=$_GET['hallid'];
 $personid=$_GET['customer'];
-$userid=$_GET['userid']=1;
+$userid=$_COOKIE['userid'];
 
 
 ?>
@@ -155,7 +155,7 @@ include_once ("../../webdesign/header/header.php");
 
     <div class="form-group row justify-content-center shadow">
         <a href="../../customer/customerEdit.php?option=hallorder&customer=<?php echo $personid; ?>&hallid=<?php echo $hallid;?>" class=" col-5  btn btn-danger"  ><i class="fas fa-arrow-circle-left"></i>Edit customer</a>
-        <button id="submitform" type="button" class=" col-4 btn btn-success" value="Submit"><i class="fas fa-check "></i> Submit</button>
+        <button id="submitform" type="button" class=" col-4 btn btn-success" value="Submit"><i class="fas fa-check "></i>Submit</button>
     </div>
 
 </form>
@@ -197,7 +197,23 @@ include_once ("../../webdesign/footer/footer.php");
                 processData: false,
                 success: function (data)
                 {
-                 $("#groupofpackages").html(data);
+                    if(perheadwith==1)
+                    {
+                        if (data == "")
+                        {
+                            $("#submitform").hide("slow");
+                            $("#groupofpackages").html(data+"<h1 class='text-danger'>No Packages found:so order not submit</h1>");
+                        } else {
+                            $("#groupofpackages").html(data);
+                            $("#submitform").show("slow");
+                        }
+                    }
+                    else
+                    {
+
+                        $("#groupofpackages").html(data);
+                        $("#submitform").show("slow");
+                    }
 
                 }
 

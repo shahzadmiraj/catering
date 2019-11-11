@@ -35,7 +35,7 @@ background: linear-gradient(to right, #ff6a00, #ee0979);/* W3C, IE 10+/ Edge, Fi
 
 
                 <?php
-                if(isset($_SESSION["userid"]))
+                if(isset($_COOKIE["userid"]))
                 {
                     echo '
                 <li class="nav-item active">
@@ -46,7 +46,7 @@ background: linear-gradient(to right, #ff6a00, #ee0979);/* W3C, IE 10+/ Edge, Fi
                 ?>
 
                 <?php
-                if(!isset($_SESSION["userid"]))
+                if(!isset($_COOKIE["userid"]))
                 {
                     echo '
                 <li class="nav-item ">
@@ -55,6 +55,7 @@ background: linear-gradient(to right, #ff6a00, #ee0979);/* W3C, IE 10+/ Edge, Fi
 
                 }
                 ?>
+
 
 
 
@@ -69,11 +70,8 @@ background: linear-gradient(to right, #ff6a00, #ee0979);/* W3C, IE 10+/ Edge, Fi
                         <a class="dropdown-item" href="#">Something else here</a>
                     </div>
                 </li>-->
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-question"></i> Contact</a>
-                </li>
                 <?php
-                if(isset($_SESSION["userid"]))
+                if(isset($_COOKIE["userid"]))
                 {
                     echo '
                 <li class="nav-item">
@@ -83,7 +81,7 @@ background: linear-gradient(to right, #ff6a00, #ee0979);/* W3C, IE 10+/ Edge, Fi
                 }
                 ?>
                 <?php
-                if(!isset($_SESSION["userid"]))
+                if(!isset($_COOKIE["userid"]))
                 {
                     echo '
                 <li class="nav-item">
@@ -92,6 +90,19 @@ background: linear-gradient(to right, #ff6a00, #ee0979);/* W3C, IE 10+/ Edge, Fi
 
                 }
                 ?>
+
+
+                <?php
+                if(isset($_GET["order"]))
+                {
+                    echo '
+                <li class="nav-item">
+                    <a class="nav-link" href="/Catering/order/PreviewOrder.php?order='.$_GET["order"].'"><i class="fas fa-shopping-cart"></i> Order Preview</a>
+                </li>';
+
+                }
+                ?>
+
             </ul>
 
         </div>

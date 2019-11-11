@@ -2,7 +2,7 @@
 <?php
 
 include_once ("../../connection/connect.php");
-$companyid=$_GET['companyid']=3;
+$companyid=$_COOKIE['companyid'];
 $sql='SELECT `id`, `name`, `expire`, `user_id` FROM `company` WHERE id='.$companyid.'';
 $companydetail=queryReceive($sql);
 ?>
@@ -24,9 +24,9 @@ $companydetail=queryReceive($sql);
         #hallbranches
         {
 
-            width: 100%;
+            width: 100%;/*
             height: 50vh;
-            overflow: auto;
+            overflow: auto;*/
             background-size: 100% 100%;
             margin: auto;
 
@@ -36,8 +36,8 @@ $companydetail=queryReceive($sql);
         #cateringbranches
         {
             width: 100%;
-            height: 50vh;
-            overflow: auto;
+            /*height: 50vh;
+            overflow: auto;*/
             background-size: 100% 100%;
             margin: auto;
 
@@ -46,8 +46,8 @@ $companydetail=queryReceive($sql);
         {
 
             width: 100%;
-            height: 50vh;
-            overflow: auto;
+            /*height: 50vh;
+            overflow: auto;*/
             background-size: 100% 100%;
             margin: auto;
         }

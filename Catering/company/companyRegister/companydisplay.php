@@ -7,7 +7,7 @@
  */
 
 include  ("../../connection/connect.php");
-$companyid=$_SESSION['companyid'];
+$companyid=$_COOKIE['companyid'];
 
 $sql='SELECT  c.name FROM company as c WHERE c.id='.$companyid.'';
 $companydetail=queryReceive($sql);
@@ -37,16 +37,16 @@ $caterings=queryReceive($sql);
         #hallbranches
         {
 
-            width: 100%;
+            width: 100%;/*
             height: 50vh;
-            overflow: auto;
+            overflow: auto;*/
             background-size: 100% 100%;
         }
         #cateringbranches
         {
             width: 100%;
-            height: 50vh;
-            overflow: auto;
+         /*   height: 50vh;
+            overflow: auto;*/
             background-size: 100% 100%;
 
 
@@ -65,7 +65,12 @@ include_once ("../../webdesign/header/header.php");
     <div class="card-body text-center" style="opacity: 0.7 ;background: white;">
         <h1 class="display-5 "><i class="fas fa-city mr-2"></i><?php echo $companydetail[0][0];?></h1>
         <p>check your orders of hall and as well as catering</p>
-        <a href="companyEdit.php?companyid=<?php echo $companyid;?>" class="btn-info btn"><i class="fas fa-edit mr-1"></i>Edit company</a>
+        <?php
+         if($_COOKIE['isOwner']==1)
+         {
+             echo '<a href="companyEdit.php" class="btn-info btn"><i class="fas fa-edit mr-1"></i>Edit company</a>';
+         }
+        ?>
     </div>
 </div>
 <h1><i class="fas fa-place-of-worship"></i>Hall Branches</h1>
@@ -103,7 +108,7 @@ echo $display;
 
 <h2><i class="fas fa-utensils mr-2"></i>Catering Branches</h2>
 <hr class="border border-white">
-<div class="col-12 m-1 mb-5 form-group row shadow border  " id="cateringbranches" >
+<div class="col-12 m-1 mb-5 form-group row shadow border " id="cateringbranches" >
 
 
     <?php

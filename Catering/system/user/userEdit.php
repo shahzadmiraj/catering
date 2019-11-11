@@ -467,6 +467,17 @@ include_once ("../../webdesign/footer/footer.php");
         });
         $("#authorbtn").click(function ()
         {
+
+            if(!(($("#username").val().length>5) && ($("#username").length<9)))
+            {
+                alert("Username must be 6 to 8 letters")
+                return false;
+            }
+            if(!(($("#password").val().length>5) && ($("#password").length<9)))
+            {
+                alert("password must be 6 to 8 letters")
+                return false;
+            }
             var formdata=new FormData($("#authorchanging")[0]);
             formdata.append("option","authorChange");
             $.ajax({
@@ -484,7 +495,7 @@ include_once ("../../webdesign/footer/footer.php");
                     else
                     {
 
-                       // window.history.back();
+                        window.history.back();
                     }
                 }
             });

@@ -8,6 +8,13 @@
 include_once ("../connection/connect.php");
 
 $customerId=$_GET['customer'];
+$hallid="";
+$cateringid='';
+if(isset($_GET['hallid']))
+    $hallid=$_GET['hallid'];
+if(isset($_GET['cateringid']))
+    $cateringid=$_GET['cateringid'];
+
 $sql = "SELECT `name`, `cnic`, `id`, `date`, `image` FROM `person` WHERE id=".$customerId."";
 $person=queryReceive($sql);
 $sql = "SELECT a.id, a.address_city, a.address_town, a.address_street_no, a.address_house_no, a.person_id FROM address as a inner JOIN person p ON a.person_id=p.id
@@ -286,7 +293,15 @@ p.id='.$customerId.'';
                 }
                 else if($_GET['option']=="hallorder")
                 {
-                    echo '<a href="../company/hallBranches/hallorder.php?customer='.$customerId.'&hallid='.$_GET['hallid'].'" class="btn btn-warning m-auto col-6"><i class="fas fa-check "></i>Done</a>';
+                    echo '
+                 
+                    <a href="../company/hallBranches/hallorder.php?customer='.$customerId.'&hallid='.$_GET['hallid'].'" class="btn btn-warning m-auto col-6"><i class="fas fa-check "></i>Done</a>';
+                }
+                else if($_GET['option']=="hallCustomer")
+                {
+                    echo '
+                    <input type="button" id="btnbackhistory" class="m-auto col-6 form-control btn btn-danger" value="Not this Customer">   
+                    <a href="../company/hallBranches/hallorder.php?customer='.$customerId.'&hallid='.$_GET['hallid'].'" class="btn btn-success m-auto col-6"><i class="fas fa-check "></i>Done</a>';
                 }
             }
 

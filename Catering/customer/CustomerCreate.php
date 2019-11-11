@@ -6,8 +6,12 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-$hallid=$_GET['hallid'];
-$cateringid=$_GET['cateringid'];
+$hallid="";
+$cateringid='';
+if(isset($_GET['hallid']))
+    $hallid=$_GET['hallid'];
+if(isset($_GET['cateringid']))
+    $cateringid=$_GET['cateringid'];
 
 ?>
 <!DOCTYPE html>
@@ -223,7 +227,17 @@ include_once ("../webdesign/footer/footer.php");
                    }
                    else
                    {
-                       window.location.href="/Catering/customer/customerEdit.php?customer="+data+"&option=CustomerCreate&hallid=<?php echo $hallid;?>&cateringid=<?php echo $cateringid;?>";
+
+                       if("<?php echo $hallid;?>"=="")
+                       {
+                           //this is the oder of catering
+                           window.location.href="/Catering/customer/customerEdit.php?customer="+data+"&option=CustomerCreate&hallid=<?php echo $hallid;?>&cateringid=<?php echo $cateringid;?>";
+                       }
+                       else
+                       {
+                           //this is the order of hall
+                           window.location.href="/Catering/customer/customerEdit.php?customer="+data+"&option=hallCustomer&hallid=<?php echo $hallid;?>";
+                       }
                    }
                }
            });

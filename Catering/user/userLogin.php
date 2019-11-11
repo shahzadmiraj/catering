@@ -8,14 +8,12 @@
 include_once ("../connection/connect.php");
 
 
-if(isset($_SESSION["companyid"]))
+if(isset($_COOKIE["companyid"]))
 {
 
     header('location:/Catering/company/companyRegister/companydisplay.php');
    exit();
 }
-print_r($_SESSION);
-
 ?>
 <!DOCTYPE html>
 <head>

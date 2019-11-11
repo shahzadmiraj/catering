@@ -9,13 +9,22 @@ include_once ("../connection/connect.php");
 
 $hallid="";
 $cateringid='';
-if(isset($_GET['hallid']))
-    $hallid=$_GET['hallid'];
-if(isset($_GET['cateringid']))
-    $cateringid=$_GET['cateringid'];
-
 
 $orderId=$_GET['order'];
+if(isset($_GET['order']))
+{
+    $sql='SELECT od.hall_id,od.catering_id FROM orderDetail as  od WHERE od.id='.$orderId.'';
+    $result=queryReceive($sql);
+    if($result[0][0]!="")
+    {
+        $hallid=$result[0][0];
+    }
+    else
+    {
+        $cateringid=$result[0][1];
+    }
+}
+
 $_SESSION['userid']=1;
 
 $sql='SELECT (SELECT p.name FROM person as p WHERE p.id=od.person_id),od.person_id,(SELECT p.image FROM person as p WHERE p.id=od.person_id) FROM orderDetail as od WHERE od.id='.$orderId.'';
@@ -82,7 +91,7 @@ include_once ("../webdesign/header/header.php");
 
     <a href="/Catering/customer/customerEdit.php?customer=<?php echo $customerID;?>&order=<?php echo $orderId;?>&option=PreviewOrder&name=<?php echo $orderDetailPerson[0][0];?>&image=<?php echo $orderDetailPerson[0][2]?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-user-edit fa-5x"></i><h4>Customer Preview</h4></a>
         <?php
-            if($hallid!='')
+            if(isset($hallid))
             {
                 //1 hall order edit                //2 make hall order to user displaye
                 echo '<a href="../company/hallBranches/EdithallOrder.php?hallid='.$hallid.'&order='.$orderId.'" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-cart-arrow-down fa-5x"></i><h4>Order Edit</h4></a>

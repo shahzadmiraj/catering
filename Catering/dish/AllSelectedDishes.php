@@ -156,8 +156,9 @@ where
 
 
     <div class="col-12  row justify-content-center mt-4 ">
-        <a href="/Catering/order/PreviewOrder.php?order=<?php echo $_GET['order'];?>"  class="form-control btn-info col-5 mr-2"><i class="fas fa-book"></i>Order Preview</a>
         <a href="/Catering/dish/dishDisplay.php?order=<?php echo $_GET['order'];?>" class="form-control btn-success col-5"><i class="fas fa-concierge-bell"></i>dish Add +</a>
+        <a class="nav-link btn btn-warning col-5" href="/Catering/order/PreviewOrder.php?order=<?php echo $_GET['order'];?>"><i class="fas fa-shopping-cart"></i> Order Preview</a>
+
     </div>
 
 

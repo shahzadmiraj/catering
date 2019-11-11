@@ -183,6 +183,29 @@ if(isset($_POST['option']))
     }
     else if($_POST['option']=="CreatePackage")
     {
+        if($_POST['perivious']!="none")
+        {
+            $packid=$_POST['perivious'];
+            $month=$_POST['month'];
+            $daytime=$_POST['daytime'];
+            $hallid=$_POST['hallid'];
+
+            $sql='SELECT `id`, `month`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name` FROM `hallprice` WHERE id='.$packid.'';
+            $result=queryReceive($sql);
+            $sql='INSERT INTO `hallprice`(`id`, `month`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name`) VALUES (NULL,"'.$month.'",1,'.$result[0][3].',"'.$result[0][4].'","'.$daytime.'",NULL,'.$hallid.',"'.$result[0][8].'")';
+            querySend($sql);
+            $last_id=mysqli_insert_id($connect);
+            $sql='SELECT `id`, `dishname`, `image`, `expire`, `hallprice_id` FROM `menu` WHERE ISNULL(expire) &&(hallprice_id='.$packid.')';
+            $result=queryReceive($sql);
+            for($i=0;$i<count($result);$i++)
+            {
+                $sql='INSERT INTO `menu`(`id`, `dishname`, `image`, `expire`, `hallprice_id`) VALUES (NULL,"'.$result[$i][1].'","'.$result[$i][2].'",NULL,'.$last_id.')';
+                querySend($sql);
+            }
+                exit();
+        }
+
+
         if(!isset($_POST['dishname']))
         {
             exit();
@@ -350,6 +373,10 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)';
         $month=$monthsArray[$monthno];
         $sql='SELECT `id`, `package_name`,`price`,`describe` FROM `hallprice` WHERE ISNULL(expire) AND (month="'.$month.'") AND (dayTime="'.$time.'") And (isFood='.$perheadwith.') AND (hall_id='.$hallid.')';
         $detailpackage=queryReceive($sql);
+        if(($perheadwith==1)&&(!(count($detailpackage)>0)))
+        {
+            exit();
+        }
 
         $display='<h3 align="center">Packages Detail </h3>';
         if($perheadwith==1)
@@ -383,7 +410,7 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)';
         {
             $time="09:00:00";
         }
-        else if($time="Afternoon")
+        else if($time=="Afternoon")
         {
 
             $time="12:00:00";
@@ -441,7 +468,7 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)';
             {
                 $time="9:00";
             }
-            else if($time="Afternoon")
+            else if($time=="Afternoon")
             {
 
                 $time="12:00";
@@ -486,16 +513,17 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)';
         $notice="";
         if($time=="Morning")
         {
-            $time="9:00";
+            $time="9:00:00";
         }
-        else if($time="Afternoon")
+        else if($time=="Afternoon")
         {
 
-            $time="12:00";
+            $time="12:00:00";
         }
-        else {
+        else if($time=="Evening")
+        {
 
-            $time="18:00";
+            $time="18:00:00";
         }
         $orderStatus=$_POST['orderStatus'];
         if($perheadwith==0)
@@ -564,6 +592,44 @@ WHERE  id='.$order.'';
         $sql='UPDATE `catering` SET `name`="'.$cateringname.'",`image`="'.$cateringimage.'" WHERE id='.$cateringid.'';
         querySend($sql);
     }
+    else if($_POST['option']=="formDishadd")
+    {
+
+        $dishname=chechIsEmpty($_POST['dishname']);
+        $dishimage='';
+        if(!empty($_FILES['image']["name"]))
+        {
+            $dishimage = "../images/dishImages/" . $_FILES['image']['name'];
+            $resultimage = ImageUploaded($_FILES, $dishimage);//$dishimage is destination file location;
+            if ($resultimage != "") {
+                print_r($resultimage);
+                exit();
+            }
+            $dishimage = "../../images/dishImages/" . $_FILES['image']['name'];
+        }
+        $sql='INSERT INTO `systemDish`(`name`, `id`, `image`, `isExpire`, `systemDishType_id`) VALUES ("'.$dishname.'",NULL,"'.$dishimage.'",NULL,NULL)';
+        querySend($sql);
+        $sql = 'SELECT `name`, `id`, `image` FROM `systemDish` WHERE ISNULL(isExpire) ';
+        echo dishesOfPakage($sql);
+
+    }
+    else if($_POST['option']=="Showdishessystem")
+    {
+        $sql = 'SELECT `name`, `id`, `image` FROM `systemDish` WHERE ISNULL(isExpire) ';
+        echo dishesOfPakage($sql);
+
+    }
+    else if($_POST['option']=="commentAdd")
+    {
+        $hallid=$_POST['hallid'];
+        $comments=$_POST['comment'];
+        $email=$_POST['email'];
+        $currentdatetime=date('Y-m-d H:i:s');
+        $sql='INSERT INTO `comments`(`hall_id`, `catering_id`, `id`, `comment`, `email`, `datetime`, `expire`) VALUES ('.$hallid.',NULL,NULL,"'.$comments.'","'.$email.'","'.$currentdatetime.'",NULL)';
+        querySend($sql);
+    }
+
+
 
 }
 ?>

@@ -15,6 +15,7 @@ $sql='SELECT `id`, `hall_id`, `catering_id`, (SELECT hp.isFood from hallprice as
  `booking_date`, `destination_time`, `status_catering`, 
  `notice`,`describe`,(SELECT hp.describe from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),hallprice_id,(SELECT hp.price from hallprice as hp WHERE hp.id=orderDetail.hallprice_id) FROM `orderDetail` WHERE id='.$orderid.'';
 $detailorder=queryReceive($sql);
+
 ?>
 <!DOCTYPE html>
 <head>
@@ -308,7 +309,24 @@ include_once ("../../webdesign/footer/footer.php");
                 processData: false,
                 success: function (data)
                 {
-                    $("#groupofpackages").html(data);
+
+                    if(perheadwith==1)
+                    {
+                        if (data == "")
+                        {
+                            $("#submitform").hide("slow");
+                            $("#groupofpackages").html(data+"<h1 class='text-danger'>No Packages found:so order not submit</h1>");
+                        } else {
+                            $("#groupofpackages").html(data);
+                            $("#submitform").show("slow");
+                        }
+                    }
+                    else
+                    {
+
+                        $("#groupofpackages").html(data);
+                        $("#submitform").show("slow");
+                    }
 
                 }
 

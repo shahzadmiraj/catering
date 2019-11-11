@@ -107,6 +107,18 @@ include_once ("../../webdesign/header/header.php");
         </div>
     </div>
     <div class="form-group row">
+        <label for="password1" class="col-form-label ">Confirm Password</label>
+
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-key"></i></span>
+            </div>
+            <input type="text" id="password1" name="password1" class="form-control" placeholder="Confirm password">
+        </div>
+
+    </div>
+    <div class="form-group row">
         <label for="number" class="col-form-label">Phone no:</label>
 <!--        <input type="number" id="number" class="allnumber form-control col-8" name="number[]"  >-->
 
@@ -281,6 +293,33 @@ include_once ("../../webdesign/footer/footer.php");
             var CateringBranches=$("#CateringBranches").val();
             var hallBranches=$("#hallBranches").val();
 
+            if(!((CateringBranches>0) && (CateringBranches<=10)))
+            {
+                alert("Catering Branches must be 0 to 10");
+                return false;
+            }
+
+            if(!((hallBranches>0) && (hallBranches<=10)))
+            {
+                alert("hall Branches must be 0 to 10");
+                return false;
+            }
+            if(!(($("#username").val().length>5) && ($("#username").length<9)))
+            {
+                alert("Username must be 6 to 8 letters");
+                return false;
+            }
+            if(!(($("#password").val().length>5) && ($("#password").length<9)))
+            {
+                alert("password must be 6 to 8 letters");
+                return false;
+            }
+            if($("#password1").val()!=($("#password").val()))
+            {
+
+                alert("password does not match");
+                return false;
+            }
             if($.trim($("#number").val())=="")
             {
                 alert("number must be enter");

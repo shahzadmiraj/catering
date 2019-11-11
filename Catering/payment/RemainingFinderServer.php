@@ -60,63 +60,9 @@ if(isset($_POST['od_status_hall']))
 $sql.=''.$hallorcater.' 
 order by 
 od.destination_date DESC';
-$details=queryReceive($sql);
 
 
-$display='<table class="table table-bordered table-responsive" style="width: 100%;">
-    <tbody class="font-weight-bold">
-            <td >order Id</td>
-            <td>customer Name</td>
-            <td>order status</td>
-            <td>received amount</td>
-            <td>System  Amount</td>
-            <td>remaining system amount </td>
-            <td>your demanded amount</td>
-            <td>remaining demand amount</td>
-
-    </tbody>';
-
-
-for ($i=0;$i<count($details);$i++)
-{
-    $display.=' <tr data-orderid="'.$details[$i][0].'" class="orderDetail">
-        <td >'.$details[$i][0].'</td>
-        <td>'.$details[$i][1].'</td>
-        <td>';
-    if(!empty($hallid))
-    {
-        //if order status is hall
-        $display.=$details[$i][7];
-
-    }
-    else
-    {
-        //if order status is catering
-        $display.=$details[$i][6];
-
-    }
-
-
-    $display.='</td>
-        <td>'.(int)$details[$i][2].'</td>
-        <td>'.(int)$details[$i][5].'</td>
-        <td> '.(int) ($details[$i][5]-$details[$i][2]).'</td>
-        <td>'.(int) $details[$i][4].'</td>
-        <td>'.(int) ($details[$i][4]-$details[$i][2]).'</td>
- ';
-
-
-
-    $display.='</tr>';
-}
-
-
-
-$display.='</table>';
-
-echo $display;
-
-
+echo showRemainings($sql);
 
 
 ?>

@@ -12,9 +12,10 @@ $hallBranches='';
 if (isset($_GET['hallBranches']))
 {
     $hallBranches = $_GET['hallBranches'];
-    if ($hallBranches == 0) {
+    if ($hallBranches == 0)
+    {
         //go to display company detail
-        header("Location:../companyRegister/companydisplay.php?companyid=" . $companyid . "");
+        header("Location:../../user/userLogin.php");
         exit();
     }
 }
@@ -66,7 +67,7 @@ include_once ("../../webdesign/header/header.php");
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-place-of-worship"></i></span>
             </div>
-            <input name="hallname" type="text" class="form-control" placeholder="Hall Branch Name">
+            <input id="hallname" name="hallname" type="text" class="form-control" placeholder="Hall Branch Name">
         </div>
 
 
@@ -112,7 +113,7 @@ include_once ("../../webdesign/header/header.php");
 
     </div>
     <div class="form-group row">
-        <label class="col-form-label col-4"><i class="fas fa-map-marker-alt"></i> Hall Branch Address</label>
+        <label class="col-form-label"><i class="fas fa-map-marker-alt"></i> Hall Branch Address</label>
     </div>
     <div class="form-group row">
         <label class="col-form-label ">Maximum Capacity of guests in hall:</label>
@@ -179,7 +180,14 @@ include_once ("../../webdesign/footer/footer.php");
 <script>
 
     $(document).ready(function () {
-        $('#submit').click(function () {
+        $('#submit').click(function ()
+        {
+            if($.trim($("#hallname").val()).length==0)
+            {
+                alert("hall name must enter");
+                return false;
+
+            }
             var formdata = new FormData($("form")[0]);
             formdata.append("option", "CreateHall");
             formdata.append("companyid",<?php echo $companyid;?>);

@@ -113,7 +113,10 @@ $('.showDetail').click(function ()
 //                $monthsArray = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 //
 //$halltype=array("Marquee","Hall","Deera /Open area");
-
+// Display the values
+// for (var value of formdata.values()) {
+//     console.log(value);
+// }
 </script>
 </body>
 </html>

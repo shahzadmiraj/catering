@@ -6,7 +6,6 @@
  * Time: 11:41
  */
 include_once ("connection/connect.php");
-
 ?>
 
 <!DOCTYPE html>
@@ -131,7 +130,7 @@ include_once ("webdesign/header/header.php");
 
 <div class="container">
 
-<div class="jumbotron card card-image mr-5 ml-5 " style="background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTggd_nzKxicPajH1Mw7Jvwb1JSakcZFoHgsqEZH3Z1Dj2RMYWk);margin-top: -15px;background-repeat: no-repeat; background-size: cover;">
+<div class="jumbotron card card-image mr-5 ml-5 transparencyjumbo " style="margin-top: -15px;background-repeat: no-repeat; background-size: cover;">
 
 
 
@@ -198,7 +197,7 @@ include_once ("webdesign/header/header.php");
 
 
 
-<div class="row mt-5" >
+<div class="row" >
 
     <?php
 
@@ -236,7 +235,7 @@ function showHalls($sql)
 
         $display.='
         
-       <a href="company/hallBranches/hallclient.php?hallid='.$AllHalls[$i][0].'&packageid='.$AllHalls[$i][4].'&date='.$AllHalls[$i][5].'&time='.$AllHalls[$i][8].'" class="card-body booking-card col-sm-11 col-md-5 col-xl-3 p-0 m-2">
+       <a href="company/hallBranches/hallclient.php?hallid='.$AllHalls[$i][0].'&packageid='.$AllHalls[$i][4].'&date='.$AllHalls[$i][5].'&time='.$AllHalls[$i][8].'" class="card-header transparencyjumbo col-sm-11 col-md-6 col-xl-4">
 
             <!-- Card image -->
             <div class="view overlay">
@@ -260,7 +259,7 @@ function showHalls($sql)
             <div class="card-body">
 
                 <!-- Title -->
-                <h4 class="card-title font-weight-bold text-center"><a> '.$AllHalls[$i][2].'</a></h4>
+                <h4 class="card-title font-weight-bold text-center"> '.$AllHalls[$i][2].'</h4>
                 <!-- Data -->
 
                 <span class="fa fa-star checked"></span>
@@ -286,6 +285,7 @@ function showHalls($sql)
 
 
         $display.='</div>
+
         </a>';
     }
 
@@ -314,17 +314,6 @@ function showHalls($sql)
 
 
 </div>
-
-
-    <a href="company/companyRegister/companyRegister.php" class="col-3 btn btn-outline-danger">Company Register</a>
-    <a href="company/companyRegister/companydisplay.php?companyid=3" class="col-3 btn btn-outline-danger">Log in</a>
-
-
-
-
-
-
-
 
 
 

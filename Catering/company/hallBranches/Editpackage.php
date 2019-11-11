@@ -116,7 +116,7 @@ include_once ("../../webdesign/header/header.php");
     </div>
 <form id="submitpackage">
     <h3  align="center"><i class="fas fa-thumbs-up"></i> Selected Menu of Package</h3>
-    <div id="selectedmenu" class="row  form-group shadow m-auto " style="height: 40vh">
+    <div id="selectedmenu" class="row form-group m-0" style="overflow:auto;width: 100% ;height: 40vh">
 
         <?php
         $sql='SELECT `id`, `dishname`, `image`, `expire`, `hallprice_id` FROM `menu` WHERE (hallprice_id='.$packageid.') AND ISNULL(expire)';
@@ -136,12 +136,13 @@ include_once ("../../webdesign/header/header.php");
 
 
         ?>
-
-
-
-
     </div>
-    <div class="mt-3 shadow" >
+
+
+
+
+
+    <div class="col-12 mt-2 row" >
         <button id="btncancel" type="button" value="<?php
 
         if($packageDetail[0][6]==NULL)
@@ -152,7 +153,7 @@ include_once ("../../webdesign/header/header.php");
         {
             echo "Click Show";
         }
-        ?>" class="btn btn-danger col-4"><i class="fas fa-ban"></i><?php
+        ?>" class="btn btn-danger col-6"><i class="fas fa-ban"></i><?php
 
             if($packageDetail[0][6]==NULL)
             {
@@ -168,37 +169,65 @@ include_once ("../../webdesign/header/header.php");
 
 </form>
 
+    <hr class="border">
+    <h3  align="center" class="mt-5"><i class="far fa-hand-pointer mr-2"></i>Select Dishes</h3>
 
 
-<h3  align="center" class="mt-5"><i class="far fa-hand-pointer mr-2"></i>SelectSelect Dishes</h3>
-<div id="selectmenu" class="border  row m-auto"  style="overflow:auto;width: 100% ;height: 40vh" >
 
-    <?php
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
+        ADD dish in system
+    </button>
 
-    for ($i=0;$i<count($dishtype);$i++)
-    {
-        $sql = 'SELECT `name`, `id`, `image` FROM `systemDish` WHERE ISNULL(isExpire) AND (systemDishType_id=' . $dishtype[$i][1] . ') ';
-        $dishdetail=queryReceive($sql);
+    <div id="selectmenu" class="border m-2 p-0  row"  style="overflow:auto;width: 100% ;height: 50vh" >
 
-        for ($j=0;$j<count($dishdetail);$j++)
-        {
-            echo '
-        <div id="dishid'.$dishdetail[$j][1].'" class="col-4 border m-2 form-group p-0 card-body shadow" style="height: 30vh;" >
-            <img src="'.$dishdetail[$j][2].'" class="col-12" style="height: 15vh">
-            <p class="col-form-label" class="form-control col-12">'.$dishdetail[$j][0].'</p>
-            <input data-dishid="'.$dishdetail[$j][1].'" type="button" value="Select" class="form-control col-12 touchdish btn btn-success">
-            <input hidden type="text"  name="dishname[]"  value="'.$dishdetail[$j][0].'">
-             <input hidden type="text"  name="image[]"  value="'.$dishdetail[$j][2].'">
-        </div>';
+        <?php
 
-        }
+        $sql = 'SELECT `name`, `id`, `image` FROM `systemDish` WHERE ISNULL(isExpire) ';
+        echo dishesOfPakage($sql);
 
+        ?>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formDishaddss">
+                        <div class="form-group row">
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-hamburger"></i></span>
+                                </div>
+                                <input id="dishnameadd" name="dishname" class="form-control" type="text" placeholder="Dish Name Enter">
+                            </div>
 
-    }
-    ?>
+                        </div>
+                        <div class="form-group row">
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                                </div>
+                                <input  name="image" class="form-control" type="file">
+                            </div>
+                        </div>
 
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="submitformDishadd" class="btn btn-primary float-right">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-</div>
 </div>
 
 <?php
@@ -240,29 +269,36 @@ include_once ("../../webdesign/footer/footer.php");
         });
 
 
+
+        var numbers=0;
         $(document).on("click",".touchdish",function ()
         {
+            var text='';
             var value=$(this).val();
             var id=$(this).data("dishid");
+            var image=$(this).data("image");
+            var dishname=$(this).data("dishname");
             if(value=="Remove")
             {
-                $(this).val("Select");
-                var text=$("#dishid"+id)[0].outerHTML;
-                $("#dishid"+id).remove();
-                $("#selectmenu").append(text);
 
+                $("#dishtempid"+id).remove();
             }
             else
             {
 
-                $(this).val("Remove");
-                var text=$("#dishid"+id)[0].outerHTML;
-                $("#dishid"+id).remove();
+                text="<div id=\"dishtempid"+numbers+"\" class=\"col-4 alert-danger border m-1 form-group p-0\" style=\"height: 30vh;\" >\n" +
+                    "            <img src=\""+image+"\" class=\"col-12\" style=\"height: 15vh\">\n" +
+                    "            <p class=\"col-form-label\" class=\"form-control col-12\">"+dishname+"</p>\n" +
+                    "            <input    data-dishid=\""+numbers+"\" type=\"button\" value=\"Remove\" class=\"form-control col-12 touchdish btn btn-danger\">\n" +
+                    "            <input hidden type=\"text\"  name=\"dishname[]\"  value=\""+dishname+"\">\n" +
+                    "             <input hidden type=\"text\"  name=\"image[]\"  value=\""+image+"\">\n" +
+                    "        </div>";
+                numbers++;
                 $("#selectedmenu").append(text);
 
             }
 
-        }) ;
+        });
         $("#btnsubmit").click(function ()
         {
             var formdata=new FormData($('#submitpackage')[0]);
@@ -289,8 +325,9 @@ include_once ("../../webdesign/footer/footer.php");
             });
 
         });
-        $("#btncancel").click(function ()
-        {   var value=$(this).val();
+        $("#btncancel").click(function (e)
+        {  e.preventDefault();
+            var value=$(this).val();
             var formdata=new FormData;
             formdata.append("option","ExpireBtn");
             formdata.append("packageid",<?php echo $packageid;?>);
@@ -344,6 +381,35 @@ include_once ("../../webdesign/footer/footer.php");
         });
 
 
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+        });
+
+        $("#submitformDishadd").click(function (e)
+        {
+            e.preventDefault();
+            if($.trim($("#dishnameadd").val()).length==0)
+            {
+                alert("please enter dish name");
+                return false;
+            }
+            var formdata = new FormData($("form")[1]);
+            formdata.append("option","formDishadd");
+            $.ajax({
+                url:"../companyServer.php",
+                method:"POST",
+                data:formdata,
+                contentType: false,
+                processData: false,
+                success:function (data)
+                {
+                    $("#selectmenu").html(data);
+                    $("form")[1].reset();
+                    $('#exampleModal').modal('toggle');
+
+                }
+            });
+        });
 
 
 

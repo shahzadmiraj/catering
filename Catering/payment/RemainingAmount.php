@@ -203,83 +203,23 @@ include_once ("../webdesign/header/header.php");
 
 
 <div  class="w-100" id="recordsAll1">
-<table class="table table-striped newcolor table-responsive" style="width: 100%;">
-    <thead class="font-weight-bold">
-    <tr>
-            <th scope="col"><h1 class="fas fa-id-card col-12"></h1>order Id</th>
-            <th scope="col"><h1 class="fas fa-user col-12"></h1>customer Name</th>
-            <th scope="col"><h1 class="far fa-eye col-12"></h1>order status</th>
-            <th scope="col"><h1 class="fab fa-amazon-pay col-12"></h1>received amount</th>
-            <th scope="col">System  Amount</th>
-            <th scope="col">remaining system amount </th>
-            <th scope="col"><h1 class="far fa-money-bill-alt col-12"></h1>your demanded amount</th>
-            <th scope="col">remaining demand amount</th>
-    </tr>
 
-    </thead>
-    <tbody>
+
+
+
+
     <?php
     $sql="SELECT DISTINCT od.id, (SELECT p.name FROM person as p WHERE p.id=od.person_id), (SELECT sum(py.amount) FROM payment as py WHERE (py.IsReturn=0)AND(py.orderDetail_id=od.id)) ,od.total_amount,od.total_amount, (SELECT SUM(dd.price*dd.quantity) FROM dish_detail as dd WHERE dd.orderDetail_id=od.id),od.status_catering,od.status_hall FROM orderDetail as od LEFT join payment as py on od.id=py.orderDetail_id where ".$hallorcater."";
-$details=queryReceive($sql);
-    $display='';
-    for ($i=0;$i<count($details);$i++)
-    {
-        $display.=' <tr data-orderid="'.$details[$i][0].'" class="orderDetail">
-        <td  scope="row">'.$details[$i][0].'</td>
-        <td>'.$details[$i][1].'</td>
-        <td>';
-        if(!empty($hallid))
-        {
-            //if order status is hall
-            $display.=$details[$i][7];
 
-        }
-        else
-        {
-            //if order status is catering
-            $display.=$details[$i][6];
-
-        }
-
-
-        $display.='</td>
-        <td>'.(int)$details[$i][2].'</td>
-        <td>'.(int)$details[$i][5].'</td>
-        <td> '.(int) ($details[$i][5]-$details[$i][2]).'</td>
-        <td>'.(int) $details[$i][4].'</td>
-        <td>'.(int) ($details[$i][4]-$details[$i][2]).'</td>
- ';
-
-
-
-        $display.='</tr>';
-    }
-
-
-
-
-
-    echo $display;
-
-
-
-
-
-
-
-
+    echo showRemainings($sql);
 
 
     ?>
-    </tbody>
-
-</table>
-
-
-
 </div>
 </div>
-
+<?php
+include_once ("../webdesign/footer/footer.php");
+?>
 <script>
 
     $(document).ready(function () {

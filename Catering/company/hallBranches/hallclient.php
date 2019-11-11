@@ -364,68 +364,15 @@ else
 
 
 
-<div class="container">
-    <h1 class="font-weight-light  mt-4 mb-0">Comments</h1>
-
-    <hr class="mt-2 mb-3">
-    <div class="row bootstrap snippets container">
-
-        <div class="col-md-12 col-md-offset-2 col-sm-12 m-auto">
-            <div class="comment-wrapper">
-                <div class="panel panel-info ">
-
-                    <div class="panel-body">
-                        <textarea class="form-control" placeholder="write a comment..." rows="3"></textarea>
-                        <br>
-
-                        <div class="input-group mb-2">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text"><i class="fas fa-comments"></i></div>
-                            </div>
-                            <input type="email" class="form-control "  placeholder="Email">
-                        </div>
-
-
-                        <button type="button" class="btn btn-info pull-right float-right col-5">Post</button>
-                        <div class="clearfix"></div>
-                        <hr>
-                        <ul class="media-list">
-
-
-
-
-
-                            <li class="media">
-                                <a href="#" class="pull-left">
-                                    <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
-                                </a>
-                                <div class="media-body">
-                                <span class="text-muted pull-right">
-                                    <small class="text-muted">30 min ago</small>
-                                </span>
-                                    <strong class="text-success">@MartinoMont</strong>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                        Lorem ipsum dolor sit amet, <a href="#">#consecteturadipiscing </a>.
-                                    </p>
-                                </div>
-                            </li>
-
-
-
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
 
 
 
 
 <?php
+
+
+
+include_once ("comment.php");
 include_once ("../../webdesign/footer/footer.php");
 ?>
 <script>

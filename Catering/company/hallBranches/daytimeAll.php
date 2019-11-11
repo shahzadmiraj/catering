@@ -66,10 +66,19 @@ else
     <div class="container" style="background-color: white;opacity: 0.7">
         <h1 class="display-4"><i class="fas fa-place-of-worship"></i><?php echo $halldetail[0][0]; ?></h1>
         <p class="lead">You can control hall setting and also month wise prize list.Prize list consist of per head with food  and per head only seating .</p>
+        <?php
+        if(isset($_GET['hallBranches']))
+        {
+            echo '        <a href="hallRegister.php?companyid='.$companyid.'&hallBranches='.$hallBranches.'" class="btn btn-success col-6 mb-2"><i class="fas fa-arrow-right"></i> Save And Next </a>';
+        }
+
+
+        ?>
     </div>
 </div>
 <div class="container">
-<h1>Hall Setting</h1>
+<h1>Hall Setting
+</h1>
 <hr class="mt-2 mb-3 border-white">
 <form class="shadow card-body" id="formhall" >
     <input type="number" hidden name="hallid" value="<?php echo $hallid; ?>">
@@ -289,90 +298,13 @@ else
 
     </div>
 
-
-
-
-
-
-        <h1 class="font-weight-light text-lg-left mt-4 mb-0">Comments</h1>
-
-        <hr class="mt-2 mb-3">
-        <div class="row bootstrap snippets">
-
-            <div class="col-md-12 col-md-offset-2 col-sm-12 m-auto">
-                <div class="comment-wrapper">
-                    <div class="panel panel-info ">
-
-                        <div class="panel-body">
-                            <textarea class="form-control" placeholder="write a comment..." rows="3"></textarea>
-                            <br>
-
-                            <div class="input-group mb-2">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text"><i class="fas fa-comments"></i></div>
-                                </div>
-                                <input type="email" class="form-control "  placeholder="Email">
-                            </div>
-
-
-                            <button type="button" class="btn btn-info pull-right float-right col-5">Post</button>
-                            <div class="clearfix"></div>
-                            <hr>
-                            <ul class="media-list">
-
-
-
-
-
-                                <li class="media">
-                                    <a href="#" class="pull-left">
-                                        <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
-                                    </a>
-                                    <div class="media-body">
-                                <span class="text-muted pull-right">
-                                    <small class="text-muted">30 min ago</small>
-                                </span>
-                                        <strong class="text-success">@MartinoMont</strong>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                            Lorem ipsum dolor sit amet, <a href="#">#consecteturadipiscing </a>.
-                                        </p>
-                                    </div>
-                                </li>
-
-
-
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-
-
-<div class="col-12 mt-2">
-    <a href="hallRegister.php?companyid=<?php echo $companyid;?>&hallBranches=<?php echo $hallBranches;?>" class="btn btn-success col-5 float-right"><i class="fas fa-arrow-right"></i> Save And Next </a>
 </div>
 
-<!---->
-<!--<tr>-->
-<!--    <td scope="col" >-->
-<!--        <h4 align="center">Months</h4>-->
-<!--        <div class="form-group row p-2 shadow btn-light">-->
-<!--            <label class="col-form-label col-6 font-weight-bold"> Prize Only Seating </label>-->
-<!--            <input class="form-control col-6" type="number">-->
-<!--            <h3 align="center" class="col-12 mt-3">List of prize with Food</h3>-->
-<!--            <a  href="#" class="form-control  btn-primary col-12 text-center"> Add New Package</a>-->
-<!--            <a  href="#" class="form-control  btn-success col-4 text-center m-2"> Package name</a>-->
-<!--        </div>-->
-<!--    </td>-->
-<!--</tr>-->
 
 
-</div>
 <?php
+
+include_once ("comment.php");
 include_once ("../../webdesign/footer/footer.php");
 ?>
 

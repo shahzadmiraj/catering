@@ -220,6 +220,93 @@ function MutipleUploadFile($File,$DestinationFile)
 
     }
 
+function dishesOfPakage($sql)
+{
+    $dishdetail = queryReceive($sql);
+    $display='';
+    for ($j = 0; $j < count($dishdetail); $j++)
+    {
+        $display.= '
+        <div id="dishid' . $dishdetail[$j][1] . '" class="col-4 alert-danger border m-1 form-group p-0" style="height: 30vh;" >
+            <img src="' . $dishdetail[$j][2] . '" class="col-12" style="height: 15vh">
+            <p class="col-form-label" class="form-control col-12">' . $dishdetail[$j][0] . '</p>
+            <input   data-image="' . $dishdetail[$j][2] . '" data-dishname="' . $dishdetail[$j][0] . '"  data-dishid="' . $dishdetail[$j][1] . '" type="button" value="Select" class="form-control col-12 touchdish btn btn-success">
+            <input hidden type="text"  name="dishname[]"  value="' . $dishdetail[$j][0] . '">
+             <input hidden type="text"  name="image[]"  value="' . $dishdetail[$j][2] . '">
+        </div>';
 
+    }
+    return $display;
+}
+
+
+
+
+
+
+function showRemainings($sql)
+{
+    $display='<table class="table table-striped newcolor table-responsive" style="width: 100%;">
+    <thead class="font-weight-bold">
+    <tr>
+            <th scope="col"><h1 class="fas fa-id-card col-12"></h1>order Id</th>
+            <th scope="col"><h1 class="fas fa-user col-12"></h1>customer Name</th>
+            <th scope="col"><h1 class="far fa-eye col-12"></h1>order status</th>
+            <th scope="col"><h1 class="fab fa-amazon-pay col-12"></h1>received amount</th>
+            <th scope="col">System  Amount</th>
+            <th scope="col">remaining system amount </th>
+            <th scope="col"><h1 class="far fa-money-bill-alt col-12"></h1>your demanded amount</th>
+            <th scope="col">remaining demand amount</th>
+    </tr>
+    </thead>
+    <tbody>';
+
+
+
+    $details=queryReceive($sql);
+    for ($i=0;$i<count($details);$i++)
+    {
+        $display.=' <tr data-orderid="'.$details[$i][0].'" class="orderDetail">
+        <td  scope="row">'.$details[$i][0].'</td>
+        <td>'.$details[$i][1].'</td>
+        <td>';
+        if(!empty($hallid))
+        {
+            //if order status is hall
+            $display.=$details[$i][7];
+
+        }
+        else
+        {
+            //if order status is catering
+            $display.=$details[$i][6];
+
+        }
+
+
+        $display.='</td>
+        <td>'.(int)$details[$i][2].'</td>
+        <td>'.(int)$details[$i][5].'</td>
+        <td> '.(int) ($details[$i][5]-$details[$i][2]).'</td>
+        <td>'.(int) $details[$i][4].'</td>
+        <td>'.(int) ($details[$i][4]-$details[$i][2]).'</td>
+ ';
+
+
+
+        $display.='</tr>';
+    }
+
+
+
+
+
+    $display.='
+    </tbody>
+
+</table>';
+    return $display;
+
+}
 
 ?>

@@ -7,7 +7,7 @@
  */
 include_once ("../../connection/connect.php");
 
-
+$companyid=$_COOKIE['companyid'];
 if(isset($_POST['option']))
 {
     if($_POST['option']=="createUser")
@@ -26,7 +26,7 @@ if(isset($_POST['option']))
 
         if(!empty($_FILES['image']["name"]))
         {
-            $image = "../images/users/" . $_FILES['image']['name'];
+            $image = "../../images/users/" . $_FILES['image']['name'];
             $resultimage = ImageUploaded($_FILES, $image);//$dishimage is destination file location;
             if ($resultimage != "") {
                 print_r($resultimage);
@@ -63,7 +63,7 @@ if(isset($_POST['option']))
             querySend($sql);
         }
         $customerId = $last_id;
-        $sql='INSERT INTO `user`(`id`, `username`, `password`, `person_id`, `isExpire`,`isowner`) VALUES (NULL,"'.$username.'","'.$password.'",'.$customerId.',NULL,"'.$isowner.'")';
+        $sql='INSERT INTO `user`(`id`, `username`, `password`, `person_id`, `isExpire`,`isowner`,`company_id`) VALUES (NULL,"'.$username.'","'.$password.'",'.$customerId.',NULL,"'.$isowner.'",'.$companyid.')';
         querySend($sql);
 
     }
