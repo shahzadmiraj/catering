@@ -100,8 +100,6 @@ include_once ("../webdesign/header/header.php");
         <label class="col-6 form-check-label"> '.(int) ($details[0][4]-$details[0][2]).'</label>
     </div>
     
-    
-    
     </div>
     ';
     ?>
