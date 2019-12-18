@@ -6,7 +6,7 @@
  * Time: 17:29
  */
 include_once ("../../connection/connect.php");
-$companyid=$_GET['companyid']=3;
+$companyid=$_GET['companyid'];
 $CateringBranches=1;
 $hallBranches='';
 if(isset($_GET['CateringBranches']))

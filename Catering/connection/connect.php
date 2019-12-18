@@ -6,7 +6,9 @@
  * Time: 21:25
  */
 session_start();
-date_default_timezone_set("asia/karachi");
+date_default_timezone_set("Asia/Karachi");
+//date_default_timezone_get();
+
 $connect=mysqli_connect('localhost',"root","","a111");
 //$connect=mysqli_connect("localhost","id10884474_shahzad","11111","id10884474_catering");
     if(!$connect)

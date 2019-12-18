@@ -6,6 +6,7 @@
  * Time: 11:41
  */
 include_once ("connection/connect.php");
+include_once ("connection/indexEdit.php");
 ?>
 
 <!DOCTYPE html>
@@ -50,10 +51,6 @@ include_once ("connection/connect.php");
              top: 8px;
              right: 16px;
          }
-
-
-
-
 
 
 
@@ -130,8 +127,11 @@ include_once ("webdesign/header/header.php");
 
 <div class="container">
 
-<div class="jumbotron card card-image mr-5 ml-5 transparencyjumbo " style="margin-top: -15px;background-repeat: no-repeat; background-size: cover;">
 
+
+
+<div class="jumbotron card card-image mr-5 ml-5 transparencyjumbo " style="margin-top: -15px;background-repeat: no-repeat; background-size: cover;">
+<form method="get" action="">
 
 
     <div class="text-white  text-center  row" >
@@ -139,10 +139,10 @@ include_once ("webdesign/header/header.php");
             <div class="input-group-prepend">
                 <div class="input-group-text"><i class="fas fa-clock"></i></div>
             </div>
-            <select class="custom-select "  size="1">
-                <option>Morning Time </option>
-                <option>Afternoon Time</option>
-                <option>Evening Time</option>
+            <select name="daytime" class="custom-select "  size="1">
+                <option value="09:00:00">Morning Time </option>
+                <option value="12:00:00">Afternoon Time</option>
+                <option value="18:00:00">Evening Time</option>
             </select>
         </div>
     </div>
@@ -155,7 +155,7 @@ include_once ("webdesign/header/header.php");
             <div class="input-group-prepend">
                 <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
             </div>
-            <input type="date" class="form-control py-0" id="inlineFormInputGroupUsername2" placeholder="Booking Date">
+            <input required name="Date" type="date" class="form-control py-0" id="inlineFormInputGroupUsername2" placeholder="Booking Date">
         </div>
     </div>
 
@@ -165,18 +165,21 @@ include_once ("webdesign/header/header.php");
             <div class="input-group-prepend">
                 <div class="input-group-text"><i class="fas fa-utensils"></i></div>
             </div>
-            <select class="custom-select "  size="1">
-                <option>Per head Only Seating</option>
-                <option>Per head Seating + Food</option>
+            <select name="perhead" class="custom-select "  size="1">
+                <option value="0">Per head Only Seating</option>
+                <option value="1">Per head Seating + Food</option>
             </select>
         </div>
     </div>
 
 
 <div class="m-auto">
-<button class="btn btn-danger"><i class="fas fa-check"></i>
+<button value="submit" type="submit" class="btn btn-danger"><i class="fas fa-check"></i>
     Submit</button>
 </div>
+</form>
+
+
 
 </div>
 
@@ -199,117 +202,23 @@ include_once ("webdesign/header/header.php");
 
 <div class="row" >
 
+
     <?php
+    //echo hallAll();
 
+    //echo HallUserDesire("2013-03-15",0,"09:00:00");
 
-    $monthsArray = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
-    $currentdate=date("Y/m/d");
-    $maxDate = new DateTime('now');
-    $maxDate->modify('+1 month'); // or you can use '-90 day' for deduct
-
-    $NextMonthNo=$maxDate->format('m');
-    $NextMonthNo=$NextMonthNo-1;
-    $maxDate = $maxDate->format('Y-m-d');
-    $CurrentMonthNo=date('m');
-    $CurrentMonthNo=$CurrentMonthNo-1;
-    $sql='SELECT h.id,h.image,h.name,h.max_guests,hp.id,hp.month,hp.isFood,hp.price,hp.dayTime,hp.package_name,h.hallType FROM hall as h INNER join hallprice as hp
-ON
-(h.id=hp.hall_id)
-left join orderDetail as od on (h.id=od.hall_id) 
-
-
-WHERE
- ((od.hall_id IS NULL) or ((od.status_hall="Cancel")AND
-(od.destination_date between "'.$currentdate.'" AND "'.$maxDate.'" ))) AND (ISNULL(h.expire)) AND
-((ISNULL(hp.expire)) AND ((hp.month="'.$monthsArray[$CurrentMonthNo].'")or (hp.month="'.$monthsArray[$NextMonthNo].'"))) limit 20
-';
-
-function showHalls($sql)
-{
-    $halltype=array("Marquee","Hall","Deera /Open area");
-
-    $display = '';
-    $AllHalls=queryReceive($sql);
-    for ($i=0;$i<count($AllHalls);$i++)
+    if(isset($_GET["Date"]))
     {
+        echo HallUserDesire($_GET["Date"],$_GET["perhead"],$_GET["daytime"]);
+    }
+    else
+    {
+        echo hallAll();
 
-        $display.='
-        
-       <a href="company/hallBranches/hallclient.php?hallid='.$AllHalls[$i][0].'&packageid='.$AllHalls[$i][4].'&date='.$AllHalls[$i][5].'&time='.$AllHalls[$i][8].'" class="card-header transparencyjumbo col-sm-11 col-md-6 col-xl-4">
-
-            <!-- Card image -->
-            <div class="view overlay">
-                <div class="container pictures">
-                    <img src="';
-        if(file_exists($AllHalls[$i][1]) &&($AllHalls[$i][1]!=""))
-        {
-            $display.=$AllHalls[$i][1];
-        }
-        else
-        {
-            $display.='https://www.pakvenues.com/system/halls/cover_images/000/000/048/original/Umar_Marriage_Hall_lahore.jpg?1566758537';
-        }
-
-        $display.='" alt="Snow" style="width:100%;height: 100%">
-                    <h5 class="top-right text-dark">43.3Km</h5>
-                </div>
-            </div>
-
-            <!-- Card content -->
-            <div class="card-body">
-
-                <!-- Title -->
-                <h4 class="card-title font-weight-bold text-center"> '.$AllHalls[$i][2].'</h4>
-                <!-- Data -->
-
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-                <h3 class="text-right"><i class="far fa-money-bill-alt"></i><span class="font-weight-bold"> RS:<i class="text-warning"> '.$AllHalls[$i][7].' </i></span></h3>
-                <h4><i class="fas fa-clock"></i> Time <span class="text-warning">'.$AllHalls[$i][8].'</span> </h4>
-                <h4><i class="far fa-calendar-alt"></i> Month <span class="text-warning">'.$AllHalls[$i][5].'</span></h4>
-                <h4><i class="fas fa-users"></i> Max Guests  <span class="text-warning">'.$AllHalls[$i][3].'</span></h4>
-                <h4><i class="fab fa-accusoft"></i> Hall Type: <span class="text-warning">'.$halltype[$AllHalls[$i][10]].'</span></h4>';
-        if( $AllHalls[$i][6]==0)
-        {
-            $display.='
-                <h4><i class="material-icons">airline_seat_recline_normal</i> <span class="text-warning">with Seating</span></h4>';
-        }
-        else
-        {
-            $display.='
-                <h4><i class="material-icons">fastfood</i> package name  <span class="text-warning">'.$AllHalls[$i][9].'</span></h4>';
-        }
-
-
-        $display.='</div>
-
-        </a>';
     }
 
-
-
-
-     return $display;
-}
-
-
-
-    echo showHalls($sql);
-?>
-
-
-
-
-
-
-
-
-
-
-
+    ?>
 
 
 
