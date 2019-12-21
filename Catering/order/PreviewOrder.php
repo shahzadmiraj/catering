@@ -109,8 +109,8 @@ include_once ("../webdesign/header/header.php");
 <div class="container row m-auto">
 
 
-    <a href="?orderid=<?php echo $orderId;?>&action=see" class="h-25 col-5 shadow text-dark m-2 text-center fa-5x"><i class="fas fa-eye"></i><h4>See Bill / Preview order</h4></a>
-    <a href="?orderid=<?php echo $orderId;?>&action=Download" class="h-25 col-5 shadow text-dark m-2 text-center fa-5x"><i class="fas fa-cloud-download-alt"></i><h4>Download Bill</h4></a>
+    <a href="?orderid=<?php echo $orderId;?>&action=see " class="h-25 col-5 shadow text-dark m-2 text-center fa-5x"   resource=""><i class="fas fa-eye"></i><h4>See Bill / Preview order</h4></a>
+    <a href="?orderid=<?php echo $orderId;?>&action=Download" class="h-25 col-5 shadow text-dark m-2 text-center fa-5x" download><i class="fas fa-cloud-download-alt"></i><h4>Download Bill</h4></a>
 
 
 
@@ -137,12 +137,12 @@ include_once ("../webdesign/header/header.php");
         ?>
 
             <a href="/Catering/dish/AllSelectedDishes.php?order=<?php echo $orderId;?>&option=PreviewOrder&name=<?php echo $orderDetailPerson[0][0];?>&image=<?php echo $orderDetailPerson[0][2]?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-file-word fa-5x"></i><h4>Bill Detail/ extend  </h4></a>
-            <a href="/Catering/payment/paymentHistory.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>&name=<?php echo $orderDetailPerson[0][0];?>&image=<?php echo $orderDetailPerson[0][2]?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-history fa-5x"></i><h4>Payment History</h4></a>
+            <a href="/Catering/payment/paymentHistory.php?user_id=<?php echo $_COOKIE['userid'];?>&order=<?php echo $orderId;?>&name=<?php echo $orderDetailPerson[0][0];?>&image=<?php echo $orderDetailPerson[0][2]?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-history fa-5x"></i><h4>Payment History</h4></a>
 
-            <a href="/Catering/payment/getPayment.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>&name=<?php echo $orderDetailPerson[0][0];?>&image=<?php echo $orderDetailPerson[0][2]?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="far fa-money-bill-alt fa-5x"></i><h4>Get payment from customer</h4></a>
-            <a href="../payment/paymentDisplaySend.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>&name=<?php echo $orderDetailPerson[0][0];?>&image=<?php echo $orderDetailPerson[0][2]?>" class="h-25 col-5 shadow text-dark m-2 text-center"> <i class="fas fa-share-alt fa-5x"></i><h4>Transfer payment <p>(user to user)</p> </h4></a>
+            <a href="/Catering/payment/getPayment.php?user_id=<?php echo $_COOKIE['userid'];?>&order=<?php echo $orderId;?>&name=<?php echo $orderDetailPerson[0][0];?>&image=<?php echo $orderDetailPerson[0][2]?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="far fa-money-bill-alt fa-5x"></i><h4>Get payment from customer</h4></a>
+            <a href="../payment/paymentDisplaySend.php?user_id=<?php echo $_COOKIE['userid'];?>&order=<?php echo $orderId;?>&name=<?php echo $orderDetailPerson[0][0];?>&image=<?php echo $orderDetailPerson[0][2]?>" class="h-25 col-5 shadow text-dark m-2 text-center"> <i class="fas fa-share-alt fa-5x"></i><h4>Transfer payment <p>(user to user)</p> </h4></a>
 
-    <a href="/Catering/payment/transferPaymentReceive.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>&name=<?php echo $orderDetailPerson[0][0];?>&image=<?php echo $orderDetailPerson[0][2]?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-clipboard-check fa-5x"></i><h4>Payment Receiving Request <p>(user to user)</p> </h4></a>
+    <a href="/Catering/payment/transferPaymentReceive.php?user_id=<?php echo $_COOKIE['userid'];?>&order=<?php echo $orderId;?>&name=<?php echo $orderDetailPerson[0][0];?>&image=<?php echo $orderDetailPerson[0][2]?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-clipboard-check fa-5x"></i><h4>Payment Receiving Request <p>(user to user)</p> </h4></a>
 
 
 </div>

@@ -5,6 +5,9 @@
  * Date: 2019-09-01
  * Time: 21:25
  */
+
+
+//session are customerid,typebranch,typebranchid
 session_start();
 date_default_timezone_set("Asia/Karachi");
 //date_default_timezone_get();

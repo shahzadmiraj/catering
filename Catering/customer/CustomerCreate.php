@@ -8,11 +8,26 @@
 include_once ("../connection/connect.php");
 $hallid="";
 $cateringid='';
-if(isset($_GET['hallid']))
-    $hallid=$_GET['hallid'];
-if(isset($_GET['cateringid']))
-    $cateringid=$_GET['cateringid'];
+if(isset($_SESSION['typebranch']))
+{
+    if($_SESSION['typebranch']=="hall")
+    {
+        $hallid=$_SESSION['typebranchid'];
+    }
+    else
+    {
+        $cateringid=$_SESSION['typebranchid'];
+    }
+}
+if(isset($_SESSION['order']))
+{
+    unset($_SESSION['order']);
+}
 
+if(isset($_SESSION['customer']))
+{
+    unset($_SESSION['customer']);
+}
 ?>
 <!DOCTYPE html>
 <head>
@@ -192,8 +207,7 @@ include_once ("../webdesign/header/header.php");
 
         </div>
         <div class="form-group row m-auto">
-
-            <button type="button" class="col-5 form-control btn btn-danger" id="cancelCustomer"><i class="fas fa-window-close"></i>Cancel</button>
+            <a href="../user/userDisplay.php" type="button" class="col-5 form-control btn btn-danger"><i class="fas fa-window-close"></i>Cancel</a>
             <button type="button" class="col-5 form-control btn btn-primary" id="submit"><i class="fas fa-check "></i>Submit</button>
         </div>
     </form>
@@ -221,31 +235,18 @@ include_once ("../webdesign/footer/footer.php");
                method: "POST",
                success:function (data)
                {
-                   if((!($.isNumeric(data))) && (data==""))
+                   if(data=="customerexist")
                    {
-                       return false;
-                   }
-                   else
-                   {
-
-                       if("<?php echo $hallid;?>"=="")
-                       {
-                           //this is the oder of catering
-                           window.location.href="/Catering/customer/customerEdit.php?customer="+data+"&option=CustomerCreate&hallid=<?php echo $hallid;?>&cateringid=<?php echo $cateringid;?>";
-                       }
-                       else
-                       {
-                           //this is the order of hall
-                           window.location.href="/Catering/customer/customerEdit.php?customer="+data+"&option=hallCustomer&hallid=<?php echo $hallid;?>";
-                       }
+                           window.location.href="/Catering/customer/customerEdit.php";
                    }
                }
            });
        });
 
 
-       $("#cancelCustomer").click(function ()
+       $("#cancelCustomer").click(function (e)
        {
+           e.preventDefault();
           window.history.back();
        });
        var number=0;
@@ -305,8 +306,9 @@ include_once ("../webdesign/footer/footer.php");
                success:function (data)
                {
 
-                    if(!($.isNumeric(data)))
+                    if(data!="")
                     {
+                        alert(data);
                         return false;
                     }
                     else
@@ -314,12 +316,12 @@ include_once ("../webdesign/footer/footer.php");
                         if("<?php echo $hallid;?>"=="")
                         {
                             //this is the oder of catering
-                            window.location.href="/Catering/order/orderCreate.php?customer="+data+"&option=CustomerCreate&cateringid=<?php echo $cateringid;?>";
+                            window.location.href="/Catering/order/orderCreate.php";
                         }
                         else
                         {
                             //this is the order of hall
-                            window.location.href="../company/hallBranches/hallorder.php?customer="+data+"&hallid=<?php echo $hallid;?>";
+                            window.location.href="../company/hallBranches/hallorder.php";
                         }
                     }
                }

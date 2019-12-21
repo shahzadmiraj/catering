@@ -8,6 +8,22 @@
 
 include  ("../../connection/connect.php");
 $companyid=$_COOKIE['companyid'];
+//session_destroy();
+$_SESSION['branchtype']="hall";
+if(isset($_GET['branchtype']))
+{
+    if($_GET['branchtype']=="hall")
+    {
+        $_SESSION['branchtype']="hall";
+    }
+    else
+    {
+        $_SESSION['branchtype']="catering";
+    }
+    $_SESSION['branchtypeid']=$_GET['branchtypeid'];
+    header("location:../../user/userDisplay.php");
+}
+
 
 $sql='SELECT  c.name FROM company as c WHERE c.id='.$companyid.'';
 $companydetail=queryReceive($sql);
@@ -84,7 +100,8 @@ $display='';
 for ($i=0;$i<count($halls);$i++)
 {
   $display.= '
-    <a href="../../user/userDisplay.php?hallid='.$halls[$i][0].'" class="col-sm-12 col-md-4 col-xl-3 m-2 shadow border  text-white" >
+    <a  href="?branchtype=hall&branchtypeid='.$halls[$i][0].'"
+     class="col-sm-12 col-md-4 col-xl-3 m-2 shadow border  text-white" >
         <img class="card-img-top  col-12 p-0" src="';
   if(file_exists($halls[$i][2]))
   {
@@ -116,7 +133,7 @@ echo $display;
     for ($i=0;$i<count($caterings);$i++)
     {
         $display.= '
-    <a href="../../user/userDisplay.php?cateringid='.$caterings[$i][0].'" class="col-sm-12 col-md-4 col-xl-3 m-2 border text-white">
+    <a href="?branchtype=catering&branchtypeid='.$caterings[$i][0].'" class="col-sm-12 col-md-4 col-xl-3 m-2 border text-white">
    
         <img class="card-img-top  col-12  p-0" src="';
         if(file_exists($caterings[$i][2])&&($caterings[$i][2]!=""))

@@ -6,11 +6,13 @@
  * Time: 21:31
  */
 include  ("../../connection/connect.php");
-$hallid=$_GET['hallid'];
-$personid=$_GET['customer'];
+$hallid=$_SESSION['branchtypeid'];
+$personid=$_SESSION['customer'];
 $userid=$_COOKIE['userid'];
 
 
+$sql='SELECT c.id, c.name,c.image FROM catering as c WHERE c.company_id=(SELECT h.company_id from hall as h where h.id='.$hallid.') AND (ISNULL(c.expire))';
+$cateringids=queryReceive($sql);
 ?>
 <!DOCTYPE html>
 <head>
@@ -116,7 +118,63 @@ include_once ("../../webdesign/header/header.php");
         </select>
     </div>
 </div>
-<div id="groupofpackages" class="col-12 alert-warning shadow">
+
+
+
+
+
+
+
+    <?php
+
+    if(count($cateringids)>0)
+    {
+
+        $display = '
+                
+                
+    <div class="form-group row" id="cateringid">
+        <label class="col-form-label ">Catereing Branch</label>
+
+
+        <div  class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-utensils"></i></span>
+            </div>
+            <select  name="cateringid" class="form-control">
+
+                
+                ';
+
+
+        for ($i = 0; $i < count($cateringids); $i++) {
+            $display .= '
+            <option value="' . $cateringids[$i][0] . '">' . $cateringids[$i][1] . '</option>';
+
+        }
+
+
+        $display .= '     
+
+
+            </select>
+        </div>
+
+
+
+
+    </div>';
+        echo $display;
+    }
+
+
+    ?>
+
+
+
+
+
+    <div id="groupofpackages" class="col-12 alert-warning shadow">
 
 
 </div>
@@ -154,7 +212,13 @@ include_once ("../../webdesign/header/header.php");
 </div>
 
     <div class="form-group row justify-content-center shadow">
-        <a href="../../customer/customerEdit.php?option=hallorder&customer=<?php echo $personid; ?>&hallid=<?php echo $hallid;?>" class=" col-5  btn btn-danger"  ><i class="fas fa-arrow-circle-left"></i>Edit customer</a>
+        <!--
+
+         edit customer 17
+
+
+        -->
+        <a href="../../customer/customerEdit.php" class=" col-5  btn btn-danger"  ><i class="fas fa-arrow-circle-left"></i>Edit customer</a>
         <button id="submitform" type="button" class=" col-4 btn btn-success" value="Submit"><i class="fas fa-check "></i>Submit</button>
     </div>
 
@@ -164,6 +228,29 @@ include_once ("../../webdesign/footer/footer.php");
 ?>
 <script>
     $(document).ready(function () {
+
+
+        function barnches()
+        {
+            var perheadwith = $("#perheadwith").val();
+            if(perheadwith==1)
+            {
+                $("#cateringid").show();
+            }
+            else
+            {
+                $("#cateringid").hide();
+            }
+        }
+        $("#perheadwith").change(function ()
+        {
+            barnches();
+
+        });
+        barnches();
+
+
+
         function checkpackage(date, time, perheadwith) {
             if ((date != "") && (time != "") && (perheadwith != "")) {
                 return 1;
@@ -285,13 +372,14 @@ include_once ("../../webdesign/footer/footer.php");
                 processData: false,
                 success: function (data)
                 {
-                    if(!($.isNumeric(data)))
+                    if(data!="")
                     {
                         alert(data);
                     }
                     else
                     {
-                        window.location.href='../../order/PreviewOrder.php?order='+data+"&hallid=<?php echo $hallid;?>";
+
+                        window.location.href="../../order/PreviewOrder.php";
                     }
 
 

@@ -6,8 +6,9 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-$cateringid=$_GET['cateringid'];
-$customer=$_GET['customer'];
+
+$cateringid=$_SESSION['branchtypeid'];
+$customer=$_SESSION['customer'];
 
 ?>
 <!DOCTYPE html>
@@ -157,23 +158,9 @@ include_once ("../webdesign/header/header.php");
         </div>
         <div class="form-group row justify-content-center">
 
-            <?php
-                if(isset($_GET['option']))
-                {
-                    if(($_GET['option']=="CustomerCreate")||($_GET['option']=="customerEdit"))
-                    {
-
-                        echo '<a href="/Catering/customer/customerEdit.php?customer='.$_GET['customer'].'&option=orderCreate&cateringid='.$cateringid.'" class="form-control col-5 btn btn-danger"><i class="fas fa-arrow-left"></i>Edit Customer</a>';
-                    }
-                }
-                else
-                {
-                    echo '
-            <button  type="button"  id=\'cancelorder\'class="form-control col-5 btn btn-danger"><i class="fas fa-arrow-left"></i> cancel</button>';
-                }
-
-            ?>
+            <a href="/Catering/customer/customerEdit.php" class="form-control col-5 btn btn-danger"><i class="fas fa-arrow-left"></i>Edit Customer</a>
             <button type="button" id="submit" class="form-control col-5 btn-success"><i class="fas fa-check "></i> Submit</button>
+
         </div>
     </form>
 
@@ -203,24 +190,19 @@ include_once ("../webdesign/footer/footer.php");
                {
 
 
-                  if(!($.isNumeric(data)))
+                  if(data!="")
                   {
                       alert(data);
                   }
                   else
                   {
-                      window.location.href="../dish/dishDisplay.php?order="+data+"&customer=<?php echo $customer;?>&option=orderCreate&cateringid=<?php echo $cateringid;?>";
+                      window.location.href="../dish/dishDisplay.php";
                   }
                }
            });
 
        });
 
-       $("#cancelorder").click(function () {
-           window.history.back();
-           return false;
-
-       });
     });
 
 </script>

@@ -6,8 +6,9 @@
  * Time: 11:31
  */
 
-$orderId=$_GET['order'];
 include_once ("../connection/connect.php");
+
+$orderId=$_SESSION['order'];
 
 ?>
 <!DOCTYPE html>
@@ -126,7 +127,7 @@ where
         {
             $totalAmount+=(int)$dishesDetail[$i][2]*(int)$dishesDetail[$i][3];
             echo '    
-            <a href="/Catering/dish/dishPreview.php?dishId='.$dishesDetail[$i][4].'&dishDetailId='.$dishesDetail[$i][0].'&order='.$_GET['order'].'&option=Allselected" class="row card-body border text-white p-0 shadow" >
+            <a href="/Catering/dish/dishPreview.php?dishId='.$dishesDetail[$i][4].'&dishDetailId='.$dishesDetail[$i][0].'&order='.$orderId.'&option=Allselected" class="row card-body border text-white p-0 shadow" >
             <label class="border-right col-form-label col-3">'.$dishesDetail[$i][1].'</label>
             <label class="border-right col-form-label col-3">'.$dishesDetail[$i][2].'</label>
             <label class="border-right col-form-label col-3">'.$dishesDetail[$i][3].'</label>
@@ -154,8 +155,8 @@ where
 
 
     <div class="col-12  row justify-content-center mt-4 ">
-        <a href="/Catering/dish/dishDisplay.php?order=<?php echo $_GET['order'];?>" class="form-control btn-success col-5"><i class="fas fa-concierge-bell"></i>dish Add +</a>
-        <a class="nav-link btn btn-warning col-5" href="/Catering/order/PreviewOrder.php?order=<?php echo $_GET['order'];?>"><i class="fas fa-shopping-cart"></i> Order Preview</a>
+        <a href="/Catering/dish/dishDisplay.php" class="form-control btn-success col-5"><i class="fas fa-concierge-bell"></i>dish Add +</a>
+        <a class="nav-link btn btn-warning col-5" href="/Catering/order/PreviewOrder.php"><i class="fas fa-shopping-cart"></i> Order Preview</a>
 
     </div>
 

@@ -6,14 +6,22 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-
-$customerId=$_GET['customer'];
+$customerId="";
+$customerId=$_SESSION['customer'];
 $hallid="";
 $cateringid='';
-if(isset($_GET['hallid']))
-    $hallid=$_GET['hallid'];
-if(isset($_GET['cateringid']))
-    $cateringid=$_GET['cateringid'];
+
+if(isset($_SESSION['typebranch']))
+{
+    if($_SESSION['typebranch']=="hall")
+    {
+        $hallid=$_SESSION['typebranchid'];
+    }
+    else
+    {
+        $cateringid=$_SESSION['typebranchid'];
+    }
+}
 
 $sql = "SELECT `name`, `cnic`, `id`, `date`, `image` FROM `person` WHERE id=".$customerId."";
 $person=queryReceive($sql);
@@ -57,7 +65,7 @@ include_once ("../webdesign/header/header.php");
 </div>
 <form id="changeImage" class="col-12 row justify-content-center" style="margin-top: -60px">
     <?php
-    echo '<input name="customerid" hidden value="'.$_GET["customer"].'">';
+    echo '<input name="customerid" hidden value="'.$customerId.'">';
     ?>
     <input name="image" hidden value="<?php echo $person[0][4] ?>">
 
@@ -93,7 +101,7 @@ include_once ("../webdesign/header/header.php");
     <?php
 
 
-    echo '<input id="customerId" type="number" hidden value="'.$_GET["customer"].'">';
+    echo '<input id="customerId" type="number" hidden value="'.$customerId.'">';
     ?>
         <div id="number_records">
             <?php
@@ -264,8 +272,9 @@ p.id='.$customerId.'';
         </div>
         <div class="form-group row mb-3 p-4">
 
+            <a href="CustomerCreate.php" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Not this Customer</a>
             <?php
-            if(isset($_GET['option']))
+        /*    if(isset($_GET['option']))
             {
                 if($_GET['option']=="orderCreate")
                 {
@@ -294,16 +303,68 @@ p.id='.$customerId.'';
                 else if($_GET['option']=="hallorder")
                 {
                     echo '
-                 
+
                     <a href="../company/hallBranches/hallorder.php?customer='.$customerId.'&hallid='.$_GET['hallid'].'" class="btn btn-warning m-auto col-6"><i class="fas fa-check "></i>Done</a>';
                 }
                 else if($_GET['option']=="hallCustomer")
                 {
                     echo '
-                    <input type="button" id="btnbackhistory" class="m-auto col-6 form-control btn btn-danger" value="Not this Customer">   
-                    <a href="../company/hallBranches/hallorder.php?customer='.$customerId.'&hallid='.$_GET['hallid'].'" class="btn btn-success m-auto col-6"><i class="fas fa-check "></i>Done</a>';
+                    <input type="button" id="btnbackhistory" class="m-auto col-6 form-control btn btn-danger" value="Not this Customer">
+                    <a href="../company/hallBranches/hallorder.php" class="btn btn-success m-auto col-6"><i class="fas fa-check "></i>Done</a>';
                 }
+            }*/
+
+            if($_SESSION['branchtype']=="hall")
+            {
+                //hall
+
+                if(!isset($_SESSION['order']))
+                {
+                    //16 new order of hall
+                    echo '
+                    <a href="../company/hallBranches/hallorder.php" class="btn btn-success m-auto col-6"><i class="fas fa-check "></i>Create hall order</a>';
+
+
+                }
+                else
+                {
+
+
+                }
+
             }
+            else
+            {
+                //catering
+
+
+
+                if(!isset($_SESSION['order']))
+                {
+                    //not order create
+                    //7 go to create order of catering
+                    echo '
+                    <a href="/Catering/order/orderCreate.php" class="col-6 form-control btn btn-outline-primary" id="submit"><i class="fas fa-check "></i> Order Create</a>   
+                    
+                     ';
+
+
+                }
+                else
+                {
+                    //order of catering is created
+
+                    //15 oder of catering edit
+                    echo '
+        <a href="/Catering/order/orderEdit.php" class="m-auto col-6 form-control btn btn-primary"><i class="fas fa-check "></i> Edit order</a>';
+
+
+
+                }
+
+            }
+
+            //6 not this customer
 
             ?>
 

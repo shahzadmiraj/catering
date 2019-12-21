@@ -7,7 +7,7 @@
  */
 include_once ("../connection/connect.php");
 
-$orderId=$_GET['order'];
+$orderId=$_SESSION['order'];
 $sql='SELECT `id`, `total_amount`, `describe`, `total_person`, `status_catering`, `destination_date`, `booking_date`, `destination_time`, `address_id`, `person_id` FROM `orderDetail` WHERE id='.$orderId.'';
 $orderDetail=queryReceive($sql);
 $addressId=$orderDetail[0][8];
@@ -48,7 +48,7 @@ include_once ("../webdesign/header/header.php");
 <div class="container">
     <form class="card-body">
         <?php
-            echo '<input id="orderid" type="number" hidden value="'.$_GET['order'].'">';
+            echo '<input id="orderid" type="number" hidden value="'.$orderId.'">';
         ?>
 
         <div class="form-group row">
@@ -225,11 +225,10 @@ include_once ("../webdesign/header/header.php");
 
         <div class="form-group row justify-content-center">
             <?php
-                if(isset($_GET['option']))
+               /* if(isset($_GET['option']))
                 {
                     if($_GET['option']=="dishDisplay")
                     {
-
                         echo '
             <a href="/Catering/customer/customerEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=customerAndOrderalreadyHave"   id="cancel" class="form-control col-6 btn btn-danger"> <i class="fas fa-arrow-left"></i>Customer Edit</a>
             <a href="/Catering/dish/dishDisplay.php?order='.$_GET['order'].'"  id="submit" class="form-control col-6 btn-success"><i class="fas fa-check "></i> Display Dish</a>';
@@ -246,9 +245,14 @@ include_once ("../webdesign/header/header.php");
                     {
                         echo '<input type="button" id="btnbackhistory" class="col-6  form-control btn btn-outline-primary" value="Done">';
                     }
-                }
+                }*/
 
+
+//14,11
             ?>
+
+            <a href="/Catering/customer/customerEdit.php"   id="cancel" class="form-control col-6 btn btn-danger"> <i class="fas fa-arrow-left"></i>Customer Edit</a>
+            <a href="/Catering/dish/dishDisplay.php"  id="submit" class="form-control col-6 btn-success"><i class="fas fa-check "></i> Display Dish</a>
 
         </div>
 

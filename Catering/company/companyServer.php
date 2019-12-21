@@ -494,7 +494,7 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)';
         NULL,NULL,NULL,NULL,'.$personid.','.$totalamount.','.$guests.',"Running","'.$date.'","'.$currentdate.'",
         "'.$time.'","'.$catering.'","'.$notice.'","'.$describe.'")';
             querySend($sql);
-            echo mysqli_insert_id($connect);
+            $_SESSION['order']=mysqli_insert_id($connect);
 
     }
     else if($_POST['option']=="Edithallorder")
@@ -507,6 +507,13 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)';
         $date=$_POST['date'];
         $time=$_POST['time'];
         $perheadwith=$_POST['perheadwith'];
+
+        $cateringid='NULL';
+        if(isset($_POST['cateringid']) &&($perheadwith==1))
+        {
+            $cateringid=$_POST['cateringid'];
+        }
+
         $describe=$_POST['describe'];
         $totalamount=chechIsEmpty($_POST['totalamount']);
         $catering="";
@@ -538,7 +545,7 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)';
                 if($catering=="Running")
                 $notice="alert";
             }
-        $sql='UPDATE `orderDetail` SET `hallprice_id`='.$packageid.',
+        $sql='UPDATE `orderDetail` SET `catering_id`='.$cateringid.',`hallprice_id`='.$packageid.',
 `total_amount`='.$totalamount.',`total_person`='.$guests.',`status_hall`
 ="'.$orderStatus.'",`destination_date`="'.$date.'",`destination_time`="'.$time.'",
 `status_catering`="'.$catering.'",`notice`="'.$notice.'",`describe`="'.$describe.'" 

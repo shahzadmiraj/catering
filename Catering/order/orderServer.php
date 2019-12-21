@@ -9,7 +9,7 @@
 
 include_once ("../connection/connect.php");
 
-$userid=$_SESSION['userid']=1;
+$userid=$_COOKIE['userid'];
 
 
 if(!isset($_POST['function'])) //add customer
@@ -58,8 +58,7 @@ NULL,'.$address_id.','.$customerId.',0,'.$persons.',NULL,'.$date.',"'.$currentDa
 '.$time.',"Running","")';
     querySend($sql);
     $ordeID=mysqli_insert_id($connect);
-
-    echo json_decode($ordeID);
+    $_SESSION['order']=$ordeID;
 }
 
 ?>

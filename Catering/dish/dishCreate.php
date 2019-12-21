@@ -7,12 +7,12 @@
  */
 include_once ("../connection/connect.php");
 
-if((!isset($_POST['dishid']))&&($_GET['order']))
+if((!isset($_POST['dishid']))&&($_SESSION['order']))
 {
-    header("location:AllSelectedDishes.php?order=".$_GET['order']."");
+    header("location:AllSelectedDishes.php");
     exit();
 }
-$orderId=$_GET['order'];
+$orderId=$_SESSION['order'];
 
 ?>
 
@@ -52,7 +52,7 @@ include_once ("../webdesign/header/header.php");
 
 <div class="container">
 
-    <input hidden type="number" id="orderIdindish" value="<?php echo $_GET["order"];?>">
+    <input hidden type="number" id="orderIdindish" value="<?php echo $orderId;?>">
 
     <?php
     $dishesId=$_POST['dishid'];
@@ -192,19 +192,17 @@ include_once ("../webdesign/footer/footer.php");
            totalitems--;
             if(totalitems==0)
             {
-                var orderid=$("#orderIdindish").val();
-                window.location.href="/Catering/dish/AllSelectedDishes.php?order="+orderid;
+                window.location.href="/Catering/dish/AllSelectedDishes.php";
             }
        }
 
        $(document).on('click','.submitForm',function ()
        {
-           var orderid=$("#orderIdindish").val();
           var id=$(this).data("formid");
           var formdata=new FormData($("#form_"+id)[0]);
           formdata.append("option",'createDish');
            $.ajax({
-               url:"dishServer.php?order="+orderid,
+               url:"dishServer.php",
                method:"POST",
                data:formdata,
                contentType: false,

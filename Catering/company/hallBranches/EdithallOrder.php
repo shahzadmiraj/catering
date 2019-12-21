@@ -16,6 +16,10 @@ $sql='SELECT `id`, `hall_id`, `catering_id`, (SELECT hp.isFood from hallprice as
  `notice`,`describe`,(SELECT hp.describe from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),hallprice_id,(SELECT hp.price from hallprice as hp WHERE hp.id=orderDetail.hallprice_id) FROM `orderDetail` WHERE id='.$orderid.'';
 $detailorder=queryReceive($sql);
 
+$sql='SELECT c.id, c.name,c.image FROM catering as c WHERE c.company_id=(SELECT h.company_id from hall as h where h.id='.$hallid.') AND (ISNULL(c.expire))';
+
+$cateringids=queryReceive($sql);
+
 ?>
 <!DOCTYPE html>
 <head>
@@ -164,6 +168,82 @@ include_once ("../../webdesign/header/header.php");
 
 
     </div>
+
+
+
+
+
+
+    <?php
+
+    if(count($cateringids)>0)
+    {
+
+        $display = '
+                
+                
+    <div class="form-group row" id="cateringid">
+        <label class="col-form-label ">Catereing Branch</label>
+
+
+        <div  class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-utensils"></i></span>
+            </div>
+            <select  name="cateringid" class="form-control">
+                ';
+        if($detailorder[0][2]!="")
+        {
+
+            $sql = 'SELECT `id`, `name` FROM `catering` WHERE id=' . $detailorder[0][2] . '';
+
+            $selectedcatering = queryReceive($sql);
+            $display .= '
+            <option value="' . $selectedcatering[0][0] . '">' . $selectedcatering[0][1] . '</option>';
+
+            for ($i = 0; $i < count($cateringids); $i++) {
+
+                if ($selectedcatering[0][0] != $cateringids[$i][0]) {
+                    $display .= '
+            <option value="' . $cateringids[$i][0] . '">' . $cateringids[$i][1] . '</option>';
+                }
+
+            }
+        }
+        else
+        {
+
+            for ($i = 0; $i < count($cateringids); $i++)
+            {
+
+                    $display .= '
+            <option value="' . $cateringids[$i][0] . '">' . $cateringids[$i][1] . '</option>';
+
+            }
+        }
+
+
+        $display .= '     
+
+
+            </select>
+        </div>
+
+
+
+
+    </div>';
+        echo $display;
+}
+
+
+     ?>
+
+
+
+
+
+
     <div id="groupofpackages" class="col-12 alert-warning shadow">
 
 
@@ -269,6 +349,25 @@ include_once ("../../webdesign/footer/footer.php");
 ?>
 <script>
     $(document).ready(function () {
+
+        function barnches()
+        {
+            var perheadwith = $("#perheadwith").val();
+            if(perheadwith==1)
+            {
+                $("#cateringid").show();
+            }
+            else
+            {
+                $("#cateringid").hide();
+            }
+        }
+        $("#perheadwith").change(function ()
+        {
+            barnches();
+
+        });
+        barnches();
         $("#cancel").click(function ()
         {
             window.history.back();

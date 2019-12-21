@@ -9,7 +9,7 @@ include_once ("../connection/connect.php");
 
 $sql='SELECT dt.id, dt.name FROM dish_type as dt WHERE ISNULL(dt.isExpire)';
 $dishTypeDetail=queryReceive($sql);
-$order=$_GET['order'];
+$order=$_SESSION['order'];
 $sql='SELECT od.hallprice_id,(SELECT hp.describe from hallprice as hp WHERE hp.id=od.hallprice_id),(SELECT hp.isFood from hallprice as hp WHERE hp.id=od.hallprice_id) FROM orderDetail as od
 WHERE od.id='.$order.'';
 $hallpackage=queryReceive($sql);
@@ -52,7 +52,7 @@ include_once ("../webdesign/header/header.php");
 </div>
 
 
-    <form class="card-header container border mb-5 " id="formid" method="post" action="dishCreate.php?order=<?php echo $_GET['order'];?>&option=dishDisplay">
+    <form class="card-header container border mb-5 " id="formid" method="post" action="dishCreate.php">
 
         <div class="col-12" id="selected">
     <div class="form-group row">
@@ -69,7 +69,7 @@ include_once ("../webdesign/header/header.php");
         <div class="form-group row col-12 justify-content-center ">
 
         <?php
-            if(isset($_GET['option']))
+           /* if(isset($_GET['option']))
             {
                 if($_GET['option']=="orderCreate")
                 {
@@ -84,8 +84,15 @@ include_once ("../webdesign/header/header.php");
             else
             {
                 echo '<button id="cancelDish" type="button" class="col-5 btn btn-danger form-control"><i class="fas fa-arrow-left"></i>Edit order</button>';
-            }
+            }*/
+           //10
+        //13
+
         ?>
+
+<!--            <button id="cancelDish" type="button" class="col-5 btn btn-danger form-control"><i class="fas fa-arrow-left"></i>Edit order</button>
+-->
+            <a href="../order/orderEdit.php" type="button" class="col-5 btn btn-danger form-control"><i class="fas fa-arrow-left"></i>Edit order</a>
 
             <button id="submit" type="submit" class="btn-success form-control btn col-5"><i class="fas fa-check "></i>Submit</button>
         </div>

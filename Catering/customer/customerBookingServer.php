@@ -54,11 +54,12 @@ if(isset($_POST['option']))
             querySend($sql);
         }
         $customerId = $last_id;
-        echo json_decode($customerId);
+        $_SESSION['customer']=$customerId;
     }
-    else if($_POST['option']=="customerExist")
+    else
     {
 
+        //if($_POST['option']=="customerExist")
         $value=$_POST['value'];
 
 
@@ -67,8 +68,12 @@ if(isset($_POST['option']))
             $customerexist=queryReceive($sql);
             if(count($customerexist)>0)
             {
-                echo $customerexist[0][0];
+                //echo $customerexist[0][0];
+                $_SESSION['customer']=$customerexist[0][0];
+                echo "customerexist";
             }
+
+
 
 
     }
