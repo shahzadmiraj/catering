@@ -6,7 +6,27 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
+include_once ("../connection/printOrderDetail.php");
 
+if(isset($_GET['action']))
+{
+    $orderId=$_GET['orderid'];
+
+    $currentdate = (string) date_create()->format('Y-m-d:H:i:s');
+   //$currentdate=date('now');
+    //$currentdate="";
+    if($_GET['action']=="see")
+    {
+        action($_COOKIE['username'],$currentdate,$orderId,"I");
+        exit();
+    }
+    else
+    {
+        action($_COOKIE['username'],$currentdate,$orderId,"D");
+        exit();
+    }
+
+}
 $hallid="";
 $cateringid='';
 
@@ -25,7 +45,7 @@ if(isset($_GET['order']))
     }
 }
 
-$_SESSION['userid']=1;
+//$_SESSION['userid']=1;
 
 $sql='SELECT (SELECT p.name FROM person as p WHERE p.id=od.person_id),od.person_id,(SELECT p.image FROM person as p WHERE p.id=od.person_id) FROM orderDetail as od WHERE od.id='.$orderId.'';
 $orderDetailPerson= queryReceive($sql);
@@ -89,9 +109,14 @@ include_once ("../webdesign/header/header.php");
 <div class="container row m-auto">
 
 
-    <a href="/Catering/customer/customerEdit.php?customer=<?php echo $customerID;?>&order=<?php echo $orderId;?>&option=PreviewOrder&name=<?php echo $orderDetailPerson[0][0];?>&image=<?php echo $orderDetailPerson[0][2]?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-user-edit fa-5x"></i><h4>Customer Preview</h4></a>
+    <a href="?orderid=<?php echo $orderId;?>&action=see " class="h-25 col-5 shadow text-dark m-2 text-center fa-5x"   resource=""><i class="fas fa-eye"></i><h4>See Bill / Preview order</h4></a>
+    <a href="?orderid=<?php echo $orderId;?>&action=Download" class="h-25 col-5 shadow text-dark m-2 text-center fa-5x" download><i class="fas fa-cloud-download-alt"></i><h4>Download Bill</h4></a>
+
+
+
+        <a href="/Catering/customer/customerEdit.php?customer=<?php echo $customerID;?>&order=<?php echo $orderId;?>&option=PreviewOrder&name=<?php echo $orderDetailPerson[0][0];?>&image=<?php echo $orderDetailPerson[0][2]?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-user-edit fa-5x"></i><h4>Customer Preview</h4></a>
         <?php
-            if(isset($hallid))
+            if($hallid!="")
             {
                 //1 hall order edit                //2 make hall order to user displaye
                 echo '<a href="../company/hallBranches/EdithallOrder.php?hallid='.$hallid.'&order='.$orderId.'" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-cart-arrow-down fa-5x"></i><h4>Order Edit</h4></a>
@@ -112,12 +137,12 @@ include_once ("../webdesign/header/header.php");
         ?>
 
             <a href="/Catering/dish/AllSelectedDishes.php?order=<?php echo $orderId;?>&option=PreviewOrder&name=<?php echo $orderDetailPerson[0][0];?>&image=<?php echo $orderDetailPerson[0][2]?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-file-word fa-5x"></i><h4>Bill Detail/ extend  </h4></a>
-            <a href="/Catering/payment/paymentHistory.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>&name=<?php echo $orderDetailPerson[0][0];?>&image=<?php echo $orderDetailPerson[0][2]?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-history fa-5x"></i><h4>Payment History</h4></a>
+            <a href="/Catering/payment/paymentHistory.php?user_id=<?php echo $_COOKIE['userid'];?>&order=<?php echo $orderId;?>&name=<?php echo $orderDetailPerson[0][0];?>&image=<?php echo $orderDetailPerson[0][2]?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-history fa-5x"></i><h4>Payment History</h4></a>
 
-            <a href="/Catering/payment/getPayment.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>&name=<?php echo $orderDetailPerson[0][0];?>&image=<?php echo $orderDetailPerson[0][2]?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="far fa-money-bill-alt fa-5x"></i><h4>Get payment from customer</h4></a>
-            <a href="../payment/paymentDisplaySend.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>&name=<?php echo $orderDetailPerson[0][0];?>&image=<?php echo $orderDetailPerson[0][2]?>" class="h-25 col-5 shadow text-dark m-2 text-center"> <i class="fas fa-share-alt fa-5x"></i><h4>Transfer payment <p>(user to user)</p> </h4></a>
+            <a href="/Catering/payment/getPayment.php?user_id=<?php echo $_COOKIE['userid'];?>&order=<?php echo $orderId;?>&name=<?php echo $orderDetailPerson[0][0];?>&image=<?php echo $orderDetailPerson[0][2]?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="far fa-money-bill-alt fa-5x"></i><h4>Get payment from customer</h4></a>
+            <a href="../payment/paymentDisplaySend.php?user_id=<?php echo $_COOKIE['userid'];?>&order=<?php echo $orderId;?>&name=<?php echo $orderDetailPerson[0][0];?>&image=<?php echo $orderDetailPerson[0][2]?>" class="h-25 col-5 shadow text-dark m-2 text-center"> <i class="fas fa-share-alt fa-5x"></i><h4>Transfer payment <p>(user to user)</p> </h4></a>
 
-    <a href="/Catering/payment/transferPaymentReceive.php?user_id=<?php echo $_SESSION['userid'];?>&order=<?php echo $orderId;?>&name=<?php echo $orderDetailPerson[0][0];?>&image=<?php echo $orderDetailPerson[0][2]?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-clipboard-check fa-5x"></i><h4>Payment Receiving Request <p>(user to user)</p> </h4></a>
+    <a href="/Catering/payment/transferPaymentReceive.php?user_id=<?php echo $_COOKIE['userid'];?>&order=<?php echo $orderId;?>&name=<?php echo $orderDetailPerson[0][0];?>&image=<?php echo $orderDetailPerson[0][2]?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-clipboard-check fa-5x"></i><h4>Payment Receiving Request <p>(user to user)</p> </h4></a>
 
 
 </div>
@@ -129,7 +154,6 @@ include_once ("../webdesign/footer/footer.php");
 ?>
 
 <script>
-
 
 
 </script>
