@@ -9,7 +9,15 @@
 include  ("../../connection/connect.php");
 $companyid=$_COOKIE['companyid'];
 //session_destroy();
-$_SESSION['branchtype']="hall";
+
+if(isset($_SESSION['order']))
+{
+    unset($_SESSION['order']);
+}
+if(isset($_SESSION['customer']))
+{
+    unset($_SESSION['customer']);
+}
 if(isset($_GET['branchtype']))
 {
     if($_GET['branchtype']=="hall")
@@ -23,6 +31,7 @@ if(isset($_GET['branchtype']))
     $_SESSION['branchtypeid']=$_GET['branchtypeid'];
     header("location:../../user/userDisplay.php");
 }
+
 
 
 $sql='SELECT  c.name FROM company as c WHERE c.id='.$companyid.'';

@@ -6,8 +6,8 @@
  * Time: 21:31
  */
 include  ("../../connection/connect.php");
-$hallid=$_GET['hallid'];
-$orderid=$_GET['order'];
+$hallid=$_SESSION['branchtypeid'];
+$orderid=$_SESSION['order'];
 $sql='SELECT `id`, `hall_id`, `catering_id`, (SELECT hp.isFood from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),
  `user_id`, `sheftCatering`, `sheftHall`, `sheftCateringUser`, 
  `sheftHallUser`, `address_id`, `person_id`, `total_amount`, 
@@ -337,6 +337,8 @@ include_once ("../../webdesign/header/header.php");
 
 
     <div class="form-group row justify-content-center">
+
+
 
         <button id="cancel" type="button" class=" col-4 btn btn-danger" value="Cancel"><i class="fas fa-arrow-circle-left"></i>back</button>
         <button id="submitform" type="button" class=" col-4 btn btn-success" value="Save"><i class="fas fa-check "></i>Save</button>

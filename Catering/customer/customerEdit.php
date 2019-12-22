@@ -272,7 +272,6 @@ p.id='.$customerId.'';
         </div>
         <div class="form-group row mb-3 p-4">
 
-            <a href="CustomerCreate.php" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Not this Customer</a>
             <?php
         /*    if(isset($_GET['option']))
             {
@@ -314,7 +313,15 @@ p.id='.$customerId.'';
                 }
             }*/
 
-            if($_SESSION['branchtype']=="hall")
+
+
+            if(isset($_GET['action']))
+            {
+                echo '
+            <a href="../order/PreviewOrder.php" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-check "></i> Done</a>';
+
+            }
+            else if($_SESSION['branchtype']=="hall")
             {
                 //hall
 
@@ -322,7 +329,11 @@ p.id='.$customerId.'';
                 {
                     //16 new order of hall
                     echo '
-                    <a href="../company/hallBranches/hallorder.php" class="btn btn-success m-auto col-6"><i class="fas fa-check "></i>Create hall order</a>';
+
+                    <a href="CustomerCreate.php" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Not this Customer</a> 
+                    <a href="../company/hallBranches/hallorder.php" class="btn btn-success m-auto col-6"><i class="fas fa-check "></i>Create hall order</a>
+                    
+                    ';
 
 
                 }
@@ -344,6 +355,8 @@ p.id='.$customerId.'';
                     //not order create
                     //7 go to create order of catering
                     echo '
+
+            <a href="CustomerCreate.php" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Not this Customer</a>
                     <a href="/Catering/order/orderCreate.php" class="col-6 form-control btn btn-outline-primary" id="submit"><i class="fas fa-check "></i> Order Create</a>   
                     
                      ';
@@ -356,6 +369,8 @@ p.id='.$customerId.'';
 
                     //15 oder of catering edit
                     echo '
+
+            <a href="CustomerCreate.php" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Not this Customer</a>
         <a href="/Catering/order/orderEdit.php" class="m-auto col-6 form-control btn btn-primary"><i class="fas fa-check "></i> Edit order</a>';
 
 

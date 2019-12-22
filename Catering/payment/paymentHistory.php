@@ -9,10 +9,8 @@ include_once ("../connection/connect.php");
 
 
 
-$userId=$_GET['user_id'];
-$orderDetail_id=$_GET['order'];
-
-
+$userId=$_COOKIE['userid'];
+$orderDetail_id=$_SESSION['order'];
 ?>
 <!DOCTYPE html>
 <head>

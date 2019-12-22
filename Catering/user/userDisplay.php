@@ -1,11 +1,31 @@
 <?php
 include_once ("../connection/connect.php");
+
 $hallid='';
 $cateringid='';
-if(isset($_GET['hallid']))
- $hallid =$_GET['hallid'];
-if(isset($_GET['cateringid']))
-    $cateringid=$_GET['cateringid'];
+if(isset($_SESSION['branchtype']))
+{
+    if($_SESSION['branchtype']=="hall")
+    {
+        $hallid=$_SESSION['branchtypeid'];
+    }
+    else
+    {
+        $cateringid=$_SESSION['branchtypeid'];
+    }
+}
+/*
+ if(isset($_SESSION['order']))
+{
+    unset($_SESSION['order']);
+}
+
+if(isset($_SESSION['customer']))
+{
+    unset($_SESSION['customer']);
+}
+*/
+
 ?>
 
 <!DOCTYPE html>
@@ -35,8 +55,9 @@ include_once ("../webdesign/header/header.php");
 <?php
 
 $display='';
-if($hallid!='')
+if($hallid!="")
 {
+
     //hall
     $sql='SELECT name,image FROM `hall` WHERE id='.$hallid.'';
     $hallinfo=queryReceive($sql);
@@ -100,17 +121,17 @@ echo $display;
 
     <div class="container row m-auto">
 <!--        $OrderStatus=array("running","cancel","delieved","clear");-->
-            <a href="/Catering/customer/CustomerCreate.php?option=userDisplay&hallid=<?php echo $hallid;?>&cateringid=<?php echo $cateringid;?>" class="h-25 col-5 shadow text-dark m-2 text-center">
+            <a href="/Catering/customer/CustomerCreate.php" class="h-25 col-5 shadow text-dark m-2 text-center">
                 <i class="fas fa-cart-plus fa-5x"></i><h3>Order Create</h3></a>
-        <a href="/Catering/order/FindOrder.php?order_status=Running&cateringid=<?php  echo $cateringid;?>&hallid=<?php echo $hallid;?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-cart-arrow-down fa-5x"></i><h3>Running Order</h3></a>
-            <a href="/Catering/order/FindOrder.php?order_status=Deliever&cateringid=<?php  echo $cateringid;?>&hallid=<?php echo $hallid;?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-truck fa-5x"></i><h3>Deliever Orders</h3></a>
-            <a href="/Catering/order/FindOrder.php?order_status=Clear&cateringid=<?php  echo $cateringid;?>&hallid=<?php echo $hallid;?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="far fa-thumbs-up fa-5x"></i><h3>Clear Orders</h3></a>
-            <a href="/Catering/order/FindOrder.php?order_status=Cancel&cateringid=<?php  echo $cateringid;?>&hallid=<?php echo $hallid;?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="far fa-trash-alt fa-5x"></i><h3>Cancel Orders</h3></a>
-            <a href="/Catering/payment/transferPaymentReceive.php?option=userDisplay" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-money-bill-alt fa-5x"></i><h3>Receive payment</h3></a>
+        <a href="/Catering/order/FindOrder.php?order_status=Running" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-cart-arrow-down fa-5x"></i><h3>Running Order</h3></a>
+            <a href="/Catering/order/FindOrder.php?order_status=Delieved" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-truck fa-5x"></i><h3>Deliever Orders</h3></a>
+            <a href="/Catering/order/FindOrder.php?order_status=Clear" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="far fa-thumbs-up fa-5x"></i><h3>Clear Orders</h3></a>
+            <a href="/Catering/order/FindOrder.php?order_status=Cancel" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="far fa-trash-alt fa-5x"></i><h3>Cancel Orders</h3></a>
+<!--            <a href="/Catering/payment/transferPaymentReceive.php?option=userDisplay" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-money-bill-alt fa-5x"></i><h3>Receive payment</h3></a>-->
     <!--        <a href="/Catering/system/dish/dishesDetail.php" class="h-25 col-6"><h1>Guideline Dishes</h1></a>
             <a href="/Catering/system/user/usercreate.php" class="h-25 col-6"><h1>User Create</h1></a>
     -->
-        <a  href="/Catering/payment/RemainingAmount.php?hallid=<?php echo $hallid;?>&cateringid=<?php echo $cateringid;?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fab fa-amazon-pay fa-5x"></i><h3>Remaining payments</h3></a>
+        <a  href="/Catering/payment/RemainingAmount.php" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fab fa-amazon-pay fa-5x"></i><h3>All Orders Payments info</h3></a>
     </div>
 
 

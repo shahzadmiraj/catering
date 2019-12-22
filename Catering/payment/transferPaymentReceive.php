@@ -3,9 +3,9 @@
 
 include_once ("../connection/connect.php");
 //2//2
-$userId=$_GET['user_id'];
-$orderid=$_GET['order'];
-$companyid=$_GET['companyid']=3;
+$userId=$_COOKIE['userid'];
+$orderid=$_SESSION['order'];
+$companyid=$_COOKIE['companyid'];
 
 ?>
 

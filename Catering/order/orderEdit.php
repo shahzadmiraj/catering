@@ -249,10 +249,21 @@ include_once ("../webdesign/header/header.php");
 
 
 //14,11
+
+            if(isset($_GET['action']))
+            {
+                echo '
+            <a href="../order/PreviewOrder.php" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-check "></i> Done</a>';
+
+            }
+            else
+            {
+                echo '
+            <a href="/Catering/customer/customerEdit.php"   id="cancel" class="form-control col-6 btn btn-danger"> <i class="fas fa-arrow-left"></i>Customer Edit</a>
+            <a href="/Catering/dish/dishDisplay.php"  id="submit" class="form-control col-6 btn-success"><i class="fas fa-check "></i> Display Dish</a>';
+            }
             ?>
 
-            <a href="/Catering/customer/customerEdit.php"   id="cancel" class="form-control col-6 btn btn-danger"> <i class="fas fa-arrow-left"></i>Customer Edit</a>
-            <a href="/Catering/dish/dishDisplay.php"  id="submit" class="form-control col-6 btn-success"><i class="fas fa-check "></i> Display Dish</a>
 
         </div>
 

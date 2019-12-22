@@ -69,10 +69,11 @@ class PDF extends FPDF
         {
             $this->Cell(189,10,'Description : '.$detailorder[0][19],0,1);
         }
-        $displayaddress="    |    Delivering Address : ".$addresDetail[0][1]." , ".$addresDetail[0][2]." , ".$addresDetail[0][3]." , ".$addresDetail[0][4];
+        $displayaddress="Delivering Address : ".$addresDetail[0][1]." , ".$addresDetail[0][2]." , ".$addresDetail[0][3]." , ".$addresDetail[0][4];
 
         $this->Cell(30,10,'Customer Name ',0,0);
-        $this->Cell(30,10,$person[0][0].$displayaddress,0,1);
+        $this->Cell(30,10,$person[0][0],0,1);
+        $this->Cell(189,10,$displayaddress,0,1);
 
         $numberdis="customer # ";
         for($i=0;($i<count($numbers)&&($i!=3));$i++)

@@ -82,9 +82,9 @@ include_once ("../../webdesign/header/header.php");
 
     <div class="input-group mb-3 input-group-lg">
         <div class="input-group-prepend">
-            <span class="input-group-text"><i class="fas fa-camera"></i></span>
+            <span class="input-group-text"><i class="fas fa-registered"></i></span>
         </div>
-        <input type="text" class="form-control" value="<?php echo $companydetail[0][1]?>">
+        <input readonly type="text" class="form-control" value="<?php echo $companydetail[0][1]?>">
     </div>
 
 
@@ -92,32 +92,7 @@ include_once ("../../webdesign/header/header.php");
 
 
 </div>
-<div class="form-group row">
-    <label class="col-form-label">Block/Unblock company</label>
 
-
-
-
-    <input type="button" class="btn btn-danger ml-2" value="
-<?php
-if($companydetail[0][2]=="")
-{
-    //for expire
-    echo "Click Expire";
-}
-else
-{
-
-    //for unblock
-    echo "Click Show";
-}
-
-?>
-
-
-
-">
-</div>
 
                     <!--USERS-->
 <div class="col-12 row mt-5">

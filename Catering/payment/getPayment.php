@@ -14,8 +14,10 @@
 //}
 
 
-$userId=$_GET['user_id'];
-$orderDetail_id=$_GET['order'];
+
+include_once ("../connection/connect.php");
+$userId=$_COOKIE['userid'];
+$orderDetail_id=$_SESSION['order'];
 ?>
 
 <!DOCTYPE html>
