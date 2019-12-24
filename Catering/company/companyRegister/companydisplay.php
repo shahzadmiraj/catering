@@ -93,7 +93,8 @@ include_once ("../../webdesign/header/header.php");
         <?php
          if($_COOKIE['isOwner']==1)
          {
-             echo '<a href="companyEdit.php" class="btn-info btn"><i class="fas fa-edit mr-1"></i>Edit company</a>';
+             echo ' <h1 class="text-center"> <a href="companyEdit.php" class="col-6 btn btn-info "> <i class="fas fa-city mr-2"></i>Edit Company</a></h1>
+                ';
          }
         ?>
     </div>

@@ -1,14 +1,28 @@
 <?php
 include_once ('../../connection/connect.php');
+
+
+if(isset($_GET['action']))
+{
+
+    if($_GET['action']=="expire")
+    {
+        $date=date('Y-m-d H:i:s');
+        $sql='UPDATE `hall` SET `expire`="'.$date.'" WHERE id='.$_SESSION['tempid'].'';
+    }
+    else
+    {
+        $sql='UPDATE `hall` SET `expire`=NULL WHERE id='.$_SESSION['tempid'].'';
+
+    }
+    querySend($sql);
+    header("location:../companyRegister/companyEdit.php");
+}
+
 $hallid='';
 $companyid='';
-$hallBranches='';
-if(isset($_GET['hallid']))
-$hallid=$_GET['hallid'];
-if(isset($_GET['companyid']))
-$companyid=$_GET['companyid'];
-if(isset($_GET['hallBranches']))
-$hallBranches=$_GET['hallBranches'];
+$hallid=$_SESSION['tempid'];
+$companyid=$_COOKIE['companyid'];
 $sql='SELECT `name`, `max_guests`, `noOfPartitions`, `ownParking`, `expire`, `image`, `hallType`, `location_id` FROM `hall` WHERE id='.$hallid.'';
 $halldetail=queryReceive($sql);
 
@@ -72,13 +86,12 @@ else
             echo '        <a href="hallRegister.php?companyid='.$companyid.'&hallBranches='.$hallBranches.'" class="btn btn-success col-6 mb-2"><i class="fas fa-arrow-right"></i> Save And Next </a>';
         }
 
-
         ?>
+        <h1 class="text-center"> <a href="../companyRegister/companyEdit.php " class="col-6 btn btn-info "> <i class="fas fa-city mr-2"></i>Edit Company</a></h1>
     </div>
 </div>
 <div class="container">
-<h1>Hall Setting
-</h1>
+    <h1> Hall Setting </h1>
 <hr class="mt-2 mb-3 border-white">
 <form class="shadow card-body" id="formhall" >
     <input type="number" hidden name="hallid" value="<?php echo $hallid; ?>">
@@ -201,8 +214,21 @@ else
     </div>
     <div class="form-group row mb-5">
 
-        <button id="expirehall" type="button" class="rounded mx-auto d-block btn btn-danger col-5 " value="Expire hall"><span class="fas fa-window-close "></span>   Expire hall</button>
-        <button id="submitedithall" type="button" class="rounded mx-auto d-block btn btn-primary col-5 " value="Submit"> <i class="fas fa-check "></i>Save</button>
+
+        <?php
+        if($halldetail[0][4]=="")
+        {
+            echo '<a href="?action=expire" class="btn btn-danger col-6">Expire</a>';
+
+        }
+        else
+        {
+            echo '<a href="?action=active" class="btn btn-warning col-6">Active</a>';
+        }
+
+        ?>
+
+        <button id="submitedithall" type="button" class="rounded mx-auto d-block btn btn-primary col-6 " value="Submit"> <i class="fas fa-check "></i>Save</button>
 
     </div>
 
@@ -319,7 +345,6 @@ include_once ("../../webdesign/footer/footer.php");
             formdata.append("daytime",daytime);
             formdata.append("hallid","<?php echo $hallid; ?>");
             formdata.append("companyid","<?php echo $companyid;?>");
-            formdata.append("hallBranches","<?php echo $hallBranches;?>");
             formdata.append("hallname","<?php echo $halldetail[0][0]; ?>")
             $.ajax({
                 url:"../companyServer.php",

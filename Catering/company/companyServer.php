@@ -34,7 +34,7 @@ if(isset($_POST['option']))
 
         if(!empty($_FILES['image']["name"]))
         {
-            $image = "../images/users/" . $_FILES['image']['name'];
+            $image = "/Catering/images/users/" . $_FILES['image']['name'];
             $resultimage = ImageUploaded($_FILES, $image);//$dishimage is destination file location;
             if ($resultimage != "") {
                 print_r($resultimage);
@@ -70,9 +70,15 @@ if(isset($_POST['option']))
         $sql='INSERT INTO `company`(`id`, `name`, `expire`, `user_id`) VALUES (NULL,"'.$_POST['companyName'].'",NULL,'.$userid.')';
         querySend($sql);
         $companyid=mysqli_insert_id($connect);
-        echo $companyid;
 
+        $sql='UPDATE user as u SET u.company_id='.$companyid.' WHERE u.id='.$userid.'';
+        querySend($sql);
 
+        setcookie('userid',$userid , time() + (86400 * 30), "/");
+        setcookie("isOwner",1,time() + (86400 * 30), "/");
+        setcookie("username",$username,time() + (86400 * 30), "/");
+        setcookie("companyid",$companyid,time() + (86400 * 30), "/");
+        setcookie("userimage",$image,time() + (86400 * 30), "/");
     }
     else if($_POST['option']=="createCatering")
     {
@@ -169,9 +175,6 @@ if(isset($_POST['option']))
 
             createOnlyAllSeating($hallid,$daytimearray[$i]);
         }
-        echo $hallid;
-
-
 
     }
     else if($_POST['option']=='createOnlyseating')
@@ -229,11 +232,11 @@ if(isset($_POST['option']))
     }
     else if($_POST['option']=="showdaytimelist")
     {
+        $hallBranches='';
         $hallname=$_POST['hallname'];
         $hallid=$_POST['hallid'];
         $daytime=$_POST['daytime'];
         $companyid=$_POST['companyid'];
-        $hallBranches=$_POST['hallBranches'];
         $monthsArray = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 
         $display='<table class="col-8 m-auto">

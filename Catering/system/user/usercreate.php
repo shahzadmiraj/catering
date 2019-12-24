@@ -33,6 +33,8 @@ include_once ("../../webdesign/header/header.php");
     <div class="card-body text-center" style="opacity: 0.7 ;background: #fdfdff;">
         <h3 ><i class="fas fa-user-plus fa-4x"></i> Add User </h3>
         <p>add new user to access your company</p>
+        <a href="../../company/companyRegister/companyEdit.php " class="col-6 btn btn-info"> <i class="fas fa-city mr-2"></i>Edit Company</a>
+
     </div>
 
 </div>

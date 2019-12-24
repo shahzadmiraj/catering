@@ -6,7 +6,24 @@
  * Time: 21:31
  */
 include_once ("../../connection/connect.php");
-$cateringid=$_GET['cateringid'];
+
+if(isset($_GET['action']))
+{
+
+    if($_GET['action']=="expire")
+    {
+        $date=date('Y-m-d H:i:s');
+        $sql='UPDATE `catering` SET `expire`="'.$date.'" WHERE id='.$_SESSION['tempid'].'';
+    }
+    else
+    {
+        $sql='UPDATE `catering` SET `expire`=NULL WHERE id='.$_SESSION['tempid'].'';
+
+    }
+    querySend($sql);
+    header("location:../companyRegister/companyEdit.php");
+}
+$cateringid=$_SESSION['tempid'];
 $sql='SELECT  `name`, `expire`, `image`, `location_id` FROM `catering` WHERE id='.$cateringid.'';
 $cateringdetail=queryReceive($sql);
 
@@ -49,6 +66,9 @@ else
     <div class="card-body " style="opacity: 0.7 ;background: white;">
         <h1 class="display-5 text-center"><i class="fas fa-utensils fa-3x mr-1"></i><?php echo $cateringdetail[0][0];?> Edit Catering Branches</h1>
         <p class="lead">Edit dishes information,dishes type,images and others </p>
+
+        <h1 class="text-center"> <a href="../companyRegister/companyEdit.php" class="col-6 btn btn-info "> <i class="fas fa-city mr-2"></i>Edit Company</a></h1>
+
     </div>
 </div>
 
@@ -99,7 +119,20 @@ else
         </div>
         <div class="form-group row col-12 mb-5">
 
-            <input id="expirecatering" type="button" class="rounded mx-auto d-block btn btn-danger col-5 " value="Expire catering">
+
+            <?php
+            if($cateringdetail[0][1]=="")
+            {
+                echo '<a href="?action=expire" class="btn btn-danger col-6">Expire</a>';
+
+            }
+            else
+            {
+                echo '<a href="?action=active" class="btn btn-warning col-6">Active</a>';
+            }
+
+            ?>
+
                 <button id="submiteditcatering" type="button" class="rounded mx-auto d-block btn btn-primary col-5 " value="Submit"><i class="fas fa-check "></i>Submit</button>
 
         </div>
@@ -377,7 +410,7 @@ $(document).ready(function () {
                     return false;
                 } else
                 {
-                    location.reload();
+                    window.location.href="../companyRegister/companyEdit.php";
 
                 }
 

@@ -6,20 +6,8 @@
  * Time: 17:29
  */
 include_once ("../../connection/connect.php");
-$companyid=$_GET['companyid'];
+$companyid=$_COOKIE['companyid'];
 $CateringBranches=1;
-$hallBranches='';
-if(isset($_GET['CateringBranches']))
-{
-
-    $CateringBranches = $_GET['CateringBranches'];
-    $hallBranches = $_GET['hallBranches'];
-    if ($CateringBranches == 0)
-    {
-        header("location:../hallBranches/hallRegister.php?hallBranches=$hallBranches&companyid=$companyid");
-        exit();
-    }
-}
 $sql='SELECT name,id FROM systemDishType WHERE ISNULL(isExpire)';
 $dishType=queryReceive($sql);
 
@@ -61,7 +49,10 @@ include_once ("../../webdesign/header/header.php");
     <div class="card-body " style="opacity: 0.7 ;background: white;">
         <h1 class="display-5 text-center"><i class="fas fa-registered"></i> Catering Branches</h1>
     <p class="lead">Free register catering branches and also get free software . Book your order easily</p>
+       <h1 class="text-center"> <a href="../companyRegister/companyEdit.php " class="col-6 btn btn-info "> <i class="fas fa-city mr-2"></i>Edit Company</a></h1>
+
     </div>
+
 </div>
 
 
@@ -195,22 +186,6 @@ include_once ("../../webdesign/footer/footer.php");
 
         });
 
-        function nextpage(formid)
-        {
-            $("#removeform"+formid).remove();
-            if(<?php if(isset($_GET['CateringBranches'])){echo 1;}else{echo 0;} ?>==1)
-            {
-                NoCatering--;
-                if(NoCatering<=0)
-                {
-                    window.location.href="../hallBranches/hallRegister.php?hallBranches=<?php echo $hallBranches; ?>&companyid=<?php echo $companyid; ?>";
-                }
-            }
-            else
-            {
-                window.history.back();
-            }
-        }
 
 
         $(".submitform").click(function () {
@@ -234,7 +209,7 @@ include_once ("../../webdesign/footer/footer.php");
                     }
                     else
                     {
-                        nextpage(formid);
+                        window.history.back();
                     }
                 }
             });
@@ -243,9 +218,7 @@ include_once ("../../webdesign/footer/footer.php");
         });
         $(".cancelform").click(function ()
         {
-            var formid=$(this).data("formid");
-            nextpage(formid);
-
+            window.history.back();
         });
 
 
