@@ -1,12 +1,31 @@
 <?php
 include_once ("../../connection/connect.php");
+
+
+
+$packageid=$_SESSION['2ndpage'];
+if(isset($_GET['action']))
+{
+
+    if($_GET['action']=="expire")
+    {
+        $dayAndTime=date('Y-m-d H:i:s');
+        $sql='UPDATE `hallprice` SET expire="'.$dayAndTime.'" WHERE id='.$packageid.'';
+    }
+    else
+    {
+        $sql='UPDATE `hallprice` SET expire=NULL WHERE id='.$packageid.'';
+
+    }
+    querySend($sql);
+    header("location:daytimeAll.php");
+}
+
 $hallname=$_GET['hallname'];
 $month=$_GET['month'];
 $daytime=$_GET['daytime'];
-$packageid=$_GET['packageid'];
-$hallid=$_GET['hallid'];
-$companyid=$_GET['companyid'];
-$hallBranches=$_GET['hallBranches'];
+$hallid=$_SESSION['tempid'];
+$companyid=$_COOKIE['companyid'];
 
 $sql='SELECT `id`, `month`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name` FROM `hallprice` WHERE id='.$packageid.'';
 $packageDetail=queryReceive($sql);
@@ -143,27 +162,20 @@ include_once ("../../webdesign/header/header.php");
 
 
     <div class="col-12 mt-2 row" >
-        <button id="btncancel" type="button" value="<?php
 
-        if($packageDetail[0][6]==NULL)
+        <?php
+        if($packageDetail[0][6]=="")
         {
-            echo "Click Expire";
+            echo '<a href="?action=expire" class="btn btn-danger col-6">Expire</a>';
+
         }
         else
         {
-            echo "Click Show";
+            echo '<a href="?action=active" class="btn btn-warning col-6">Active</a>';
         }
-        ?>" class="btn btn-danger col-6"><i class="fas fa-ban"></i><?php
 
-            if($packageDetail[0][6]==NULL)
-            {
-                echo "Click Expire";
-            }
-            else
-            {
-                echo "Click Show";
-            }
-            ?></button>
+        ?>
+
         <button id="btnsubmit" type="button" value="OK" class="btn btn-primary col-4"><i class="fas fa-check "></i>OK</button>
     </div>
 

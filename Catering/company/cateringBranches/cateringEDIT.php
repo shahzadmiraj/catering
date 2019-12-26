@@ -23,6 +23,11 @@ if(isset($_GET['action']))
     querySend($sql);
     header("location:../companyRegister/companyEdit.php");
 }
+if(isset($_GET['dishdetail']))
+{
+    $_SESSION['2ndpage']=$_GET['dishid'];
+    header("location:dish/EditDish.php");
+}
 $cateringid=$_SESSION['tempid'];
 $sql='SELECT  `name`, `expire`, `image`, `location_id` FROM `catering` WHERE id='.$cateringid.'';
 $cateringdetail=queryReceive($sql);
@@ -199,7 +204,7 @@ else
 
     <div class="col-12 row mb-4">
         <h3 class="rounded mx-auto d-block m-4 col-6" align="center"> Dish information</h3>
-        <a  href="dish/addDish.php?cateringid=<?php echo $cateringid; ?>" class="float-right btn btn-success col-4 form-control mt-4">Add dish +</a>
+        <a  href="dish/addDish.php" class="float-right btn btn-success col-4 form-control mt-4">Add dish +</a>
     </div>
     <hr>
 
@@ -223,7 +228,7 @@ else
 
 
             for ($i = 0; $i < count($Dishes); $i++) {
-                $display .= '<a href="dish/EditDish.php?dishid=' . $Dishes[$i][1] . '&cateringid='.$cateringid.'" class="col-sm-12 col-md-6 col-xl-4 border">
+                $display .= '<a href="?dishdetail=yes&dishid=' . $Dishes[$i][1] . '&cateringid='.$cateringid.'" class="col-sm-12 col-md-6 col-xl-4 border">
               <img src="';
 
                 if(file_exists(substr($Dishes[$i][5],3))&&($Dishes[$i][5]!=""))

@@ -18,6 +18,14 @@ if(isset($_GET['action']))
     querySend($sql);
     header("location:../companyRegister/companyEdit.php");
 }
+if(isset($_GET['editpackage']))
+{
+
+    $_SESSION['2ndpage']=$_GET['packageid'];
+
+    header("location:Editpackage.php?hallname=".$_GET['hallname']."&month=".$_GET['month']."&daytime=".$_GET['daytime']."");
+
+}
 
 $hallid='';
 $companyid='';
@@ -80,13 +88,6 @@ else
     <div class="container" style="background-color: white;opacity: 0.7">
         <h1 class="display-4"><i class="fas fa-place-of-worship"></i><?php echo $halldetail[0][0]; ?></h1>
         <p class="lead">You can control hall setting and also month wise prize list.Prize list consist of per head with food  and per head only seating .</p>
-        <?php
-        if(isset($_GET['hallBranches']))
-        {
-            echo '        <a href="hallRegister.php?companyid='.$companyid.'&hallBranches='.$hallBranches.'" class="btn btn-success col-6 mb-2"><i class="fas fa-arrow-right"></i> Save And Next </a>';
-        }
-
-        ?>
         <h1 class="text-center"> <a href="../companyRegister/companyEdit.php " class="col-6 btn btn-info "> <i class="fas fa-city mr-2"></i>Edit Company</a></h1>
     </div>
 </div>
@@ -258,7 +259,7 @@ else
         </div>
     </div>
 </div>
-<div  class="border" id="showDaytimes" style="margin-top: 20%;height: 60vh;width:100%; overflow: auto">
+<div  class="border" id="showDaytimes" style="margin-top: 20%;height: 90vh;width:100%; overflow: auto">
 
 
 

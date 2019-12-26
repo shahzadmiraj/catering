@@ -123,7 +123,7 @@ include_once ("../webdesign/header/header.php");
             else
             {
                 //catering order editor                  //2 make catering order to user displaye
-                echo '<a href="/Catering/order/orderEdit.php" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-cart-arrow-down fa-5x"></i><h4>Order edit</h4></a>';
+                echo '<a href="/Catering/order/orderEdit.php?action=preview" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-cart-arrow-down fa-5x"></i><h4>Order edit</h4></a>';
             }
         ?>
     <a href="/Catering/user/userDisplay.php" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-grip-horizontal fa-5x"></i><h4>User Display</h4></a>

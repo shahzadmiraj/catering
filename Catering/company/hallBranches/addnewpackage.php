@@ -3,10 +3,8 @@ include_once ("../../connection/connect.php");
 $hallname=$_GET['hallname'];
 $month=$_GET['month'];
 $daytime=$_GET['daytime'];
-$hallid=$_GET['hallid'];
-$companyid=$_GET['companyid'];
-$hallBranches=$_GET['hallBranches'];
-
+$hallid=$_SESSION['tempid'];
+$companyid=$_COOKIE['companyid'];
 
 ?>
 

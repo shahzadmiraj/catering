@@ -7,12 +7,13 @@
  */
 include_once ("../connection/connect.php");
 
-$sql='SELECT dt.id, dt.name FROM dish_type as dt WHERE ISNULL(dt.isExpire)';
-$dishTypeDetail=queryReceive($sql);
 $order=$_SESSION['order'];
-$sql='SELECT od.hallprice_id,(SELECT hp.describe from hallprice as hp WHERE hp.id=od.hallprice_id),(SELECT hp.isFood from hallprice as hp WHERE hp.id=od.hallprice_id) FROM orderDetail as od
+$sql='SELECT od.hallprice_id,(SELECT hp.describe from hallprice as hp WHERE hp.id=od.hallprice_id),(SELECT hp.isFood from hallprice as hp WHERE hp.id=od.hallprice_id),od.catering_id FROM orderDetail as od
 WHERE od.id='.$order.'';
 $hallpackage=queryReceive($sql);
+$cateringid=$hallpackage[0][3];
+$sql='SELECT dt.id, dt.name FROM dish_type as dt WHERE ISNULL(dt.isExpire) AND (dt.catering_id='.$cateringid.')';
+$dishTypeDetail=queryReceive($sql);
 ?>
 <!DOCTYPE html>
 <head>
@@ -108,7 +109,7 @@ include_once ("../webdesign/header/header.php");
         {
             $display.='<h2 data-dishtype="'.$i.'" data-display="hide" align="center " class="dishtypes col-12 btn-warning"> '.$dishTypeDetail[$i][1].'</h2>';
 
-            $sql='SELECT `name`, `id`, `image`, `dish_type_id` FROM `dish` WHERE (dish_type_id='.$dishTypeDetail[$i][0].') AND (ISNULL(isExpire))';
+            $sql='SELECT `name`, `id`, `image`, `dish_type_id` FROM `dish` WHERE (dish_type_id='.$dishTypeDetail[$i][0].') AND (ISNULL(isExpire)) AND(catering_id='.$cateringid.')';
             $dishDetail=queryReceive($sql);
             $display.='<div id="dishtype'.$i.'"  class="row" style="display: none">';
             for ($j=0;$j<count($dishDetail);$j++)

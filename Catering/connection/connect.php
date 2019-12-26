@@ -7,7 +7,7 @@
  */
 
 
-//session are customerid,typebranch,typebranchid
+//session are customerid,typebranch,typebranchid,tempid,2ndpage,order
 //cookies are userid,username,companyid,userimage,isOwner
 //
 //$OrderStatus=array("Running","Cancel","Delieved","Clear");

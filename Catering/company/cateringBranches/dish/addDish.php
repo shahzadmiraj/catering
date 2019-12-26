@@ -6,7 +6,7 @@
  * Time: 21:31
  */
 include_once ("../../../connection/connect.php");
-$cateringid=$_GET['cateringid'];
+$cateringid=$_SESSION['tempid'];
 
 ?>
 <!DOCTYPE html>

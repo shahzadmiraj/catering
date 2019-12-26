@@ -70,16 +70,7 @@ background: linear-gradient(to right, #ff6a00, #ee0979);/* W3C, IE 10+/ Edge, Fi
                         <a class="dropdown-item" href="#">Something else here</a>
                     </div>
                 </li>-->
-                <?php
-                if(isset($_COOKIE["userid"]))
-                {
-                    echo '
-                <li class="nav-item">
-                    <a class="nav-link" href="/Catering/user/logout.php"><i class="fas fa-sign-out-alt"></i> Sign out</a>
-                </li>';
 
-                }
-                ?>
                 <?php
                 if(!isset($_COOKIE["userid"]))
                 {
@@ -93,11 +84,30 @@ background: linear-gradient(to right, #ff6a00, #ee0979);/* W3C, IE 10+/ Edge, Fi
 
 
                 <?php
-                if(isset($_GET["order"]))
+                if(isset($_SESSION["order"]))
                 {
                     echo '
                 <li class="nav-item">
-                    <a class="nav-link" href="/Catering/order/PreviewOrder.php?order='.$_GET["order"].'"><i class="fas fa-shopping-cart"></i> Order Preview</a>
+                    <a class="nav-link" href="/Catering/order/PreviewOrder.php"><i class="fas fa-shopping-cart"></i> Order Preview</a>
+                </li>';
+
+                }
+
+
+                if(isset($_SESSION['order']))
+                {
+                    echo '    <a class="nav-link" href="/Catering/user/userDisplay.php" ><i class="fas fa-grip-horizontal"></i> User Display</a>';
+                }
+                ?>
+
+
+
+                <?php
+                if(isset($_COOKIE["userid"]))
+                {
+                    echo '
+                <li class="nav-item">
+                    <a class="nav-link" href="/Catering/user/logout.php"><i class="fas fa-sign-out-alt"></i> Sign out</a>
                 </li>';
 
                 }
