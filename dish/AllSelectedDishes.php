@@ -11,6 +11,11 @@ if(!isset($_SESSION['order']))
 {
     header("location:../user/userDisplay.php");
 }
+if(isset($_GET['action']))
+{
+    $_SESSION['tempid']=$_GET['action'];
+    header("location:dishPreview.php");
+}
 $orderId=$_SESSION['order'];
 
 ?>
@@ -26,7 +31,7 @@ $orderId=$_SESSION['order'];
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../webdesign/css/complete.css">
-
+    <link rel="stylesheet" href="../webdesign/css/loader.css">
     <style>
 
     </style>
@@ -109,14 +114,20 @@ include_once ("../webdesign/header/header.php");
     ?>
 
 
-<div class="col-12" style="overflow: auto">
-        <div class="form-group row border">
-            <label class="font-weight-bold border-right col-3 "><h1 class="fas fa-concierge-bell mr-2"></h1> dish name</label>
-            <label class=" font-weight-bold border-right col-3 "><h1 class="fas fa-hashtag mr-2"></h1>quantity</label>
-            <label class=" font-weight-bold border-right col-3 "><h1 class="far fa-money-bill-alt mr-2"></h1>each price</label>
-            <label class="font-weight-bold border-right col-3 "><h1 class="fas fa-list-alt mr-2"></h1>total</label>
 
-        </div>
+<div style="overflow:auto;width:auto" >
+
+    <table class="table table-striped table-dark">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col"><h1 class="fas fa-concierge-bell"></h1><br> DishName</th>
+            <th scope="col"><h1 class="fas fa-hashtag "></h1><br>Quantity</th>
+            <th scope="col"><h1 class="far fa-money-bill-alt"></h1><br>Each price</th>
+            <th scope="col"><h1 class="fas fa-list-alt"></h1><br>Total price</th>
+        </tr>
+        </thead>
+        <tbody>
 
         <?php
         $sql='SELECT dd.id,d.name,dd.quantity,dd.price,d.id FROM dish_detail as dd INNER JOIN
@@ -129,15 +140,17 @@ where
         for($i=0;$i<count($dishesDetail);$i++)
         {
             $totalAmount+=(int)$dishesDetail[$i][2]*(int)$dishesDetail[$i][3];
-            echo '    
-            <a href="dishPreview.php?dishId='.$dishesDetail[$i][4].'&dishDetailId='.$dishesDetail[$i][0].'&order='.$orderId.'&option=Allselected" class="row card-body border text-white p-0 shadow" >
-            <label class="border-right col-form-label col-3">'.$dishesDetail[$i][1].'</label>
-            <label class="border-right col-form-label col-3">'.$dishesDetail[$i][2].'</label>
-            <label class="border-right col-form-label col-3">'.$dishesDetail[$i][3].'</label>
-            <label class="border-right col-form-label col-3">'.(int)$dishesDetail[$i][2]*(int)$dishesDetail[$i][3].'</label>
+            echo '   
+            <tr class="dishdetail" data-id="'.$dishesDetail[$i][0].'">
+            <th scope="row">'.($i+1).'</th>
+            <td>'.$dishesDetail[$i][1].'</td>
+            <td>'.$dishesDetail[$i][2].'</td>
+            <td>'.$dishesDetail[$i][3].'</td>
+            <td>'.(int)$dishesDetail[$i][2]*(int)$dishesDetail[$i][3].'</td>
             
             
-            </a>';
+             </tr>
+            ';
         }
 
 
@@ -148,6 +161,13 @@ where
 
 
         ?>
+
+
+        </tbody>
+    </table>
+
+
+
 </div>
 
 
@@ -155,11 +175,9 @@ where
 
 
 
-
-
-    <div class="col-12  row justify-content-center mt-4 ">
-        <a href="dishDisplay.php" class="form-control btn-success col-5"><i class="fas fa-concierge-bell"></i>dish Add +</a>
-        <a class="nav-link btn btn-warning col-5" href="../order/PreviewOrder.php"><i class="fas fa-shopping-cart"></i> Order Preview</a>
+    <div class="col-12  row justify-content-center ">
+        <a href="dishDisplay.php" class="form-control btn-success col-6"><i class="fas fa-concierge-bell"></i>dish Add +</a>
+        <a class="nav-link btn btn-warning col-6 form-control" href="../order/PreviewOrder.php"><i class="fas fa-shopping-cart"></i> Order Preview</a>
 
     </div>
 
@@ -174,6 +192,17 @@ where
 include_once ("../webdesign/footer/footer.php");
 ?>
 <script>
+
+    $(document).ready(function () {
+
+        $(".dishdetail").click(function ()
+        {
+            var id=$(this).data("id");
+            window.location.href="?action="+id;
+
+        });
+
+    });
 
 </script>
 </body>

@@ -27,7 +27,7 @@ $dishTypeDetail=queryReceive($sql);
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-
+    <link rel="stylesheet" href="../webdesign/css/loader.css">
     <style>
 
     </style>
@@ -57,9 +57,9 @@ include_once ("../webdesign/header/header.php");
 
         <div class="col-12" id="selected">
     <div class="form-group row">
-        <label  class="text-center col-form-label col-5"><i class="fas fa-concierge-bell fa-2x col-12"></i>Dish Name</label>
-        <label class="text-center col-form-label col-3"> <i class="fas fa-sort-amount-up fa-2x col-12"></i>Types</label>
-        <label class=" text-center col-form-label col-3"><i class="fas fa-trash-alt fa-2x col-12"></i>Delete</label>
+        <label  class="text-center col-form-label col-8"><i class="fas fa-concierge-bell fa-2x col-12"></i>Dish Name</label>
+        <label class="text-center col-form-label col-3" hidden> <i class="fas fa-sort-amount-up fa-2x col-12"></i>Types</label>
+        <label class=" text-center col-form-label col-4"><i class="fas fa-trash-alt fa-2x col-12"></i>Delete</label>
     </div>
 
 
@@ -93,9 +93,9 @@ include_once ("../webdesign/header/header.php");
 
 <!--            <button id="cancelDish" type="button" class="col-5 btn btn-danger form-control"><i class="fas fa-arrow-left"></i>Edit order</button>
 -->
-            <a href="../order/orderEdit.php" type="button" class="col-5 btn btn-danger form-control"><i class="fas fa-arrow-left"></i>Edit order</a>
+            <a href="../order/orderEdit.php" type="button" class="col-6 btn btn-danger form-control"><i class="fas fa-arrow-left"></i>Edit order</a>
 
-            <button id="submit" type="submit" class="btn-success form-control btn col-5"><i class="fas fa-check "></i>Submit</button>
+            <button id="submit" type="submit" class="btn-success form-control btn col-6"><i class="fas fa-check "></i>Submit</button>
         </div>
 
     </form>
@@ -115,7 +115,7 @@ include_once ("../webdesign/header/header.php");
             for ($j=0;$j<count($dishDetail);$j++)
             {
                 $display .= ' 
-         <div  class="col-4 m-2 m-sm-auto  shadow-lg p-3 bg-white rounded" >';
+         <div  class="col-5 m-2 m-sm-auto  shadow-lg p-3 bg-white rounded" >';
 
 
 
@@ -157,10 +157,10 @@ include_once ("../webdesign/footer/footer.php");
            var dishId=$(this).data("dishid");
            $('#selected').append('\n' +
                '            <div class="form-group row " id="dishid_'+dishId+'">\n' +
-               '                <h2 class="form-control col-7">'+dishName+'</h2>\n' +
-               '                <input type="number" value="1" name="types[]" class="form-control col-3">\n' +
+               '                <h2 class="col-8 border">'+dishName+'</h2>\n' +
+               '                <input type="number" hidden value="1" name="types[]" class="form-control col-3">\n' +
                '                <input type="number" hidden name="dishid[]" value="'+dishId+'">\n' +
-               '                <input type="button" class="remove form-control col-2 btn-danger" data-dishid="'+dishId+'" value="-">\n' +
+               '                <button  type="button" class="remove border-white form-control col-4 btn-danger" data-dishid="'+dishId+'"><i class="fas fa-trash-alt"></i></button>\n' +
                '            </div>');
 
        }) ;
