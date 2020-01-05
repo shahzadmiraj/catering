@@ -6,6 +6,10 @@
  * Time: 21:31
  */
 include  ("../../connection/connect.php");
+if(!isset($_SESSION['customer']))
+{
+    header("location:../../customer/CustomerCreate.php");
+}
 $hallid=$_SESSION['branchtypeid'];
 $personid=$_SESSION['customer'];
 $userid=$_COOKIE['userid'];
@@ -26,6 +30,7 @@ $cateringids=queryReceive($sql);
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../../webdesign/css/complete.css">
+    <link rel="stylesheet" href="../../webdesign/css/loader.css">
 
     <style>
         form
@@ -282,8 +287,13 @@ include_once ("../../webdesign/footer/footer.php");
                 data: formdata,
                 contentType: false,
                 processData: false,
-                success: function (data)
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
                 {
+                    $("#preloader").hide();
                     if(perheadwith==1)
                     {
                         if (data == "")
@@ -330,8 +340,13 @@ include_once ("../../webdesign/footer/footer.php");
                 data: formdata,
                 contentType: false,
                 processData: false,
-                success: function (data)
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
                 {
+                    $("#preloader").hide();
                     $("#selectmenu").html(data);
                     $("#selectmenu").append("<h3 align='center' class='col-12'>Menu Description</h3><p class='col-12'>"+describe+"</p>");
                 }
@@ -370,8 +385,13 @@ include_once ("../../webdesign/footer/footer.php");
                 data: formdata,
                 contentType: false,
                 processData: false,
-                success: function (data)
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
                 {
+                    $("#preloader").hide();
                     if(data!="")
                     {
                         alert(data);

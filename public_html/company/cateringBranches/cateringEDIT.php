@@ -7,6 +7,18 @@
  */
 include_once ("../../connection/connect.php");
 
+
+if(!isset($_COOKIE['companyid']))
+{
+    header("location:../../user/userLogin.php");
+}
+if(!isset($_SESSION['tempid']))
+{
+
+    header("location:../companyRegister/companyEdit.php");
+}
+
+
 if(isset($_GET['action']))
 {
 
@@ -46,7 +58,7 @@ $cateringdetail=queryReceive($sql);
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../../webdesign/css/complete.css">
-
+    <link rel="stylesheet" href="../../webdesign/css/loader.css">
     <style>
 
     </style>
@@ -363,8 +375,13 @@ $(document).ready(function () {
           data:{id:id,value:value,option:"changeDishType"},
           dataType:"text",
           method:"POST",
-          success:function (data)
-          {
+
+           beforeSend: function() {
+               $("#preloader").show();
+           },
+           success:function (data)
+           {
+               $("#preloader").hide();
               if(data!="")
               {
                   alert(data);
@@ -384,8 +401,13 @@ $(document).ready(function () {
             data:{value:value,id:id,option:"Delele_Dish_Type"},
             dataType:"text",
             method:"POST",
+
+            beforeSend: function() {
+                $("#preloader").show();
+            },
             success:function (data)
             {
+                $("#preloader").hide();
                 if(data!="")
                 {
                     alert(data);
@@ -408,7 +430,13 @@ $(document).ready(function () {
             data: formdata,
             contentType: false,
             processData: false,
-            success: function (data) {
+
+            beforeSend: function() {
+                $("#preloader").show();
+            },
+            success:function (data)
+            {
+                $("#preloader").hide();
                 if (data != '')
                 {
                     alert(data);

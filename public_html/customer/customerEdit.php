@@ -6,6 +6,10 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
+if(!isset($_SESSION['customer']))
+{
+    header("location:CustomerCreate.php");
+}
 $customerId="";
 $customerId=$_SESSION['customer'];
 $hallid="";
@@ -46,7 +50,7 @@ $numbers=queryReceive($sql);
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-
+    <link rel="stylesheet" href="../webdesign/css/loader.css">
     <style>
 
     </style>
@@ -73,7 +77,7 @@ include_once ("../webdesign/header/header.php");
 
         if($person[0][4]=="")
         {
-            echo 'http://pngwebicons.com/uploads/user/512/user_icon9133.png';
+            echo 'https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
         }
         else
         {
@@ -405,7 +409,13 @@ p.id='.$customerId.'';
              data:{columnname:column,value:text,edittype:type,option:"change",customerid:customerid},
              dataType:"text",
              method:"POST",
-             success:function (data) {
+
+             beforeSend: function() {
+                 $("#preloader").show();
+             },
+             success:function (data)
+             {
+                 $("#preloader").hide();
                  if(data!='')
                  {
                      alert(data);
@@ -420,7 +430,13 @@ p.id='.$customerId.'';
              data:{columnname:column,value:text,edittype:type,id:id,option:"change",customerid:customerid},
              dataType:"text",
              method:"POST",
-             success:function (data) {
+
+             beforeSend: function() {
+                 $("#preloader").show();
+             },
+             success:function (data)
+             {
+                 $("#preloader").hide();
                  if(data!='') {
                      alert(data);
                  }
@@ -461,7 +477,13 @@ p.id='.$customerId.'';
              data:{option:"addNumber",number:numberText,customerid:customerid},
              dataType:"text",
              method:"POST",
-             success:function (data) {
+
+             beforeSend: function() {
+                 $("#preloader").show();
+             },
+             success:function (data)
+             {
+                 $("#preloader").hide();
                  if(data!='')
                  {
                      alert(data);
@@ -482,7 +504,13 @@ p.id='.$customerId.'';
              data:{ id:id,option:"deleteNumber"},
              dataType:"text",
              method:"POST",
-             success:function (data) {
+
+             beforeSend: function() {
+                 $("#preloader").show();
+             },
+             success:function (data)
+             {
+                 $("#preloader").hide();
                  if(data!='')
                  {
                      alert(data);
@@ -504,8 +532,13 @@ p.id='.$customerId.'';
              data:formData,
              contentType: false,
              processData: false,
+
+             beforeSend: function() {
+                 $("#preloader").show();
+             },
              success:function (data)
              {
+                 $("#preloader").hide();
                  if(data!='')
                  {
                      alert(data);

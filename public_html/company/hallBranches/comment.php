@@ -130,9 +130,13 @@
                data: formdata,
                contentType: false,
                processData: false,
-               success: function (data)
-               {
 
+               beforeSend: function() {
+                   $("#preloader").show();
+               },
+               success:function (data)
+               {
+                   $("#preloader").hide();
                     location.reload();
 
                }

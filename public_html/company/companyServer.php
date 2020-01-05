@@ -34,12 +34,14 @@ if(isset($_POST['option']))
 
         if(!empty($_FILES['image']["name"]))
         {
-            $image = "/public_html/images/users/" . $_FILES['image']['name'];
+            $image = "../images/users/" . $_FILES['image']['name'];
             $resultimage = ImageUploaded($_FILES, $image);//$dishimage is destination file location;
             if ($resultimage != "") {
                 print_r($resultimage);
                 exit();
             }
+
+            $image = "../../images/users/" . $_FILES['image']['name'];
 
         }
 
@@ -95,6 +97,7 @@ if(isset($_POST['option']))
                 print_r($resultimage);
                 exit();
             }
+
         }
         $sql='INSERT INTO `catering`(`id`, `name`, `expire`, `image`, `location_id`, `company_id`) VALUES (NULL,"'.$namecatering.'",NULL,"'.$Cateringimage.'",NULL,'.$companyid.')';
         querySend($sql);
@@ -657,6 +660,12 @@ WHERE  id='.$order.'';
         $currentdatetime=date('Y-m-d H:i:s');
         $sql='INSERT INTO `comments`(`hall_id`, `catering_id`, `id`, `comment`, `email`, `datetime`, `expire`) VALUES ('.$hallid.',NULL,NULL,"'.$comments.'","'.$email.'","'.$currentdatetime.'",NULL)';
         querySend($sql);
+    }
+    else if($_POST['option']=="dishpredict")
+    {
+        $dishname=$_POST['dishname'];
+        $sql='SELECT `name`, `id`, `image` FROM `systemDish` WHERE ISNULL(isExpire) AND name LIKE "%'.$dishname.'%"';
+        echo dishesOfPakage($sql);
     }
 
 

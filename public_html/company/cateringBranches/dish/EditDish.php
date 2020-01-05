@@ -27,7 +27,7 @@ $attributes=queryReceive($sql);
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../../../webdesign/css/complete.css">
-
+    <link rel="stylesheet" href="../../../webdesign/css/loader.css">
     <style>
 
     </style>
@@ -227,8 +227,13 @@ include_once ("../../../webdesign/footer/footer.php");
                 method:"POST",
                 data:{value:value,dishid:dishid,option:"ExpireDish"},
                 dataType:"text",
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
                 success:function (data)
                 {
+                    $("#preloader").hide();
                     if(data!='')
                     {
                         alert(data);
@@ -279,8 +284,13 @@ include_once ("../../../webdesign/footer/footer.php");
                 data:formdata,
                 contentType: false,
                 processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
                 success:function (data)
                 {
+                    $("#preloader").hide();
                     if(data!='')
                     {
                         alert(data);
@@ -302,8 +312,13 @@ include_once ("../../../webdesign/footer/footer.php");
                method: "POST",
                data: {attributeid:attributeid,text:text,option:"changeAttributes"},
                dataType:"text",
+
+               beforeSend: function() {
+                   $("#preloader").show();
+               },
                success:function (data)
                {
+                   $("#preloader").hide();
                    if(data!='')
                    {
                        alert(data);
@@ -322,8 +337,13 @@ include_once ("../../../webdesign/footer/footer.php");
                 method: "POST",
                 data: {attributeid:attributeid,option:"RemoveAttribute"},
                 dataType:"text",
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
                 success:function (data)
                 {
+                    $("#preloader").hide();
                     if(data!='')
                     {
                         alert(data);
@@ -347,8 +367,13 @@ include_once ("../../../webdesign/footer/footer.php");
                 method: "POST",
                 data: {dishid:dishid,column:column,text:text,option:"dishchanges"},
                 dataType:"text",
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
                 success:function (data)
                 {
+                    $("#preloader").hide();
                     if(data!='')
                     {
                         alert(data);
@@ -369,8 +394,13 @@ include_once ("../../../webdesign/footer/footer.php");
                 data:formData,
                 contentType: false,
                 processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
                 success:function (data)
                 {
+                    $("#preloader").hide();
                     if(data!='')
                     {
                         alert(data);

@@ -3,10 +3,10 @@
 //../cateringBranches/cateringEDIT.php?
 //../../system/user/userEdit.php?
 include_once ("../../connection/connect.php");
-/*if(isset($_SESSION['tempid']))
+if(!isset($_COOKIE['companyid']))
 {
-    unset($_SESSION['tempid']);
-}*/
+    header("location:../../user/userLogin.php");
+}
 if(isset($_GET['action']))
 {
     $_SESSION['tempid']=$_GET['id'];
@@ -45,7 +45,7 @@ $companydetail=queryReceive($sql);
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-
+    <link rel="stylesheet" href="../../webdesign/css/loader.css">
     <style>
 
         #hallbranches

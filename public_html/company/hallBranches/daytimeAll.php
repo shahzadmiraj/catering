@@ -2,6 +2,12 @@
 include_once ('../../connection/connect.php');
 
 
+if(!isset($_SESSION['tempid']))
+{
+
+    header("location:../companyRegister/companyEdit.php");
+}
+
 if(isset($_GET['action']))
 {
 
@@ -48,7 +54,7 @@ $halldetail=queryReceive($sql);
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../../webdesign/css/complete.css">
-
+    <link rel="stylesheet" href="../../webdesign/css/loader.css">
     <style>
 
         #formhall
@@ -271,6 +277,10 @@ else
         <h1 class="font-weight-light text-lg-left mt-4 mb-3">Gallery</h1>
 
 
+
+        
+
+
         <form action="" method="POST" enctype="multipart/form-data" class="form-inline">
             <input type="file" name="userfile[]" value="" multiple="" class="col-8 btn  btn-light">
             <input type="submit" name="submit" value="Upload" class="btn btn-success col-4">
@@ -353,8 +363,13 @@ include_once ("../../webdesign/footer/footer.php");
                 data:formdata,
                 contentType: false,
                 processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
                 success:function (data)
                 {
+                    $("#preloader").hide();
                     $("#showDaytimes").html(data);
                 }
             });
@@ -380,8 +395,13 @@ include_once ("../../webdesign/footer/footer.php");
                 data:formdata,
                 contentType: false,
                 processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
                 success:function (data)
                 {
+                    $("#preloader").hide();
                     if(data!='')
                     {
                         alert(data);
@@ -404,8 +424,13 @@ include_once ("../../webdesign/footer/footer.php");
                 data:formdata,
                 contentType: false,
                 processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
                 success:function (data)
                 {
+                    $("#preloader").hide();
                     if(data!='')
                     {
                         alert(data);

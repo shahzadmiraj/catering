@@ -41,13 +41,18 @@ if(isset($_SESSION['customer']))
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-
+    <link rel="stylesheet" href="../webdesign/css/loader.css">
 
     <style>
 
     </style>
+
 </head>
 <body>
+
+
+
+
 <?php
 include_once ("../webdesign/header/header.php");
 ?>
@@ -60,9 +65,8 @@ include_once ("../webdesign/header/header.php");
 
 
 
-
-
 <div class="container card-body">
+
 
 <form id="form">
 
@@ -220,7 +224,6 @@ include_once ("../webdesign/footer/footer.php");
 ?>
 <script>
 
-
    $(document).ready(function ()
    {
 
@@ -233,12 +236,18 @@ include_once ("../webdesign/footer/footer.php");
                data:{value:value,option:"customerExist"},
                dataType:"text",
                method: "POST",
+
+               beforeSend: function() {
+                   $("#preloader").show();
+               },
                success:function (data)
                {
+                   $("#preloader").hide();
                    if(data=="customerexist")
                    {
                            window.location.href="customerEdit.php";
                    }
+
                }
            });
        });
@@ -303,8 +312,14 @@ include_once ("../webdesign/footer/footer.php");
                data:formdata,
                contentType: false,
                processData: false,
+
+               beforeSend: function() {
+                   $("#preloader").show();
+               },
                success:function (data)
                {
+
+                   $("#preloader").hide();
 
                     if(data!="")
                     {

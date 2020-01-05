@@ -9,7 +9,7 @@
 
 //session are customerid,typebranch,typebranchid,tempid,2ndpage,order
 //cookies are userid,username,companyid,userimage,isOwner
-//
+//public_html on companyserver.php,header footer
 //$OrderStatus=array("Running","Cancel","Delieved","Clear");
 //
 session_start();
@@ -17,7 +17,7 @@ date_default_timezone_set("Asia/Karachi");
 //date_default_timezone_get();
 
 $connect=mysqli_connect('localhost',"root","","a111");
-//$connect=mysqli_connect("localhost","id10884474_shahzad","11111","id10884474_catering");
+//$connect=mysqli_connect("localhost","id10884474_shahzad","11111111","id10884474_a111");
     if(!$connect)
     {
         echo "fail connection";

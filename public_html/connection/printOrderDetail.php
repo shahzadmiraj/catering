@@ -16,7 +16,7 @@ class PDF extends FPDF
         // Title
         $this->Cell(30,10,$branchinfo[0][0],1,1,'C');
 
-        $displaynum=" company #: ";
+        $displaynum=$branchinfo[0][0]." company # : ";
         for($i=0;$i<count($owerinfo)&&($i!=3);$i++)
         {
             if($owerinfo[$i][1]!="")
@@ -35,12 +35,8 @@ class PDF extends FPDF
     {
         // Position at 1.5 cm from bottom
 
-        $this->SetY(-40);
+        $this->SetY(-15);
 
-        $this->Cell(45,20,"Company User signature",0,0,"C");
-        $this->Cell(45,20,"",1,0);
-        $this->Cell(45,20,"Customer signature",0,0,"C");
-        $this->Cell(45,20,"",1,1);
         // Arial italic 8
         $this->SetFont('Arial','I',9);
 
@@ -49,7 +45,7 @@ class PDF extends FPDF
         $this->Image('../gmail.png', 5, $this->GetY(), 12);
 
 
-        $this->Cell(0,10,"Event Guru (website:www.eventguru.com) , (Gmail:groupofshaheen@gmail.com) , (whatsapp:0923350498004)   ".'Page '.$this->PageNo().'/{nb}',0,1,'R');
+        $this->Cell(0,10,"Event Guru (website:www.eventguru.com) , (Gmail:group.of.shaheen@gmail.com) , (whatsapp:0923350498004)   ".'Page '.$this->PageNo().'/{nb}',0,1,'R');
     }
 
 
@@ -67,7 +63,12 @@ class PDF extends FPDF
 
         if($detailorder[0][19]!="")
         {
-            $this->Cell(189,10,'Description : '.$detailorder[0][19],0,1);
+
+            $text='Description : '.$detailorder[0][19];
+            $nb=$this->WordWrap($text,189);
+            $this->Write(10,$text);
+
+            $this->Cell(189,10,"",0,1);
         }
         $displayaddress="Delivering Address : ".$addresDetail[0][1]." , ".$addresDetail[0][2]." , ".$addresDetail[0][3]." , ".$addresDetail[0][4];
 
@@ -157,7 +158,6 @@ $attributeDetail=queryReceive($sql);
         $this->Cell(45,10,$detailorder[0][11]-$totalReceivedPayment[0][0],1,1);
 
 
-
     }
     function hallorderPrint($detailorder,$person,$numbers,$menu,$totalReceivedPayment,$branchinfo,$owerinfo,$userName,$printDate)
     {
@@ -208,8 +208,17 @@ $attributeDetail=queryReceive($sql);
         $this->Cell(45,10,"booked Date : ",0,0);
         $this->Cell(45,10,$detailorder[0][15],0,1);
 
-        $this->Cell(189,10,"Description/Comment of order : ",0,1,"C");
-        $this->Cell(189,10,$detailorder[0][19],0,1);
+
+
+        if($detailorder[0][19]!="")
+        {
+
+            $text='Description : '.$detailorder[0][19];
+            $nb=$this->WordWrap($text,189);
+            $this->Write(10,$text);
+
+            $this->Cell(189,10,"",0,1);
+        }
 
         $this->Cell(189,10,"Payments Detial : ",1,1,"C");
         $this->Cell(45,10,"Total Amount : ",0,0);
@@ -253,6 +262,9 @@ $attributeDetail=queryReceive($sql);
 
 
         }
+
+
+
 
 
 
@@ -382,6 +394,65 @@ WHERE
 
 
     }
+
+
+
+    function WordWrap(&$text, $maxwidth)
+    {
+        $text = trim($text);
+        if ($text==='')
+            return 0;
+        $space = $this->GetStringWidth(' ');
+        $lines = explode("\n", $text);
+        $text = '';
+        $count = 0;
+
+        foreach ($lines as $line)
+        {
+            $words = preg_split('/ +/', $line);
+            $width = 0;
+
+            foreach ($words as $word)
+            {
+                $wordwidth = $this->GetStringWidth($word);
+                if ($wordwidth > $maxwidth)
+                {
+                    // Word is too long, we cut it
+                    for($i=0; $i<strlen($word); $i++)
+                    {
+                        $wordwidth = $this->GetStringWidth(substr($word, $i, 1));
+                        if($width + $wordwidth <= $maxwidth)
+                        {
+                            $width += $wordwidth;
+                            $text .= substr($word, $i, 1);
+                        }
+                        else
+                        {
+                            $width = $wordwidth;
+                            $text = rtrim($text)."\n".substr($word, $i, 1);
+                            $count++;
+                        }
+                    }
+                }
+                elseif($width + $wordwidth <= $maxwidth)
+                {
+                    $width += $wordwidth + $space;
+                    $text .= $word.' ';
+                }
+                else
+                {
+                    $width = $wordwidth + $space;
+                    $text = rtrim($text)."\n".$word.' ';
+                    $count++;
+                }
+            }
+            $text = rtrim($text)."\n";
+            $count++;
+        }
+        $text = rtrim($text);
+        return $count;
+    }
+
 }
 
 
@@ -394,9 +465,16 @@ function action($userName,$printDate,$orderid,$action)
     $pdf->AliasNbPages();
     $pdf->AddPage();
     $pdf->SetFont('Times','',8);
-
     $pdf->billing($userName,$printDate,$orderid);
     //$pdf->Output($action,"orderid".$orderid."date".$printDate);
+
+
+    $pdf->Cell(189,10,"",0,1);
+    $pdf->Cell(45,20,"Company User signature",0,0,"C");
+    $pdf->Cell(45,20,"",1,0);
+    $pdf->Cell(45,20,"Customer signature",0,0,"C");
+    $pdf->Cell(45,20,"",1,1);
+
     $pdf->Output($action,"orderid".$orderid."date".$printDate.".pdf");
 }
 

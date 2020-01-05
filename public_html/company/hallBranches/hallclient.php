@@ -38,6 +38,7 @@ $packagedtail=queryReceive($sql);
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="../../webdesign/css/complete.css">
+    <link rel="stylesheet" href="../../webdesign/css/loader.css">
     <style>
         html body{
             width: 100%;
@@ -306,7 +307,7 @@ else
 
     <form action="" method="POST" enctype="multipart/form-data" class="form-inline">
         <input type="file" name="userfile[]" value="" multiple="" class="col-8 btn  btn-light">
-        <input type="submit" name="submit" value="Upload" class="btn btn-success col-4">
+        <input id="submitmultiphotos" type="submit" name="submit" value="Upload" class="btn btn-success col-4">
     </form>
     <?php
 
@@ -376,6 +377,45 @@ include_once ("comment.php");
 include_once ("../../webdesign/footer/footer.php");
 ?>
 <script>
+
+
+    $(document).ready(function ()
+    {
+        $("#submitmultiphotos").change(function (e)
+        {
+            e.preventDefault();
+            var formData=new FormData($(this)[0]);
+            $.ajax({
+                url:"",
+                method:"POST",
+                data:formData,
+                contentType: false,
+                processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
+                {
+                    $("#preloader").hide();
+                        location.reload();
+
+
+                }
+            });
+
+
+
+
+        });
+
+
+
+
+
+    });
+
+
 
 
 

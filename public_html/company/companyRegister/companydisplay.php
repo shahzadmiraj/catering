@@ -7,8 +7,12 @@
  */
 
 include  ("../../connection/connect.php");
+if(!isset($_COOKIE['companyid']))
+{
+    header("location:../../user/userLogin.php");
+}
 $companyid=$_COOKIE['companyid'];
-//session_destroy();
+
 
 if(isset($_SESSION['order']))
 {
@@ -56,7 +60,7 @@ $caterings=queryReceive($sql);
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-
+    <link rel="stylesheet" href="../../webdesign/css/loader.css">
     <style>
 
         #hallbranches

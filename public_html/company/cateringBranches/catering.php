@@ -6,6 +6,11 @@
  * Time: 17:29
  */
 include_once ("../../connection/connect.php");
+
+if(!isset($_COOKIE['companyid']))
+{
+    header("location:../../user/userLogin.php");
+}
 $companyid=$_COOKIE['companyid'];
 $CateringBranches=1;
 $sql='SELECT name,id FROM systemDishType WHERE ISNULL(isExpire)';
@@ -24,7 +29,7 @@ $dishType=queryReceive($sql);
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../../webdesign/css/complete.css">
-
+    <link rel="stylesheet" href="../../webdesign/css/loader.css">
     <style>
         form
         {
@@ -40,6 +45,11 @@ $dishType=queryReceive($sql);
     </style>
 </head>
 <body>
+
+
+
+
+
 <?php
 include_once ("../../webdesign/header/header.php");
 
@@ -199,9 +209,13 @@ include_once ("../../webdesign/footer/footer.php");
                 data:formdata,
                 contentType: false,
                 processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
                 success:function (data)
                 {
-
+                    $("#preloader").hide();
                     if(data!="")
                     {
                         alert(data);

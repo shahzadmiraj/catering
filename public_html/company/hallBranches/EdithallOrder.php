@@ -6,6 +6,14 @@
  * Time: 21:31
  */
 include  ("../../connection/connect.php");
+if(!isset($_SESSION['order']))
+{
+    header("location:hallorder.php");
+}
+if(!isset($_SESSION['customer']))
+{
+    header("location:../../customer/CustomerCreate.php");
+}
 $hallid=$_SESSION['branchtypeid'];
 $orderid=$_SESSION['order'];
 $sql='SELECT `id`, `hall_id`, `catering_id`, (SELECT hp.isFood from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),
@@ -33,7 +41,7 @@ $cateringids=queryReceive($sql);
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../../webdesign/css/complete.css">
-
+    <link rel="stylesheet" href="../../webdesign/css/loader.css">
     <style>
 
     </style>
@@ -408,9 +416,13 @@ include_once ("../../webdesign/footer/footer.php");
                 data: formdata,
                 contentType: false,
                 processData: false,
-                success: function (data)
-                {
 
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
+                {
+                    $("#preloader").hide();
                     if(perheadwith==1)
                     {
                         if (data == "")
@@ -449,8 +461,13 @@ include_once ("../../webdesign/footer/footer.php");
                 data: formdata,
                 contentType: false,
                 processData: false,
-                success: function (data)
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
                 {
+                    $("#preloader").hide();
                     $("#selectmenu").html(data);
                     $("#selectmenu").append("<h3 align='center' class='col-12'>Menu Description</h3><p class='col-12'>"+describe+"</p>");
                 }
@@ -506,8 +523,13 @@ include_once ("../../webdesign/footer/footer.php");
                 data: formdata,
                 contentType: false,
                 processData: false,
-                success: function (data)
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
                 {
+                    $("#preloader").hide();
                     if(data!="")
                     {
                         alert(data);
