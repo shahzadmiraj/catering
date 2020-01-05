@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="/Catering/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bootstrap.min.css">
     <script src="../../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -47,7 +47,7 @@ include_once ("../../webdesign/header/header.php");
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
                 <span class="input-group-text" ><i class="fas fa-building"></i>
-</span>
+                </span>
             </div>
             <input placeholder="Your Company Name" id="companyName"  class="form-control" type="text" name="companyName">
         </div>
@@ -55,38 +55,12 @@ include_once ("../../webdesign/header/header.php");
 
     </div>
 
-    <div  class="form-group row">
-        <label class="form-check-label ">No of Catering Branches</label>
-<!--        <input id="CateringBranches" class="form-control" type="number" name="CateringBranches">-->
 
 
-        <div class="input-group mb-3 input-group-lg">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-utensils"></i>
 
-</span>
-            </div>
-            <input placeholder="No of Catering Branches"   id="CateringBranches" class="form-control" type="number" name="CateringBranches">
-        </div>
-    </div>
-
-    <div  class="form-group row">
-        <label class="form-check-label">No of Hall Branches</label>
-<!--        <input id="hallBranches" class="form-control col-3" type="number" name="hallBranches">-->
-
-
-        <div class="input-group mb-3 input-group-lg">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-mosque"></i></span>
-            </div>
-            <input placeholder="No of Hall Branches"  id="hallBranches" class="form-control" type="number" name="hallBranches">
-        </div>
-    </div>
     <div class="form-group row">
         <label for="username" class="col-form-label  ">User Name</label>
 <!--        <input type="text" id="username" name="username" class="form-control ">-->
-
-
 
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
@@ -103,7 +77,7 @@ include_once ("../../webdesign/header/header.php");
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-key"></i></span>
             </div>
-            <input placeholder="Password"  type="text" id="password" name="password" class="form-control">
+            <input placeholder="Password"  type="password" id="password" name="password" class="form-control">
         </div>
     </div>
     <div class="form-group row">
@@ -114,7 +88,7 @@ include_once ("../../webdesign/header/header.php");
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-key"></i></span>
             </div>
-            <input type="text" id="password1" name="password1" class="form-control" placeholder="Confirm password">
+            <input type="password" id="password1" name="password1" class="form-control" placeholder="Confirm password">
         </div>
 
     </div>
@@ -240,13 +214,13 @@ include_once ("../../webdesign/header/header.php");
     </div>
 </div>
 
-
+<!--
 <div class="input-group mb-3 input-group-lg">
     <div class="input-group-prepend">
         <span class="input-group-text">Large</span>
     </div>
     <input type="text" class="form-control">
-</div>
+</div>-->
 
 <?php
 include_once ("../../webdesign/footer/footer.php");
@@ -289,21 +263,6 @@ include_once ("../../webdesign/footer/footer.php");
         {
             e.preventDefault();
 
-            var companyName=$("#companyName").val();
-            var CateringBranches=$("#CateringBranches").val();
-            var hallBranches=$("#hallBranches").val();
-
-            if(!((CateringBranches>0) && (CateringBranches<=10)))
-            {
-                alert("Catering Branches must be 0 to 10");
-                return false;
-            }
-
-            if(!((hallBranches>0) && (hallBranches<=10)))
-            {
-                alert("hall Branches must be 0 to 10");
-                return false;
-            }
             if(!(($("#username").val().length>5) && ($("#username").length<9)))
             {
                 alert("Username must be 6 to 8 letters");
@@ -339,10 +298,15 @@ include_once ("../../webdesign/footer/footer.php");
                 data:formdata,
                 contentType: false,
                 processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
                 success:function (data)
                 {
+                    $("#preloader").hide();
 
-                    if(!($.isNumeric(data)))
+                    if(data!="")
                     {
                         alert(data);
                         return false;
@@ -350,7 +314,7 @@ include_once ("../../webdesign/footer/footer.php");
                     else
                     {
 
-                        window.location.href='../cateringBranches/catering.php?companyid='+data+"&CateringBranches="+CateringBranches+"&hallBranches="+hallBranches;
+                        window.location.href='companydisplay.php';
 
                     }
                 }

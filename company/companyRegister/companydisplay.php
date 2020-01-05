@@ -7,7 +7,36 @@
  */
 
 include  ("../../connection/connect.php");
+if(!isset($_COOKIE['companyid']))
+{
+    header("location:../../user/userLogin.php");
+}
 $companyid=$_COOKIE['companyid'];
+
+
+if(isset($_SESSION['order']))
+{
+    unset($_SESSION['order']);
+}
+if(isset($_SESSION['customer']))
+{
+    unset($_SESSION['customer']);
+}
+if(isset($_GET['branchtype']))
+{
+    if($_GET['branchtype']=="hall")
+    {
+        $_SESSION['branchtype']="hall";
+    }
+    else
+    {
+        $_SESSION['branchtype']="catering";
+    }
+    $_SESSION['branchtypeid']=$_GET['branchtypeid'];
+    header("location:../../user/userDisplay.php");
+}
+
+
 
 $sql='SELECT  c.name FROM company as c WHERE c.id='.$companyid.'';
 $companydetail=queryReceive($sql);
@@ -68,7 +97,8 @@ include_once ("../../webdesign/header/header.php");
         <?php
          if($_COOKIE['isOwner']==1)
          {
-             echo '<a href="companyEdit.php" class="btn-info btn"><i class="fas fa-edit mr-1"></i>Edit company</a>';
+             echo ' <h1 class="text-center"> <a href="companyEdit.php" class="col-6 btn btn-info "> <i class="fas fa-city mr-2"></i>Edit Company</a></h1>
+                ';
          }
         ?>
     </div>
@@ -84,7 +114,8 @@ $display='';
 for ($i=0;$i<count($halls);$i++)
 {
   $display.= '
-    <a href="../../user/userDisplay.php?hallid='.$halls[$i][0].'" class="col-sm-12 col-md-4 col-xl-3 m-2 shadow border  text-white" >
+    <a  href="?branchtype=hall&branchtypeid='.$halls[$i][0].'"
+     class="col-sm-12 col-md-4 col-xl-3 m-2 shadow border  text-white" >
         <img class="card-img-top  col-12 p-0" src="';
   if(file_exists($halls[$i][2]))
   {
@@ -116,7 +147,7 @@ echo $display;
     for ($i=0;$i<count($caterings);$i++)
     {
         $display.= '
-    <a href="../../user/userDisplay.php?cateringid='.$caterings[$i][0].'" class="col-sm-12 col-md-4 col-xl-3 m-2 border text-white">
+    <a href="?branchtype=catering&branchtypeid='.$caterings[$i][0].'" class="col-sm-12 col-md-4 col-xl-3 m-2 border text-white">
    
         <img class="card-img-top  col-12  p-0" src="';
         if(file_exists($caterings[$i][2])&&($caterings[$i][2]!=""))

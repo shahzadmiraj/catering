@@ -241,7 +241,7 @@ else
             }
 
             ?> " class="img-thumbnail" style="width: 200px">
-            <h4 class="m-3"><span class="text-info">Name: <?php echo $owndetail[0][1];?></span></h4>
+            <h4 class="m-3"><span class="text-white">Name: <?php echo $owndetail[0][1];?></span></h4>
             </div>
 
             <?php
@@ -250,7 +250,7 @@ else
             {
                 $display.='<h5 class="m-3">
                 <i class="fas fa-phone-volume"></i>
-          Phone No:<span class="text-info"> '.$owndetail[$i][2].'</span></h5>';
+          Phone No:<span class="text-white"> '.$owndetail[$i][2].'</span></h5>';
             }
             echo $display;
 
@@ -262,13 +262,13 @@ else
 
             <h5 class="m-3">
                 <i class="fas fa-users"></i>
-                  Maximum Guest: <span class="text-info"><?php echo $hallinformations[0][0];?></span></h5>
+                  Maximum Guest: <span class="text-white"><?php echo $hallinformations[0][0];?></span></h5>
 
             <h5 class="m-3">
                 <i class="fas fa-columns"></i>
-                Number of partitions: <span class="text-info"><?php echo $hallinformations[0][0];?></span></h5>
+                Number of partitions: <span class="text-white"><?php echo $hallinformations[0][0];?></span></h5>
             <h5 class="m-3">
-                <i class="fas fa-parking"></i>Parking : <span class="text-info"><?php
+                <i class="fas fa-parking"></i>Parking : <span class="text-white"><?php
 
 
                 if($hallinformations[0][0]==1)
@@ -286,7 +286,7 @@ else
 
             <h5 class="m-3">
                 <i class="fas fa-archway"></i>
-                Hall Type: <span class="text-info"><?php
+                Hall Type: <span class="text-white"><?php
                 $halltype=array("Marquee","Hall","Deera /Open area");
 
                 echo $halltype[$hallinformations[0][5]];
@@ -306,7 +306,7 @@ else
 
     <form action="" method="POST" enctype="multipart/form-data" class="form-inline">
         <input type="file" name="userfile[]" value="" multiple="" class="col-8 btn  btn-light">
-        <input type="submit" name="submit" value="Upload" class="btn btn-success col-4">
+        <input id="submitmultiphotos" type="submit" name="submit" value="Upload" class="btn btn-success col-4">
     </form>
     <?php
 
@@ -376,6 +376,45 @@ include_once ("comment.php");
 include_once ("../../webdesign/footer/footer.php");
 ?>
 <script>
+
+
+    $(document).ready(function ()
+    {
+        $("#submitmultiphotos").change(function (e)
+        {
+            e.preventDefault();
+            var formData=new FormData($(this)[0]);
+            $.ajax({
+                url:"",
+                method:"POST",
+                data:formData,
+                contentType: false,
+                processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
+                {
+                    $("#preloader").hide();
+                        location.reload();
+
+
+                }
+            });
+
+
+
+
+        });
+
+
+
+
+
+    });
+
+
 
 
 

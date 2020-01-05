@@ -1,12 +1,35 @@
 <?php
 include_once ("../../connection/connect.php");
+
+if(!(isset($_SESSION['tempid'])&&(isset($_SESSION['2ndpage']))))
+{
+
+    header("location:../companyRegister/companyEdit.php");
+}
+
+$packageid=$_SESSION['2ndpage'];
+if(isset($_GET['action']))
+{
+
+    if($_GET['action']=="expire")
+    {
+        $dayAndTime=date('Y-m-d H:i:s');
+        $sql='UPDATE `hallprice` SET expire="'.$dayAndTime.'" WHERE id='.$packageid.'';
+    }
+    else
+    {
+        $sql='UPDATE `hallprice` SET expire=NULL WHERE id='.$packageid.'';
+
+    }
+    querySend($sql);
+    header("location:daytimeAll.php");
+}
+
 $hallname=$_GET['hallname'];
 $month=$_GET['month'];
 $daytime=$_GET['daytime'];
-$packageid=$_GET['packageid'];
-$hallid=$_GET['hallid'];
-$companyid=$_GET['companyid'];
-$hallBranches=$_GET['hallBranches'];
+$hallid=$_SESSION['tempid'];
+$companyid=$_COOKIE['companyid'];
 
 $sql='SELECT `id`, `month`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name` FROM `hallprice` WHERE id='.$packageid.'';
 $packageDetail=queryReceive($sql);
@@ -143,28 +166,21 @@ include_once ("../../webdesign/header/header.php");
 
 
     <div class="col-12 mt-2 row" >
-        <button id="btncancel" type="button" value="<?php
 
-        if($packageDetail[0][6]==NULL)
+        <?php
+        if($packageDetail[0][6]=="")
         {
-            echo "Click Expire";
+            echo '<a href="?action=expire" class="btn btn-danger col-6">Expire</a>';
+
         }
         else
         {
-            echo "Click Show";
+            echo '<a href="?action=active" class="btn btn-warning col-6">Active</a>';
         }
-        ?>" class="btn btn-danger col-6"><i class="fas fa-ban"></i><?php
 
-            if($packageDetail[0][6]==NULL)
-            {
-                echo "Click Expire";
-            }
-            else
-            {
-                echo "Click Show";
-            }
-            ?></button>
-        <button id="btnsubmit" type="button" value="OK" class="btn btn-primary col-4"><i class="fas fa-check "></i>OK</button>
+        ?>
+
+        <button id="btnsubmit" type="button" value="OK" class="btn btn-primary col-6"><i class="fas fa-check "></i>OK</button>
     </div>
 
 </form>
@@ -175,9 +191,19 @@ include_once ("../../webdesign/header/header.php");
 
 
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
-        ADD dish in system
-    </button>
+
+    <div class="form-group row">
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-search"></i></span>
+            </div>
+            <input id="searchdish" class="form-control" type="text" placeholder="Search dish">
+            <button type="button" class="btn btn-primary float-right col-4" data-toggle="modal" data-target="#exampleModal">
+                ADD dish
+            </button>
+        </div>
+    </div>
+
 
     <div id="selectmenu" class="border m-2 p-0  row"  style="overflow:auto;width: 100% ;height: 50vh" >
 
@@ -251,8 +277,13 @@ include_once ("../../webdesign/footer/footer.php");
                 data:formdata,
                 contentType: false,
                 processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
                 success:function (data)
                 {
+                    $("#preloader").hide();
 
                     if(data!='')
                     {
@@ -310,8 +341,13 @@ include_once ("../../webdesign/footer/footer.php");
                 data:formdata,
                 contentType: false,
                 processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
                 success:function (data)
                 {
+                    $("#preloader").hide();
 
                     if(data!='')
                     {
@@ -338,8 +374,13 @@ include_once ("../../webdesign/footer/footer.php");
                 data:formdata,
                 contentType: false,
                 processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
                 success:function (data)
                 {
+                    $("#preloader").hide();
 
                     if(data!='')
                     {
@@ -363,8 +404,13 @@ include_once ("../../webdesign/footer/footer.php");
                method:"POST",
                data:{option:"alreadydishremove",id:id},
                dataType:"text",
+
+               beforeSend: function() {
+                   $("#preloader").show();
+               },
                success:function (data)
                {
+                   $("#preloader").hide();
                     if(data!="")
                     {
                         alert(data);
@@ -401,14 +447,46 @@ include_once ("../../webdesign/footer/footer.php");
                 data:formdata,
                 contentType: false,
                 processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
                 success:function (data)
                 {
+                    $("#preloader").hide();
                     $("#selectmenu").html(data);
                     $("form")[1].reset();
                     $('#exampleModal').modal('toggle');
 
                 }
             });
+        });
+
+        $("#searchdish").keyup(function () {
+            var dishname=$(this).val();
+
+            var formdata=new FormData();
+            formdata.append("option","dishpredict");
+            formdata.append("dishname",dishname);
+            $.ajax({
+                url:"../companyServer.php",
+                method:"POST",
+                data:formdata,
+                contentType: false,
+                processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
+                {
+                    $("#preloader").hide();
+
+                    $("#selectmenu").html(data);
+                }
+            });
+
+
         });
 
 

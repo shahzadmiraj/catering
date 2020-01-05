@@ -6,19 +6,8 @@
  * Time: 21:31
  */
 include  ("../../connection/connect.php");
-$companyid=$_GET['companyid'];
+$companyid=$_COOKIE['companyid'];
 $hallBranches='';
-
-if (isset($_GET['hallBranches']))
-{
-    $hallBranches = $_GET['hallBranches'];
-    if ($hallBranches == 0)
-    {
-        //go to display company detail
-        header("Location:../../user/userLogin.php");
-        exit();
-    }
-}
 
 ?>
 <!DOCTYPE html>
@@ -53,6 +42,9 @@ include_once ("../../webdesign/header/header.php");
     <div class="card-body text-center" style="opacity: 0.7 ;background: white;">
         <h1 class="display-5 "><i class="fas fa-registered"></i> Hall Branch Register</h1>
         <p class="lead">Free register Hall branches and also get free software . Book your order easily</p>
+
+        <a href="../companyRegister/companyEdit.php " class="col-6 btn btn-info"> <i class="fas fa-city mr-2"></i>Edit Company</a>
+
     </div>
 </div>
 
@@ -197,36 +189,21 @@ include_once ("../../webdesign/footer/footer.php");
                 data: formdata,
                 contentType: false,
                 processData: false,
-                success: function (data)
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
                 {
-                    if(!($.isNumeric(data)))
+                    $("#preloader").hide();
+                    if(data!="")
                     {
                         alert(data);
+                        return false;
                     }
                     else
                     {
-                        //hall detail
-
-                        <?php
-                        if (isset($_GET['hallBranches']))
-                        {
-                            ?>
-
-                        window.location.href="daytimeAll.php?companyid=<?php echo $companyid; ?>&hallid="+data+"&hallBranches=<?php  $hallBranches--;  echo $hallBranches;?>";
-
-                            <?php
-
-                        }
-                        else
-                        {
-                            ?>
-
                         window.history.back();
-                            <?php
-
-                        }
-
-                        ?>
                     }
 
                 }
@@ -234,30 +211,7 @@ include_once ("../../webdesign/footer/footer.php");
         });
         $("#cancel").click(function ()
         {
-
-
-            <?php
-            if (isset($_GET['hallBranches']))
-            {
-                ?>
-
-
-            //remove one hall
-            window.location.href="?hallBranches=<?php  $hallBranches--;  echo $hallBranches;?>&companyid=<?php echo $companyid;?>";
-
-                <?php
-
-            }
-            else
-            {
-                ?>
-
             window.history.back();
-                <?php
-
-            }
-
-            ?>
 
         });
     });

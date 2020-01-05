@@ -16,7 +16,7 @@ class PDF extends FPDF
         // Title
         $this->Cell(30,10,$branchinfo[0][0],1,1,'C');
 
-        $displaynum=" company #: ";
+        $displaynum=$branchinfo[0][0]." company # : ";
         for($i=0;$i<count($owerinfo)&&($i!=3);$i++)
         {
             if($owerinfo[$i][1]!="")
@@ -49,7 +49,7 @@ class PDF extends FPDF
         $this->Image('../gmail.png', 5, $this->GetY(), 12);
 
 
-        $this->Cell(0,10,"Event Guru (website:www.eventguru.com) , (Gmail:groupofshaheen@gmail.com) , (whatsapp:0923350498004)   ".'Page '.$this->PageNo().'/{nb}',0,1,'R');
+        $this->Cell(0,10,"Event Guru (website:www.eventguru.com) , (Gmail:group.of.shaheen@gmail.com) , (whatsapp:0923350498004)   ".'Page '.$this->PageNo().'/{nb}',0,1,'R');
     }
 
 
@@ -69,10 +69,11 @@ class PDF extends FPDF
         {
             $this->Cell(189,10,'Description : '.$detailorder[0][19],0,1);
         }
-        $displayaddress="    |    Delivering Address : ".$addresDetail[0][1]." , ".$addresDetail[0][2]." , ".$addresDetail[0][3]." , ".$addresDetail[0][4];
+        $displayaddress="Delivering Address : ".$addresDetail[0][1]." , ".$addresDetail[0][2]." , ".$addresDetail[0][3]." , ".$addresDetail[0][4];
 
         $this->Cell(30,10,'Customer Name ',0,0);
-        $this->Cell(30,10,$person[0][0].$displayaddress,0,1);
+        $this->Cell(30,10,$person[0][0],0,1);
+        $this->Cell(189,10,$displayaddress,0,1);
 
         $numberdis="customer # ";
         for($i=0;($i<count($numbers)&&($i!=3));$i++)

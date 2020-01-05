@@ -1,12 +1,12 @@
 <?php
 include_once ("../../connection/connect.php");
+
+
 $hallname=$_GET['hallname'];
 $month=$_GET['month'];
 $daytime=$_GET['daytime'];
-$hallid=$_GET['hallid'];
-$companyid=$_GET['companyid'];
-$hallBranches=$_GET['hallBranches'];
-
+$hallid=$_SESSION['tempid'];
+$companyid=$_COOKIE['companyid'];
 
 ?>
 
@@ -172,15 +172,26 @@ include_once ("../../webdesign/header/header.php");
 
 
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
-        ADD dish in system
-    </button>
+
+
+
+    <div class="form-group row">
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-search"></i></span>
+            </div>
+            <input id="searchdish" class="form-control" type="text" placeholder="Search dish">
+            <button type="button" class="btn btn-primary float-right col-4" data-toggle="modal" data-target="#exampleModal">
+                ADD dish
+            </button>
+        </div>
+    </div>
 
     <div id="selectmenu" class="border m-2 p-0  row"  style="overflow:auto;width: 100% ;height: 50vh" >
 
         <?php
 
-        $sql = 'SELECT `name`, `id`, `image` FROM `systemDish` WHERE ISNULL(isExpire) ';
+        $sql = 'SELECT `name`, `id`, `image` FROM `systemDish` WHERE ISNULL(isExpire)';
         echo dishesOfPakage($sql);
 
         ?>
@@ -288,9 +299,13 @@ $(document).ready(function ()
            data:formdata,
            contentType: false,
            processData: false,
+
+           beforeSend: function() {
+               $("#preloader").show();
+           },
            success:function (data)
            {
-
+               $("#preloader").hide();
               if(data!='')
               {
                   alert(data);
@@ -326,8 +341,13 @@ $(document).ready(function ()
             data:formdata,
             contentType: false,
             processData: false,
+
+            beforeSend: function() {
+                $("#preloader").show();
+            },
             success:function (data)
             {
+                $("#preloader").hide();
                 $("#selectmenu").html(data);
                 $("form")[1].reset();
                 $('#exampleModal').modal('toggle');
@@ -335,6 +355,33 @@ $(document).ready(function ()
             }
         });
     });
+    $("#searchdish").keyup(function () {
+       var dishname=$(this).val();
+
+        var formdata=new FormData();
+        formdata.append("option","dishpredict");
+        formdata.append("dishname",dishname);
+        $.ajax({
+            url:"../companyServer.php",
+            method:"POST",
+            data:formdata,
+            contentType: false,
+            processData: false,
+
+            beforeSend: function() {
+                $("#preloader").show();
+            },
+            success:function (data)
+            {
+                $("#preloader").hide();
+
+                $("#selectmenu").html(data);
+            }
+        });
+
+
+    });
+
 
 
 

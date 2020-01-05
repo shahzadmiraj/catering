@@ -52,10 +52,10 @@ if($_POST['function']=="add") {
  `user_id`, `sheftCatering`, `sheftHall`, `sheftCateringUser`, `sheftHallUser`, 
  `address_id`, `person_id`, 
 `total_amount`, `total_person`, `status_hall`, `destination_date`, `booking_date`, 
-`destination_time`, `status_catering`, `notice`) VALUES 
+`destination_time`, `status_catering`, `notice`,`describe`) VALUES 
 (NULL,NULL,'.$cateringid.',NULL,'.$userid.',NULL,NULL,NULL,
 NULL,'.$address_id.','.$customerId.',0,'.$persons.',NULL,'.$date.',"'.$currentDate.'",
-'.$time.',"Running","")';
+'.$time.',"Running","","'.$describe.'")';
     querySend($sql);
     $ordeID=mysqli_insert_id($connect);
     $_SESSION['order']=$ordeID;

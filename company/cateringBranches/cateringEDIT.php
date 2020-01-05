@@ -6,7 +6,41 @@
  * Time: 21:31
  */
 include_once ("../../connection/connect.php");
-$cateringid=$_GET['cateringid'];
+
+
+if(!isset($_COOKIE['companyid']))
+{
+    header("location:../../user/userLogin.php");
+}
+if(!isset($_SESSION['tempid']))
+{
+
+    header("location:../companyRegister/companyEdit.php");
+}
+
+
+if(isset($_GET['action']))
+{
+
+    if($_GET['action']=="expire")
+    {
+        $date=date('Y-m-d H:i:s');
+        $sql='UPDATE `catering` SET `expire`="'.$date.'" WHERE id='.$_SESSION['tempid'].'';
+    }
+    else
+    {
+        $sql='UPDATE `catering` SET `expire`=NULL WHERE id='.$_SESSION['tempid'].'';
+
+    }
+    querySend($sql);
+    header("location:../companyRegister/companyEdit.php");
+}
+if(isset($_GET['dishdetail']))
+{
+    $_SESSION['2ndpage']=$_GET['dishid'];
+    header("location:dish/EditDish.php");
+}
+$cateringid=$_SESSION['tempid'];
 $sql='SELECT  `name`, `expire`, `image`, `location_id` FROM `catering` WHERE id='.$cateringid.'';
 $cateringdetail=queryReceive($sql);
 
@@ -49,6 +83,9 @@ else
     <div class="card-body " style="opacity: 0.7 ;background: white;">
         <h1 class="display-5 text-center"><i class="fas fa-utensils fa-3x mr-1"></i><?php echo $cateringdetail[0][0];?> Edit Catering Branches</h1>
         <p class="lead">Edit dishes information,dishes type,images and others </p>
+
+        <h1 class="text-center"> <a href="../companyRegister/companyEdit.php" class="col-6 btn btn-info "> <i class="fas fa-city mr-2"></i>Edit Company</a></h1>
+
     </div>
 </div>
 
@@ -99,7 +136,20 @@ else
         </div>
         <div class="form-group row col-12 mb-5">
 
-            <input id="expirecatering" type="button" class="rounded mx-auto d-block btn btn-danger col-5 " value="Expire catering">
+
+            <?php
+            if($cateringdetail[0][1]=="")
+            {
+                echo '<a href="?action=expire" class="btn btn-danger col-6">Expire</a>';
+
+            }
+            else
+            {
+                echo '<a href="?action=active" class="btn btn-warning col-6">Active</a>';
+            }
+
+            ?>
+
                 <button id="submiteditcatering" type="button" class="rounded mx-auto d-block btn btn-primary col-5 " value="Submit"><i class="fas fa-check "></i>Submit</button>
 
         </div>
@@ -166,7 +216,7 @@ else
 
     <div class="col-12 row mb-4">
         <h3 class="rounded mx-auto d-block m-4 col-6" align="center"> Dish information</h3>
-        <a  href="dish/addDish.php?cateringid=<?php echo $cateringid; ?>" class="float-right btn btn-success col-4 form-control mt-4">Add dish +</a>
+        <a  href="dish/addDish.php" class="float-right btn btn-success col-4 form-control mt-4">Add dish +</a>
     </div>
     <hr>
 
@@ -190,7 +240,7 @@ else
 
 
             for ($i = 0; $i < count($Dishes); $i++) {
-                $display .= '<a href="dish/EditDish.php?dishid=' . $Dishes[$i][1] . '&cateringid='.$cateringid.'" class="col-sm-12 col-md-6 col-xl-4 border">
+                $display .= '<a href="?dishdetail=yes&dishid=' . $Dishes[$i][1] . '&cateringid='.$cateringid.'" class="col-sm-12 col-md-6 col-xl-4 border">
               <img src="';
 
                 if(file_exists(substr($Dishes[$i][5],3))&&($Dishes[$i][5]!=""))
@@ -325,8 +375,13 @@ $(document).ready(function () {
           data:{id:id,value:value,option:"changeDishType"},
           dataType:"text",
           method:"POST",
-          success:function (data)
-          {
+
+           beforeSend: function() {
+               $("#preloader").show();
+           },
+           success:function (data)
+           {
+               $("#preloader").hide();
               if(data!="")
               {
                   alert(data);
@@ -346,8 +401,13 @@ $(document).ready(function () {
             data:{value:value,id:id,option:"Delele_Dish_Type"},
             dataType:"text",
             method:"POST",
+
+            beforeSend: function() {
+                $("#preloader").show();
+            },
             success:function (data)
             {
+                $("#preloader").hide();
                 if(data!="")
                 {
                     alert(data);
@@ -370,14 +430,20 @@ $(document).ready(function () {
             data: formdata,
             contentType: false,
             processData: false,
-            success: function (data) {
+
+            beforeSend: function() {
+                $("#preloader").show();
+            },
+            success:function (data)
+            {
+                $("#preloader").hide();
                 if (data != '')
                 {
                     alert(data);
                     return false;
                 } else
                 {
-                    location.reload();
+                    window.location.href="../companyRegister/companyEdit.php";
 
                 }
 

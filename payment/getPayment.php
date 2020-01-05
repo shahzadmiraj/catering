@@ -13,15 +13,21 @@
 //    exit();
 //}
 
+include_once ("../connection/connect.php");
 
-$userId=$_GET['user_id'];
-$orderDetail_id=$_GET['order'];
+if(!isset($_SESSION['order']))
+{
+    header("location:../user/userDisplay.php");
+}
+
+$userId=$_COOKIE['userid'];
+$orderDetail_id=$_SESSION['order'];
 ?>
 
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="/Catering/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -163,7 +169,7 @@ include_once ("../webdesign/header/header.php");
 
 
         <div class="form-group row justify-content-center m-auto">
-            <a href="/Catering/order/PreviewOrder.php?order=<?php echo $orderDetail_id;?>" class="form-control col-4 btn-danger btn"><i class="fas fa-times-circle"></i>Cancel</a>
+            <a href="../order/PreviewOrder.php?order=<?php echo $orderDetail_id;?>" class="form-control col-4 btn-danger btn"><i class="fas fa-times-circle"></i>Cancel</a>
             <button id="submitBtnfrom" type="submit" class="form-control col-4 btn-primary btn"><i class="fas fa-check "></i>Submit</button>
 
         </div>
@@ -197,8 +203,13 @@ include_once ("../webdesign/footer/footer.php");
               data:formdata,
               contentType: false,
               processData: false,
-              success:function (data)
-              {
+
+                 beforeSend: function() {
+                     $("#preloader").show();
+                 },
+                 success:function (data)
+                 {
+                     $("#preloader").hide();
                   if(data!='')
                   {
                       alert(data);

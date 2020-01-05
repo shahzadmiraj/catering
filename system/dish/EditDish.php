@@ -16,7 +16,7 @@ $attributes=queryReceive($sql);
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="/Catering/../bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bootstrap.min.css">
     <script src="../../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -40,7 +40,7 @@ include_once("../../webdesign/header/headerclient.php");
         <div class="col-12 shadow card p-4">
             <input id="dishid" type="number" hidden value="<?php echo $dishID; ?>">
             <div class="form-group row">
-                <a href="/Catering/system/dish/dishesDetail.php" class=" form-control col-4 btn-warning">Previous</a>
+                <a href="/public_html/system/dish/dishesDetail.php" class=" form-control col-4 btn-warning">Previous</a>
                 <span class="font-weight-bold text-center col-9 form-control"> Edit Dish in System</span>
             </div>
 
@@ -153,15 +153,20 @@ include_once("../../webdesign/header/headerclient.php");
                 method:"POST",
                 data:{value:value,dishid:dishid,option:"ExpireDish"},
                 dataType:"text",
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
                 success:function (data)
                 {
+                    $("#preloader").hide();
                     if(data!='')
                     {
                         alert(data);
                     }
                     else
                     {
-                        window.location.href="/Catering/system/dish/dishesDetail.php";
+                        window.location.href="dishesDetail.php";
                     }
                 }
             });
@@ -204,15 +209,20 @@ include_once("../../webdesign/header/headerclient.php");
                 data:formdata,
                 contentType: false,
                 processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
                 success:function (data)
                 {
+                    $("#preloader").hide();
                     if(data!='')
                     {
                         alert(data);
                     }
                     else
                     {
-                        window.location.href="/Catering/system/dish/dishesDetail.php";
+                        window.location.href="dishesDetail.php";
                     }
                 }
             });
@@ -226,8 +236,13 @@ include_once("../../webdesign/header/headerclient.php");
                method: "POST",
                data: {attributeid:attributeid,text:text,option:"changeAttributes"},
                dataType:"text",
+
+               beforeSend: function() {
+                   $("#preloader").show();
+               },
                success:function (data)
                {
+                   $("#preloader").hide();
                    if(data!='')
                    {
                        alert(data);
@@ -246,8 +261,13 @@ include_once("../../webdesign/header/headerclient.php");
                 method: "POST",
                 data: {attributeid:attributeid,option:"RemoveAttribute"},
                 dataType:"text",
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
                 success:function (data)
                 {
+                    $("#preloader").hide();
                     if(data!='')
                     {
                         alert(data);
@@ -271,8 +291,13 @@ include_once("../../webdesign/header/headerclient.php");
                 method: "POST",
                 data: {dishid:dishid,column:column,text:text,option:"dishchanges"},
                 dataType:"text",
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
                 success:function (data)
                 {
+                    $("#preloader").hide();
                     if(data!='')
                     {
                         alert(data);
@@ -293,8 +318,13 @@ include_once("../../webdesign/header/headerclient.php");
                 data:formData,
                 contentType: false,
                 processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
                 success:function (data)
                 {
+                    $("#preloader").hide();
                     if(data!='')
                     {
                         alert(data);

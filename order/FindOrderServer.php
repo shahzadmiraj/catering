@@ -14,7 +14,7 @@ include_once ("../connection/connect.php");
 $hallorcater=$_POST['hallorcater'];
 $sql='SELECT     
 DISTINCT
-od.id,p.name,p.image,od.destination_date,od.destination_time,od.status_hall,od.status_catering,od.hall_id,od.catering_id,hp.package_name FROM orderDetail as od INNER JOIN person as p 
+od.id,p.name,p.image,od.destination_date,od.destination_time,od.status_hall,od.status_catering,od.hall_id,od.catering_id,hp.package_name,p.id FROM orderDetail as od INNER JOIN person as p 
 on (p.id=od.person_id)
 left JOIN number as n
 on (p.id=n.person_id)
@@ -78,7 +78,7 @@ $display='';
 for ($i=0;$i<count($orderdetail);$i++)
 {
     $display.='
-        <a href="#'.$orderdetail[$i][0].'" class="col-12   row  shadow m-3 newcolor">
+        <a href="?action=preview&order='.$orderdetail[$i][0].'&customer='.$orderdetail[$i][10].'" class="col-12   row  shadow m-3 newcolor">
         <img src="';
     if(file_exists($orderdetail[$i][2]))
     {

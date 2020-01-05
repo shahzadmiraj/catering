@@ -12,7 +12,7 @@ include_once ("../../connection/connect.php");
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="/Catering/../bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bootstrap.min.css">
     <script src="../../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -146,15 +146,20 @@ include_once ("../../webdesign/footer/footer.php");
               data:formdata,
               contentType: false,
               processData: false,
-              success:function (data)
-              {
+
+                 beforeSend: function() {
+                     $("#preloader").show();
+                 },
+                 success:function (data)
+                 {
+                     $("#preloader").hide();
                   if(data!='')
                   {
                       alert(data);
                   }
                   else
                   {
-                      window.location.href="/Catering/system/dish/dishesDetail.php";
+                      window.location.href="dishesDetail.php";
                   }
               }
           });

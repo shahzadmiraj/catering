@@ -7,9 +7,29 @@
  */
 include_once ("../../connection/connect.php");
 
+if(!isset($_SESSION['tempid']))
+{
 
-$userid=$_GET['userid'];
+    header("location:../../company/companyRegister/companyEdit.php");
+}
 
+if(isset($_GET['action']))
+{
+
+    if($_GET['action']=="expire")
+    {
+        $date=date('Y-m-d H:i:s');
+        $sql='UPDATE `user` SET `isExpire`="'.$date.'" WHERE id='.$_SESSION['tempid'].'';
+    }
+    else
+    {
+        $sql='UPDATE `user` SET `isExpire`=NULL WHERE id='.$_SESSION['tempid'].'';
+
+    }
+    querySend($sql);
+    header("location:../../company/companyRegister/companyEdit.php");
+}
+$userid=$_SESSION['tempid'];
 $sql='SELECT  `username`, `password`, `person_id`, `isExpire`, `isowner` FROM `user` WHERE id='.$userid.'';
 $userdetail=queryReceive($sql);
 $customerId=$userdetail[0][2];
@@ -49,6 +69,7 @@ include_once ("../../webdesign/header/header.php");
     <div class="card-body text-center" style="opacity: 0.7 ;background: #fdfdff;">
         <h3 ><i class="fas fa-user fa-4x"></i> Edit <?php echo $person[0][0]; ?>  User </h3>
         <p>Edit Exiting user  </p>
+        <a href="../../company/companyRegister/companyEdit.php" class="col-6 btn btn-info"> <i class="fas fa-city mr-2"></i>Edit Company</a>
 
     </div>
 
@@ -139,8 +160,21 @@ include_once ("../../webdesign/header/header.php");
         </div>
         <div class="col-12 row justify-content-center">
 
-            <input id="authorbtn" type="button" class="float-right btn btn-outline-primary col-4" value="Save">
-            <input type="button" value="Expire" class="float-right btn btn-outline-danger col-4">
+
+
+            <?php
+            if($userdetail[0][3]=="")
+            {
+                echo '<a href="?action=expire" class="btn btn-danger col-6">Expire</a>';
+
+            }
+            else
+            {
+                echo '<a href="?action=active" class="btn btn-warning col-6">Active</a>';
+            }
+
+            ?>
+            <input id="authorbtn" type="button" class="float-right btn btn-outline-primary col-6" value="Save">
 
 
 

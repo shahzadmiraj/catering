@@ -8,16 +8,31 @@
 include_once ("../connection/connect.php");
 $hallid="";
 $cateringid='';
-if(isset($_GET['hallid']))
-    $hallid=$_GET['hallid'];
-if(isset($_GET['cateringid']))
-    $cateringid=$_GET['cateringid'];
+if(isset($_SESSION['typebranch']))
+{
+    if($_SESSION['typebranch']=="hall")
+    {
+        $hallid=$_SESSION['typebranchid'];
+    }
+    else
+    {
+        $cateringid=$_SESSION['typebranchid'];
+    }
+}
+if(isset($_SESSION['order']))
+{
+    unset($_SESSION['order']);
+}
 
+if(isset($_SESSION['customer']))
+{
+    unset($_SESSION['customer']);
+}
 ?>
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="/Catering/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -26,13 +41,18 @@ if(isset($_GET['cateringid']))
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-
+    <link rel="stylesheet" href="../webdesign/css/loader.css">
 
     <style>
 
     </style>
+
 </head>
 <body>
+
+
+
+
 <?php
 include_once ("../webdesign/header/header.php");
 ?>
@@ -45,9 +65,8 @@ include_once ("../webdesign/header/header.php");
 
 
 
-
-
 <div class="container card-body">
+
 
 <form id="form">
 
@@ -192,8 +211,7 @@ include_once ("../webdesign/header/header.php");
 
         </div>
         <div class="form-group row m-auto">
-
-            <button type="button" class="col-5 form-control btn btn-danger" id="cancelCustomer"><i class="fas fa-window-close"></i>Cancel</button>
+            <a href="../user/userDisplay.php" type="button" class="col-5 form-control btn btn-danger"><i class="fas fa-window-close"></i>Cancel</a>
             <button type="button" class="col-5 form-control btn btn-primary" id="submit"><i class="fas fa-check "></i>Submit</button>
         </div>
     </form>
@@ -205,7 +223,6 @@ include_once ("../webdesign/header/header.php");
 include_once ("../webdesign/footer/footer.php");
 ?>
 <script>
-
 
    $(document).ready(function ()
    {
@@ -219,33 +236,26 @@ include_once ("../webdesign/footer/footer.php");
                data:{value:value,option:"customerExist"},
                dataType:"text",
                method: "POST",
+
+               beforeSend: function() {
+                   $("#preloader").show();
+               },
                success:function (data)
                {
-                   if((!($.isNumeric(data))) && (data==""))
+                   $("#preloader").hide();
+                   if(data=="customerexist")
                    {
-                       return false;
+                           window.location.href="customerEdit.php";
                    }
-                   else
-                   {
 
-                       if("<?php echo $hallid;?>"=="")
-                       {
-                           //this is the oder of catering
-                           window.location.href="/Catering/customer/customerEdit.php?customer="+data+"&option=CustomerCreate&hallid=<?php echo $hallid;?>&cateringid=<?php echo $cateringid;?>";
-                       }
-                       else
-                       {
-                           //this is the order of hall
-                           window.location.href="/Catering/customer/customerEdit.php?customer="+data+"&option=hallCustomer&hallid=<?php echo $hallid;?>";
-                       }
-                   }
                }
            });
        });
 
 
-       $("#cancelCustomer").click(function ()
+       $("#cancelCustomer").click(function (e)
        {
+           e.preventDefault();
           window.history.back();
        });
        var number=0;
@@ -302,11 +312,18 @@ include_once ("../webdesign/footer/footer.php");
                data:formdata,
                contentType: false,
                processData: false,
+
+               beforeSend: function() {
+                   $("#preloader").show();
+               },
                success:function (data)
                {
 
-                    if(!($.isNumeric(data)))
+                   $("#preloader").hide();
+
+                    if(data!="")
                     {
+                        alert(data);
                         return false;
                     }
                     else
@@ -314,12 +331,12 @@ include_once ("../webdesign/footer/footer.php");
                         if("<?php echo $hallid;?>"=="")
                         {
                             //this is the oder of catering
-                            window.location.href="/Catering/order/orderCreate.php?customer="+data+"&option=CustomerCreate&cateringid=<?php echo $cateringid;?>";
+                            window.location.href="../order/orderCreate.php";
                         }
                         else
                         {
                             //this is the order of hall
-                            window.location.href="../company/hallBranches/hallorder.php?customer="+data+"&hallid=<?php echo $hallid;?>";
+                            window.location.href="../company/hallBranches/hallorder.php";
                         }
                     }
                }

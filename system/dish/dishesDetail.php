@@ -12,7 +12,7 @@ include_once ("../../connection/connect.php");
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="/Catering/../bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bootstrap.min.css">
     <script src="../../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -101,7 +101,7 @@ include_once("../../webdesign/header/headerclient.php");
 
 
     <div class="col-12 card shadow mb-2 p-4 ">
-        <h3 align="center"> Dish information        <a  href="/Catering/system/dish/addDish.php" class=" btn-outline-primary btn form-control ">Add dish +</a>
+        <h3 align="center"> Dish information        <a  href="/public_html/system/dish/addDish.php" class=" btn-outline-primary btn form-control ">Add dish +</a>
         </h3>
         <div class="form-group row font-weight-bold border">
             <label class="col-4  col-form-label ">Dish Id</label>
@@ -120,7 +120,7 @@ include_once("../../webdesign/header/headerclient.php");
             $display.= '<div class="form-group row  border">
             <label class="col-2  col-form-label ">'.$Dishes[$i][1].'</label>
             <label class="col-6  col-form-label " > '.$Dishes[$i][0].'</label>
-            <a href="/Catering/system/dish/EditDish.php?dishid='.$Dishes[$i][1].'" class="col-4  form-control btn ';
+            <a href="/public_html/system/dish/EditDish.php?dishid='.$Dishes[$i][1].'" class="col-4  form-control btn ';
 
 
             if(($Dishes[$i][3]=="")&&($Dishes[$i][4]==""))
@@ -183,8 +183,13 @@ $(document).ready(function () {
           data:{id:id,value:value,option:"changeDishType"},
           dataType:"text",
           method:"POST",
-          success:function (data)
-          {
+
+           beforeSend: function() {
+               $("#preloader").show();
+           },
+           success:function (data)
+           {
+               $("#preloader").hide();
               if(data!="")
               {
                   alert(data);
@@ -204,8 +209,13 @@ $(document).ready(function () {
             data:{value:value,id:id,option:"Delele_Dish_Type"},
             dataType:"text",
             method:"POST",
+
+            beforeSend: function() {
+                $("#preloader").show();
+            },
             success:function (data)
             {
+                $("#preloader").hide();
                 if(data!="")
                 {
                     alert(data);
@@ -226,8 +236,13 @@ $(document).ready(function () {
             data:{value:value,option:"addDishtype"},
             dataType:"text",
             method:"POST",
+
+            beforeSend: function() {
+                $("#preloader").show();
+            },
             success:function (data)
             {
+                $("#preloader").hide();
                 if(data!="")
                 {
                     alert(data);

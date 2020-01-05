@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="../../jquery-3.3.1.js"></script>
-    <link rel="stylesheet" type="text/css" href="/Catering/../bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/public_html/../bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <script type="text/javascript" src="../../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -85,16 +85,16 @@
                 <h6 class="text-uppercase font-weight-bold">Products</h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                 <p>
-                    <a href="/Catering/company/companyRegister/companyRegister.php" class="text-white">Marquee Management software</a>
+                    <a href="/public_html/company/companyRegister/companyRegister.php" class="text-white">Marquee Management software</a>
                 </p>
                 <p>
-                    <a href="/Catering/company/companyRegister/companyRegister.php" class="text-white">Hall Management software</a>
+                    <a href="/public_html/company/companyRegister/companyRegister.php" class="text-white">Hall Management software</a>
                 </p>
                 <p>
-                    <a href="/Catering/company/companyRegister/companyRegister.php" class="text-white">Catering Management software</a>
+                    <a href="/public_html/company/companyRegister/companyRegister.php" class="text-white">Catering Management software</a>
                 </p>
                 <p>
-                    <a href="/Catering/company/companyRegister/companyRegister.php" class="text-white">Dera / Open area Management software</a>
+                    <a href="/public_html/company/companyRegister/companyRegister.php" class="text-white">Dera / Open area Management software</a>
                 </p>
             </div>
 
@@ -118,7 +118,10 @@
 
 
                 <!-- Default inline form -->
-                <form class="row container m-2 ">
+
+
+
+            <!--    <form class="row container m-2 ">
                     <h6 class="text-uppercase font-weight-bold col-12 text-center">suggestion / comment for improvement</h6>
                     <div class="input-group mb-2 mr-sm-2">
                         <div class="input-group-prepend">
@@ -132,6 +135,7 @@
                         </div>
                     </div>
                 </form>
+            -->
                 <!-- Default inline form -->
 
 
@@ -149,6 +153,20 @@
 
 </footer>
 
+
+
+
+<script>
+
+    $("#preloader").show();
+    $(document).ready(function () {
+
+        $("#preloader").hide();
+    });
+
+
+
+</script>
 
 <!--
 <script>

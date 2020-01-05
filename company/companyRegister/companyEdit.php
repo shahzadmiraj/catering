@@ -1,7 +1,34 @@
 
 <?php
-
+//../cateringBranches/cateringEDIT.php?
+//../../system/user/userEdit.php?
 include_once ("../../connection/connect.php");
+if(!isset($_COOKIE['companyid']))
+{
+    header("location:../../user/userLogin.php");
+}
+if(isset($_GET['action']))
+{
+    $_SESSION['tempid']=$_GET['id'];
+
+    if($_GET['action']=="user")
+    {
+        //user
+        header("location:../../system/user/userEdit.php");
+    }
+    else if($_GET['action']=="hall")
+    {
+        //hall
+        header("location:../hallBranches/daytimeAll.php");
+    }
+    else
+    {
+        //catering
+        header("location:../cateringBranches/cateringEDIT.php");
+    }
+
+}
+
 $companyid=$_COOKIE['companyid'];
 $sql='SELECT `id`, `name`, `expire`, `user_id` FROM `company` WHERE id='.$companyid.'';
 $companydetail=queryReceive($sql);
@@ -66,63 +93,24 @@ include_once ("../../webdesign/header/header.php");
 <div class="jumbotron  shadow " style="background-image: url(https://i2.wp.com/findlawyer.com.ng/wp-content/uploads/2018/05/Pros-and-Cons-of-Working-at-Large-Companies.jpg?resize=1024%2C512&ssl=1);background-size:100% 115%;background-repeat: no-repeat;">
 
     <div class="card-body text-center" style="opacity: 0.7 ;background: white;">
-        <h1 class="display-5 "><i class="fas fa-city mr-2"></i><?php echo $companydetail[0][1];?> Edit your company</h1>
+        <h1 class="display-5 "><i class="fas fa-city mr-2"></i><?php echo $companydetail[0][1];?><br>Edit your company</h1>
         <p>setting you company of hall branches,catering branches ,user informations ,packages edit</p>
+
+        <h1 class="text-center"> <a href="../companyRegister/companydisplay.php" class="col-6 btn btn-warning "> <i class="fas fa-city mr-2"></i>My Company</a></h1>
+
     </div>
 </div>
 
 
 
 <div class="container">
-<div class="form-group row">
-    <label class="col-form-label">Company Name</label>
 
 
-
-
-    <div class="input-group mb-3 input-group-lg">
-        <div class="input-group-prepend">
-            <span class="input-group-text"><i class="fas fa-camera"></i></span>
-        </div>
-        <input type="text" class="form-control" value="<?php echo $companydetail[0][1]?>">
-    </div>
-
-
-
-
-
-</div>
-<div class="form-group row">
-    <label class="col-form-label">Block/Unblock company</label>
-
-
-
-
-    <input type="button" class="btn btn-danger ml-2" value="
-<?php
-if($companydetail[0][2]=="")
-{
-    //for expire
-    echo "Click Expire";
-}
-else
-{
-
-    //for unblock
-    echo "Click Show";
-}
-
-?>
-
-
-
-">
-</div>
 
                     <!--USERS-->
 <div class="col-12 row mt-5">
-    <h2 align="center" class="col-7"><i class="fas fa-user  mr-1"></i>Users</h2>
-    <a href="../../system/user/usercreate.php" class="btn btn-success col-5"><i class="fas fa-user-plus"></i>Add User</a>
+    <h2 align="center" class="col-7"> <i class="fas fa-user  mr-1"></i> Users</h2>
+    <a href="../../system/user/usercreate.php" class="btn btn-success col-5"><i class="fas fa-user-plus"></i> Add User</a>
 </div>
     <hr class="border border-white">
 <div class="form-group row shadow m-auto newcolor" id="userbranches">
@@ -133,7 +121,7 @@ else
     for($i=0;$i<count($users);$i++)
     {
       $display.='
-    <a href="../../system/user/userEdit.php?userid='.$users[$i][0].'" class="col-sm-12 col-md-4 col-xl-3 m-2">
+    <a href="?action=user&id='.$users[$i][0].'" class="col-sm-12 col-md-4 col-xl-3 m-2">
         <div class="card  col-12  rounded-circle shadow" style="height: 25vh"  >
             <img class="card-img-top  col-12 rounded-circle" src="';
 
@@ -170,8 +158,8 @@ else
 
                     <!--Hall Branches-->
 <div class="col-12 mt-5 row">
-    <h2 align="center" class=" col-6"><i class="fas fa-place-of-worship mr-2"></i>Halls</h2>
-    <a href="../hallBranches/hallRegister.php?companyid=<?php echo $companyid;?>" class="btn btn-success col-6"><i class="fas fa-plus"></i><i class="fas fa-place-of-worship mr-2"></i>Add Hall</a>
+    <h2 align="center" class=" col-6"> <i class="fas fa-place-of-worship mr-2"></i> Halls</h2>
+    <a href="../hallBranches/hallRegister.php" class="btn btn-success col-6"><i class="fas fa-plus"></i><i class="fas fa-place-of-worship mr-2"></i>Add Hall</a>
 </div>
     <hr class="border border-white">
 <div class="form-group row shadow newcolor " id="hallbranches">
@@ -182,7 +170,7 @@ else
     for($i=0;$i<count($halldetails);$i++)
     {
         $display.='
-    <a href="../hallBranches/daytimeAll.php?hallid='.$halldetails[$i][0].'" class="col-sm-12 col-md-4 col-xl-3 m-2">
+    <a href="?action=hall&id='.$halldetails[$i][0].'" class="col-sm-12 col-md-4 col-xl-3 m-2">
         <div class="card  col-12  rounded-circle shadow" style="height: 25vh"  >
             <img class="card-img-top  col-12 rounded-circle" src="';
 
@@ -217,8 +205,8 @@ else
 
                         <!--Catering Branches-->
 <div class="col-12 mt-5  row">
-    <h2 align="center" class="col-7"><i class="fas fa-utensils"></i>Caterings</h2>
-    <a href="../cateringBranches/catering.php?companyid=<?php echo $companyid; ?>" class="btn btn-success col-5"><i class="fas fa-plus"></i>Add Catering</a>
+    <h2 align="center" class="col-7"> <i class="fas fa-utensils"></i> Caterings</h2>
+    <a href="../cateringBranches/catering.php" class="btn btn-success col-5"><i class="fas fa-plus"></i> <i class="fas fa-utensils"></i> Add Catering</a>
 </div>
     <hr class="border border-white">
 <div class="form-group row shadow newcolor" id="cateringbranches">
@@ -229,7 +217,7 @@ else
     for($i=0;$i<count($cateringdetails);$i++)
     {
         $display.='
-    <a href="../cateringBranches/cateringEDIT.php?cateringid='.$cateringdetails[$i][0].'" class="col-sm-12 col-md-4 col-xl-3 m-2">
+    <a href="?action=catering&id='.$cateringdetails[$i][0].'" class="col-sm-12 col-md-4 col-xl-3 m-2">
         <div class="card  col-12  rounded-circle shadow" style="height: 25vh"  >
             <img class="card-img-top  col-12 rounded-circle" src="';
 
@@ -261,14 +249,6 @@ else
     ?>
 </div>
 
-
-<!--<a href="../../user/userDisplay.php?hallid=2" class="col-5 m-2">
-    <div class="card  col-12  rounded-circle shadow" style="height: 25vh"  >
-        <img class="card-img-top  col-12 rounded-circle" src="../../gmail.png" alt="Card image" >
-    </div>
-    <h4 align="center" >23432</h4>
-    <i class="text-danger ">Expire</i>
-</a>-->
 
 </div>
 

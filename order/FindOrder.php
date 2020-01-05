@@ -7,11 +7,34 @@
  */
 include_once ("../connection/connect.php");
 
-$hallid=$_GET['hallid'];
-$cateringid=$_GET['cateringid'];
+
+if(isset($_GET['action']))
+{
+    $_SESSION['order']=$_GET['order'];
+    $_SESSION['customer']=$_GET['customer'];
+    header("location:PreviewOrder.php");
+}
+
+$hallid="";
+$cateringid="";
 $hallorcater="";
 $order_info=$_GET['order_status'];
-$order_status=$_GET['order_status'];
+$order_status=$order_info;
+
+
+if(isset($_SESSION['branchtype']))
+{
+    if($_SESSION['branchtype']=="hall")
+    {
+        $hallid=$_SESSION['branchtypeid'];
+    }
+    else
+    {
+        $cateringid=$_SESSION['branchtypeid'];
+    }
+}
+
+
 if(!empty($hallid))
 {
     $hallorcater="(od.hall_id=".$hallid.")";
@@ -27,7 +50,7 @@ else
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="/Catering/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -202,26 +225,13 @@ include_once ("../webdesign/header/header.php");
 
 
             <?php
-            $sql='SELECT od.id,(SELECT p.name FROM person as p WHERE p.id=od.person_id),(SELECT p.image FROM person as p WHERE p.id=od.person_id),od.destination_date,od.destination_time,od.status_hall,od.status_catering,od.hall_id,od.catering_id,(SELECT hp.package_name FROM hallprice as hp WHERE hp.id=od.hallprice_id) FROM orderDetail as od WHERE '.$hallorcater.' AND '.$order_status.'';
+            $sql='SELECT od.id,(SELECT p.name FROM person as p WHERE p.id=od.person_id),(SELECT p.image FROM person as p WHERE p.id=od.person_id),od.destination_date,od.destination_time,od.status_hall,od.status_catering,od.hall_id,od.catering_id,(SELECT hp.package_name FROM hallprice as hp WHERE hp.id=od.hallprice_id),od.person_id FROM orderDetail as od WHERE '.$hallorcater.' AND '.$order_status.'';
             $orderdetail=queryReceive($sql);
             $display='';
             for ($i=0;$i<count($orderdetail);$i++)
             {
                 $display.='
-        <a href="PreviewOrder.php?order='.$orderdetail[$i][0].'&';
-                if($orderdetail[$i][7])
-                {
-                    //hall id
-                    $display.='hallid='.$orderdetail[$i][7].'';
-                }
-                else
-                {
-                    //catering order
-                    $display.='cateringid='.$cateringid.'';
-                }
-
-
-
+        <a href="?action=preview&order='.$orderdetail[$i][0].'&customer='.$orderdetail[$i][10].'';
 
 
 
@@ -348,10 +358,14 @@ include_once ("../webdesign/footer/footer.php");
                     data:formdata,
                     contentType: false,
                     processData: false,
+
+                    beforeSend: function() {
+                        $("#preloader").show();
+                    },
                     success:function (data)
                     {
+                        $("#preloader").hide();
                         $("#recordsAll").html(data);
-                        // console.log(data);
                     }
                 });
         });

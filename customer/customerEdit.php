@@ -6,14 +6,26 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-
-$customerId=$_GET['customer'];
+if(!isset($_SESSION['customer']))
+{
+    header("location:CustomerCreate.php");
+}
+$customerId="";
+$customerId=$_SESSION['customer'];
 $hallid="";
 $cateringid='';
-if(isset($_GET['hallid']))
-    $hallid=$_GET['hallid'];
-if(isset($_GET['cateringid']))
-    $cateringid=$_GET['cateringid'];
+
+if(isset($_SESSION['typebranch']))
+{
+    if($_SESSION['typebranch']=="hall")
+    {
+        $hallid=$_SESSION['typebranchid'];
+    }
+    else
+    {
+        $cateringid=$_SESSION['typebranchid'];
+    }
+}
 
 $sql = "SELECT `name`, `cnic`, `id`, `date`, `image` FROM `person` WHERE id=".$customerId."";
 $person=queryReceive($sql);
@@ -29,7 +41,7 @@ $numbers=queryReceive($sql);
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="/Catering/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -57,7 +69,7 @@ include_once ("../webdesign/header/header.php");
 </div>
 <form id="changeImage" class="col-12 row justify-content-center" style="margin-top: -60px">
     <?php
-    echo '<input name="customerid" hidden value="'.$_GET["customer"].'">';
+    echo '<input name="customerid" hidden value="'.$customerId.'">';
     ?>
     <input name="image" hidden value="<?php echo $person[0][4] ?>">
 
@@ -65,7 +77,7 @@ include_once ("../webdesign/header/header.php");
 
         if($person[0][4]=="")
         {
-            echo 'http://pngwebicons.com/uploads/user/512/user_icon9133.png';
+            echo 'https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
         }
         else
         {
@@ -93,7 +105,7 @@ include_once ("../webdesign/header/header.php");
     <?php
 
 
-    echo '<input id="customerId" type="number" hidden value="'.$_GET["customer"].'">';
+    echo '<input id="customerId" type="number" hidden value="'.$customerId.'">';
     ?>
         <div id="number_records">
             <?php
@@ -265,27 +277,27 @@ p.id='.$customerId.'';
         <div class="form-group row mb-3 p-4">
 
             <?php
-            if(isset($_GET['option']))
+        /*    if(isset($_GET['option']))
             {
                 if($_GET['option']=="orderCreate")
                 {
                     echo '
-        <a href="/Catering/customer/CustomerCreate.php" class="col-6 form-control btn btn-danger" id="cancel">Not this customer</a>
-        <a href="/Catering/order/orderCreate.php?customer='.$customerId.'" class="col-6 form-control btn btn-outline-primary" id="submit"><i class="fas fa-check "></i>Next</a>';
+        <a href="CustomerCreate.php" class="col-6 form-control btn btn-danger" id="cancel">Not this customer</a>
+        <a href="../order/orderCreate.php?customer='.$customerId.'" class="col-6 form-control btn btn-outline-primary" id="submit"><i class="fas fa-check "></i>Next</a>';
                 }
                 else if(($_GET['option']=="orderCreate") || ($_GET['option']=="CustomerCreate"))
                 {
 
                     echo '
-        <a href="/Catering/customer/CustomerCreate.php?option=customerEdit" class="col-6 form-control btn btn-danger" id="cancel">Not this customer</a>
-        <a href="/Catering/order/orderCreate.php?customer='.$customerId.'&option=customerEdit" class="col-6 form-control btn btn-outline-primary" id="submit">Order Create</a>';
+        <a href="CustomerCreate.php?option=customerEdit" class="col-6 form-control btn btn-danger" id="cancel">Not this customer</a>
+        <a href="../order/orderCreate.php?customer='.$customerId.'&option=customerEdit" class="col-6 form-control btn btn-outline-primary" id="submit">Order Create</a>';
                 }
                 else if($_GET['option']=="customerAndOrderalreadyHave")
                 {
 
                     echo '
-        <a href="/Catering/customer/CustomerCreate.php" class="col-6 form-control btn btn-danger" id="cancel">Not this customer</a>
-        <a href="/Catering/order/orderEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=customerEdit" class="m-auto col-6 form-control btn btn-primary" id="submit">Edit order</a>';
+        <a href="CustomerCreate.php" class="col-6 form-control btn btn-danger" id="cancel">Not this customer</a>
+        <a href="../order/orderEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=customerEdit" class="m-auto col-6 form-control btn btn-primary" id="submit">Edit order</a>';
                 }
                 else if($_GET['option']=="PreviewOrder")
                 {
@@ -294,16 +306,84 @@ p.id='.$customerId.'';
                 else if($_GET['option']=="hallorder")
                 {
                     echo '
-                 
+
                     <a href="../company/hallBranches/hallorder.php?customer='.$customerId.'&hallid='.$_GET['hallid'].'" class="btn btn-warning m-auto col-6"><i class="fas fa-check "></i>Done</a>';
                 }
                 else if($_GET['option']=="hallCustomer")
                 {
                     echo '
-                    <input type="button" id="btnbackhistory" class="m-auto col-6 form-control btn btn-danger" value="Not this Customer">   
-                    <a href="../company/hallBranches/hallorder.php?customer='.$customerId.'&hallid='.$_GET['hallid'].'" class="btn btn-success m-auto col-6"><i class="fas fa-check "></i>Done</a>';
+                    <input type="button" id="btnbackhistory" class="m-auto col-6 form-control btn btn-danger" value="Not this Customer">
+                    <a href="../company/hallBranches/hallorder.php" class="btn btn-success m-auto col-6"><i class="fas fa-check "></i>Done</a>';
                 }
+            }*/
+
+
+
+            if(isset($_GET['action']))
+            {
+                echo '
+            <a href="../order/PreviewOrder.php" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-check "></i> Done</a>';
+
             }
+            else if($_SESSION['branchtype']=="hall")
+            {
+                //hall
+
+                if(!isset($_SESSION['order']))
+                {
+                    //16 new order of hall
+                    echo '
+
+                    <a href="CustomerCreate.php" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Not this Customer</a> 
+                    <a href="../company/hallBranches/hallorder.php" class="btn btn-success m-auto col-6"><i class="fas fa-check "></i>Create hall order</a>
+                    
+                    ';
+
+
+                }
+                else
+                {
+
+
+                }
+
+            }
+            else
+            {
+                //catering
+
+
+
+                if(!isset($_SESSION['order']))
+                {
+                    //not order create
+                    //7 go to create order of catering
+                    echo '
+
+            <a href="CustomerCreate.php" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Not this Customer</a>
+                    <a href="../order/orderCreate.php" class="col-6 form-control btn btn-outline-primary" id="submit"><i class="fas fa-check "></i> Order Create</a>   
+                    
+                     ';
+
+
+                }
+                else
+                {
+                    //order of catering is created
+
+                    //15 oder of catering edit
+                    echo '
+
+            <a href="CustomerCreate.php" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Not this Customer</a>
+        <a href="../order/orderEdit.php" class="m-auto col-6 form-control btn btn-primary"><i class="fas fa-check "></i> Edit order</a>';
+
+
+
+                }
+
+            }
+
+            //6 not this customer
 
             ?>
 
@@ -329,7 +409,13 @@ p.id='.$customerId.'';
              data:{columnname:column,value:text,edittype:type,option:"change",customerid:customerid},
              dataType:"text",
              method:"POST",
-             success:function (data) {
+
+             beforeSend: function() {
+                 $("#preloader").show();
+             },
+             success:function (data)
+             {
+                 $("#preloader").hide();
                  if(data!='')
                  {
                      alert(data);
@@ -344,7 +430,13 @@ p.id='.$customerId.'';
              data:{columnname:column,value:text,edittype:type,id:id,option:"change",customerid:customerid},
              dataType:"text",
              method:"POST",
-             success:function (data) {
+
+             beforeSend: function() {
+                 $("#preloader").show();
+             },
+             success:function (data)
+             {
+                 $("#preloader").hide();
                  if(data!='') {
                      alert(data);
                  }
@@ -385,7 +477,13 @@ p.id='.$customerId.'';
              data:{option:"addNumber",number:numberText,customerid:customerid},
              dataType:"text",
              method:"POST",
-             success:function (data) {
+
+             beforeSend: function() {
+                 $("#preloader").show();
+             },
+             success:function (data)
+             {
+                 $("#preloader").hide();
                  if(data!='')
                  {
                      alert(data);
@@ -406,7 +504,13 @@ p.id='.$customerId.'';
              data:{ id:id,option:"deleteNumber"},
              dataType:"text",
              method:"POST",
-             success:function (data) {
+
+             beforeSend: function() {
+                 $("#preloader").show();
+             },
+             success:function (data)
+             {
+                 $("#preloader").hide();
                  if(data!='')
                  {
                      alert(data);
@@ -428,8 +532,13 @@ p.id='.$customerId.'';
              data:formData,
              contentType: false,
              processData: false,
+
+             beforeSend: function() {
+                 $("#preloader").show();
+             },
              success:function (data)
              {
+                 $("#preloader").hide();
                  if(data!='')
                  {
                      alert(data);

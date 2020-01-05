@@ -6,7 +6,7 @@
  * Time: 21:31
  */
 include_once ("../../../connection/connect.php");
-$cateringid=$_GET['cateringid'];
+$cateringid=$_SESSION['tempid'];
 
 ?>
 <!DOCTYPE html>
@@ -212,8 +212,12 @@ include_once ("../../../webdesign/footer/footer.php");
               data:formdata,
               contentType: false,
               processData: false,
-              success:function (data)
-              {
+                 beforeSend: function() {
+                $("#preloader").show();
+                },
+            success:function (data)
+            {
+                $("#preloader").hide();
                   if(data!='')
                   {
                       alert(data);

@@ -6,6 +6,10 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
+if(isset($_SESSION['order']))
+{
+    header("location:orderEdit.php");
+}
 
 $cateringid=$_SESSION['branchtypeid'];
 $customer=$_SESSION['customer'];
@@ -14,7 +18,7 @@ $customer=$_SESSION['customer'];
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="/Catering/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -158,7 +162,7 @@ include_once ("../webdesign/header/header.php");
         </div>
         <div class="form-group row justify-content-center">
 
-            <a href="/Catering/customer/customerEdit.php" class="form-control col-5 btn btn-danger"><i class="fas fa-arrow-left"></i>Edit Customer</a>
+            <a href="../customer/customerEdit.php" class="form-control col-5 btn btn-danger"><i class="fas fa-arrow-left"></i>Edit Customer</a>
             <button type="button" id="submit" class="form-control col-5 btn-success"><i class="fas fa-check "></i> Submit</button>
 
         </div>
@@ -186,8 +190,13 @@ include_once ("../webdesign/footer/footer.php");
                contentType: false,
                processData: false,
                dataType:"text",
+
+               beforeSend: function() {
+                   $("#preloader").show();
+               },
                success:function (data)
                {
+                   $("#preloader").hide();
 
 
                   if(data!="")

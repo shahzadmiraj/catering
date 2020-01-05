@@ -7,6 +7,14 @@
  */
 include_once ("../connection/connect.php");
 
+if(!isset($_SESSION['order']))
+{
+    header("location:../user/userDisplay.php");
+}
+if(!isset($_SESSION['customer']))
+{
+    header("location:../customer/CustomerCreate.php");
+}
 $orderId=$_SESSION['order'];
 $sql='SELECT `id`, `total_amount`, `describe`, `total_person`, `status_catering`, `destination_date`, `booking_date`, `destination_time`, `address_id`, `person_id` FROM `orderDetail` WHERE id='.$orderId.'';
 $orderDetail=queryReceive($sql);
@@ -18,7 +26,7 @@ $addresDetail=queryReceive($sql);
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="/Catering/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -230,15 +238,15 @@ include_once ("../webdesign/header/header.php");
                     if($_GET['option']=="dishDisplay")
                     {
                         echo '
-            <a href="/Catering/customer/customerEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=customerAndOrderalreadyHave"   id="cancel" class="form-control col-6 btn btn-danger"> <i class="fas fa-arrow-left"></i>Customer Edit</a>
-            <a href="/Catering/dish/dishDisplay.php?order='.$_GET['order'].'"  id="submit" class="form-control col-6 btn-success"><i class="fas fa-check "></i> Display Dish</a>';
+            <a href="/public_html/customer/customerEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=customerAndOrderalreadyHave"   id="cancel" class="form-control col-6 btn btn-danger"> <i class="fas fa-arrow-left"></i>Customer Edit</a>
+            <a href="/public_html/dish/dishDisplay.php?order='.$_GET['order'].'"  id="submit" class="form-control col-6 btn-success"><i class="fas fa-check "></i> Display Dish</a>';
                     }
                     else if($_GET['option']=="customerEdit")
                     {
 
                         echo '
-            <a href="/Catering/customer/customerEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=customerAndOrderalreadyHave"   id="cancel" class="form-control col-6 btn btn-danger"><i class="fas fa-arrow-left"></i> Customer Edit</a>
-            <a href="/Catering/dish/dishDisplay.php?order='.$_GET['order'].'&option=orderEdit"  id="submit" class="form-control col-6 btn-success"><i class="fas fa-check "></i> Display Dish</a>';
+            <a href="/public_html/customer/customerEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=customerAndOrderalreadyHave"   id="cancel" class="form-control col-6 btn btn-danger"><i class="fas fa-arrow-left"></i> Customer Edit</a>
+            <a href="/public_html/dish/dishDisplay.php?order='.$_GET['order'].'&option=orderEdit"  id="submit" class="form-control col-6 btn-success"><i class="fas fa-check "></i> Display Dish</a>';
 
                     }
                     else if($_GET['option']=="PreviewOrder")
@@ -249,10 +257,21 @@ include_once ("../webdesign/header/header.php");
 
 
 //14,11
+
+            if(isset($_GET['action']))
+            {
+                echo '
+            <a href="../order/PreviewOrder.php" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-check "></i> Done</a>';
+
+            }
+            else
+            {
+                echo '
+            <a href="../customer/customerEdit.php"   id="cancel" class="form-control col-6 btn btn-danger"> <i class="fas fa-arrow-left"></i>Customer Edit</a>
+            <a href="../dish/dishDisplay.php"  id="submit" class="form-control col-6 btn-success"><i class="fas fa-check "></i> Display Dish</a>';
+            }
             ?>
 
-            <a href="/Catering/customer/customerEdit.php"   id="cancel" class="form-control col-6 btn btn-danger"> <i class="fas fa-arrow-left"></i>Customer Edit</a>
-            <a href="/Catering/dish/dishDisplay.php"  id="submit" class="form-control col-6 btn-success"><i class="fas fa-check "></i> Display Dish</a>
 
         </div>
 
@@ -283,7 +302,13 @@ include_once ("../webdesign/footer/footer.php");
                 data:{column_name:columnName,value:text,option:'orderChange',orderid:orderid},
                 dataType:"text",
                 method:"POST",
-                success:function (data) {
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
+                {
+                    $("#preloader").hide();
                     if(data!='')
                     {
                         alert(data);
@@ -302,7 +327,13 @@ include_once ("../webdesign/footer/footer.php");
                 data:{column_name:columnName,value:text,option:'addressChange',addressId:addressId},
                 dataType:"text",
                 method:"POST",
-                success:function (data) {
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
+                {
+                    $("#preloader").hide();
                     if(data!='')
                     {
                         alert(data);

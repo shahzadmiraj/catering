@@ -9,12 +9,32 @@
 
 include_once ("../connection/connect.php");
 
+
+if(!isset($_SESSION['branchtype']))
+{
+    header("location:../user/userDisplay.php");
+}
+if(isset($_GET['action']))
+{
+    $_SESSION['order']=$_GET['order'];
+    $_SESSION['customer']=$_GET['customer'];
+    header("location:../order/PreviewOrder.php");
+}
+
 $hallid="";
 $cateringid='';
-if(isset($_GET['hallid']))
-    $hallid=$_GET['hallid'];
-if(isset($_GET['cateringid']))
-    $cateringid=$_GET['cateringid'];
+
+if(isset($_SESSION['branchtype']))
+{
+    if($_SESSION['branchtype']=="hall")
+    {
+        $hallid=$_SESSION['branchtypeid'];
+    }
+    else
+    {
+        $cateringid=$_SESSION['branchtypeid'];
+    }
+}
 $hallorcater='';
 if(!empty($hallid))
 {
@@ -31,7 +51,7 @@ else
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="/Catering/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -209,7 +229,7 @@ include_once ("../webdesign/header/header.php");
 
 
     <?php
-    $sql="SELECT DISTINCT od.id, (SELECT p.name FROM person as p WHERE p.id=od.person_id), (SELECT sum(py.amount) FROM payment as py WHERE (py.IsReturn=0)AND(py.orderDetail_id=od.id)) ,od.total_amount,od.total_amount, (SELECT SUM(dd.price*dd.quantity) FROM dish_detail as dd WHERE dd.orderDetail_id=od.id),od.status_catering,od.status_hall FROM orderDetail as od LEFT join payment as py on od.id=py.orderDetail_id where ".$hallorcater."";
+    $sql="SELECT DISTINCT od.id, (SELECT p.name FROM person as p WHERE p.id=od.person_id), (SELECT sum(py.amount) FROM payment as py WHERE (py.IsReturn=0)AND(py.orderDetail_id=od.id)) ,od.total_amount,od.total_amount, (SELECT SUM(dd.price*dd.quantity) FROM dish_detail as dd WHERE dd.orderDetail_id=od.id),od.status_catering,od.status_hall,od.person_id FROM orderDetail as od LEFT join payment as py on od.id=py.orderDetail_id where ".$hallorcater."";
 
     echo showRemainings($sql);
 
@@ -224,14 +244,12 @@ include_once ("../webdesign/footer/footer.php");
 
     $(document).ready(function () {
 
-        $(document).on("click",".orderDetail",function ()
+
+
+        $(document).on("click",".clickable-row",function ()
         {
-            var orderid=$(this).data("orderid");
-            location.href="/Catering/order/PreviewOrder.php?order="+orderid+"&cateringid=<?php echo $cateringid;?>&hallid=<?php echo $hallid;?>";
+            window.location = $(this).data("href");
         });
-
-
-
 
         $(document).on("change",'.changeColumn',function (e)
         {
@@ -244,8 +262,13 @@ include_once ("../webdesign/footer/footer.php");
                 data:formdata,
                 contentType: false,
                 processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
                 success:function (data)
                 {
+                    $("#preloader").hide();
                     $("#recordsAll1").html(data);
 
                 }

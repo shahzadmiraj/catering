@@ -40,6 +40,9 @@ if(isset($_POST['option']))
                 print_r($resultimage);
                 exit();
             }
+
+            $image = "../../images/users/" . $_FILES['image']['name'];
+
         }
 
         $name = trim($_POST['name']);
@@ -70,9 +73,15 @@ if(isset($_POST['option']))
         $sql='INSERT INTO `company`(`id`, `name`, `expire`, `user_id`) VALUES (NULL,"'.$_POST['companyName'].'",NULL,'.$userid.')';
         querySend($sql);
         $companyid=mysqli_insert_id($connect);
-        echo $companyid;
 
+        $sql='UPDATE user as u SET u.company_id='.$companyid.' WHERE u.id='.$userid.'';
+        querySend($sql);
 
+        setcookie('userid',$userid , time() + (86400 * 30), "/");
+        setcookie("isOwner",1,time() + (86400 * 30), "/");
+        setcookie("username",$username,time() + (86400 * 30), "/");
+        setcookie("companyid",$companyid,time() + (86400 * 30), "/");
+        setcookie("userimage",$image,time() + (86400 * 30), "/");
     }
     else if($_POST['option']=="createCatering")
     {
@@ -88,6 +97,7 @@ if(isset($_POST['option']))
                 print_r($resultimage);
                 exit();
             }
+
         }
         $sql='INSERT INTO `catering`(`id`, `name`, `expire`, `image`, `location_id`, `company_id`) VALUES (NULL,"'.$namecatering.'",NULL,"'.$Cateringimage.'",NULL,'.$companyid.')';
         querySend($sql);
@@ -169,9 +179,6 @@ if(isset($_POST['option']))
 
             createOnlyAllSeating($hallid,$daytimearray[$i]);
         }
-        echo $hallid;
-
-
 
     }
     else if($_POST['option']=='createOnlyseating')
@@ -229,14 +236,14 @@ if(isset($_POST['option']))
     }
     else if($_POST['option']=="showdaytimelist")
     {
+
         $hallname=$_POST['hallname'];
         $hallid=$_POST['hallid'];
         $daytime=$_POST['daytime'];
         $companyid=$_POST['companyid'];
-        $hallBranches=$_POST['hallBranches'];
         $monthsArray = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 
-        $display='<table class="col-8 m-auto">
+        $display='<table class="col-12 border-white border">
         <thead>
 
         <tr>
@@ -255,44 +262,63 @@ AND (month="'.$monthsArray[$i].'")';
         <tr>
             <td scope="col" >
                 <h4 align="center">'.$monthsArray[$i].'</h4>
-                <div class="form-group row p-2 card-body ">
-                    <label class="col-form-label  font-weight-bold"> Prize Only Seating </label>
-                   
-                   
-                   
-                   
-                <div class="input-group mb-3 input-group-lg justify-content-center">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
-                    </div>
-                      <input data-menuid="'.$detailList[0][0].'" class="changeSeating form-control col-6" type="number" value="'.$detailList[0][1].'">
-                </div>
+                <div class="alert-light col-12 card">
+                
+                
+               
+                
+                <div class="form-group row col-12 p-0 ">
+                         <label class="col-form-label col-4"> Prize Only Seating </label>
+                        <div class="input-group  input-group-lg col-8">
+                            <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
+                            </div>
+                             <input data-menuid="'.$detailList[0][0].'" class="changeSeating form-control" type="number" value="'.$detailList[0][1].'">
+                        </div>
+
+                 </div>
 
                    
                    
                    
                    
                    
-                    <h3 align="center" class="col-12 mt-3">List of prize with Food</h3>
-                    <a  href="addnewpackage.php?hallname='.$hallname.'&month='.$monthsArray[$i].'&daytime='.$daytime.'&hallid='.$hallid.'&companyid='.$companyid.'&hallBranches='.$hallBranches.'" class="form-control  btn-primary col-12 text-center"><i class="fas fa-plus-square"></i> Add New Package</a>';
+                    <h3 align="center" class="col-12 mt-3">List of packages with Food</h3>
+                    <a  href="addnewpackage.php?hallname='.$hallname.'&month='.$monthsArray[$i].'&daytime='.$daytime.'" class="form-control  btn-primary col-12 text-center"><i class="fas fa-plus-square"></i> Add New Package</a>
+                    
+                    
+                    
+                    <div class="form-group row ">';
 
             $sql='SELECT `id`,`expire`, `package_name` FROM `hallprice` WHERE (hall_id='.$hallid.')
 AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)';
             $ALLpackages=queryReceive($sql);
             for ($j=0;$j<count($ALLpackages);$j++)
             {
-                $display.='    <a  href="Editpackage.php?hallname='.$hallname.'&month='.$monthsArray[$i].'&daytime='.$daytime.'&packageid='.$ALLpackages[$j][0].'&hallid='.$hallid.'&companyid='.$companyid.'&hallBranches='.$hallBranches.'" class="form-control  btn-success col-4 text-center m-2"> '.$ALLpackages[$j][2].'';
-                if($ALLpackages[$j][1]!=NULL)
+//                $display.='    <a  href="?editpackage=yes&hallname='.$hallname.'&month='.$monthsArray[$i].'&daytime='.$daytime.'&packageid='.$ALLpackages[$j][0].'" class="form-control  btn-success col-4 text-center m-2"> '.$ALLpackages[$j][2].'';
+//                if($ALLpackages[$j][1]!=NULL)
+//                {
+//                    $display.='   Expired';
+//                }
+//                $display.='</a>';
+
+
+                if($ALLpackages[$j][1]!="")
                 {
-                    $display.='   Expired';
+                    $display.= '<a href="?editpackage=yes&hallname='.$hallname.'&month='.$monthsArray[$i].'&daytime='.$daytime.'&packageid='.$ALLpackages[$j][0].'" class="btn btn-danger col-sm-4 col-md-3 col-xl-3 m-1">'.$ALLpackages[$j][2].'</a>';
+
+                }
+                else
+                {
+                    $display.= '<a href="?editpackage=yes&hallname='.$hallname.'&month='.$monthsArray[$i].'&daytime='.$daytime.'&packageid='.$ALLpackages[$j][0].'" class="btn btn-warning col-sm-4 col-md-3 col-xl-3 m-1">'.$ALLpackages[$j][2].'</a>';
                 }
 
 
-                $display.='</a>';
+
             }
 
 
-            $display.='</div>
+            $display.='</div></div>
             </td>
         </tr>';
 
@@ -494,7 +520,7 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)';
         NULL,NULL,NULL,NULL,'.$personid.','.$totalamount.','.$guests.',"Running","'.$date.'","'.$currentdate.'",
         "'.$time.'","'.$catering.'","'.$notice.'","'.$describe.'")';
             querySend($sql);
-            echo mysqli_insert_id($connect);
+            $_SESSION['order']=mysqli_insert_id($connect);
 
     }
     else if($_POST['option']=="Edithallorder")
@@ -507,6 +533,13 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)';
         $date=$_POST['date'];
         $time=$_POST['time'];
         $perheadwith=$_POST['perheadwith'];
+
+        $cateringid='NULL';
+        if(isset($_POST['cateringid']) &&($perheadwith==1))
+        {
+            $cateringid=$_POST['cateringid'];
+        }
+
         $describe=$_POST['describe'];
         $totalamount=chechIsEmpty($_POST['totalamount']);
         $catering="";
@@ -538,7 +571,7 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)';
                 if($catering=="Running")
                 $notice="alert";
             }
-        $sql='UPDATE `orderDetail` SET `hallprice_id`='.$packageid.',
+        $sql='UPDATE `orderDetail` SET `catering_id`='.$cateringid.',`hallprice_id`='.$packageid.',
 `total_amount`='.$totalamount.',`total_person`='.$guests.',`status_hall`
 ="'.$orderStatus.'",`destination_date`="'.$date.'",`destination_time`="'.$time.'",
 `status_catering`="'.$catering.'",`notice`="'.$notice.'",`describe`="'.$describe.'" 
@@ -627,6 +660,12 @@ WHERE  id='.$order.'';
         $currentdatetime=date('Y-m-d H:i:s');
         $sql='INSERT INTO `comments`(`hall_id`, `catering_id`, `id`, `comment`, `email`, `datetime`, `expire`) VALUES ('.$hallid.',NULL,NULL,"'.$comments.'","'.$email.'","'.$currentdatetime.'",NULL)';
         querySend($sql);
+    }
+    else if($_POST['option']=="dishpredict")
+    {
+        $dishname=$_POST['dishname'];
+        $sql='SELECT `name`, `id`, `image` FROM `systemDish` WHERE ISNULL(isExpire) AND name LIKE "%'.$dishname.'%"';
+        echo dishesOfPakage($sql);
     }
 
 

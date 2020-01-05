@@ -16,7 +16,7 @@ $orderid=$_GET['order'];
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="/Catering/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -166,7 +166,7 @@ WHERE dd.id='.$dishDetailId.'';
                 {
                     $display.='
                     <button id="cancel_dish" type="button"  class="cancelForm form-control btn col-5 btn-danger" value="dish cancel"><i class="fas fa-trash-alt"></i>Delete</button>
-                    <a href="/Catering/dish/AllSelectedDishes.php?order='.$_GET['order'].'&option=PreviewOrder" class="submitForm form-control btn col-5 btn-primary"><i class="fas fa-check "></i>Done</a>
+                    <a href="AllSelectedDishes.php?order='.$_GET['order'].'&option=PreviewOrder" class="submitForm form-control btn col-5 btn-primary"><i class="fas fa-check "></i>Done</a>
 ';
                 }
             }
@@ -200,12 +200,17 @@ include_once ("../webdesign/footer/footer.php");
            var  valueAttribute=$(this).val();
 
             $.ajax({
-              url:"/Catering/dish/dishServer.php",
+              url:"dishServer.php",
                 data:{attributeid:attributeid,value:valueAttribute,option:"attributeChange"},
               method:"POST",
                 dataType:"text",
-              success:function (data)
-              {
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
+                {
+                    $("#preloader").hide();
                   if(data!="")
                   {
                       alert(data);
@@ -219,11 +224,17 @@ include_once ("../webdesign/footer/footer.php");
            var columnValue=$(this).val();
 
            $.ajax({
-              url:"/Catering/dish/dishServer.php",
+              url:"dishServer.php",
               data: {dishDetailId:dishDetailId,columnName:columnName,columnValue:columnValue,option:"dishDetailChange" },
                dataType: "text",
                method:"POST",
-               success:function (data) {
+
+               beforeSend: function() {
+                   $("#preloader").show();
+               },
+               success:function (data)
+               {
+                   $("#preloader").hide();
                   if(data!="")
                   {
                       console.log(data);
@@ -236,11 +247,17 @@ include_once ("../webdesign/footer/footer.php");
        {
            var dishDetailId=$("#dishDetailID").val();
            $.ajax({
-               url:"/Catering/dish/dishServer.php",
+               url:"dishServer.php",
                data: {dishDetailId:dishDetailId,option:"deleteDish" },
                dataType: "text",
                method:"POST",
-               success:function (data) {
+
+               beforeSend: function() {
+                   $("#preloader").show();
+               },
+               success:function (data)
+               {
+                   $("#preloader").hide();
                    if(data!="")
                    {
                        console.log(data);
@@ -248,7 +265,7 @@ include_once ("../webdesign/footer/footer.php");
                    }
                    else
                    {
-                       window.location.href="/Catering/dish/AllSelectedDishes.php?order=<?php echo json_decode($orderid);?>";
+                       window.location.href="AllSelectedDishes.php?order=<?php echo json_decode($orderid);?>";
                    }
                }
            });
@@ -256,7 +273,7 @@ include_once ("../webdesign/footer/footer.php");
        });
         $('#ok').click(function ()
         {
-            window.location.href="/Catering/dish/AllSelectedDishes.php?order=<?php echo json_decode($orderid);?>";
+            window.location.href="AllSelectedDishes.php?order=<?php echo json_decode($orderid);?>";
         });
 
     });

@@ -6,8 +6,16 @@
  * Time: 21:31
  */
 include  ("../../connection/connect.php");
-$hallid=$_GET['hallid'];
-$orderid=$_GET['order'];
+if(!isset($_SESSION['order']))
+{
+    header("location:hallorder.php");
+}
+if(!isset($_SESSION['customer']))
+{
+    header("location:../../customer/CustomerCreate.php");
+}
+$hallid=$_SESSION['branchtypeid'];
+$orderid=$_SESSION['order'];
 $sql='SELECT `id`, `hall_id`, `catering_id`, (SELECT hp.isFood from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),
  `user_id`, `sheftCatering`, `sheftHall`, `sheftCateringUser`, 
  `sheftHallUser`, `address_id`, `person_id`, `total_amount`, 
@@ -15,6 +23,10 @@ $sql='SELECT `id`, `hall_id`, `catering_id`, (SELECT hp.isFood from hallprice as
  `booking_date`, `destination_time`, `status_catering`, 
  `notice`,`describe`,(SELECT hp.describe from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),hallprice_id,(SELECT hp.price from hallprice as hp WHERE hp.id=orderDetail.hallprice_id) FROM `orderDetail` WHERE id='.$orderid.'';
 $detailorder=queryReceive($sql);
+
+$sql='SELECT c.id, c.name,c.image FROM catering as c WHERE c.company_id=(SELECT h.company_id from hall as h where h.id='.$hallid.') AND (ISNULL(c.expire))';
+
+$cateringids=queryReceive($sql);
 
 ?>
 <!DOCTYPE html>
@@ -164,6 +176,82 @@ include_once ("../../webdesign/header/header.php");
 
 
     </div>
+
+
+
+
+
+
+    <?php
+
+    if(count($cateringids)>0)
+    {
+
+        $display = '
+                
+                
+    <div class="form-group row" id="cateringid">
+        <label class="col-form-label ">Catereing Branch</label>
+
+
+        <div  class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-utensils"></i></span>
+            </div>
+            <select  name="cateringid" class="form-control">
+                ';
+        if($detailorder[0][2]!="")
+        {
+
+            $sql = 'SELECT `id`, `name` FROM `catering` WHERE id=' . $detailorder[0][2] . '';
+
+            $selectedcatering = queryReceive($sql);
+            $display .= '
+            <option value="' . $selectedcatering[0][0] . '">' . $selectedcatering[0][1] . '</option>';
+
+            for ($i = 0; $i < count($cateringids); $i++) {
+
+                if ($selectedcatering[0][0] != $cateringids[$i][0]) {
+                    $display .= '
+            <option value="' . $cateringids[$i][0] . '">' . $cateringids[$i][1] . '</option>';
+                }
+
+            }
+        }
+        else
+        {
+
+            for ($i = 0; $i < count($cateringids); $i++)
+            {
+
+                    $display .= '
+            <option value="' . $cateringids[$i][0] . '">' . $cateringids[$i][1] . '</option>';
+
+            }
+        }
+
+
+        $display .= '     
+
+
+            </select>
+        </div>
+
+
+
+
+    </div>';
+        echo $display;
+}
+
+
+     ?>
+
+
+
+
+
+
     <div id="groupofpackages" class="col-12 alert-warning shadow">
 
 
@@ -258,6 +346,8 @@ include_once ("../../webdesign/header/header.php");
 
     <div class="form-group row justify-content-center">
 
+
+
         <button id="cancel" type="button" class=" col-4 btn btn-danger" value="Cancel"><i class="fas fa-arrow-circle-left"></i>back</button>
         <button id="submitform" type="button" class=" col-4 btn btn-success" value="Save"><i class="fas fa-check "></i>Save</button>
     </div>
@@ -269,6 +359,25 @@ include_once ("../../webdesign/footer/footer.php");
 ?>
 <script>
     $(document).ready(function () {
+
+        function barnches()
+        {
+            var perheadwith = $("#perheadwith").val();
+            if(perheadwith==1)
+            {
+                $("#cateringid").show();
+            }
+            else
+            {
+                $("#cateringid").hide();
+            }
+        }
+        $("#perheadwith").change(function ()
+        {
+            barnches();
+
+        });
+        barnches();
         $("#cancel").click(function ()
         {
             window.history.back();
@@ -307,9 +416,13 @@ include_once ("../../webdesign/footer/footer.php");
                 data: formdata,
                 contentType: false,
                 processData: false,
-                success: function (data)
-                {
 
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
+                {
+                    $("#preloader").hide();
                     if(perheadwith==1)
                     {
                         if (data == "")
@@ -348,8 +461,13 @@ include_once ("../../webdesign/footer/footer.php");
                 data: formdata,
                 contentType: false,
                 processData: false,
-                success: function (data)
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
                 {
+                    $("#preloader").hide();
                     $("#selectmenu").html(data);
                     $("#selectmenu").append("<h3 align='center' class='col-12'>Menu Description</h3><p class='col-12'>"+describe+"</p>");
                 }
@@ -405,8 +523,13 @@ include_once ("../../webdesign/footer/footer.php");
                 data: formdata,
                 contentType: false,
                 processData: false,
-                success: function (data)
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
                 {
+                    $("#preloader").hide();
                     if(data!="")
                     {
                         alert(data);

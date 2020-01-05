@@ -7,16 +7,22 @@
  */
 include_once ("../connection/connect.php");
 
-$userId=$_GET['user_id'];
-$orderid=$_GET['order'];
-$companyid=$_GET['companyid']=3;
+
+if(!isset($_SESSION['order']))
+{
+    header("location:../user/userDisplay.php");
+}
+
+$userId=$_COOKIE['userid'];
+$orderid=$_SESSION['order'];
+$companyid=$_COOKIE['companyid'];
 
 ?>
 
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="/Catering/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
     <meta charset="utf-8">
@@ -256,8 +262,13 @@ include_once ("../webdesign/footer/footer.php");
                  data:{useid:userID,paymentId:paymentId,option:"paymentsend"} ,
                   dataType:"text",
                   method:"POST",
+
+                  beforeSend: function() {
+                      $("#preloader").show();
+                  },
                   success:function (data)
                   {
+                      $("#preloader").hide();
                         if(data!='')
                         {
                             alert(data);

@@ -18,10 +18,10 @@ if(!isset($_POST['option']))
     exit();
 }
 $orderId='';
-if(isset($_GET['order']))
+if(isset($_SESSION['order']))
 {
 
-    $orderId=$_GET['order'];
+    $orderId=$_SESSION['order'];
 }
 
 if($_POST['option']=='createDish')
