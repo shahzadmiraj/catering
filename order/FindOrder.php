@@ -33,18 +33,28 @@ if(isset($_SESSION['branchtype']))
         $cateringid=$_SESSION['branchtypeid'];
     }
 }
-
+$date=date('Y-m-d');
 
 if(!empty($hallid))
 {
     $hallorcater="(od.hall_id=".$hallid.")";
-    $order_status='(od.status_hall="'.$order_status.'")';
+    if($_GET['order_status']=="Today_Orders")
+    {
+        $hallorcater.="AND (od.destination_date='".$date."')";
+        $order_status="Running";
+    }
+    $hallorcater.='AND (od.status_hall="'.$order_status.'")';
 }
 else
 {
 
     $hallorcater="(od.catering_id=".$cateringid.")";
-    $order_status='(od.status_catering="'.$order_status.'")';
+    if($_GET['order_status']=="Today_Orders")
+    {
+        $hallorcater.="AND (od.destination_date='".$date."')";
+        $order_status="Running";
+    }
+    $hallorcater.='AND (od.status_catering="'.$order_status.'")';
 }
 ?>
 <!DOCTYPE html>
@@ -228,7 +238,7 @@ include_once ("../webdesign/header/header.php");
 
 
             <?php
-            $sql='SELECT od.id,(SELECT p.name FROM person as p WHERE p.id=od.person_id),(SELECT p.image FROM person as p WHERE p.id=od.person_id),od.destination_date,od.destination_time,od.status_hall,od.status_catering,od.hall_id,od.catering_id,(SELECT hp.package_name FROM hallprice as hp WHERE hp.id=od.hallprice_id),od.person_id FROM orderDetail as od WHERE '.$hallorcater.' AND '.$order_status.'';
+            $sql='SELECT od.id,(SELECT p.name FROM person as p WHERE p.id=od.person_id),(SELECT p.image FROM person as p WHERE p.id=od.person_id),od.destination_date,od.destination_time,od.status_hall,od.status_catering,od.hall_id,od.catering_id,(SELECT hp.package_name FROM hallprice as hp WHERE hp.id=od.hallprice_id),od.person_id FROM orderDetail as od WHERE '.$hallorcater.' ';
             $orderdetail=queryReceive($sql);
             $display='';
             for ($i=0;$i<count($orderdetail);$i++)

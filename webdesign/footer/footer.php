@@ -159,9 +159,13 @@
 <script>
 
     $("#preloader").show();
-    $(document).ready(function () {
 
-        $("#preloader").hide();
+
+
+    $(window).ready(function() {
+        $("#preloader").fadeOut(function() {
+            $(this).remove(); // Optional if it's going to only be used once.
+        });
     });
 
 

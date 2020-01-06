@@ -3,6 +3,9 @@ include_once ("../connection/connect.php");
 
 $hallid='';
 $cateringid='';
+
+
+
 if(isset($_SESSION['branchtype']))
 {
     if($_SESSION['branchtype']=="hall")
@@ -18,17 +21,8 @@ else
 {
     header("location:../company/companyRegister/companydisplay.php");
 }
-/*
- if(isset($_SESSION['order']))
-{
-    unset($_SESSION['order']);
-}
 
-if(isset($_SESSION['customer']))
-{
-    unset($_SESSION['customer']);
-}
-*/
+
 
 ?>
 
@@ -126,6 +120,8 @@ echo $display;
 <!--        $OrderStatus=array("running","cancel","delieved","clear");-->
             <a href="../customer/CustomerCreate.php" class="h-25 col-5 shadow text-dark m-2 text-center">
                 <i class="fas fa-cart-plus fa-5x"></i><h3>Order Create</h3></a>
+
+        <a href="../order/FindOrder.php?order_status=Today_Orders" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-book-reader fa-5x"></i><h3>Today Orders</h3></a>
         <a href="../order/FindOrder.php?order_status=Running" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-cart-arrow-down fa-5x"></i><h3>Running Order</h3></a>
             <a href="../order/FindOrder.php?order_status=Delieved" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-truck fa-5x"></i><h3>Deliever Orders</h3></a>
             <a href="../order/FindOrder.php?order_status=Clear" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="far fa-thumbs-up fa-5x"></i><h3>Clear Orders</h3></a>
