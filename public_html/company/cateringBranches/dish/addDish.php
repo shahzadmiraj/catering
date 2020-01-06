@@ -6,8 +6,11 @@
  * Time: 21:31
  */
 include_once ("../../../connection/connect.php");
+if(!isset($_SESSION['tempid']))
+{
+    header('../cateringEDIR.php');
+}
 $cateringid=$_SESSION['tempid'];
-
 ?>
 <!DOCTYPE html>
 <head>

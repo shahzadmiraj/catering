@@ -132,6 +132,14 @@ if(isset($_POST['option']))
 
         }
         $dishId=$_POST['dishId'];
+
+        $imagepath=$_POST['imagepath'];
+        if(file_exists($imagepath))
+        {
+            unlink($imagepath);
+        }
+
+
         $dishimage="../../../images/dishImages/".$_FILES['image']['name'];
         $resultimage=ImageUploaded($_FILES,$dishimage);//$dishimage is destination file location;
         if($resultimage!="")

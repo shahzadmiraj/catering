@@ -19,11 +19,11 @@ if(isset($_SESSION['typebranch']))
 {
     if($_SESSION['typebranch']=="hall")
     {
-        $hallid=$_SESSION['typebranchid'];
+        $hallid=$_SESSION['branchtypeid'];
     }
     else
     {
-        $cateringid=$_SESSION['typebranchid'];
+        $cateringid=$_SESSION['branchtypeid'];
     }
 }
 

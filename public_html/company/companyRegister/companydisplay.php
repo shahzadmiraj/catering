@@ -11,6 +11,7 @@ if(!isset($_COOKIE['companyid']))
 {
     header("location:../../user/userLogin.php");
 }
+
 $companyid=$_COOKIE['companyid'];
 
 
@@ -21,6 +22,14 @@ if(isset($_SESSION['order']))
 if(isset($_SESSION['customer']))
 {
     unset($_SESSION['customer']);
+}
+if(isset($_SESSION['2ndpage']))
+{
+    unset($_SESSION['2ndpage']);
+}
+if(isset($_SESSION['tempid']))
+{
+    unset($_SESSION['tempid']);
 }
 if(isset($_GET['branchtype']))
 {
