@@ -16,10 +16,12 @@ if(isset($_POST['option']))
         {
             $dishimage = "../../images/dishImages/" . $_FILES['image']['name'];
             $resultimage = ImageUploaded($_FILES, $dishimage);//$dishimage is destination file location;
-            if ($resultimage != "") {
+            if ($resultimage != "")
+            {
                 print_r($resultimage);
                 exit();
             }
+            $dishimage =$_FILES['image']['name'];
         }
         $dishtype='';
         if($_POST["dishtype"]=="others")
@@ -134,12 +136,12 @@ if(isset($_POST['option']))
             print_r($resultimage);
             exit();
         }
-
+        $dishimage =$_FILES['image']['name'];
         $sql='UPDATE `systemDish` SET image="'.$dishimage.'" WHERE id='.$dishId.'';
         querySend($sql);
-        if (file_exists($previouspath))
+        if (file_exists('../../images/dishImages/'.$previouspath) &&($previouspath!=""))
         {
-            $deleted = unlink($previouspath);
+            $deleted = unlink('../../images/dishImages/'.$previouspath);
         }
 
 

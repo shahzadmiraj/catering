@@ -7,7 +7,7 @@
  */
 include_once ("../../connection/connect.php");
 
-$dishID=$_GET['dishid']=1;
+$dishID=$_GET['dishid'];
 $sql='SELECT d.name,(SELECT dt.name FROM systemDishType as dt WHERE dt.id=d.systemDishType_id), d.image, d.systemDishType_id, d.isExpire FROM systemDish as d WHERE d.id='.$dishID.'';
 $dishDetail=queryReceive($sql);
 $sql='SELECT `name`, `id`, `systemDish_id`, `isExpire` FROM `SystemAttribute` WHERE ISNULL(isExpire) AND (systemDish_id='.$dishID.')';
@@ -23,26 +23,39 @@ $attributes=queryReceive($sql);
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="../../webdesign/css/complete.css">
+    <link rel="stylesheet" href="../../webdesign/css/loader.css">
     <style>
-        *{
-            margin:auto;
-            padding: auto;
-        }
     </style>
 </head>
-<body class="alert-light">
-<div class="container"  style="margin-top:150px">
+<body>
+<?php
+include_once ("../../webdesign/header/header.php");
+
+?>
+<div class="container"  style="margin-top:100px">
 
         <div class="col-12 shadow card p-4">
             <input id="dishid" type="number" hidden value="<?php echo $dishID; ?>">
             <div class="form-group row">
-                <a href="dishesDetail.php" class=" form-control col-4 btn-warning">Previous</a>
-                <span class="font-weight-bold text-center col-9 form-control"> Edit Dish in System</span>
+                <span class="font-weight-bold text-center form-control"> Edit Dish in System</span>
             </div>
 
             <div class="form-group row">
-                <img style="height: 30vh " src="<?php echo $dishDetail[0][2]; ?>"   class="col-8 form-control" alt="Image is not set" >
+                <img style="height: 30vh " src="<?php
+
+                if(file_exists('../../images/dishImages/'.$dishDetail[0][2])&&($dishDetail[0][2]!=""))
+                {
+                    echo '../../images/dishImages/'.$dishDetail[0][2];
+                }
+                else
+                {
+                    echo 'https://www.pngkey.com/png/detail/430-4307759_knife-fork-and-plate-vector-icon-dishes-png.png';
+                }
+
+
+                ?>"   class="form-control" alt="Image is not set" >
             </div>
             <div class="form-group row">
                 <label class="col-4 col-form-label">Dish Name</label>
@@ -132,7 +145,9 @@ $attributes=queryReceive($sql);
 
 
 
-
+<?php
+include_once ("../../webdesign/footer/footer.php");
+?>
 <script>
     //window.history.back();
 

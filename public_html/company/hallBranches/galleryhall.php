@@ -2,6 +2,7 @@
 include_once ('../../connection/connect.php');
 
 
+
 if(!isset($_GET['hall']))
 {
 
@@ -15,12 +16,15 @@ if((!is_numeric($id))||$id=="")
     header("location:../companyRegister/companyEdit.php");
 }
 
+
+
 $hallid='';
 $companyid='';
 $hallid=$id;
 $companyid=$_COOKIE['companyid'];
 $sql='SELECT `name`, `max_guests`, `noOfPartitions`, `ownParking`, `expire`, `image`, `hallType`, `location_id` FROM `hall` WHERE id='.$hallid.'';
 $halldetail=queryReceive($sql);
+
 ?>
 <!DOCTYPE html>
 <head>
@@ -37,18 +41,6 @@ $halldetail=queryReceive($sql);
     <link rel="stylesheet" href="../../webdesign/css/loader.css">
     <style>
 
-        #formhall
-        {
-            margin: 5%;;
-
-        }
-        #showDaytimes
-        {
-            background: #dd3e54;  /* fallback for old browsers */
-            background: -webkit-linear-gradient(to right, #6be585, #dd3e54);  /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to right, #6be585, #dd3e54); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-        }
     </style>
 </head>
 <body>
@@ -58,8 +50,10 @@ include_once ("../../webdesign/header/header.php");
 
 ?>
 
-<div class="jumbotron jumbotron-fluid text-center" style="background-image: url(<?php
 
+
+
+<div class="jumbotron jumbotron-fluid text-center" style="background-image: url(<?php
 if((file_exists('../../images/hall/'.$halldetail[0][5]))&&($halldetail[0][5]!=""))
 {
     echo "'../../images/hall/".$halldetail[0][5]."'";
@@ -70,18 +64,76 @@ else
 }
 ?>);background-repeat: no-repeat ;background-size: 100% 100%">
     <div class="container" style="background-color: white;opacity: 0.7">
-        <h1 class="display-4"><i class="fas fa-place-of-worship"></i><?php echo $halldetail[0][0]; ?></h1>
-        <p class="lead">You can control hall setting and also month wise prize list.Prize list consist of per head with food  and per head only seating .</p>
+        <h1 class="display-4"><i class="fas fa-images fa-1x"></i> <?php echo $halldetail[0][0]; ?></h1>
+        <p class="lead">View and upload picture of hall </p>
         <h1 class="text-center"> <a href="../companyRegister/companyEdit.php " class="col-6 btn btn-info "> <i class="fas fa-city mr-2"></i>Edit Company</a></h1>
     </div>
 </div>
+<div class="container">
 
 
-<div class="container row m-auto">
-    <a href="hallInfo.php?hall=<?php echo $encoded;?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-cogs fa-5x"></i><h4> Change info</h4></a>
-    <a href="galleryhall.php?hall=<?php echo $encoded;?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-images fa-5x"></i> <h4> Gallery</h4></a>
-    <a href="HallprizeLists.php?hall=<?php echo $encoded;?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-clipboard-list fa-5x"></i> <h4> Prize list</h4></a>
-    <a href="comment.php?hall=<?php echo $encoded;?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-comments fa-5x"></i> <h4> Comments</h4></a>
+
+        <h1 class="font-weight-light text-lg-left mt-4 mb-3">Gallery</h1>
+
+
+
+
+
+
+        <form action="" method="POST" enctype="multipart/form-data" class="form-inline">
+            <input type="file" name="userfile[]" value="" multiple="" class="col-8 btn  btn-light">
+            <input type="submit" name="submit" value="Upload" class="btn btn-success col-4">
+        </form>
+        <?php
+
+        if(isset($_FILES['userfile']))
+        {
+
+            $file_array=reArray($_FILES['userfile']);
+            $Distination='';
+            for ($i=0;$i<count($file_array);$i++)
+            {
+                $Distination= '../../images/hall/'.$file_array[$i]['name'];
+                $error=MutipleUploadFile($file_array[$i],$Distination);
+                if(count($error)>0)
+                {
+                    echo '<h4 class="badge-danger">'.$file_array[$i]['name'].'.'.$error[0].'</h4>';
+                }
+                else
+                {
+                    $sql='INSERT INTO `images`(`id`, `image`, `expire`, `catering_id`, `hall_id`) VALUES (NULL,"'.$Distination.'",NULL,NULL,'.$hallid.')';
+                    querySend($sql);
+                }
+
+            }
+            unset($_FILES['userfile']);
+
+        }
+
+
+
+        ?>
+
+
+
+        <hr class="mt-3 mb-5 border-white">
+
+        <div class="row text-center text-lg-left">
+
+
+            <?php
+
+
+            $sql='SELECT `id`, `image` FROM `images` WHERE hall_id='.$hallid.'' ;
+            echo showGallery($sql);
+
+            ?>
+
+
+        </div>
+
+
+
 </div>
 
 
@@ -94,6 +146,8 @@ include_once ("../../webdesign/footer/footer.php");
 
     $(document).ready(function ()
     {
+
+
 
 
 

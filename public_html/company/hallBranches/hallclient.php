@@ -70,13 +70,16 @@ include_once ("../../webdesign/header/header.php");
 
 <div class="jumbotron  shadow" style="background-image: url(
 <?php
-if(file_exists($hallinformations[0][4]))
+
+
+if(file_exists('../images/hall/'.$hallinformations[0][4]))
 {
-    echo $hallinformations[0][4];
+    echo "'../images/hall/".$hallinformations[0][4]."'";
 }
 else
 {
-    echo "https://weddingspot-prod-s3-1.s3.amazonaws.com/__sized__/images/venues/2218/Royal-Palm-Banquet-Hall-Farmingdale-NY-2c26ce40-b77e-404c-afb9-aae846a77332-97450e389c42885476f1fbe9bc5bca5a.jpg";
+    echo 'https://thumbs.dreamstime.com/z/wedding-hall-decoration-reception-party-35933352.jpg';
+
 }
 
 ?>);background-size:100% 115%;background-repeat: no-repeat">
@@ -300,66 +303,6 @@ else
 
 
 
-<div class="container">
-
-    <h1 class="font-weight-light text-lg-left mt-5 mb-3">Gallery</h1>
-
-
-    <form action="" method="POST" enctype="multipart/form-data" class="form-inline">
-        <input type="file" name="userfile[]" value="" multiple="" class="col-8 btn  btn-light">
-        <input id="submitmultiphotos" type="submit" name="submit" value="Upload" class="btn btn-success col-4">
-    </form>
-    <?php
-
-    if(isset($_FILES['userfile']))
-    {
-
-        $file_array=reArray($_FILES['userfile']);
-        $Distination='';
-        for ($i=0;$i<count($file_array);$i++)
-        {
-            $Distination= '../../images/hall/'.$file_array[$i]['name'];
-            $error=MutipleUploadFile($file_array[$i],$Distination);
-            if(count($error)>0)
-            {
-                echo '<h4 class="badge-danger">'.$file_array[$i]['name'].'.'.$error[0].'</h4>';
-            }
-            else
-            {
-                $sql='INSERT INTO `images`(`id`, `image`, `expire`, `catering_id`, `hall_id`) VALUES (NULL,"'.$Distination.'",NULL,NULL,'.$hallid.')';
-                querySend($sql);
-            }
-
-        }
-        unset($_FILES['userfile']);
-
-    }
-
-
-
-    ?>
-
-
-
-    <hr class="mt-3 mb-5">
-
-    <div class="row text-center text-lg-left">
-
-
-        <?php
-
-
-        $sql='SELECT `id`, `image` FROM `images` WHERE hall_id='.$hallid.'' ;
-        echo showGallery($sql);
-
-        ?>
-
-
-    </div>
-
-</div>
-
-
 
 
 
@@ -370,10 +313,6 @@ else
 
 
 <?php
-
-
-
-include_once ("comment.php");
 include_once ("../../webdesign/footer/footer.php");
 ?>
 <script>

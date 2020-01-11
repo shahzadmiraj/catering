@@ -101,15 +101,15 @@ function showHalls($sql,$Distance)
             <div class="view overlay">
                 <div class="container pictures">
                     <img src="';
-        if(file_exists($AllHalls[$i][1]) &&($AllHalls[$i][1]!=""))
+        if(file_exists('images/hall/'.$AllHalls[$i][1]) &&($AllHalls[$i][1]!=""))
         {
-            $display.=$AllHalls[$i][1];
+            $display.="images/hall/".$AllHalls[$i][1];
         }
         else
         {
-            $display.='https://www.pakvenues.com/system/halls/cover_images/000/000/048/original/Umar_Marriage_Hall_lahore.jpg?1566758537';
-        }
+            $display.='https://thumbs.dreamstime.com/z/wedding-hall-decoration-reception-party-35933352.jpg';
 
+        }
         $display.='" alt="Snow" style="width:100%;height: 100%">
                     <h5 class="top-right text-dark font-weight-bold"> ';
 

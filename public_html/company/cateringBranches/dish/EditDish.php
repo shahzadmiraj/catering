@@ -7,11 +7,25 @@
  */
 include_once ("../../../connection/connect.php");
 
-$cateringid=$_SESSION['tempid'];
-$dishID=$_SESSION['2ndpage'];
+
+
+if((!isset($_GET['catering']))||(!isset($_GET['dish'])))
+{
+    header("location:../companyRegister/companyEdit.php");
+}
+$encoded=$_GET['catering'];
+$id=base64url_decode($encoded);
+$encodedPack=$_GET['dish'];
+$packageid=base64url_decode($encodedPack);
+if(((!is_numeric($id))||$id=="")||((!is_numeric($packageid))||$packageid==""))
+{
+    header("location:../companyRegister/companyEdit.php");
+}
+
+$cateringid=$id;
+$dishID=$packageid;
 $sql='SELECT d.name,(SELECT dt.name FROM dish_type as dt WHERE dt.id=d.dish_type_id), d.image, d.dish_type_id, d.isExpire FROM dish as d WHERE d.id='.$dishID.'';
 $dishDetail=queryReceive($sql);
-
 $sql='SELECT `name`, `id`, `dish_id`, `isExpire` FROM `attribute` WHERE ISNULL(isExpire) AND (dish_id='.$dishID.')';
 $attributes=queryReceive($sql);
 ?>
@@ -51,20 +65,14 @@ include_once ("../../../webdesign/header/header.php");
 
             <div class="form-group row justify-content-center">
                 <img style="height: 30vh " src="<?php
-
-
-                if(file_exists($dishDetail[0][2])&&($dishDetail[0][2]!=""))
+                if(file_exists('../../../images/dishImages/'.$dishDetail[0][2])&&($dishDetail[0][2]!=""))
                 {
-                    echo $dishDetail[0][2];
+                    echo '../../../images/dishImages/'.$dishDetail[0][2];
                 }
                 else
                 {
-                    echo 'https://shaadishopblog.files.wordpress.com/2015/10/indian-wedding-punjabi-jain-kunal-shveta-bride-groom-hotel-irvine-global-photography-lehenga-sherwani-sera-manohar-delhi-palace-indian-food.jpg?w=720&h=480';
+                    echo 'https://www.pngkey.com/png/detail/430-4307759_knife-fork-and-plate-vector-icon-dishes-png.png';
                 }
-
-
-
-
 
                 ?>"   class="col-8 " alt="Image is not set" >
             </div>

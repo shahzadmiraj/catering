@@ -2,10 +2,25 @@
 include_once ("../../connection/connect.php");
 
 
+
+
+if(!isset($_GET['hall']))
+{
+
+    header("location:../companyRegister/companyEdit.php");
+}
+$encoded=$_GET['hall'];
+$id=base64url_decode($encoded);
+
+if((!is_numeric($id))||$id=="")
+{
+    header("location:../companyRegister/companyEdit.php");
+}
+
 $hallname=$_GET['hallname'];
 $month=$_GET['month'];
 $daytime=$_GET['daytime'];
-$hallid=$_SESSION['tempid'];
+$hallid=$id;
 $companyid=$_COOKIE['companyid'];
 
 ?>
@@ -374,7 +389,6 @@ $(document).ready(function ()
             success:function (data)
             {
                 $("#preloader").hide();
-
                 $("#selectmenu").html(data);
             }
         });

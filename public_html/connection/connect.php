@@ -5,8 +5,11 @@
  * Date: 2019-09-01
  * Time: 21:25
  */
-
-
+//dish  ../../images/dishImages/" . $_FILES['image']['name'];   https://www.pngkey.com/png/detail/430-4307759_knife-fork-and-plate-vector-icon-dishes-png.png
+//customer    /images/customerimage/     echo "https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png";
+//user     ../../images/users/                      echo "https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png";
+//for image Hall      ../../images/hall/                        $display.='https://thumbs.dreamstime.com/z/wedding-hall-decoration-reception-party-35933352.jpg';
+// for catering image ../../images/catering/                $display.='https://www.liberaldictionary.com/wp-content/uploads/2019/02/cater-4956.jpg';
 //session are customer,typebranch,branchtypeid,tempid,2ndpage,order
 //cookies are userid,username,companyid,userimage,isOwner
 //public_html on companyserver.php,header footer
@@ -27,6 +30,19 @@ $connect=mysqli_connect('localhost',"root","","a111");
         printf("Connect failed: %s\n", mysqli_connect_error());
         exit();
     }
+
+function base64url_encode( $data )
+{
+    $dammy=substr(md5(time()), 0, 6);
+    return rtrim( strtr( base64_encode( $data), '+/', '-_'), '=').$dammy;
+}
+function base64url_decode( $data )
+{
+    $data=substr($data,0,-6);
+    return base64_decode( strtr( $data, '-_', '+/') . str_repeat('=', 3 - ( 3 + strlen( $data )) % 4 ));
+}
+
+
 
 
 function queryReceive($sql)
@@ -237,9 +253,39 @@ function dishesOfPakage($sql)
     {
         $display.= '
         <div id="dishid' . $dishdetail[$j][1] . '" class="col-4 alert-danger border m-1 form-group p-0" style="height: 30vh;" >
-            <img src="' . $dishdetail[$j][2] . '" class="col-12" style="height: 15vh">
+            <img src="';
+            if((file_exists('../images/dishImages/'.$dishdetail[$j][2])||file_exists('../../images/dishImages/'.$dishdetail[$j][2]))&&($dishdetail[$j][2]!=""))
+            {
+                $display.='../../images/dishImages/'.$dishdetail[$j][2];;
+            }
+            else
+            {
+                $display.='https://www.pngkey.com/png/detail/430-4307759_knife-fork-and-plate-vector-icon-dishes-png.png';
+
+            }
+
+
+
+            $display.='" class="col-12" style="height: 15vh">
             <p class="col-form-label" class="form-control col-12">' . $dishdetail[$j][0] . '</p>
-            <input   data-image="' . $dishdetail[$j][2] . '" data-dishname="' . $dishdetail[$j][0] . '"  data-dishid="' . $dishdetail[$j][1] . '" type="button" value="Select" class="form-control col-12 touchdish btn btn-success">
+            <input   data-image="';
+
+
+        if((file_exists('../images/dishImages/'.$dishdetail[$j][2])||file_exists('../../images/dishImages/'.$dishdetail[$j][2]))&&($dishdetail[$j][2]!=""))
+        {
+            $display.='../../images/dishImages/'.$dishdetail[$j][2];;
+        }
+        else
+        {
+            $display.='https://www.pngkey.com/png/detail/430-4307759_knife-fork-and-plate-vector-icon-dishes-png.png';
+
+        }
+
+
+
+
+
+            $display.='" data-dishname="' . $dishdetail[$j][0] . '"  data-dishid="' . $dishdetail[$j][1] . '" type="button" value="Select" class="form-control col-12 touchdish btn btn-success">
             <input hidden type="text"  name="dishname[]"  value="' . $dishdetail[$j][0] . '">
              <input hidden type="text"  name="image[]"  value="' . $dishdetail[$j][2] . '">
         </div>';
@@ -255,16 +301,16 @@ function dishesOfPakage($sql)
 
 function showRemainings($sql)
 {
-    $display='<table class="table table-striped newcolor table-responsive" style="width: 100%;">
+    $display='<table class="table table-warning newcolor table-responsive text-white">
     <thead class="font-weight-bold">
     <tr>
-            <th scope="col"><h1 class="fas fa-id-card col-12"></h1>order Id</th>
-            <th scope="col"><h1 class="fas fa-user col-12"></h1>customer Name</th>
-            <th scope="col"><h1 class="far fa-eye col-12"></h1>order status</th>
-            <th scope="col"><h1 class="fab fa-amazon-pay col-12"></h1>received amount</th>
+            <th scope="col"><h1 class="fas fa-id-card "></h1>order Id</th>
+            <th scope="col"><h1 class="fas fa-user "></h1>customer Name</th>
+            <th scope="col"><h1 class="far fa-eye "></h1>order status</th>
+            <th scope="col"><h1 class="fab fa-amazon-pay"></h1>received amount</th>
             <th scope="col">System  Amount</th>
             <th scope="col">remaining system amount </th>
-            <th scope="col"><h1 class="far fa-money-bill-alt col-12"></h1>your demanded amount</th>
+            <th scope="col"><h1 class="far fa-money-bill-alt"></h1> Demanded amount</th>
             <th scope="col">remaining demand amount</th>
     </tr>
     </thead>

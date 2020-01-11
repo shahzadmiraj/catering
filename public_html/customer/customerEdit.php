@@ -75,14 +75,16 @@ include_once ("../webdesign/header/header.php");
 
         <img src="<?php
 
-        if($person[0][4]=="")
+        if(file_exists('../images/customerimage/'.$person[0][4])&&($person[0][4]!=""))
         {
-            echo 'https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
+            echo '../images/customerimage/'.$person[0][4];
+
         }
         else
         {
-            echo $person[0][4];
+            echo 'https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
         }
+
 
         ?> " style="height: 30vh;" class="img-thumbnail figure-img rounded-circle" alt="image is not set">
     <div class="form-group row col-12 justify-content-center ">

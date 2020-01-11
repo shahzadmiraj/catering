@@ -115,12 +115,14 @@ for($M=0;$M<$CateringBranches;$M++)
         <?php
 
         $display = '';
-        for ($i = 0; $i < count($dishType); $i++) {
-            $display = '<h1 align="center" class="col-12">' . $dishType[$i][0] . '</h1>';
+        for ($i = 0; $i < count($dishType); $i++)
+        {
+            $display = '<h1 align="center" class="col-12  card">' . $dishType[$i][0] . '</h1>';
             $sql = 'SELECT `name`, `id`, `image` FROM `systemDish` WHERE ISNULL(isExpire)AND
 systemDishType_id=' . $dishType[$i][1] . '';
             $dishDetail = queryReceive($sql);
-            for ($j = 0; $j < count($dishDetail); $j++) {
+            for ($j = 0; $j < count($dishDetail); $j++)
+            {
                 $display .= '
     <div class="col-4 shadow border btn-outline-warning m-2">
     
@@ -128,7 +130,25 @@ systemDishType_id=' . $dishType[$i][1] . '';
     <input id="dishid' .$H. '"  hidden type="number" name="dishid[]" value="' . $dishDetail[$j][1] . '">
     <input id="dishname' . $H . '" name="dishname[]" hidden value="' . $dishDetail[$j][0] . '">
     <input id="image' . $H. '" name="image[]" hidden value="' . $dishDetail[$j][2] . '">
-    <img class="col-12" src="' . $dishDetail[$j][2] . '" style="height: 20vh" >
+    <img class="col-12" src="';
+
+
+
+
+                $str2 = substr($dishDetail[$j][2], 3);
+                if (file_exists($str2)&&($str2!=""))
+                {
+                    $display.= $str2;
+                }
+                else
+                {
+                    $display.= '../../gmail.png';
+
+                }
+
+
+
+                $display.='" style="height: 20vh" >
     <p class="col-12"> ' . $dishDetail[$j][0] . '</p>
     <input   data-dishshow="' .$H. '" type="button" class="selectdish form-control col-12 btn-danger" value="Remove">
     </div>';

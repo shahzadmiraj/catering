@@ -21,6 +21,8 @@ if(isset($_POST['option']))
                 print_r($resultimage);
                 exit();
             }
+
+            $dishimage =$_FILES['image']['name'];
         }
         $dishtype='';
         if($_POST["dishtype"]=="others")
@@ -133,11 +135,6 @@ if(isset($_POST['option']))
         }
         $dishId=$_POST['dishId'];
 
-        $imagepath=$_POST['imagepath'];
-        if(file_exists($imagepath))
-        {
-            unlink($imagepath);
-        }
 
 
         $dishimage="../../../images/dishImages/".$_FILES['image']['name'];
@@ -148,8 +145,16 @@ if(isset($_POST['option']))
             exit();
         }
 
+        $dishimage=$_FILES['image']['name'];
         $sql='UPDATE `dish` SET image="'.$dishimage.'" WHERE id='.$dishId.'';
         querySend($sql);
+
+
+        $imagepath=$_POST['imagepath'];
+        if(file_exists("../../../images/dishImages/".$imagepath))
+        {
+            unlink("../../../images/dishImages/".$imagepath);
+        }
 
 
     }

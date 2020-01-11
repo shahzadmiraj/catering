@@ -41,7 +41,7 @@ if(isset($_POST['option']))
                 exit();
             }
 
-            $image = "../../images/users/" . $_FILES['image']['name'];
+            $image = $_FILES['image']['name'];
 
         }
 
@@ -97,6 +97,8 @@ if(isset($_POST['option']))
                 print_r($resultimage);
                 exit();
             }
+
+            $Cateringimage =$_FILES['image']['name'];
 
         }
         $sql='INSERT INTO `catering`(`id`, `name`, `expire`, `image`, `location_id`, `company_id`) VALUES (NULL,"'.$namecatering.'",NULL,"'.$Cateringimage.'",NULL,'.$companyid.')';
@@ -156,6 +158,8 @@ if(isset($_POST['option']))
                 print_r($resultimage);
                 exit();
             }
+
+            $hallimage =$_FILES['image']['name'];
         }
         $daytime='';
         $parking=0;
@@ -239,6 +243,8 @@ if(isset($_POST['option']))
 
         $hallname=$_POST['hallname'];
         $hallid=$_POST['hallid'];
+        $encodehallid=base64url_encode($hallid);
+
         $daytime=$_POST['daytime'];
         $companyid=$_POST['companyid'];
         $monthsArray = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
@@ -284,33 +290,26 @@ AND (month="'.$monthsArray[$i].'")';
                    
                    
                     <h3 align="center" class="col-12 mt-3">List of packages with Food</h3>
-                    <a  href="addnewpackage.php?hallname='.$hallname.'&month='.$monthsArray[$i].'&daytime='.$daytime.'" class="form-control  btn-primary col-12 text-center"><i class="fas fa-plus-square"></i> Add New Package</a>
+                    <a  href="addnewpackage.php?hallname='.$hallname.'&month='.$monthsArray[$i].'&daytime='.$daytime.'&hall='.$encodehallid.'" class="form-control  btn-primary col-12 text-center"><i class="fas fa-plus-square"></i> Add New Package</a>
                     
                     
                     
                     <div class="form-group row ">';
 
             $sql='SELECT `id`,`expire`, `package_name` FROM `hallprice` WHERE (hall_id='.$hallid.')
-AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)';
+AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)AND ISNULL(expire)';
             $ALLpackages=queryReceive($sql);
             for ($j=0;$j<count($ALLpackages);$j++)
             {
-//                $display.='    <a  href="?editpackage=yes&hallname='.$hallname.'&month='.$monthsArray[$i].'&daytime='.$daytime.'&packageid='.$ALLpackages[$j][0].'" class="form-control  btn-success col-4 text-center m-2"> '.$ALLpackages[$j][2].'';
-//                if($ALLpackages[$j][1]!=NULL)
-//                {
-//                    $display.='   Expired';
-//                }
-//                $display.='</a>';
-
 
                 if($ALLpackages[$j][1]!="")
                 {
-                    $display.= '<a href="?editpackage=yes&hallname='.$hallname.'&month='.$monthsArray[$i].'&daytime='.$daytime.'&packageid='.$ALLpackages[$j][0].'" class="btn btn-danger col-sm-4 col-md-3 col-xl-3 m-1">'.$ALLpackages[$j][2].'</a>';
+                    $display.= '<a href="?editpackage=yes&hallname='.$hallname.'&month='.$monthsArray[$i].'&daytime='.$daytime.'&packageid='.$ALLpackages[$j][0].'&hall='.$hallid.'" class="btn btn-danger col-sm-4 col-md-3 col-xl-3 m-1">'.$ALLpackages[$j][2].'</a>';
 
                 }
                 else
                 {
-                    $display.= '<a href="?editpackage=yes&hallname='.$hallname.'&month='.$monthsArray[$i].'&daytime='.$daytime.'&packageid='.$ALLpackages[$j][0].'" class="btn btn-warning col-sm-4 col-md-3 col-xl-3 m-1">'.$ALLpackages[$j][2].'</a>';
+                    $display.= '<a href="?editpackage=yes&hallname='.$hallname.'&month='.$monthsArray[$i].'&daytime='.$daytime.'&packageid='.$ALLpackages[$j][0].'&hall='.$hallid.'" class="btn btn-warning col-sm-4 col-md-3 col-xl-3 m-1">'.$ALLpackages[$j][2].'</a>';
                 }
 
 
@@ -592,6 +591,8 @@ WHERE  id='.$order.'';
                 print_r($resultimage);
                 exit();
             }
+
+            $hallimage =$_FILES['image']['name'];
         }
         $daytime='';
         $parking=0;
@@ -621,6 +622,9 @@ WHERE  id='.$order.'';
                 print_r($resultimage);
                 exit();
             }
+
+            $cateringimage = $_FILES['image']['name'];
+
         }
         $sql='UPDATE `catering` SET `name`="'.$cateringname.'",`image`="'.$cateringimage.'" WHERE id='.$cateringid.'';
         querySend($sql);
@@ -638,7 +642,7 @@ WHERE  id='.$order.'';
                 print_r($resultimage);
                 exit();
             }
-            $dishimage = "../../images/dishImages/" . $_FILES['image']['name'];
+            $dishimage =$_FILES['image']['name'];
         }
         $sql='INSERT INTO `systemDish`(`name`, `id`, `image`, `isExpire`, `systemDishType_id`) VALUES ("'.$dishname.'",NULL,"'.$dishimage.'",NULL,NULL)';
         querySend($sql);

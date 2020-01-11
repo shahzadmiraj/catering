@@ -25,6 +25,8 @@ if(isset($_POST['option']))
                 print_r($resultimage);
                 exit();
             }
+
+            $image =$_FILES['image']['name'];
         }
 
         $name = trim($_POST['name']);

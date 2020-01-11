@@ -6,11 +6,22 @@
  * Time: 21:31
  */
 include_once ("../../../connection/connect.php");
-if(!isset($_SESSION['tempid']))
+if (!isset($_COOKIE['companyid']))
 {
-    header('../cateringEDIR.php');
+    header("location:../../user/userLogin.php");
 }
-$cateringid=$_SESSION['tempid'];
+if(!isset($_GET['catering']))
+{
+    header("location:./../companyRegister/companyEdit.php");
+}
+$encoded=$_GET['catering'];
+$id=base64url_decode($encoded);
+
+if((!is_numeric($id))||$id=="")
+{
+    header("location:../../companyRegister/companyEdit.php");
+}
+$cateringid=$id;
 ?>
 <!DOCTYPE html>
 <head>
