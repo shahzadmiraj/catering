@@ -32,6 +32,8 @@ if(isset($_POST['option']))
                 print_r($resultimage);
                 exit();
             }
+
+            $image =$_FILES['image']['name'];
         }
 
         $name = trim($_POST['name']);
@@ -118,6 +120,8 @@ if(isset($_POST['option']))
             print_r($resultimage);
             exit();
         }
+
+        $image=$_FILES['image']['name'];
         $sql='UPDATE person as p SET p.image="'.$image.'" WHERE p.id='.$customerid.';';
         querySend($sql);
         if (file_exists($previouspath))

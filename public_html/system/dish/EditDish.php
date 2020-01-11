@@ -23,7 +23,7 @@ $attributes=queryReceive($sql);
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
+    <link rel="stylesheet" href="../../webdesign/css/loader.css">
     <style>
         *{
             margin:auto;
@@ -153,15 +153,20 @@ include_once("../../webdesign/header/headerclient.php");
                 method:"POST",
                 data:{value:value,dishid:dishid,option:"ExpireDish"},
                 dataType:"text",
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
                 success:function (data)
                 {
+                    $("#preloader").hide();
                     if(data!='')
                     {
                         alert(data);
                     }
                     else
                     {
-                        window.location.href="/public_html/system/dish/dishesDetail.php";
+                        window.location.href="dishesDetail.php";
                     }
                 }
             });
@@ -204,15 +209,20 @@ include_once("../../webdesign/header/headerclient.php");
                 data:formdata,
                 contentType: false,
                 processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
                 success:function (data)
                 {
+                    $("#preloader").hide();
                     if(data!='')
                     {
                         alert(data);
                     }
                     else
                     {
-                        window.location.href="/public_html/system/dish/dishesDetail.php";
+                        window.location.href="dishesDetail.php";
                     }
                 }
             });
@@ -226,8 +236,13 @@ include_once("../../webdesign/header/headerclient.php");
                method: "POST",
                data: {attributeid:attributeid,text:text,option:"changeAttributes"},
                dataType:"text",
+
+               beforeSend: function() {
+                   $("#preloader").show();
+               },
                success:function (data)
                {
+                   $("#preloader").hide();
                    if(data!='')
                    {
                        alert(data);
@@ -246,8 +261,13 @@ include_once("../../webdesign/header/headerclient.php");
                 method: "POST",
                 data: {attributeid:attributeid,option:"RemoveAttribute"},
                 dataType:"text",
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
                 success:function (data)
                 {
+                    $("#preloader").hide();
                     if(data!='')
                     {
                         alert(data);
@@ -271,8 +291,13 @@ include_once("../../webdesign/header/headerclient.php");
                 method: "POST",
                 data: {dishid:dishid,column:column,text:text,option:"dishchanges"},
                 dataType:"text",
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
                 success:function (data)
                 {
+                    $("#preloader").hide();
                     if(data!='')
                     {
                         alert(data);
@@ -293,8 +318,13 @@ include_once("../../webdesign/header/headerclient.php");
                 data:formData,
                 contentType: false,
                 processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
                 success:function (data)
                 {
+                    $("#preloader").hide();
                     if(data!='')
                     {
                         alert(data);

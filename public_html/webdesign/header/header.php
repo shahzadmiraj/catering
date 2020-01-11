@@ -14,6 +14,10 @@
 </head>
 <body >-->
 
+<div id="preloader">
+    <div id="loader"></div>
+</div>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="background: #ee0979;  /* fallback for old browsers */
 background: -webkit-linear-gradient(to right, #ff6a00, #ee0979);  /* Chrome 10-25, Safari 5.1-6 */
 background: linear-gradient(to right, #ff6a00, #ee0979);/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
@@ -30,7 +34,7 @@ background: linear-gradient(to right, #ff6a00, #ee0979);/* W3C, IE 10+/ Edge, Fi
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto w-100 justify-content-end">
                 <li class="nav-item ">
-                    <a class="nav-link" href="/public_html/index.php"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/public_html/index.php?action=home"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
                 </li>
 
 
@@ -40,7 +44,10 @@ background: linear-gradient(to right, #ff6a00, #ee0979);/* W3C, IE 10+/ Edge, Fi
                     echo '
                 <li class="nav-item active">
                     <a class="nav-link" href="/public_html/company/companyRegister/companydisplay.php"><i class="fas fa-building"></i> My Company<span class="sr-only">(current)</span></a>
-                </li>';
+                </li>
+               
+                
+                ';
 
                 }
                 ?>
@@ -108,11 +115,20 @@ background: linear-gradient(to right, #ff6a00, #ee0979);/* W3C, IE 10+/ Edge, Fi
                     echo '
                 <li class="nav-item">
                     <a class="nav-link" href="/public_html/user/logout.php"><i class="fas fa-sign-out-alt"></i> Sign out</a>
-                </li>';
+                </li>
+                
+                <li class="nav-item active">
+                    <a class="nav-link" href="/public_html/company/companyRegister/companyEdit.php"><i class="fas fa-globe-europe"></i> Edit Company</a>
+                </li>
+                
+                
+                ';
 
                 }
                 ?>
-
+                <li class="nav-item">
+                    <a class="nav-link" href="/public_html/user/userLogin.php?action=admin"><i class="fas fa-users-cog"></i>Admin</a>
+                </li>
             </ul>
 
         </div>
@@ -120,7 +136,7 @@ background: linear-gradient(to right, #ff6a00, #ee0979);/* W3C, IE 10+/ Edge, Fi
 
 
 </nav>
-<div style="margin-top: 104px">
+<div style="margin-top: 80px">
 
 </div>
 

@@ -29,7 +29,7 @@ $orderId=$_SESSION['order'];
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../webdesign/css/complete.css">
-
+    <link rel="stylesheet" href="../webdesign/css/loader.css">
 
 
 
@@ -71,17 +71,22 @@ include_once ("../webdesign/header/header.php");
             $display .= '
     <form  id="form_' . $number . '">
 
-        <div class="card-header shadow-lg p-4 mb-4 border  col-12">';
+        <div class="card shadow-lg p-4 mb-4 border  col-12">';
+            $image='';
 
-            $image = substr($dishDetail[0][2], 6);
-            if(!file_exists($image))
+
+            if(file_exists('../images/dishImages/'.$dishDetail[0][2])&&($dishDetail[0][2]!=""))
             {
-                $image='https://vector.me/files/images/1/4/145000/icon_food_bowl_plate_dan_outline_symbol_silhouette_cartoon_dish_free_knife_logo_fork_plates_cartoons_spoon_dinner_iammisc_spoons_forks_knives_sendok_garpu_diner_piring.jpg';
+                $image= '../images/dishImages/'.$dishDetail[0][2];
+            }
+            else
+            {
+                $image='https://www.pngkey.com/png/detail/430-4307759_knife-fork-and-plate-vector-icon-dishes-png.png';
             }
         $display.='<div class="row">
 <div class="col-6 m-auto card-body">
 <img src="'.$image.'" style="height: 20vh;width: 100%">
-<h2>'.$dishDetail[0][1].'</h2>
+<p class="card-header">'.$dishDetail[0][1].'</p>
 </div>
 </div>';
 
@@ -207,8 +212,13 @@ include_once ("../webdesign/footer/footer.php");
                data:formdata,
                contentType: false,
                processData: false,
+
+               beforeSend: function() {
+                   $("#preloader").show();
+               },
                success:function (data)
                {
+                   $("#preloader").hide();
                   if(data!='')
                   {
                       alert(data);

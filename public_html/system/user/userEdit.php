@@ -7,6 +7,19 @@
  */
 include_once ("../../connection/connect.php");
 
+
+
+if(!isset($_GET['id']))
+{
+
+    header("location:../../company/companyRegister/companyEdit.php");
+}
+$id=base64url_decode($_GET['id']);
+
+if((!is_numeric($id))||$id=="")
+{
+    header("location:../../company/companyRegister/companyEdit.php");
+}
 if(isset($_GET['action']))
 {
 
@@ -23,7 +36,7 @@ if(isset($_GET['action']))
     querySend($sql);
     header("location:../../company/companyRegister/companyEdit.php");
 }
-$userid=$_SESSION['tempid'];
+$userid=$id;
 $sql='SELECT  `username`, `password`, `person_id`, `isExpire`, `isowner` FROM `user` WHERE id='.$userid.'';
 $userdetail=queryReceive($sql);
 $customerId=$userdetail[0][2];
@@ -79,9 +92,9 @@ include_once ("../../webdesign/header/header.php");
         <input name="image" hidden value="<?php echo $person[0][4] ?>">
         <div class=" form-group row justify-content-center">
             <img src="<?php
-            if(file_exists($person[0][4]))
+            if(file_exists('../../images/users/'.$person[0][4]))
             {
-                echo $person[0][4];
+                echo '../../images/users/'.$person[0][4];
             }
             else
             {

@@ -8,8 +8,12 @@
 
 include_once ("../connection/connect.php");
 
-$userId=$_GET['user_id'];
-$orderDetail_id=$_GET['order'];
+if(!isset($_SESSION['order']))
+{
+    header("location:../user/userDisplay.php");
+}
+$userId=$_COOKIE['userid'];
+$orderDetail_id=$_SESSION['order'];
 
 ?>
 
@@ -23,7 +27,7 @@ $orderDetail_id=$_GET['order'];
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
+    <link rel="stylesheet" href="../webdesign/css/loader.css">
     <style>
         *{
             margin:auto;

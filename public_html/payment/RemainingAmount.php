@@ -10,7 +10,10 @@
 include_once ("../connection/connect.php");
 
 
-
+if(!isset($_SESSION['branchtype']))
+{
+    header("location:../user/userDisplay.php");
+}
 if(isset($_GET['action']))
 {
     $_SESSION['order']=$_GET['order'];
@@ -57,6 +60,7 @@ else
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../webdesign/css/complete.css">
+    <link rel="stylesheet" href="../webdesign/css/loader.css">
     <style>
 
         .newcolor
@@ -219,7 +223,7 @@ include_once ("../webdesign/header/header.php");
     </form>
 
 
-<div  class="w-100" id="recordsAll1">
+<div  id="recordsAll1" style="overflow: paged-x;">
 
 
 
@@ -259,8 +263,13 @@ include_once ("../webdesign/footer/footer.php");
                 data:formdata,
                 contentType: false,
                 processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
                 success:function (data)
                 {
+                    $("#preloader").hide();
                     $("#recordsAll1").html(data);
 
                 }

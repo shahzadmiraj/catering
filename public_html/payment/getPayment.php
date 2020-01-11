@@ -13,11 +13,19 @@
 //    exit();
 //}
 
-
-
 include_once ("../connection/connect.php");
+
+if(!isset($_SESSION['order']))
+{
+    header("location:../user/userDisplay.php");
+}
+
 $userId=$_COOKIE['userid'];
 $orderDetail_id=$_SESSION['order'];
+$sql='SELECT (SELECT p.name FROM person as p WHERE p.id=od.person_id),od.person_id,(SELECT p.image FROM person as p WHERE p.id=od.person_id) FROM orderDetail as od WHERE od.id='.$orderDetail_id.'';
+$orderDetailPerson= queryReceive($sql);
+$customerID=$orderDetailPerson[0][1];
+
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +40,7 @@ $orderDetail_id=$_SESSION['order'];
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-
+    <link rel="stylesheet" href="../webdesign/css/loader.css">
     <style>
 
     </style>
@@ -54,18 +62,19 @@ include_once ("../webdesign/header/header.php");
     <div class="card text-center card-header">
         <img src="<?php
 
-        if($_GET['image']=="")
+        if(file_exists('../images/customerimage/'.$orderDetailPerson[0][2])&&($orderDetailPerson[0][2]!=""))
         {
-            echo 'https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
+            echo '../images/customerimage/'.$orderDetailPerson[0][2];
+
         }
         else
         {
-            echo $_GET['image'];
+            echo 'https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
         }
 
         ?> " style="height: 20vh;" class="figure-img rounded-circle" alt="image is not set">
         <h5 ><?php
-            echo  $_GET['name'];
+            echo  $orderDetailPerson[0][0];
             ?></h5>
         <label >Order ID:<?php
             echo  $orderDetail_id;
@@ -199,8 +208,13 @@ include_once ("../webdesign/footer/footer.php");
               data:formdata,
               contentType: false,
               processData: false,
-              success:function (data)
-              {
+
+                 beforeSend: function() {
+                     $("#preloader").show();
+                 },
+                 success:function (data)
+                 {
+                     $("#preloader").hide();
                   if(data!='')
                   {
                       alert(data);

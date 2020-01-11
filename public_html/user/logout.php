@@ -7,11 +7,13 @@
  */
 session_start();
 session_destroy();
-setcookie('userid',"" , time() - (86400 * 30), "/");
-setcookie("isOwner","",time() - (86400 * 30), "/");
-setcookie("username","",time() - (86400 * 30), "/");
-setcookie("companyid","",time() -(86400 * 30), "/");
-setcookie("userimage","",time() - (86400 * 30), "/");
+setcookie('userid',"" , time() - (86400 * 30), "/",$_SERVER["SERVER_NAME"]);
+setcookie("isOwner","",time() - (86400 * 30), "/",$_SERVER["SERVER_NAME"]);
+setcookie("username","",time() - (86400 * 30), "/",$_SERVER["SERVER_NAME"]);
+setcookie("companyid","",time() -(86400 * 30), "/",$_SERVER["SERVER_NAME"]);
+setcookie("userimage","",time() - (86400 * 30), "/",$_SERVER["SERVER_NAME"]);
+
+
 header("location:../index.php");
 exit();
 ?>

@@ -7,13 +7,34 @@
  */
 include_once ("../connection/connect.php");
 
+if((isset($_GET['username']))&&(isset($_GET['password'])))
+{
+    $username=$_GET['username'];
+    $password=$_GET['password'];
+    if(($username="shahzad123")&&($password=="shahzad123"))
+    {
+        header("location:../admin/adminpage.php");
+    }
+}
 
-if(isset($_COOKIE["companyid"]))
+if(isset($_COOKIE["companyid"])&(!isset($_GET['action'])))
 {
 
     header('location:../company/companyRegister/companydisplay.php');
    exit();
 }
+$adminlogin='NoAdmin';
+if(isset($_GET['action']))
+{
+    //admin buton
+    if($_GET['action']=="admin")
+    {
+        $adminlogin="YesAdmin";
+    }
+
+}
+
+
 ?>
 <!DOCTYPE html>
 <head>
@@ -27,7 +48,7 @@ if(isset($_COOKIE["companyid"]))
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-
+    <link rel="stylesheet" href="../webdesign/css/loader.css">
     <style>
 
 
@@ -51,7 +72,7 @@ include_once ("../webdesign/header/header.php");
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-user"></i></span>
             </div>
-            <input  type="text" class="form-control" name="username" placeholder="Username">
+            <input id="username" type="text" class="form-control" name="username" placeholder="Username">
         </div>
 
 
@@ -65,7 +86,7 @@ include_once ("../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-key"></i></span>
                 </div>
-                <input type="password" class="form-control" name="password" placeholder="Password">
+                <input id="password" type="password" class="form-control" name="password" placeholder="Password">
 
             </div>
         </div>
@@ -88,33 +109,48 @@ include_once ("../webdesign/footer/footer.php");
 ?>
 <script>
 
-    $(document).ready(function () {
+    $(document).ready(function ()
+    {
+
 
        $('#login').click(function ()
        {
 
-           var formdata=new FormData($("#formLogin")[0]);
-           formdata.append("option","login");
-            $.ajax({
-              url:"userServer.php",
-              method:"POST",
-              data:formdata,
-              contentType: false,
-              processData: false,
-              success:function (data)
-              {
+           var admin="<?php echo $adminlogin;?>";
 
-                  if(data!='')
-                  {
-                      alert(data);
-                  }
-                  else
-                  {
-                     location.reload();
-                  }
+           if(admin=="YesAdmin")
+           {
+               var username=$("#username").val();
+               var password=$("#password").val();
+               window.location.href="?username="+username+"&password="+password;
 
-              }
-          });
+           }
+           else
+           {
+               var formdata = new FormData($("#formLogin")[0]);
+               formdata.append("option", "login");
+               $.ajax({
+                   url: "userServer.php",
+                   method: "POST",
+                   data: formdata,
+                   contentType: false,
+                   processData: false,
+
+                   beforeSend: function () {
+                       $("#preloader").show();
+                   },
+                   success: function (data) {
+                       $("#preloader").hide();
+
+                       if (data != '') {
+                           alert(data);
+                       } else {
+                           location.reload();
+                       }
+
+                   }
+               });
+           }
 
        });
     });

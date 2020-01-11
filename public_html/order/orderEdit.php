@@ -7,6 +7,14 @@
  */
 include_once ("../connection/connect.php");
 
+if(!isset($_SESSION['order']))
+{
+    header("location:../user/userDisplay.php");
+}
+if(!isset($_SESSION['customer']))
+{
+    header("location:../customer/CustomerCreate.php");
+}
 $orderId=$_SESSION['order'];
 $sql='SELECT `id`, `total_amount`, `describe`, `total_person`, `status_catering`, `destination_date`, `booking_date`, `destination_time`, `address_id`, `person_id` FROM `orderDetail` WHERE id='.$orderId.'';
 $orderDetail=queryReceive($sql);
@@ -27,7 +35,7 @@ $addresDetail=queryReceive($sql);
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-
+    <link rel="stylesheet" href="../webdesign/css/loader.css">
     <style>
 
     </style>
@@ -294,7 +302,13 @@ include_once ("../webdesign/footer/footer.php");
                 data:{column_name:columnName,value:text,option:'orderChange',orderid:orderid},
                 dataType:"text",
                 method:"POST",
-                success:function (data) {
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
+                {
+                    $("#preloader").hide();
                     if(data!='')
                     {
                         alert(data);
@@ -313,7 +327,13 @@ include_once ("../webdesign/footer/footer.php");
                 data:{column_name:columnName,value:text,option:'addressChange',addressId:addressId},
                 dataType:"text",
                 method:"POST",
-                success:function (data) {
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
+                {
+                    $("#preloader").hide();
                     if(data!='')
                     {
                         alert(data);

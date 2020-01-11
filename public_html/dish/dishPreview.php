@@ -7,7 +7,17 @@
  */
 include_once ("../connection/connect.php");
 
-$orderid=$_GET['order'];
+
+
+
+$dishDetailId=$_SESSION['tempid'];
+
+
+$sql='SELECT `describe`, `price`, `quantity`, `dish_id` FROM `dish_detail` WHERE id='.$dishDetailId.'';
+
+$dishDetailOfDetai=queryReceive($sql);
+
+$dishId=$dishDetailOfDetai[0][3];
 
 
 ?>
@@ -26,7 +36,7 @@ $orderid=$_GET['order'];
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../webdesign/css/complete.css">
 
-
+    <link rel="stylesheet" href="../webdesign/css/loader.css">
     <style>
 
     </style>
@@ -51,26 +61,28 @@ include_once ("../webdesign/header/header.php");
 <?php
 
 $display='';
-    $dishId=$_GET['dishId'];
-    $dishDetailId=$_GET['dishDetailId'];
     $sql = 'SELECT d.id,d.name,d.image FROM dish as d WHERE d.id=' . $dishId . '';
     $dishDetail = queryReceive($sql);
     $display .= '
     <form class="col-12" id="form">
 
-        <div class="card-header shadow-lg p-4 mb-4 border  col-12">';
-//            <h2 align="center">' . $dishDetail[0][1] . '</h2>
+        <div class="card shadow-lg p-4 mb-4 border  col-12">';
+
+$image='';
 
 
-$image = substr($dishDetail[0][2], 6);
-if(!file_exists($image))
+if(file_exists('../images/dishImages/'.$dishDetail[0][2])&&($dishDetail[0][2]!=""))
 {
-    $image='https://vector.me/files/images/1/4/145000/icon_food_bowl_plate_dan_outline_symbol_silhouette_cartoon_dish_free_knife_logo_fork_plates_cartoons_spoon_dinner_iammisc_spoons_forks_knives_sendok_garpu_diner_piring.jpg';
+    $image= '../images/dishImages/'.$dishDetail[0][2];
+}
+else
+{
+    $image='https://www.pngkey.com/png/detail/430-4307759_knife-fork-and-plate-vector-icon-dishes-png.png';
 }
 $display.='<div class="row">
 <div class="col-6 m-auto card-body">
 <img src="'.$image.'" style="height: 20vh;width: 100%">
-<h2>'.$dishDetail[0][1].'</h2>
+<p class="card-header">'.$dishDetail[0][1].'</p>
 </div>
 </div>';
             
@@ -109,9 +121,6 @@ WHERE dd.id='.$dishDetailId.'';
             </div>';
 
             }
-            $sql='SELECT `describe`, `price`, `quantity` FROM `dish_detail` WHERE id='.$dishDetailId.'';
-
-            $dishDetailOfDetai=queryReceive($sql);
             $display .= ' <div class="form-group row">
                 <label  class="col-form-label">each price</label>
            
@@ -204,8 +213,13 @@ include_once ("../webdesign/footer/footer.php");
                 data:{attributeid:attributeid,value:valueAttribute,option:"attributeChange"},
               method:"POST",
                 dataType:"text",
-              success:function (data)
-              {
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
+                {
+                    $("#preloader").hide();
                   if(data!="")
                   {
                       alert(data);
@@ -223,10 +237,16 @@ include_once ("../webdesign/footer/footer.php");
               data: {dishDetailId:dishDetailId,columnName:columnName,columnValue:columnValue,option:"dishDetailChange" },
                dataType: "text",
                method:"POST",
-               success:function (data) {
+
+               beforeSend: function() {
+                   $("#preloader").show();
+               },
+               success:function (data)
+               {
+                   $("#preloader").hide();
                   if(data!="")
                   {
-                      console.log(data);
+                      alert(data);
                   }
                }
            });
@@ -240,15 +260,21 @@ include_once ("../webdesign/footer/footer.php");
                data: {dishDetailId:dishDetailId,option:"deleteDish" },
                dataType: "text",
                method:"POST",
-               success:function (data) {
+
+               beforeSend: function() {
+                   $("#preloader").show();
+               },
+               success:function (data)
+               {
+                   $("#preloader").hide();
                    if(data!="")
                    {
-                       console.log(data);
+                       alert(data);
 
                    }
                    else
                    {
-                       window.location.href="AllSelectedDishes.php?order=<?php echo json_decode($orderid);?>";
+                       window.location.href="AllSelectedDishes.php>";
                    }
                }
            });
@@ -256,7 +282,7 @@ include_once ("../webdesign/footer/footer.php");
        });
         $('#ok').click(function ()
         {
-            window.location.href="AllSelectedDishes.php?order=<?php echo json_decode($orderid);?>";
+            window.location.href="AllSelectedDishes.php";
         });
 
     });

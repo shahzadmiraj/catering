@@ -80,14 +80,18 @@ for ($i=0;$i<count($orderdetail);$i++)
     $display.='
         <a href="?action=preview&order='.$orderdetail[$i][0].'&customer='.$orderdetail[$i][10].'" class="col-12   row  shadow m-3 newcolor">
         <img src="';
-    if(file_exists($orderdetail[$i][2]))
-    {
-        $display.= $orderdetail[$i][2];
-    }
-    else
-    {
-        $display.="https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png";
-    }
+
+      if(file_exists('../images/customerimage/'.$orderdetail[$i][2])&&($orderdetail[$i][2]!=""))
+      {
+          $display.='../images/customerimage/'.$orderdetail[$i][2];
+
+      }
+      else
+      {
+          $display.='https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
+      }
+
+
 
 
 

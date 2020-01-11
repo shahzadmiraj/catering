@@ -7,7 +7,10 @@
  */
 include_once ("../connection/connect.php");
 include_once ("../connection/printOrderDetail.php");
-
+if(!isset($_SESSION['order']))
+{
+    header("location:../user/userDisplay.php");
+}
 if(isset($_GET['action']))
 {
     $orderId=$_SESSION['order'];
@@ -61,7 +64,7 @@ $customerID=$orderDetailPerson[0][1];
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-
+    <link rel="stylesheet" href="../webdesign/css/loader.css">
     <style>
 
     </style>
@@ -83,14 +86,19 @@ include_once ("../webdesign/header/header.php");
     <div class="card text-center card-header">
     <img src="<?php
 
-    if($orderDetailPerson[0][2]=="")
+
+
+
+    if(file_exists('../images/customerimage/'.$orderDetailPerson[0][2])&&($orderDetailPerson[0][2]!=""))
     {
-        echo 'https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
+        echo '../images/customerimage/'.$orderDetailPerson[0][2];
+
     }
     else
     {
-        echo $orderDetailPerson[0][2];
+        echo 'https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
     }
+
 
     ?> " style="height: 20vh;" class="figure-img rounded-circle" alt="image is not set">
         <h5 ><?php
@@ -128,12 +136,12 @@ include_once ("../webdesign/header/header.php");
         ?>
     <a href="../user/userDisplay.php" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-grip-horizontal fa-5x"></i><h4>User Display</h4></a>
     <a href="../dish/AllSelectedDishes.php" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-file-word fa-5x"></i><h4>Bill Detail/ extend  </h4></a>
-            <a href="../payment/paymentHistory.php?name=<?php echo $orderDetailPerson[0][0];?>&image=<?php echo $orderDetailPerson[0][2];?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-history fa-5x"></i><h4>Payment History</h4></a>
+            <a href="../payment/paymentHistory.php" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-history fa-5x"></i><h4>Payment History</h4></a>
 
-            <a href="../payment/getPayment.php?name=<?php echo $orderDetailPerson[0][0];?>&image=<?php echo $orderDetailPerson[0][2]?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="far fa-money-bill-alt fa-5x"></i><h4>Get payment from customer</h4></a>
-            <a href="../payment/paymentDisplaySend.php?name=<?php echo $orderDetailPerson[0][0];?>&image=<?php echo $orderDetailPerson[0][2];?>" class="h-25 col-5 shadow text-dark m-2 text-center"> <i class="fas fa-share-alt fa-5x"></i><h4>Transfer payment <p>(user to user)</p> </h4></a>
+            <a href="../payment/getPayment.php" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="far fa-money-bill-alt fa-5x"></i><h4>Get payment from customer</h4></a>
+            <a href="../payment/paymentDisplaySend.php" class="h-25 col-5 shadow text-dark m-2 text-center"> <i class="fas fa-share-alt fa-5x"></i><h4>Transfer payment <p>(user to user)</p> </h4></a>
 
-    <a href="../payment/transferPaymentReceive.php?name=<?php echo $orderDetailPerson[0][0];?>&image=<?php echo $orderDetailPerson[0][2];?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-clipboard-check fa-5x"></i><h4>Payment Receiving Request <p>(user to user)</p> </h4></a>
+    <a href="../payment/transferPaymentReceive.php" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-clipboard-check fa-5x"></i><h4>Payment Receiving Request <p>(user to user)</p> </h4></a>
 
 
 </div>

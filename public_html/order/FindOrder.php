@@ -12,7 +12,7 @@ if(isset($_GET['action']))
 {
     $_SESSION['order']=$_GET['order'];
     $_SESSION['customer']=$_GET['customer'];
-    header("location:../order/PreviewOrder.php");
+    header("location:PreviewOrder.php");
 }
 
 $hallid="";
@@ -33,18 +33,30 @@ if(isset($_SESSION['branchtype']))
         $cateringid=$_SESSION['branchtypeid'];
     }
 }
-
-
+$date=date('Y-m-d');
+$description='';
 if(!empty($hallid))
 {
     $hallorcater="(od.hall_id=".$hallid.")";
-    $order_status='(od.status_hall="'.$order_status.'")';
+    $description=$hallorcater;
+    if($_GET['order_status']=="Today_Orders")
+    {
+        $hallorcater.="AND (od.destination_date='".$date."')";
+        $order_status="Running";
+    }
+    $hallorcater.="AND (od.status_hall='".$order_status."')";
 }
 else
 {
 
     $hallorcater="(od.catering_id=".$cateringid.")";
-    $order_status='(od.status_catering="'.$order_status.'")';
+    $description=$hallorcater;
+    if($_GET['order_status']=="Today_Orders")
+    {
+        $hallorcater.="AND (od.destination_date='".$date."')";
+        $order_status="Running";
+    }
+    $hallorcater.="AND (od.status_catering='".$order_status."')";
 }
 ?>
 <!DOCTYPE html>
@@ -59,6 +71,9 @@ else
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../webdesign/css/complete.css">
+
+    <link rel="stylesheet" href="../webdesign/css/loader.css">
+
     <style>
         .newcolor
         {
@@ -225,7 +240,7 @@ include_once ("../webdesign/header/header.php");
 
 
             <?php
-            $sql='SELECT od.id,(SELECT p.name FROM person as p WHERE p.id=od.person_id),(SELECT p.image FROM person as p WHERE p.id=od.person_id),od.destination_date,od.destination_time,od.status_hall,od.status_catering,od.hall_id,od.catering_id,(SELECT hp.package_name FROM hallprice as hp WHERE hp.id=od.hallprice_id),od.person_id FROM orderDetail as od WHERE '.$hallorcater.' AND '.$order_status.'';
+            $sql='SELECT od.id,(SELECT p.name FROM person as p WHERE p.id=od.person_id),(SELECT p.image FROM person as p WHERE p.id=od.person_id),od.destination_date,od.destination_time,od.status_hall,od.status_catering,od.hall_id,od.catering_id,(SELECT hp.package_name FROM hallprice as hp WHERE hp.id=od.hallprice_id),od.person_id FROM orderDetail as od WHERE '.$hallorcater.' ';
             $orderdetail=queryReceive($sql);
             $display='';
             for ($i=0;$i<count($orderdetail);$i++)
@@ -237,14 +252,17 @@ include_once ("../webdesign/header/header.php");
 
                 $display.='" class="col-12   row  shadow m-3 newcolor">
         <img src="';
-                if(file_exists($orderdetail[$i][2]))
+
+                if(file_exists('../images/customerimage/'.$orderdetail[$i][2])&&($orderdetail[$i][2]!=""))
                 {
-                    $display.= $orderdetail[$i][2];
+                    $display.='../images/customerimage/'.$orderdetail[$i][2];
+
                 }
                 else
                 {
-                    $display.="https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png";
+                    $display.='https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
                 }
+
 
 
 
@@ -351,15 +369,20 @@ include_once ("../webdesign/footer/footer.php");
         {
                 e.preventDefault();
                 var formdata=new FormData($('#formId1')[0]);
-                formdata.append("hallorcater","<?php echo $hallorcater;?>");
+                formdata.append("hallorcater","<?php echo $description;?>");
                 $.ajax({
                     url:"FindOrderServer.php",
                     method:"POST",
                     data:formdata,
                     contentType: false,
                     processData: false,
+
+                    beforeSend: function() {
+                        $("#preloader").show();
+                    },
                     success:function (data)
                     {
+                        $("#preloader").hide();
                         $("#recordsAll").html(data);
                     }
                 });

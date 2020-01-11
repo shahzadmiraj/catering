@@ -6,7 +6,13 @@
  * Time: 11:41
  */
 include_once ("connection/connect.php");
+if((isset($_COOKIE['companyid']))&&(!isset($_GET['action'])))
+{
+    header("location:company/companyRegister/companydisplay.php");
+}
+
 include_once ("connection/indexEdit.php");
+
 ?>
 
 <!DOCTYPE html>
@@ -25,6 +31,9 @@ include_once ("connection/indexEdit.php");
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="webdesign/css/complete.css">
+    <link rel="stylesheet" href="webdesign/css/loader.css">
+
+
     <style>
 
         .carousel-item img
@@ -53,7 +62,6 @@ include_once ("connection/indexEdit.php");
          }
 
 
-
     </style>
 </head>
 <body>
@@ -61,6 +69,8 @@ include_once ("connection/indexEdit.php");
 include_once ("webdesign/header/header.php");
 
 ?>
+
+
 
 
 <div class="bd-example">
@@ -94,16 +104,16 @@ include_once ("webdesign/header/header.php");
                         <h4 class="text-uppercase font-weight-bold">Software Features</h4>
                         <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                         <p>
-                            <a href="/public_html/company/companyRegister/companyRegister.php" class="text-dark">Marquee Management software</a>
+                            <a href="company/companyRegister/companyRegister.php" class="text-dark">Marquee Management software</a>
                         </p>
                         <p>
-                            <a href="/public_html/company/companyRegister/companyRegister.php" class="text-dark">Hall Management software</a>
+                            <a href="company/companyRegister/companyRegister.php" class="text-dark">Hall Management software</a>
                         </p>
                         <p>
-                            <a href="/public_html/company/companyRegister/companyRegister.php" class="text-dark">Catering Management software</a>
+                            <a href="company/companyRegister/companyRegister.php" class="text-dark">Catering Management software</a>
                         </p>
                         <p>
-                            <a href="/public_html/company/companyRegister/companyRegister.php" class="text-dark">Dera / Open area Management software</a>
+                            <a href="company/companyRegister/companyRegister.php" class="text-dark">Dera / Open area Management software</a>
                         </p>
                     </div>
                 </div>

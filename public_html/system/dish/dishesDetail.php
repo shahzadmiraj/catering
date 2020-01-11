@@ -19,7 +19,7 @@ include_once ("../../connection/connect.php");
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
+    <link rel="stylesheet" href="../../webdesign/css/loader.css">
     <style>
         *{
             margin:auto;
@@ -183,8 +183,13 @@ $(document).ready(function () {
           data:{id:id,value:value,option:"changeDishType"},
           dataType:"text",
           method:"POST",
-          success:function (data)
-          {
+
+           beforeSend: function() {
+               $("#preloader").show();
+           },
+           success:function (data)
+           {
+               $("#preloader").hide();
               if(data!="")
               {
                   alert(data);
@@ -204,8 +209,13 @@ $(document).ready(function () {
             data:{value:value,id:id,option:"Delele_Dish_Type"},
             dataType:"text",
             method:"POST",
+
+            beforeSend: function() {
+                $("#preloader").show();
+            },
             success:function (data)
             {
+                $("#preloader").hide();
                 if(data!="")
                 {
                     alert(data);
@@ -226,8 +236,13 @@ $(document).ready(function () {
             data:{value:value,option:"addDishtype"},
             dataType:"text",
             method:"POST",
+
+            beforeSend: function() {
+                $("#preloader").show();
+            },
             success:function (data)
             {
+                $("#preloader").hide();
                 if(data!="")
                 {
                     alert(data);
